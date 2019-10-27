@@ -1,0 +1,17 @@
+<--Weaponry-->
+Sky Metal
+Iron 
+Steel
+
+<--Building-->
+Stone
+Wood
+Housing
+
+<--Food/Water-->
+Meat
+Crops
+Water
+
+
+runestones for progression

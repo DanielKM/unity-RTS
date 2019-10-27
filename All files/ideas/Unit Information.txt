@@ -1,0 +1,14 @@
+Unit Info
+
+-Name 
+-Unit Name
+-Unit Icon
+-Unit Health
+-Unit Energy
+-Physical Attack
+-Physical Defence
+-Energy Attack
+-Energy Defence
+-16 Action Buttons
+-Kill Count
+-Rank

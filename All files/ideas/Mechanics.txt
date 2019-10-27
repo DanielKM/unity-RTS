@@ -1,0 +1,32 @@
+To DO
+--------------------------------------
+Add all friendly units to an array which can be seen by the enemy units
+
+Add combat system
+
+Workers - Set amount of resources gathered per trip 
+
+Max supplies - per faction
+- more supply yards
+- supplies are stealable
+
+Add armour as being multiple hits before breaking/can repair
+
+Rips - broken portals need to be closed/travelled through
+
+Sell buildings
+Emotes/Taunts
+
+
+
+Hiring can be done asynchronously
+Training cannot
+
+
+
+
+FUTURE - HALL OF HEROES 
+
+
+hobbits - happy traders
+military academy/library/augmenting buildings with spreadsheets and queues

@@ -1,0 +1,60 @@
+What Mark on RTS?			Realistic weather/daynight cycle/infrastructure/supply chains
+Cool Victory Conditions?		War, Bonus Quests,
+What Time Period?			Dark Realistic Medieval Fantasy
+Civilians allowed to attack? 		Faction specific, Yes, No, Infantry are Builders, Militia, Run Inside, Depends on Force, Yell
+What art style?				Not amazing graphics, dark & detailed, lighting 
+Neat movement mechanics? 		3d, leading while following, sneak, sprint, portals, grappling hooks, 
+How many resources are too many?	Entire chains of resources that may not overlap with your oponent
+What Are Cool Resources in RTS? 	Gas, Wood, Stone, Skystone, Points, Gold, Happiness, 
+What are cool RTS resources?		Population, Food, Water, Iron, Housing, Souls, Bodies, Slaves
+
+Animation Quirks Buildings 
+- Blacksmith Giant Lars - Sharpen
+
+Multiple drop off locations?		Yes - for specific resources
+Resource Gathering Buildings? 		Water tower - water, supply yard - iron/wood/stone/skystone,  
+What do you want for units?		Reaper, Harbinger, Feeder, Mindless, Horror, Portals, Shade
+What kind of abilities are you 		Fog of war, whispers, screaming, portals, blink on hit, teleport on banish, soulsteal
+excited about?
+selection box ideas?
+
+Games you like?				Faction numbers in AOE, Naval Warfare/select unit in Rise and Fall, Warcraft 2 feel, warcraft 3 story, 
+
+Bugs? 					Turning on and off select, deselecting, multiselect at distance, resources keep dropping
+
+
+Rolling objectives
+- meteor strikes
+- day/night
+- slaves
+- neutral armies
+- drastically different resource needs
+	(souls/slaves/gold/iron)
+- different bases
+	(demon portals/undead base/nomad/traditional)
+
+
+Demons
+- harbinger brings demons
+- demon portal continuousautonomous spawn
+
+
+NOTES
+
+New script added AL objects, return to fix
+
+IDEA REFERENCES
+ - Fire Emblem Class System 
+
+
+
+
+
+
+
+
+
+
+
+
+

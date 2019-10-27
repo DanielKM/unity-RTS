@@ -1,0 +1,48 @@
+<---Resource/Building Units-->
+
+Villager
+Workers
+Civilians
+Builders
+Peasants
+Townfolk
+Settler
+Colonist
+Explorer
+Slaves
+Grunts
+Artisans
+Engineers
+Masons
+Cobbler
+Drone
+
+<---Basic Troops-->
+
+Levies
+Plebs
+Footman
+Pillager
+Thug
+Man at Arms
+Soldier
+Grunt
+Warrior
+Brave
+Skeleton
+
+<--Ranged Troops-->
+Archer
+Crossbowman
+Axethrower
+Spearthrower
+Skeletal Archer
+Horse Archer
+Pilums
+
+<--Scouts-->
+Outrider
+Sneak
+Runner
+Brave
+Eagle

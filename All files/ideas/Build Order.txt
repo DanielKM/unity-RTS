@@ -1,0 +1,36 @@
+Basic Buildings
+
+House
+Farm 
+Hall
+- peasants
+Barracks
+- man at arms
+Lumber Mill
+- archers
+- wood walls
+Blacksmith
+- footmen
+Stables
+- outriders
+Masonry
+- stone walls
+Supply Yard
+- trolley
+
+Advanced Buildings
+
+Wizard's Tower
+- wizards
+Great Hall
+- artisans
+- lords
+Forge
+- knights
+Siege Workshop
+- catapults
+Healing Academy
+- doctors
+Military Academy
+- commanders
+Keep

@@ -1,0 +1,88 @@
+Kingdom of Andar
+ - traditional rts
+ - armour
+ - medics
+ - camps
+ - footmen/knights/etc.
+ - iron/steel/sky metal/wood/stone/food/housing
+ - Lord Commander Brendan 
+ - Lord Andon Raincourt
+ - Lord Keenan
+ - Lord Symon Fairmount
+ - Captain Dagan
+- Nathaniel
+- Captain Marcus
+
+Landon
+Lhanan
+Llane
+Giants
+Lord Shin
+Elders
+Forest
+
+clouds
+caves
+
+Little Folk
+ - mercenaries
+ - resources
+ - colony manager
+ - iron/steel/sky metal/wood/stone/food/housing/drakhs/slaves/souls
+- Alderman Solomon
+- Councillor Archibald
+- Councillor Bartholomew
+- Councillor Llan
+- Councillor Isak
+- Councillor Aden
+- commerce/trade
+
+
+Beastmen
+ - hunter/gatherer
+ - animals/berries/hides
+ - tents
+ - tame animals
+ - food/wood/hide
+- Bremen
+- Cain
+- Brahm
+- Kobos
+- Set
+
+Undead 
+- ocd/roman
+ - zambies/skeleton/archers/dread knight/bonemancer/necro
+ - bones/bodies
+- Lord Marrow
+- Lord Barrow
+- Lord Gallows
+- Lord Bonescraper
+- Bone Lord
+- King Andar
+
+Demons 
+ - no base
+ - mindless portals/horrors/darkness
+ - reap souls
+ - feed
+ - souls
+- Maldragar
+- Mavis
+- Samus
+
+Marauders
+ - Humans
+ - Take prisoners
+ - clubs
+ - Cages/prisons
+ - iron/steel/sky metal/wood/stone/food/housing/slaves
+- Redig
+
+
+Orcs
+ - Pillagers
+ - Tough meaty troops
+ - paid for kills
+ - meat/drakhs
+- Crom

@@ -1,0 +1,6 @@
+atmospheric
+noises 
+footsteps
+weapon clash
+screams
+army orders

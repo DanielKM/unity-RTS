@@ -1,0 +1,126 @@
+Different time pieces for each faction - sun dial/hourglass etc.
+kingdom - > 20 footmen, formation/armour
+having a commander on the ground
+ 
+Influences:
+Morrowind - Adventure
+Skyrim - Epicness/Atmosphere
+Warcraft - Feel/Seriousness
+Diablo - Dark/Action
+Rise and Fall - Gameplay
+
+
+Names:
+Karsis
+Blackwald
+Malerweg
+Arco
+Huntly
+Auburn
+Lara
+Liana
+Aria
+Aiden
+Airon
+Irk
+Murk
+Will
+
+Towns:
+Luckport
+Woodbridge
+Vineland
+Southbridge
+Ironside
+Belvedere
+Alden
+Ninde
+Haydon Hall
+White Stone
+
+Castles:
+Karsis
+
+Places:
+Nightlands
+Island Lords
+Okra
+Arkos
+
+Buildings:
+Kennel - dogs - tracking/barking/alerts
+Beastiary - ravens/dogs/bears/horses/deer
+Alchemy Lab - chemistry/tar/poisons/oil
+Fletcher - better arrows/longbows
+Grain Silo - cheap storage
+Pits - manure/fertilizers
+Dungeons
+
+Upgrades:
+Metallurgy
+
+Units:
+-trooper
+-infantry
+-grunt
+-warrior
+-conscript
+-mercenary
+-veteran
+-dragon
+-fighter
+-swordsman
+-bladesmith
+-armoursmith
+-legionnairy
+-corpseman
+-corps
+-cur
+-marine
+-guard
+-recruit
+
+-blackguard
+-curs
+-scoundrels
+-cutthroats
+-ironguard
+-rogue
+-knave
+-scallywags
+
+Name Endings:
+land
+ton
+ville
+bridge
+ford
+rasa
+
+Factions:
+Hobbits: Commerce is king, traders, simple, friendly
+-dealmaker/sneak/mayor/boss/foreman
+-grunt labor
+-wages
+
+Marauders:
+-slaves
+-escapes
+-overthrow
+-jails
+-health
+
+Undead: 
+-OCD Clean
+-straight
+-crisp
+-caskets to heal
+
+Gutter elves: 
+-quick, dirty, cheap
+-cutthroats
+
+Warbringers
+Orcs - War Cry 	- Thick hide + speed
+		- Battle Shout - Extra damage
+		- Drum Rythm - Jog/Cardio
