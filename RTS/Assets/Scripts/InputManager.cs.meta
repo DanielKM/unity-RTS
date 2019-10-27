@@ -1,0 +1,22 @@
+fileFormatVersion: 2
+guid: 0f9313fd1ff589d4c9c1a71cab43a2e1
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences:
+  - unitName: {instanceID: 0}
+  - nameDisp: {instanceID: 0}
+  - HB: {instanceID: 0}
+  - healthDisp: {instanceID: 0}
+  - EB: {instanceID: 0}
+  - energyDisp: {instanceID: 0}
+  - pointer: {fileID: 2800000, guid: a0620340a5e7c6a4e9495140a3e7ec63, type: 3}
+  - target: {fileID: 2800000, guid: c8cc70f1cc1017045b54aee58a711af8, type: 3}
+  - doorway: {fileID: 2800000, guid: c21cc0a3bd09a8d41bef2787ea7fa284, type: 3}
+  - combat: {fileID: 2800000, guid: c527aacb1e33c3943b77694f59d12c9d, type: 3}
+  - sword: {fileID: 2800000, guid: c527aacb1e33c3943b77694f59d12c9d, type: 3}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

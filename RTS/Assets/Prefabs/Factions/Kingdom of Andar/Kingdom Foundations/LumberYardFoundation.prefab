@@ -1,0 +1,73 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1001 &6718567782094577186
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 871514539, guid: 5afd6824e8816a54da98276a53a4810e, type: 3}
+      propertyPath: m_Name
+      value: LumberYardFoundation
+      objectReference: {fileID: 0}
+    - target: {fileID: 871514538, guid: 5afd6824e8816a54da98276a53a4810e, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -24.378723
+      objectReference: {fileID: 0}
+    - target: {fileID: 871514538, guid: 5afd6824e8816a54da98276a53a4810e, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.60533565
+      objectReference: {fileID: 0}
+    - target: {fileID: 871514538, guid: 5afd6824e8816a54da98276a53a4810e, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -43.23471
+      objectReference: {fileID: 0}
+    - target: {fileID: 871514538, guid: 5afd6824e8816a54da98276a53a4810e, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 871514538, guid: 5afd6824e8816a54da98276a53a4810e, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0.7071068
+      objectReference: {fileID: 0}
+    - target: {fileID: 871514538, guid: 5afd6824e8816a54da98276a53a4810e, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 871514538, guid: 5afd6824e8816a54da98276a53a4810e, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.7071068
+      objectReference: {fileID: 0}
+    - target: {fileID: 871514538, guid: 5afd6824e8816a54da98276a53a4810e, type: 3}
+      propertyPath: m_RootOrder
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 871514538, guid: 5afd6824e8816a54da98276a53a4810e, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 871514538, guid: 5afd6824e8816a54da98276a53a4810e, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 90
+      objectReference: {fileID: 0}
+    - target: {fileID: 871514538, guid: 5afd6824e8816a54da98276a53a4810e, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 871514543, guid: 5afd6824e8816a54da98276a53a4810e, type: 3}
+      propertyPath: unitType
+      value: Lumber Yard Foundation
+      objectReference: {fileID: 0}
+    - target: {fileID: 871514543, guid: 5afd6824e8816a54da98276a53a4810e, type: 3}
+      propertyPath: unitName
+      value: Lumber Yard Foundation
+      objectReference: {fileID: 0}
+    - target: {fileID: 8901928165844825646, guid: 5afd6824e8816a54da98276a53a4810e,
+        type: 3}
+      propertyPath: buildingPrefab
+      value: 
+      objectReference: {fileID: 3319812515624710287, guid: ded039f5c2495b2428d71bc0f083aa97,
+        type: 3}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 5afd6824e8816a54da98276a53a4810e, type: 3}

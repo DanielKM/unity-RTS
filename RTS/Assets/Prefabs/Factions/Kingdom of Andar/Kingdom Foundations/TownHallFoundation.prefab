@@ -1,0 +1,89 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1001 &7167191556434710946
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 871514539, guid: 5afd6824e8816a54da98276a53a4810e, type: 3}
+      propertyPath: m_Name
+      value: TownHallFoundation
+      objectReference: {fileID: 0}
+    - target: {fileID: 871514538, guid: 5afd6824e8816a54da98276a53a4810e, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 871514538, guid: 5afd6824e8816a54da98276a53a4810e, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 871514538, guid: 5afd6824e8816a54da98276a53a4810e, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 871514538, guid: 5afd6824e8816a54da98276a53a4810e, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 871514538, guid: 5afd6824e8816a54da98276a53a4810e, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 871514538, guid: 5afd6824e8816a54da98276a53a4810e, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 871514538, guid: 5afd6824e8816a54da98276a53a4810e, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 871514538, guid: 5afd6824e8816a54da98276a53a4810e, type: 3}
+      propertyPath: m_RootOrder
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 871514538, guid: 5afd6824e8816a54da98276a53a4810e, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 871514538, guid: 5afd6824e8816a54da98276a53a4810e, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 871514538, guid: 5afd6824e8816a54da98276a53a4810e, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 871514538, guid: 5afd6824e8816a54da98276a53a4810e, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 871514538, guid: 5afd6824e8816a54da98276a53a4810e, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 5.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 871514542, guid: 5afd6824e8816a54da98276a53a4810e, type: 3}
+      propertyPath: m_Size.x
+      value: 3.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 871514542, guid: 5afd6824e8816a54da98276a53a4810e, type: 3}
+      propertyPath: m_Size.z
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 871514543, guid: 5afd6824e8816a54da98276a53a4810e, type: 3}
+      propertyPath: unitType
+      value: Town Hall Foundation
+      objectReference: {fileID: 0}
+    - target: {fileID: 871514543, guid: 5afd6824e8816a54da98276a53a4810e, type: 3}
+      propertyPath: unitName
+      value: Town Hall Foundation
+      objectReference: {fileID: 0}
+    - target: {fileID: 8901928165844825646, guid: 5afd6824e8816a54da98276a53a4810e,
+        type: 3}
+      propertyPath: buildingPrefab
+      value: 
+      objectReference: {fileID: 4247186984801027523, guid: 32859feca3fc475458797204fa38b271,
+        type: 3}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 5afd6824e8816a54da98276a53a4810e, type: 3}

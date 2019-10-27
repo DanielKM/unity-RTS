@@ -1,0 +1,92 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1001 &3123329304891828506
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 2283330217339759905, guid: a7c77b0fcfd2e7a4ea8a5609c862de1b,
+        type: 3}
+      propertyPath: m_Name
+      value: StablesFoundation
+      objectReference: {fileID: 0}
+    - target: {fileID: 2283330217339759904, guid: a7c77b0fcfd2e7a4ea8a5609c862de1b,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2283330217339759904, guid: a7c77b0fcfd2e7a4ea8a5609c862de1b,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2283330217339759904, guid: a7c77b0fcfd2e7a4ea8a5609c862de1b,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2283330217339759904, guid: a7c77b0fcfd2e7a4ea8a5609c862de1b,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2283330217339759904, guid: a7c77b0fcfd2e7a4ea8a5609c862de1b,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0.7071068
+      objectReference: {fileID: 0}
+    - target: {fileID: 2283330217339759904, guid: a7c77b0fcfd2e7a4ea8a5609c862de1b,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2283330217339759904, guid: a7c77b0fcfd2e7a4ea8a5609c862de1b,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.7071068
+      objectReference: {fileID: 0}
+    - target: {fileID: 2283330217339759904, guid: a7c77b0fcfd2e7a4ea8a5609c862de1b,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2283330217339759904, guid: a7c77b0fcfd2e7a4ea8a5609c862de1b,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2283330217339759904, guid: a7c77b0fcfd2e7a4ea8a5609c862de1b,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 90
+      objectReference: {fileID: 0}
+    - target: {fileID: 2283330217339759904, guid: a7c77b0fcfd2e7a4ea8a5609c862de1b,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2283330217339759904, guid: a7c77b0fcfd2e7a4ea8a5609c862de1b,
+        type: 3}
+      propertyPath: m_LocalScale.x
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 2283330217339759909, guid: a7c77b0fcfd2e7a4ea8a5609c862de1b,
+        type: 3}
+      propertyPath: unitType
+      value: Stables Foundation
+      objectReference: {fileID: 0}
+    - target: {fileID: 2283330217339759909, guid: a7c77b0fcfd2e7a4ea8a5609c862de1b,
+        type: 3}
+      propertyPath: unitName
+      value: Stables Foundation
+      objectReference: {fileID: 0}
+    - target: {fileID: 7222089610396457636, guid: a7c77b0fcfd2e7a4ea8a5609c862de1b,
+        type: 3}
+      propertyPath: buildingPrefab
+      value: 
+      objectReference: {fileID: 3904504068563203642, guid: 4712f6d29236dd94a867c843fcaf0182,
+        type: 3}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: a7c77b0fcfd2e7a4ea8a5609c862de1b, type: 3}

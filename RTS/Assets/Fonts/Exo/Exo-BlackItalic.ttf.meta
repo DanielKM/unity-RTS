@@ -1,0 +1,23 @@
+fileFormatVersion: 2
+guid: fd25a57d199898541bf5d424b7df8822
+TrueTypeFontImporter:
+  externalObjects: {}
+  serializedVersion: 4
+  fontSize: 16
+  forceTextureCase: -2
+  characterSpacing: 0
+  characterPadding: 1
+  includeFontData: 1
+  fontName: Exo Black
+  fontNames:
+  - Exo Black
+  fallbackFontReferences:
+  - {fileID: 12800000, guid: c26f9aea66c95da4ab98411c0077f7b4, type: 3}
+  customCharacters: 
+  fontRenderingMode: 0
+  ascentCalculationMode: 1
+  useLegacyBoundsCalculation: 0
+  shouldRoundAdvanceValue: 1
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
