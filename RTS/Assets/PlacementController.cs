@@ -8,19 +8,19 @@ public class PlacementController : MonoBehaviour
 {
     // House Variables
     [SerializeField]
-    private GameObject housePrefab;
+    public GameObject housePrefab;
     [SerializeField]
     private KeyCode newObjectHotkey = KeyCode.H;
 
     // Town Hall Variables
     [SerializeField]
-    private GameObject townHallPrefab;
+    public GameObject townHallPrefab;
     [SerializeField]
     private KeyCode townHallObjectHotkey = KeyCode.T;
 
     // Barracks Variables
     [SerializeField]
-    private GameObject barracksPrefab;
+    public GameObject barracksPrefab;
     [SerializeField]
     private KeyCode barracksObjectHotkey = KeyCode.B;
 

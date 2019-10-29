@@ -7,10 +7,10 @@ public class BarracksController : MonoBehaviour
     private float nextSpawnTime;
 
     [SerializeField]
-    private GameObject footmanPrefab;
+    public GameObject footmanPrefab;
 
     [SerializeField]
-    private float spawnDelay;
+    public float spawnDelay;
 
     public bool selected = false;
 

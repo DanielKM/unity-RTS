@@ -22,7 +22,7 @@ public class BuildingButtonController : MonoBehaviour
     private Slider PeasantProgressSlider;
     private GameObject noResourcesText2;
 
-    private bool isTraining;
+    public bool isTraining;
 
     // UI Elements
     private CanvasGroup UnitPanel;

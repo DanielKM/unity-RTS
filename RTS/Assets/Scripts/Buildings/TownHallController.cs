@@ -14,7 +14,7 @@ public class TownHallController : MonoBehaviour
     public AudioClip villagerReporting;
 
     [SerializeField]
-    private float spawnDelay;
+    public float spawnDelay;
 
     public bool selected = false;
 

@@ -46,7 +46,7 @@ public class InputManager : MonoBehaviour
     public Text armourDisp;
     public Text itemDisp;
 
-    private bool isSelected;
+    public bool isSelected;
 
     // UI FOR BUILDINGS
     private CanvasGroup BuildingPanel;
@@ -675,7 +675,6 @@ public class InputManager : MonoBehaviour
                     }
                     else
                     {
-                        ShowBuildingActionPanel();
                         HideBuildingProgressPanel();
                     }
                 }
