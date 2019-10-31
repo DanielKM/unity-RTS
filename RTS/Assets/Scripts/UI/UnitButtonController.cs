@@ -14,6 +14,7 @@ public class UnitButtonController : MonoBehaviour
     //Buttons
     public Button buttonOne, buttonTwo, buttonThree, buttonFour, buttonFive, buttonSix, buttonSeven, buttonEight, basicBuildings, advancedBuildings, basicBack, advancedBack;
 
+    //Audio
     public AudioSource playerAudio;
     public AudioClip constructingBuilding;
 
@@ -82,6 +83,18 @@ public class UnitButtonController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if(RM.townHallCount == 0) {
+            buttonFive.interactable = false; 
+            buttonSix.interactable = false;
+            buttonSeven.interactable = false;
+            buttonEight.interactable = false;
+        } else if (RM.townHallCount > 0) {
+            buttonFive.interactable = true; 
+            buttonSix.interactable = true;
+            buttonSeven.interactable = true;
+            buttonEight.interactable = true;
+        }
+        
         if (currentPlaceableObject != null)
         {
             if (!EventSystem.current.IsPointerOverGameObject(-1))
@@ -272,7 +285,7 @@ public class UnitButtonController : MonoBehaviour
     void BuildLumberMill()
     {
         //Output this to console when the Button2 is clicked
-        if (currentPlaceableObject == null && RM.gold >= 500 && RM.Wood >= 500)
+        if (currentPlaceableObject == null && RM.gold >= 500 && RM.Wood >= 500 && RM.townHallCount > 0)
         {
             currentPlaceableObject = Instantiate(lumberMill);
             meshes = currentPlaceableObject.GetComponentsInChildren<MeshRenderer>();
@@ -289,7 +302,7 @@ public class UnitButtonController : MonoBehaviour
             }
             iter = 0;
         }
-        else if (currentPlaceableObject == null && RM.gold < 500 || currentPlaceableObject == null && RM.Wood < 500)
+        else if (currentPlaceableObject == null && RM.gold < 500 || currentPlaceableObject == null && RM.Wood < 500 || RM.townHallCount < 1)
         {
             noResourcesText.SetActive(true);
             StartCoroutine(Wait());
@@ -303,7 +316,7 @@ public class UnitButtonController : MonoBehaviour
     void BuildStables()
     {
         //Output this to console when the Button2 is clicked
-        if (currentPlaceableObject == null && RM.gold >= 500 && RM.Wood >= 700)
+        if (currentPlaceableObject == null && RM.gold >= 500 && RM.Wood >= 700 & RM.townHallCount > 0)
         {
             currentPlaceableObject = Instantiate(stables);
             meshes = currentPlaceableObject.GetComponentsInChildren<MeshRenderer>();
@@ -320,7 +333,7 @@ public class UnitButtonController : MonoBehaviour
             }
             iter = 0;
         }
-        else if (currentPlaceableObject == null && RM.gold < 500 || currentPlaceableObject == null && RM.Wood < 700)
+        else if (currentPlaceableObject == null && RM.gold < 500 || currentPlaceableObject == null && RM.Wood < 700 || RM.townHallCount < 1)
         {
             noResourcesText.SetActive(true);
             StartCoroutine(Wait());
@@ -334,7 +347,7 @@ public class UnitButtonController : MonoBehaviour
     void BuildBarracks()
     {
         //Output this to console when the Button2 is clicked
-        if (currentPlaceableObject == null && RM.gold >= 600 && RM.Wood >= 600)
+        if (currentPlaceableObject == null && RM.gold >= 600 && RM.Wood >= 600 && RM.townHallCount > 0)
         {
             currentPlaceableObject = Instantiate(barracks);
             meshes = currentPlaceableObject.GetComponentsInChildren<MeshRenderer>();
@@ -351,7 +364,7 @@ public class UnitButtonController : MonoBehaviour
             }
             iter = 0;
         }
-        else if (currentPlaceableObject == null && RM.gold < 600 || currentPlaceableObject == null && RM.Wood < 600)
+        else if (currentPlaceableObject == null && RM.gold < 600 || currentPlaceableObject == null && RM.Wood < 600 || RM.townHallCount < 1)
         {
             noResourcesText.SetActive(true);
             StartCoroutine(Wait());
@@ -396,7 +409,7 @@ public class UnitButtonController : MonoBehaviour
     void BuildBlacksmith()
     {
         //Output this to console when the Button2 is clicked
-        if (currentPlaceableObject == null && RM.gold >= 800 && RM.Wood >= 800)
+        if (currentPlaceableObject == null && RM.gold >= 800 && RM.Wood >= 800 && RM.townHallCount > 0)
         {
             currentPlaceableObject = Instantiate(blacksmith);
             meshes = currentPlaceableObject.GetComponentsInChildren<MeshRenderer>();
@@ -413,7 +426,7 @@ public class UnitButtonController : MonoBehaviour
             }
             iter = 0;
         }
-        else if (currentPlaceableObject == null && RM.gold < 800 || currentPlaceableObject == null && RM.Wood < 800)
+        else if (currentPlaceableObject == null && RM.gold < 800 || currentPlaceableObject == null && RM.Wood < 800 || RM.townHallCount < 1)
         {
             noResourcesText.SetActive(true);
             StartCoroutine(Wait());
@@ -541,7 +554,6 @@ public class UnitButtonController : MonoBehaviour
             currentPlaceableObject = Instantiate(building.foundation);
             currentPlaceableObject.transform.position = currentLocation;
             currentPlaceableObject = null;
-            RM.townHallCount += 1;
             PlayBuildingSound();
         }
         else if (Input.GetMouseButtonDown(0) && building.unitType == "Lumber Yard")

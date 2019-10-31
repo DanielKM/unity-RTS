@@ -14,13 +14,17 @@ public class FoundationController : MonoBehaviour
     public int builders;
     private Vector3 location;
 
-
     private CanvasGroup BuildingProgressPanel;
     private GameObject currentBuilding;
+
+    public ResourceManager RM;
     
     // Start is called before the first frame update
     void Start()
     {
+        GameObject player = GameObject.FindGameObjectWithTag("Player");
+        RM = player.GetComponent<ResourceManager>();
+
         // Starts the resource tick (means its true)
         BuildingProgressPanel = GameObject.Find("BuildingProgressPanel").GetComponent<CanvasGroup>();
         StartCoroutine(BuildTick());
@@ -57,6 +61,9 @@ public class FoundationController : MonoBehaviour
             {
                 Vector3 newLocation = new Vector3(currentBuilding.transform.position.x, currentBuilding.transform.position.y, currentBuilding.transform.position.z - 2.5f);
                 currentBuilding.transform.position = newLocation;
+            }
+            if(buildingScript.unitType == "Town Hall") {
+                RM.townHallCount += 1;
             }
             currentBuilding.layer = 11;
             isBuilding = false;
