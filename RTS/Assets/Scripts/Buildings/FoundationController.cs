@@ -62,9 +62,26 @@ public class FoundationController : MonoBehaviour
                 Vector3 newLocation = new Vector3(currentBuilding.transform.position.x, currentBuilding.transform.position.y, currentBuilding.transform.position.z - 2.5f);
                 currentBuilding.transform.position = newLocation;
             }
-            if(buildingScript.unitType == "Town Hall") {
+
+            // ADD COUNTS TO RESOURCE MANAGER
+            if (buildingScript.unitType == "House") {
+                RM.houseCount += 1;
+            } else if(buildingScript.unitType == "Farm") {
+                RM.farmCount += 1;
+            } else if(buildingScript.unitType == "Town Hall") {
                 RM.townHallCount += 1;
+            } else if(buildingScript.unitType == "Barracks") {
+                RM.barracksCount += 1;
+            } else if(buildingScript.unitType == "Lumber Yard") {
+                RM.lumberYardCount += 1;
+            } else if(buildingScript.unitType == "Stables") {
+                RM.stablesCount += 1;
+            } else if(buildingScript.unitType == "Blacksmith") {
+                RM.blacksmithCount += 1;
             }
+
+
+
             currentBuilding.layer = 11;
             isBuilding = false;
         }

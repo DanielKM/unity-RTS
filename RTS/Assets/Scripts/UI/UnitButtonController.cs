@@ -528,7 +528,6 @@ public class UnitButtonController : MonoBehaviour
             currentPlaceableObject = Instantiate(building.foundation);
             currentPlaceableObject.transform.position = currentLocation;
             currentPlaceableObject = null;
-            RM.houseCount += 1;
             PlayBuildingSound();
         }
         else if (Input.GetMouseButtonDown(0) && building.unitType == "Farm")
@@ -541,7 +540,6 @@ public class UnitButtonController : MonoBehaviour
             currentPlaceableObject = Instantiate(building.foundation);
             currentPlaceableObject.transform.position = currentLocation;
             currentPlaceableObject = null;
-            RM.farmCount += 1;
             PlayBuildingSound();
         }
         else if (Input.GetMouseButtonDown(0) && building.unitType == "Town Hall")
@@ -566,7 +564,6 @@ public class UnitButtonController : MonoBehaviour
             currentPlaceableObject = Instantiate(building.foundation);
             currentPlaceableObject.transform.position = currentLocation;
             currentPlaceableObject = null;
-            RM.lumberYardCount += 1;
             PlayBuildingSound();
         }
         else if (Input.GetMouseButtonDown(0) && building.unitType == "Stables")
@@ -579,7 +576,6 @@ public class UnitButtonController : MonoBehaviour
             currentPlaceableObject = Instantiate(building.foundation);
             currentPlaceableObject.transform.position = currentLocation;
             currentPlaceableObject = null;
-            RM.lumberYardCount += 1;
             PlayBuildingSound();
         }
         else if (Input.GetMouseButtonDown(0) && building.unitType == "Barracks")
@@ -592,7 +588,6 @@ public class UnitButtonController : MonoBehaviour
             currentPlaceableObject = Instantiate(building.foundation);
             currentPlaceableObject.transform.position = currentLocation;
             currentPlaceableObject = null;
-            RM.barracksCount += 1;
             PlayBuildingSound();
         }
         else if (Input.GetMouseButtonDown(0) && building.unitType == "Fort")
@@ -606,7 +601,6 @@ public class UnitButtonController : MonoBehaviour
             currentPlaceableObject = Instantiate(building.foundation);
             currentPlaceableObject.transform.position = currentLocation;
             currentPlaceableObject = null;
-            RM.fortCount += 1;
             PlayBuildingSound();
         }
         else if (Input.GetMouseButtonDown(0) && building.unitType == "Resource")
@@ -619,7 +613,6 @@ public class UnitButtonController : MonoBehaviour
             currentPlaceableObject = Instantiate(building.foundation);
             currentPlaceableObject.transform.position = currentLocation;
             currentPlaceableObject = null;
-            RM.townHallCount += 1;
             PlayBuildingSound();
         }
         else if (Input.GetMouseButtonDown(0) && building.unitType == "Blacksmith")
@@ -632,7 +625,6 @@ public class UnitButtonController : MonoBehaviour
             currentPlaceableObject = Instantiate(building.foundation);
             currentPlaceableObject.transform.position = currentLocation;
             currentPlaceableObject = null;
-            RM.blacksmithCount += 1;
             PlayBuildingSound();
         }
         else if (Input.GetMouseButtonDown(0))
