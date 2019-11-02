@@ -27,8 +27,8 @@ public class TownHallController : MonoBehaviour
     public bool isTraining;
 
     //Progress bar
-    private GameObject PeasantProgressBar;
-    private Slider PeasantProgressSlider;
+    private GameObject VillagerProgressBar;
+    private Slider VillagerProgressSlider;
 
     //UI Elements
     private CanvasGroup BuildingProgressPanel;
@@ -43,9 +43,8 @@ public class TownHallController : MonoBehaviour
         BuildingActionPanel = GameObject.Find("BuildingActions").GetComponent<CanvasGroup>();
 
         // Progress bar
-        PeasantProgressBar = GameObject.Find("PeasantProgressBar");
-        PeasantProgressSlider = PeasantProgressBar.GetComponent<Slider>();
-
+        VillagerProgressBar = GameObject.Find("VillagerProgressBar");
+        VillagerProgressSlider = VillagerProgressBar.GetComponent<Slider>();
     }
 
     // Update is called once per frame
@@ -54,14 +53,12 @@ public class TownHallController : MonoBehaviour
 
     }
 
-
     public void HireVillager()
     {
         selectedObj = inputScript.selectedObj;
         buildingScript = selectedObj.GetComponent<BuildingController>();
 
         StartCoroutine(VillagerSpawn());
-        Debug.Log((spawnPosition));
      //   nextSpawnTime = Time.time + spawnDelay;
        // Instantiate(villagerPrefab, spawnPosition, Quaternion.identity);
     }

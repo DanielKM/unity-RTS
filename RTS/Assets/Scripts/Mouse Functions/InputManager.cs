@@ -14,6 +14,8 @@ public class InputManager : MonoBehaviour
    public float xMin, xMax, yMin, yMax, zMin, zMax;
 
     // Reference Scripts
+    UIController UI;
+
     UnitController unitScript;
     Selection selectScript;
     BuildingController buildingScript;
@@ -25,8 +27,7 @@ public class InputManager : MonoBehaviour
     // UI FOR UNITS
     private CanvasGroup UnitPanel;
     private CanvasGroup UnitActionPanel;
-    private CanvasGroup PeasantPanel;
- //   private CanvasGroup GameMenuPanel;
+    private CanvasGroup VillagerPanel;
 
     private AudioSource peasantAudio;
     public AudioClip peasantAudioClip;
@@ -54,8 +55,8 @@ public class InputManager : MonoBehaviour
     private CanvasGroup AdvancedBuildingsPanel;
     private CanvasGroup BuildingProgressPanel;
     
-    private GameObject PeasantProgressBar;
-    public Slider PeasantProgressSlider;
+    private GameObject VillagerProgressBar;
+    public Slider VillagerProgressSlider;
 
     public Slider buildingHB;
     public Text buildingHealthDisp;
@@ -131,36 +132,17 @@ public class InputManager : MonoBehaviour
     void Start()
     {
         player = GameObject.FindGameObjectWithTag("Player");
-
-        // Unit panels
-        UnitPanel = GameObject.Find("UnitPanel").GetComponent<CanvasGroup>();
-        UnitActionPanel = GameObject.Find("BasicBuildingsPanel").GetComponent<CanvasGroup>();
-        AdvancedBuildingsPanel = GameObject.Find("AdvancedBuildingsPanel").GetComponent<CanvasGroup>();
-        PeasantPanel = GameObject.Find("PeasantPanel").GetComponent<CanvasGroup>();
-       // GameMenuPanel = GameObject.Find("GameMenu").GetComponent<CanvasGroup>();
-
-        // Building panels
-        BuildingPanel = GameObject.Find("BuildingPanel").GetComponent<CanvasGroup>();
-        BuildingActionPanel = GameObject.Find("BuildingActions").GetComponent<CanvasGroup>();
-        BuildingProgressPanel = GameObject.Find("BuildingProgressPanel").GetComponent<CanvasGroup>();
-
+        UI = player.GetComponent<UIController>();
        // progressIcon = GameObject.Find("ProgressIcon").GetComponent<Image>();
        // foundationScript = selectedObj.GetComponent<FoundationController>();
-      //  progressIcon.sprite = foundationScript.buildingPrefab.GetComponent<BuildingController>().icon;
+        // progressIcon.sprite = foundationScript.buildingPrefab.GetComponent<BuildingController>().icon;
 
-        PeasantProgressBar = GameObject.Find("PeasantProgressBar");
-        PeasantProgressSlider = PeasantProgressBar.GetComponent<Slider>();
+        VillagerProgressBar = GameObject.Find("VillagerProgressBar");
+        VillagerProgressSlider = VillagerProgressBar.GetComponent<Slider>();
 
         // UI functions
-        //   MenuPanel = GameObject.Find("PauseMenu").GetComponent<CanvasGroup>();
+        // MenuPanel = GameObject.Find("PauseMenu").GetComponent<CanvasGroup>();
 
-       // HideGameMenuPanel();
-        HideUnitPanel();
-        HidePeasantPanel();
-        HideBuildingPanel();
-        HideAdvancedBuildingsPanel();
-        HideBuildingProgressPanel();
-        Debug.Log("here");
         rotation = Camera.main.transform.rotation;
         cam = Camera.main;
         minimap = GameObject.Find("Minimap").GetComponent<Camera>();
@@ -197,33 +179,30 @@ public class InputManager : MonoBehaviour
 
         if(Input.GetKeyDown(KeyCode.F10))
         {
-            ShowGameMenuPanel();
+            UI.OpenGameMenuPanel();
         }
         
         if(selectedObj != null)
         {
-            if (buildingScript.unitType == "Town Hall")
-            {
-                if (townHallScript != null && townHallScript.isTraining)
+            if(buildingScript != null) {
+                if (buildingScript.unitType == "Town Hall")
                 {
-                    PeasantProgressSlider.value = townHallScript.i * 10;
+                    if (townHallScript != null && townHallScript.isTraining)
+                    {
+                        VillagerProgressSlider.value = townHallScript.i * 10;
+                    }
                 }
-            }
-            else if (selectedObj.tag == "Foundation")
-            {
-                if (foundationScript != null && foundationScript.isBuilding)
+                else if (selectedObj.tag == "Foundation")
                 {
-                    PeasantProgressSlider.value = foundationScript.buildPercent;
+                    if (foundationScript != null && foundationScript.isBuilding)
+                    {
+                        VillagerProgressSlider.value = foundationScript.buildPercent;
+                    }
                 }
             }
         }
-
-
-
-
-
     }
-    
+
     // Camera functions
     void MoveCamera()
     {
@@ -283,9 +262,7 @@ public class InputManager : MonoBehaviour
         if (Input.GetMouseButton(2))
         {
             destination.x -= Input.GetAxis("Mouse Y") * rotateAmount;
-          //  Debug.Log(destination);
             destination.x = Mathf.Clamp(destination.x, 20f, 90f);
-
             destination.y += Input.GetAxis("Mouse X") * rotateAmount;
             //requires clamping -55 to 55 or so
         }
@@ -394,9 +371,10 @@ public class InputManager : MonoBehaviour
                     peasantAudio.clip = peasantAudioClip;
                     peasantAudio.Play();
 
-                    HideBuildingPanel();
-                    UpdateUnitPanel();
-                    ShowUnitPanel();
+                    UI.CloseBuildingPanel();
+                    UI.UpdateUnitPanel();
+                    UI.OpenUnitPanel();
+                    UI.OpenVillagerPanel();
                 }
             }
         }
@@ -460,106 +438,6 @@ public class InputManager : MonoBehaviour
             buildingItemDisp.text = nodeScript.resourceType + ": " + nodeScript.availableResource;
         }
     }
-    
-    private void ShowUnitPanel()
-    {
-        // UI Update
-        UnitPanel.alpha = 1;
-        UnitPanel.blocksRaycasts = true;
-        UnitPanel.interactable = true;
-
-        PeasantPanel.alpha = 1;
-        PeasantPanel.blocksRaycasts = true;
-        PeasantPanel.interactable = true;
-
-    }
-
-    private void HideGameMenuPanel()
-    {
-        // UI Update
-        // UI Functions
-     //   GameMenuPanel.alpha = 0;
-    //    GameMenuPanel.blocksRaycasts = false;
-     //   GameMenuPanel.interactable = false;
-    }
-
-    private void ShowGameMenuPanel()
-    {
-        // UI Update
-        // UI Functions
-     //   GameMenuPanel.alpha = 1;
-      //  GameMenuPanel.blocksRaycasts = true;
-    //    GameMenuPanel.interactable = true;
-    }
-
-    private void HideUnitPanel()
-    {
-        // UI Update
-        // UI Functions
-        UnitPanel.alpha = 0;
-        UnitPanel.blocksRaycasts = false;
-        UnitPanel.interactable = false;
-
-        UnitActionPanel.alpha = 0;
-        UnitActionPanel.blocksRaycasts = false;
-        UnitActionPanel.interactable = false;
-    }
-
-    private void HidePeasantPanel()
-    {
-        // UI Update
-        // UI Functions
-        PeasantPanel.alpha = 0;
-        PeasantPanel.blocksRaycasts = false;
-        PeasantPanel.interactable = false;
-    }
-
-    private void ShowBuildingPanel()
-    {
-        // UI Update
-        BuildingPanel.alpha = 1;
-        BuildingPanel.blocksRaycasts = true;
-        BuildingPanel.interactable = true;
-
-    }
-
-    private void ShowBuildingActionPanel()
-    {
-        BuildingActionPanel.alpha = 1;
-        BuildingActionPanel.blocksRaycasts = true;
-        BuildingActionPanel.interactable = true;
-    }
-
-    private void HideBuildingPanel()
-    {
-        // UI Update
-        // UI Functions
-        BuildingPanel.alpha = 0;
-        BuildingPanel.blocksRaycasts = false;
-        BuildingPanel.interactable = false;
-
-        BuildingActionPanel.alpha = 0;
-        BuildingActionPanel.blocksRaycasts = false;
-        BuildingActionPanel.interactable = false;
-    }
-
-    private void HideAdvancedBuildingsPanel()
-    {
-        // UI Update
-        // UI Functions
-        AdvancedBuildingsPanel.alpha = 0;
-        AdvancedBuildingsPanel.blocksRaycasts = false;
-        AdvancedBuildingsPanel.interactable = false;
-    }
-
-    private void HideBuildingProgressPanel()
-    {
-        // UI Update
-        // UI Functions
-        BuildingProgressPanel.alpha = 0;
-        BuildingProgressPanel.blocksRaycasts = false;
-        BuildingProgressPanel.interactable = false;
-    }
 
     // Left click controller
     public void LeftClick()
@@ -574,18 +452,14 @@ public class InputManager : MonoBehaviour
                 if(selectedObjects.Length >= 0)
                 {
                     DeselectUnits();
-                    HideUnitPanel();
-                    HideAdvancedBuildingsPanel();
+                    UI.CloseAllPanels();
                    // Debug.Log("Standing down, Sir!");
                 }
-                HideBuildingPanel();
-                HideBuildingProgressPanel();
             }
             else if (hit.collider.tag == "Selectable")
             {
                 selectedObj = hit.collider.gameObject;
                 selectedInfo = selectedObj.GetComponent<Selection>();
-                
                 if (selectedInfo.selected == true)
                 {
                     DeselectUnits();
@@ -601,10 +475,9 @@ public class InputManager : MonoBehaviour
                     peasantAudio = selectedObj.GetComponent<AudioSource>();
                     peasantAudio.clip = peasantAudioClip;
                     peasantAudio.Play();
-                    HideBuildingPanel();
-                    HideBuildingProgressPanel();
+                    UI.CloseBuildingPanels();
                     UpdateUnitPanel();
-                    ShowUnitPanel();
+                    UI.OpenVillagerPanels();
                 }
                 else
                 {
@@ -625,22 +498,20 @@ public class InputManager : MonoBehaviour
                     peasantAudio = selectedObj.GetComponent<AudioSource>();
                     peasantAudio.clip = peasantAudioClip;
                     peasantAudio.Play();
-                    HideBuildingPanel();
-                    HideBuildingProgressPanel();
+                    UI.CloseBuildingPanels();
                     isSelected = true;
 
                     UpdateUnitPanel();
-                    ShowUnitPanel();
+                    UI.OpenVillagerPanels();
                 }
             }
             else if (hit.collider.tag == "Yard" || hit.collider.tag == "Foundation" || hit.collider.tag == "Barracks" || hit.collider.tag == "House" || hit.collider.tag == "Resource" || hit.collider.tag == "Fort" || hit.collider.tag == "Blacksmith" || hit.transform.tag == "Lumber Yard" || hit.transform.tag == "Stables" )
             {
+                UI.CloseAllPanels();
                 if (selectedObjects.Length >= 0)
                 {
                     DeselectUnits();
-                    HideUnitPanel();
-                    HidePeasantPanel();
-                    HideAdvancedBuildingsPanel();
+                    UI.CloseUnitPanels();
                    // Debug.Log("Standing down, Sir!");
                 }
 
@@ -654,13 +525,13 @@ public class InputManager : MonoBehaviour
                     if (isTraining)
                     {
                         SwapProgressIcon();
-                        ShowBuildingProgressPanel();
-                        HideBuildingActionPanel();
+                        UI.CloseBuildingActionPanel();
+                        UI.OpenBuildingProgressPanel();
                     }
                     else
                     {
-                        ShowBuildingActionPanel();
-                        HideBuildingProgressPanel();
+                        UI.CloseBuildingProgressPanel();
+                        UI.OpenBuildingActionPanel();
                     }
                 }
                 else if (selectedObj.tag == "Foundation")
@@ -670,26 +541,26 @@ public class InputManager : MonoBehaviour
                     if (isBuilding)
                     {
                         SwapProgressIcon();
-                        ShowBuildingProgressPanel();
-                        HideBuildingActionPanel();
+                        UI.CloseBuildingActionPanel();
+                        UI.OpenBuildingProgressPanel();
                     }
                     else
                     {
-                        HideBuildingProgressPanel();
+                        UI.CloseBuildingProgressPanel();
                     }
+                } 
+                else if (selectedObj.tag == "Blacksmith") {
+                    UI.OpenBlacksmithActionPanel();
                 }
 
-                HideUnitPanel();
-                HidePeasantPanel();
-                HideAdvancedBuildingsPanel();
                 UpdateBuildingPanel();
-                ShowBuildingPanel();
+                UI.OpenBuildingPanel();
             }
             else if (hit.collider.tag != "Selectable" && (!Input.GetKey(KeyCode.LeftShift)))
             {
                 DeselectUnits();
-                HideBuildingPanel();
-                HidePeasantPanel();
+                UI.CloseBuildingPanel();
+                UI.CloseVillagerPanel();
             }
         }
     }
@@ -715,25 +586,11 @@ public class InputManager : MonoBehaviour
         }
     }
 
-    void HideBuildingActionPanel()
-    {
-        BuildingActionPanel.alpha = 0;
-        BuildingActionPanel.blocksRaycasts = false;
-        BuildingActionPanel.interactable = false;
-    }
-
-    void ShowBuildingProgressPanel()
-    {
-        BuildingProgressPanel.alpha = 1;
-        BuildingProgressPanel.blocksRaycasts = true;
-        BuildingProgressPanel.interactable = true;
-    }
-
     private void DeselectUnits()
     {
         selectedObj = null;
-        HideUnitPanel();
-        HidePeasantPanel();
+        UI.CloseUnitPanel();
+        UI.CloseVillagerPanel();
         for (int i = 0; i < selectedObjects.Length; i++)
         {
             // Grabs all objects in selected array and deselects them

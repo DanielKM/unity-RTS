@@ -20,13 +20,15 @@ Emotes/Taunts
 
 
 Hiring can be done asynchronously
+
 Training cannot
-
-
-
+Barracks - strength/cardio/toughness training
+Town hall - cheaper labour/better training
+- more housing need/less
+- municipal strategy
 
 FUTURE - HALL OF HEROES 
 
-
+hygiene - latrines/trenches/cleaning/rats
 hobbits - happy traders
 military academy/library/augmenting buildings with spreadsheets and queues

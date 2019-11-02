@@ -38,14 +38,12 @@ public class PlacementController : MonoBehaviour
     public GameObject player;
     ResourceManager RM;
 
-    private GameObject noResourcesText;
     private GameObject currentPlaceableObject;
     private float mouseWheelRotation;
     private float adjustedY;
 
     private void Start()
     {
-        noResourcesText = GameObject.Find("No Resources Panel");
         player = GameObject.FindGameObjectWithTag("Player");
         RM = player.GetComponent<ResourceManager>();
     }
@@ -138,7 +136,6 @@ public class PlacementController : MonoBehaviour
             }
             else if (currentPlaceableObject == null && RM.gold < 200 || currentPlaceableObject == null && RM.Wood < 200)
             {
-                noResourcesText.SetActive(true);
                 StartCoroutine(Wait());
             }
             else
@@ -153,7 +150,6 @@ public class PlacementController : MonoBehaviour
             }
             else if (currentPlaceableObject == null && RM.gold < 1200 || currentPlaceableObject == null && RM.Wood < 800)
             {
-                noResourcesText.SetActive(true);
                 StartCoroutine(Wait());
             }
             else
@@ -169,7 +165,6 @@ public class PlacementController : MonoBehaviour
             }
             else if (currentPlaceableObject == null && RM.gold < 500 || currentPlaceableObject == null && RM.Wood < 400)
             {
-                noResourcesText.SetActive(true);
                 StartCoroutine(Wait());
             }
             else
@@ -183,6 +178,5 @@ public class PlacementController : MonoBehaviour
     {
         yield return new WaitForSeconds(3);
         //my code here after 3 seconds
-        noResourcesText.SetActive(false);
     }
 }

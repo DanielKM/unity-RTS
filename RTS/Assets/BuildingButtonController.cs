@@ -18,9 +18,8 @@ public class BuildingButtonController : MonoBehaviour
 
     [SerializeField]
     private float nextSpawnTime;
-    private GameObject PeasantProgressBar;
-    private Slider PeasantProgressSlider;
-    private GameObject noResourcesText2;
+    // private GameObject PeasantProgressBar;
+    // private Slider PeasantProgressSlider;
 
     public bool isTraining;
 
@@ -47,16 +46,14 @@ public class BuildingButtonController : MonoBehaviour
         BuildingProgressPanel = GameObject.Find("BuildingProgressPanel").GetComponent<CanvasGroup>();
         BasicBuildingsPanel = GameObject.Find("BasicBuildingsPanel").GetComponent<CanvasGroup>();
         AdvancedBuildingsPanel = GameObject.Find("AdvancedBuildingsPanel").GetComponent<CanvasGroup>();
-        PeasantPanel = GameObject.Find("PeasantPanel").GetComponent<CanvasGroup>();
+        PeasantPanel = GameObject.Find("VillagerPanel").GetComponent<CanvasGroup>();
         BuildingActionPanel = GameObject.Find("BuildingActions").GetComponent<CanvasGroup>();
 
         player = GameObject.FindGameObjectWithTag("Player");
         inputScript = player.GetComponent<InputManager>();
         RM = player.GetComponent<ResourceManager>();
-        noResourcesText2 = GameObject.Find("No Resources Panel 2");
-        PeasantProgressBar = GameObject.Find("PeasantProgressBar");
-        PeasantProgressSlider = PeasantProgressBar.GetComponent<Slider>();
-        noResourcesText2.SetActive(false);
+        // PeasantProgressBar = GameObject.Find("VillagerProgressBar");
+        // PeasantProgressSlider = PeasantProgressBar.GetComponent<Slider>();
 
         buttonOne.onClick.AddListener(HireVillager);
     }
@@ -89,7 +86,6 @@ public class BuildingButtonController : MonoBehaviour
         }
         else if (RM.gold < 400 || RM.food < 200 || RM.housing >= RM.maxHousing)
         {
-            noResourcesText2.SetActive(true);
             StartCoroutine(Wait());
         }
     }
@@ -126,7 +122,6 @@ public class BuildingButtonController : MonoBehaviour
     {
         yield return new WaitForSeconds(3);
         //my code here after 3 seconds
-        noResourcesText2.SetActive(false);
     }
 
 }

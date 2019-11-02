@@ -34,14 +34,8 @@ public class UnitButtonController : MonoBehaviour
     public Material placing;
     public Renderer[] childColors;
 
-    //UI Objects
-    private GameObject noResourcesText;
-
-    private CanvasGroup UnitPanel;
-    private CanvasGroup BasicBuildingsPanel;
-    private CanvasGroup AdvancedBuildingsPanel;
-    private CanvasGroup PeasantPanel;
-    private CanvasGroup BuildingProgressPanel;
+    // UI Controller
+    UIController UI; 
 
     private MeshRenderer[] meshes;
     Color[] colors;
@@ -51,23 +45,17 @@ public class UnitButtonController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        BuildingProgressPanel = GameObject.Find("BuildingProgressPanel").GetComponent<CanvasGroup>();
-        BasicBuildingsPanel = GameObject.Find("BasicBuildingsPanel").GetComponent<CanvasGroup>();
-        AdvancedBuildingsPanel = GameObject.Find("AdvancedBuildingsPanel").GetComponent<CanvasGroup>();
-        PeasantPanel = GameObject.Find("PeasantPanel").GetComponent<CanvasGroup>();
-
         player = GameObject.FindGameObjectWithTag("Player");
         RM = player.GetComponent<ResourceManager>();
-        noResourcesText = GameObject.Find("No Resources Panel");
-        noResourcesText.SetActive(false);
+        UI = player.GetComponent<UIController>();
 
         //Calls the TaskOnClick/TaskWithParameters/ButtonClicked method when you click the Button
 
-        basicBack.onClick.AddListener(OpenPeasantPanel);
-        advancedBack.onClick.AddListener(OpenPeasantPanel);
+        basicBack.onClick.AddListener(UI.OpenVillagerPanel);
+        advancedBack.onClick.AddListener(UI.OpenVillagerPanel);
 
-        basicBuildings.onClick.AddListener(BasicBuildings);
-        advancedBuildings.onClick.AddListener(AdvancedBuildings);
+        basicBuildings.onClick.AddListener(UI.OpenBasicBuildingsPanel);
+        advancedBuildings.onClick.AddListener(UI.OpenAdvancedBuildingsPanel);
 
         buttonTwo.onClick.AddListener(BuildHouse);
         buttonThree.onClick.AddListener(BuildFarm);
@@ -133,54 +121,6 @@ public class UnitButtonController : MonoBehaviour
         }
     }
 
-    void OpenPeasantPanel()
-    {
-        PeasantPanel.alpha = 1;
-        PeasantPanel.blocksRaycasts = true;
-        PeasantPanel.interactable = true;
-
-        BasicBuildingsPanel.alpha = 0;
-        BasicBuildingsPanel.blocksRaycasts = false;
-        BasicBuildingsPanel.interactable = false;
-
-        AdvancedBuildingsPanel.alpha = 0;
-        AdvancedBuildingsPanel.blocksRaycasts = false;
-        AdvancedBuildingsPanel.interactable = false;
-    }
-
-    void BasicBuildings()
-    {
-        HidePeasantPanel();
-        OpenBasicBuildingsPanel();
-    }
-
-    void AdvancedBuildings()
-    {
-        HidePeasantPanel();
-        OpenAdvancedBuildingsPanel();
-    }
-
-    void HidePeasantPanel()
-    {
-        PeasantPanel.alpha = 0;
-        PeasantPanel.blocksRaycasts = false;
-        PeasantPanel.interactable = false;
-    }
-
-    void OpenBasicBuildingsPanel()
-    {
-        BasicBuildingsPanel.alpha = 1;
-        BasicBuildingsPanel.blocksRaycasts = true;
-        BasicBuildingsPanel.interactable = true;
-    }
-
-    void OpenAdvancedBuildingsPanel()
-    {
-        AdvancedBuildingsPanel.alpha = 1;
-        AdvancedBuildingsPanel.blocksRaycasts = true;
-        AdvancedBuildingsPanel.interactable = true;
-    }
-
     void BuildHouse()
     {
         //Output this to console when Button1 or Button3 is clicked
@@ -203,7 +143,7 @@ public class UnitButtonController : MonoBehaviour
         }
         else if (currentPlaceableObject == null && RM.gold < 200 || currentPlaceableObject == null && RM.Wood < 200)
         {
-            noResourcesText.SetActive(true);
+            UI.noResourcesText.SetActive(true);
             StartCoroutine(Wait());
         }
         else
@@ -238,7 +178,7 @@ public class UnitButtonController : MonoBehaviour
         }
         else if (currentPlaceableObject == null && RM.gold < 400 || currentPlaceableObject == null && RM.Wood < 400)
         {
-            noResourcesText.SetActive(true);
+            UI.noResourcesText.SetActive(true);
             StartCoroutine(Wait());
         }
         else
@@ -273,7 +213,7 @@ public class UnitButtonController : MonoBehaviour
         }
         else if (currentPlaceableObject == null && RM.gold < 800 || currentPlaceableObject == null && RM.Wood < 800)
         {
-            noResourcesText.SetActive(true);
+            UI.noResourcesText.SetActive(true);
             StartCoroutine(Wait());
         }
         else
@@ -304,7 +244,7 @@ public class UnitButtonController : MonoBehaviour
         }
         else if (currentPlaceableObject == null && RM.gold < 500 || currentPlaceableObject == null && RM.Wood < 500 || RM.townHallCount < 1)
         {
-            noResourcesText.SetActive(true);
+            UI.noResourcesText.SetActive(true);
             StartCoroutine(Wait());
         }
         else
@@ -335,7 +275,7 @@ public class UnitButtonController : MonoBehaviour
         }
         else if (currentPlaceableObject == null && RM.gold < 500 || currentPlaceableObject == null && RM.Wood < 700 || RM.townHallCount < 1)
         {
-            noResourcesText.SetActive(true);
+            UI.noResourcesText.SetActive(true);
             StartCoroutine(Wait());
         }
         else
@@ -366,7 +306,7 @@ public class UnitButtonController : MonoBehaviour
         }
         else if (currentPlaceableObject == null && RM.gold < 600 || currentPlaceableObject == null && RM.Wood < 600 || RM.townHallCount < 1)
         {
-            noResourcesText.SetActive(true);
+            UI.noResourcesText.SetActive(true);
             StartCoroutine(Wait());
         }
         else
@@ -397,7 +337,7 @@ public class UnitButtonController : MonoBehaviour
         }
         else if (currentPlaceableObject == null && RM.gold < 1400 || currentPlaceableObject == null && RM.Wood < 1400 || currentPlaceableObject == null && RM.stone < 1400)
         {
-            noResourcesText.SetActive(true);
+            UI.noResourcesText.SetActive(true);
             StartCoroutine(Wait());
         }
         else
@@ -428,7 +368,7 @@ public class UnitButtonController : MonoBehaviour
         }
         else if (currentPlaceableObject == null && RM.gold < 800 || currentPlaceableObject == null && RM.Wood < 800 || RM.townHallCount < 1)
         {
-            noResourcesText.SetActive(true);
+            UI.noResourcesText.SetActive(true);
             StartCoroutine(Wait());
         }
         else
@@ -644,14 +584,12 @@ public class UnitButtonController : MonoBehaviour
     {
         yield return new WaitForSeconds(3);
         //my code here after 3 seconds
-        noResourcesText.SetActive(false);
     }
 
     IEnumerator PlaceBuilding()
     {
         yield return new WaitForSeconds(3);
         //my code here after 3 seconds
-        noResourcesText.SetActive(false);
         PlayBuildingSound();
     }
 }

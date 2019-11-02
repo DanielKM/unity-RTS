@@ -4,6 +4,7 @@ House
 Farm 
 Hall
 - peasants
+
 Barracks
 - man at arms
 Lumber Mill
@@ -13,10 +14,26 @@ Blacksmith
 - footmen
 Stables
 - outriders
-Masonry
+
+Masonry/Stonecutter shop
 - stone walls
+Hunting lodge
+Kennel
+Tannery
+
+
+
 Supply Yard
 - trolley
+Merchant
+Market
+Workshop 
+- lanterns/candles/torches
+Clothier
+Fletcher
+Silo
+
+
 
 Advanced Buildings
 
@@ -25,12 +42,23 @@ Wizard's Tower
 Great Hall
 - artisans
 - lords
+Beastiary
+Alchemists
 Forge
 - knights
+
 Siege Workshop
 - catapults
 Healing Academy
 - doctors
 Military Academy
 - commanders
+
 Keep
+
+Dungeon
+Walls
+Cathedral
+Temple
+Church
+Guild Hall
