@@ -9,6 +9,7 @@ public class BuildingButtonController : MonoBehaviour
 {
     public GameObject player;
     ResourceManager RM;
+    UIController UI;
 
     public Button buttonOne;
     public AudioSource playerAudio;
@@ -52,6 +53,7 @@ public class BuildingButtonController : MonoBehaviour
         player = GameObject.FindGameObjectWithTag("Player");
         inputScript = player.GetComponent<InputManager>();
         RM = player.GetComponent<ResourceManager>();
+        UI = player.GetComponent<UIController>();
         // PeasantProgressBar = GameObject.Find("VillagerProgressBar");
         // PeasantProgressSlider = PeasantProgressBar.GetComponent<Slider>();
 
@@ -86,6 +88,7 @@ public class BuildingButtonController : MonoBehaviour
         }
         else if (RM.gold < 400 || RM.food < 200 || RM.housing >= RM.maxHousing)
         {
+            UI.noResourcesText.SetActive(true);
             StartCoroutine(Wait());
         }
     }
@@ -122,6 +125,7 @@ public class BuildingButtonController : MonoBehaviour
     {
         yield return new WaitForSeconds(3);
         //my code here after 3 seconds
+        UI.noResourcesText.SetActive(false);
     }
 
 }

@@ -6,6 +6,7 @@ public class NodeManager : MonoBehaviour
 {
     public enum ResourceTypes { Skymetal, Iron, Steel, Stone, Wood, Food, Gold, Housing }
     public ResourceTypes resourceType;
+    InputManager IM;
 
     private Selection selectscript;
     public List<Collider> collidedObjects = new List<Collider>();
@@ -46,6 +47,8 @@ public class NodeManager : MonoBehaviour
         if(collidedObjects.Count != 0)
         {
             availableResource -= collidedObjects.Count * 5;
+            // IM.UpdateBuildingPanel();
+            // IM.UpdateUnitPanel();
         }
     }
 

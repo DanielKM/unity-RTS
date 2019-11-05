@@ -47,6 +47,8 @@ public class InputManager : MonoBehaviour
     public Text armourDisp;
     public Text itemDisp;
 
+    public int resourceHeld;
+
     public bool isSelected;
 
     // UI FOR BUILDINGS
@@ -125,7 +127,7 @@ public class InputManager : MonoBehaviour
     Camera cam;
     Camera minimap;
 
-    private Selection selectedInfo;
+    public Selection selectedInfo;
     public GameObject selectedObj;
         
     // Start is called before the first frame update
@@ -140,12 +142,11 @@ public class InputManager : MonoBehaviour
         VillagerProgressBar = GameObject.Find("VillagerProgressBar");
         VillagerProgressSlider = VillagerProgressBar.GetComponent<Slider>();
 
-        // UI functions
-        // MenuPanel = GameObject.Find("PauseMenu").GetComponent<CanvasGroup>();
-
         rotation = Camera.main.transform.rotation;
         cam = Camera.main;
         minimap = GameObject.Find("Minimap").GetComponent<Camera>();
+        StartCoroutine(UpdateUnitPanels());
+        StartCoroutine(UpdateBuildingPanels());
      }
 
     // Update is called once per frame
@@ -182,6 +183,7 @@ public class InputManager : MonoBehaviour
             UI.OpenGameMenuPanel();
         }
         
+
         if(selectedObj != null)
         {
             if(buildingScript != null) {
@@ -358,11 +360,11 @@ public class InputManager : MonoBehaviour
                 unitPos = new Vector3(unitPosX, unitPosY, unitPosZ);
                 Vector3 screenPos = cam.WorldToScreenPoint(unitPos);
 
-                selectedInfo = units[i].GetComponent<Selection>();
-
                 // Adds all units in selection box to selected
                 if (selectRect.Contains(screenPos, true))
                 {
+                    selectedInfo = units[i].GetComponent<Selection>();
+                    unitScript = units[i].GetComponent<UnitController>();
                     isSelected = true;
                     selectedInfo.selected = true;
                     selectedInfo.transform.GetChild(2).gameObject.SetActive(true);
@@ -371,21 +373,17 @@ public class InputManager : MonoBehaviour
                     peasantAudio.clip = peasantAudioClip;
                     peasantAudio.Play();
 
-                    UI.CloseBuildingPanel();
-                    UI.UpdateUnitPanel();
-                    UI.OpenUnitPanel();
-                    UI.OpenVillagerPanel();
+                    UI.CloseBuildingPanels();
+                    UI.OpenVillagerPanels();
                 }
             }
         }
     }
     
-    private void UpdateUnitPanel()
+    public void UpdateUnitPanel()
     {
         // UI Functions
-        unitScript = selectedInfo.GetComponent<UnitController>();
-        selectScript = selectedInfo.GetComponent<Selection>();
-
+        // unitScript = selectedObj.GetComponent<UnitController>();
         HB.maxValue = unitScript.maxHealth;
         HB.value = unitScript.health;
 
@@ -402,14 +400,14 @@ public class InputManager : MonoBehaviour
 
         weaponDisp.text = unitScript.weapon;
         armourDisp.text = unitScript.armour;
-        NodeManager.ResourceTypes resourceType = selectScript.heldResourceType;
-        float resourceHeld = selectScript.heldResource;
-        itemDisp.text = resourceType + ": " + resourceHeld.ToString();
+        NodeManager.ResourceTypes resourceType = selectedInfo.heldResourceType;
+        itemDisp.text = resourceType + ": " + selectedInfo.heldResource;
     }
 
-    private void UpdateBuildingPanel()
+    public void UpdateBuildingPanel()
     {
         // UI Functions
+        //ERROR - Object reference not set to an instance of an object - when you select a tree that is being harvested then switch to a villager
         buildingScript = selectedObj.GetComponent<BuildingController>();
         Image icon = buildingIcon.GetComponent<Image>();
         icon.sprite = buildingScript.icon;
@@ -460,6 +458,7 @@ public class InputManager : MonoBehaviour
             {
                 selectedObj = hit.collider.gameObject;
                 selectedInfo = selectedObj.GetComponent<Selection>();
+                unitScript = selectedObj.GetComponent<UnitController>();
                 if (selectedInfo.selected == true)
                 {
                     DeselectUnits();
@@ -468,15 +467,13 @@ public class InputManager : MonoBehaviour
                 {
                     selectedInfo.selected = true;
 
-                    isSelected = true;
                     // Selection indicators
                     selectedObj.transform.GetChild(2).gameObject.SetActive(true);
-
                     peasantAudio = selectedObj.GetComponent<AudioSource>();
                     peasantAudio.clip = peasantAudioClip;
                     peasantAudio.Play();
                     UI.CloseBuildingPanels();
-                    UpdateUnitPanel();
+                    isSelected = true;
                     UI.OpenVillagerPanels();
                 }
                 else
@@ -500,8 +497,6 @@ public class InputManager : MonoBehaviour
                     peasantAudio.Play();
                     UI.CloseBuildingPanels();
                     isSelected = true;
-
-                    UpdateUnitPanel();
                     UI.OpenVillagerPanels();
                 }
             }
@@ -553,7 +548,6 @@ public class InputManager : MonoBehaviour
                     UI.OpenBlacksmithActionPanel();
                 }
 
-                UpdateBuildingPanel();
                 UI.OpenBuildingPanel();
             }
             else if (hit.collider.tag != "Selectable" && (!Input.GetKey(KeyCode.LeftShift)))
@@ -588,9 +582,9 @@ public class InputManager : MonoBehaviour
 
     private void DeselectUnits()
     {
+        UI.panelOpen = 0;
         selectedObj = null;
-        UI.CloseUnitPanel();
-        UI.CloseVillagerPanel();
+        UI.CloseUnitPanels();
         for (int i = 0; i < selectedObjects.Length; i++)
         {
             // Grabs all objects in selected array and deselects them
@@ -612,6 +606,29 @@ public class InputManager : MonoBehaviour
         isSelected = false;
     }
 
+    IEnumerator UpdateUnitPanels()
+    {
+        while (true)
+        {
+            if(UI.panelOpen == 1) {
+                UpdateUnitPanel();
+                yield return new WaitForSeconds(0.1f);
+            }
+                yield return new WaitForSeconds(0.1f);
+        }
+    }
+
+    IEnumerator UpdateBuildingPanels()
+    {
+        while (true)
+        {
+            if(UI.panelOpen == 2) {
+                UpdateBuildingPanel();
+                yield return new WaitForSeconds(0.1f);
+            }
+                yield return new WaitForSeconds(0.1f);
+        }
+    }
 }
 
 [System.Serializable]

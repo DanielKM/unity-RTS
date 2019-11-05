@@ -8,6 +8,7 @@ public class UnitButtonController : MonoBehaviour
 {
     public GameObject player;
     ResourceManager RM;
+    UIController UI;
     public BuildingController building;
     public bool isPlaceable;
 
@@ -34,9 +35,6 @@ public class UnitButtonController : MonoBehaviour
     public Material placing;
     public Renderer[] childColors;
 
-    // UI Controller
-    UIController UI; 
-
     private MeshRenderer[] meshes;
     Color[] colors;
     Color color;
@@ -51,8 +49,8 @@ public class UnitButtonController : MonoBehaviour
 
         //Calls the TaskOnClick/TaskWithParameters/ButtonClicked method when you click the Button
 
-        basicBack.onClick.AddListener(UI.OpenVillagerPanel);
-        advancedBack.onClick.AddListener(UI.OpenVillagerPanel);
+        basicBack.onClick.AddListener(UI.OpenVillagerPanels);
+        advancedBack.onClick.AddListener(UI.OpenVillagerPanels);
 
         basicBuildings.onClick.AddListener(UI.OpenBasicBuildingsPanel);
         advancedBuildings.onClick.AddListener(UI.OpenAdvancedBuildingsPanel);
@@ -583,6 +581,7 @@ public class UnitButtonController : MonoBehaviour
     IEnumerator Wait()
     {
         yield return new WaitForSeconds(3);
+        UI.noResourcesText.SetActive(false);
         //my code here after 3 seconds
     }
 

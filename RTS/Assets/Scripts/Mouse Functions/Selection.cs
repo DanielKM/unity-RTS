@@ -79,10 +79,6 @@ public class Selection : MonoBehaviour
         {
             if (heldResource >= maxHeldResource && targetNode.tag == "Resource")
             {
-                if (targetNode.tag == "Resource")
-                {
-                    Debug.Log(targetNode.tag);
-                }
                 //stop gathering immediately
                 isGathering = false;
                 //Drop off point here for resource yards

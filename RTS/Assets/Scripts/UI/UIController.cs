@@ -9,7 +9,12 @@ public class UIController : MonoBehaviour
     ResourceManager RM;
 
     // GAME MENU
-    public GameObject GameMenuPanel;
+    public CanvasGroup GameMenuPanel;
+
+    public int panelOpen = 0;
+    // 0 - no panel
+    // 1 - unit panel
+    // 2 - building panel
 
     // UNIT PANELS
     public CanvasGroup UnitPanel;
@@ -28,7 +33,8 @@ public class UIController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        GameMenuPanel = GameObject.Find("PauseMenu");
+        GameMenuPanel = GameObject.Find("GameMenu").GetComponent<CanvasGroup>();
+
         UnitPanel = GameObject.Find("UnitPanel").GetComponent<CanvasGroup>();
         VillagerPanel = GameObject.Find("VillagerPanel").GetComponent<CanvasGroup>();
         BasicBuildingsPanel = GameObject.Find("BasicBuildingsPanel").GetComponent<CanvasGroup>();
@@ -43,6 +49,7 @@ public class UIController : MonoBehaviour
         player = GameObject.FindGameObjectWithTag("Player");
         RM = player.GetComponent<ResourceManager>();
 
+        CloseGameMenuPanel();
         CloseAllPanels();
     }
 
@@ -96,16 +103,16 @@ public class UIController : MonoBehaviour
 
     public void OpenGameMenuPanel()
     {
-        // UI Update
-        // UI Functions
-       GameMenuPanel.SetActive(true);
+        GameMenuPanel.alpha = 1;
+        GameMenuPanel.blocksRaycasts = true;
+        GameMenuPanel.interactable = true;
     }
 
     public void CloseGameMenuPanel()
     {
-        // UI Update
-        // UI Functions
-       GameMenuPanel.SetActive(false);
+        GameMenuPanel.alpha = 0;
+        GameMenuPanel.blocksRaycasts = false;
+        GameMenuPanel.interactable = false;
     }
 
     // UNIT PANEL
@@ -114,6 +121,8 @@ public class UIController : MonoBehaviour
         UnitPanel.alpha = 1;
         UnitPanel.blocksRaycasts = true;
         UnitPanel.interactable = true;
+
+        panelOpen = 1;
     }
 
     public void CloseUnitPanel()
@@ -144,6 +153,8 @@ public class UIController : MonoBehaviour
         BuildingPanel.alpha = 1;
         BuildingPanel.blocksRaycasts = true;
         BuildingPanel.interactable = true;
+
+        panelOpen = 2;
     }
 
     public void CloseBuildingPanel()
