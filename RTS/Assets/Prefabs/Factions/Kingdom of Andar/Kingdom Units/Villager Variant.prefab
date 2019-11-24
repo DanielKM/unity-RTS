@@ -189,6 +189,11 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 21300000, guid: 7517b78990e6c1b469a09c23c14a0be2,
         type: 3}
+    - target: {fileID: 5708971625227228989, guid: 05dcb862907ebd443902a00688e27034,
+        type: 3}
+      propertyPath: unitName
+      value: Ferra
+      objectReference: {fileID: 0}
     - target: {fileID: 5708971625227228988, guid: 05dcb862907ebd443902a00688e27034,
         type: 3}
       propertyPath: m_IsTrigger

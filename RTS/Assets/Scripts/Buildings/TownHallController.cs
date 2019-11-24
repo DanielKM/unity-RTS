@@ -6,6 +6,9 @@ using UnityEngine.UI;
 
 public class TownHallController : MonoBehaviour
 {
+    // Villager names
+    string[] villagers = new string[14]{ "Farah", "Dan", "Dave", "Steve", "Katie", "Sam", "Ryan", "Sid", "Bill", "Will", "Sarah", "Arj", "Izzy", "Aron"};
+
     private float nextSpawnTime;
     public int i = 0;
 
@@ -33,6 +36,8 @@ public class TownHallController : MonoBehaviour
     //UI Elements
     private CanvasGroup BuildingProgressPanel;
     private CanvasGroup BuildingActionPanel;
+
+
 
     // Start is called before the first frame update
     void Start()
@@ -95,8 +100,11 @@ public class TownHallController : MonoBehaviour
             yield return new WaitForSeconds(1);
         }
         isTraining = false;
-        Instantiate(villagerPrefab, spawnPosition, Quaternion.identity);
 
+        var iteration = Random.Range(0,villagers.Length);
+        villagerPrefab.GetComponent<UnitController>().unitName = villagers[iteration];
+
+        Instantiate(villagerPrefab, spawnPosition, Quaternion.identity);
         villagerAudio = selectedObj.GetComponent<AudioSource>();
         villagerAudio.clip = villagerReporting;
         villagerAudio.Play();
