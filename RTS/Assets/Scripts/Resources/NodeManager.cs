@@ -47,8 +47,6 @@ public class NodeManager : MonoBehaviour
         if(collidedObjects.Count != 0)
         {
             availableResource -= collidedObjects.Count * 5;
-            // IM.UpdateBuildingPanel();
-            // IM.UpdateUnitPanel();
         }
     }
 

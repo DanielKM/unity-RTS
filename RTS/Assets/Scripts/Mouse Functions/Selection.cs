@@ -250,7 +250,6 @@ public class Selection : MonoBehaviour
 
     public void DropSkyMetal()
     {
-        Debug.Log("Skymetal");
         //Handle drop off!
         if (RM.skymetal >= RM.maxSkymetal)
         {
@@ -332,7 +331,6 @@ public class Selection : MonoBehaviour
 
     public void DropIron()
     {
-        Debug.Log("Iron");
         //Handle drop off!
         if (RM.iron >= RM.maxIron)
         {
@@ -373,7 +371,6 @@ public class Selection : MonoBehaviour
 
     public void DropStone()
     {
-        Debug.Log("Stone");
         //Handle drop off!
         if (RM.stone >= RM.maxStone)
         {
@@ -414,7 +411,6 @@ public class Selection : MonoBehaviour
 
     public void DropGold()
     {
-        Debug.Log("Gold");
         //Handle drop off!
         if (RM.gold >= RM.maxGold)
         {
@@ -455,7 +451,6 @@ public class Selection : MonoBehaviour
 
     public void DropFood()
     {
-        Debug.Log("Food");
         //Handle drop off!
         if (RM.food >= RM.maxFood)
         {

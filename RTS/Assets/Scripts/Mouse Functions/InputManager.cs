@@ -548,6 +548,7 @@ public class InputManager : MonoBehaviour
                     UI.OpenBlacksmithActionPanel();
                 }
 
+                UpdateBuildingPanel();
                 UI.OpenBuildingPanel();
             }
             else if (hit.collider.tag != "Selectable" && (!Input.GetKey(KeyCode.LeftShift)))
