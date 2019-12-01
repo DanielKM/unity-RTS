@@ -292,13 +292,9 @@ public class InputManager : MonoBehaviour
             {
                 Cursor.SetCursor(combat, new Vector2(0, 0), CursorMode.Auto);
             }
-            else if (hit.collider.gameObject.tag == "Selectable")
+            else if (hit.collider.gameObject.tag == "Selectable" || hit.collider.gameObject.layer == 11 || hit.collider.gameObject.layer == 12)
             {
                 Cursor.SetCursor(pointer, new Vector2(0, 0), CursorMode.Auto);
-            }
-            else if (hit.collider.gameObject.tag == "Resource")
-            {
-                Cursor.SetCursor(target, new Vector2(0, 0), CursorMode.Auto);
             }
             else
             {

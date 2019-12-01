@@ -55,6 +55,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   resourceType: 4
+  collidedObjects: []
   harvestTime: 1
   availableResource: 1000
   gatherers: 0
@@ -104,11 +105,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 100000, guid: 4b0d0f8998c99834ab1b60a6886519e8, type: 3}
       propertyPath: m_Layer
-      value: 0
+      value: 12
       objectReference: {fileID: 0}
     - target: {fileID: 100002, guid: 4b0d0f8998c99834ab1b60a6886519e8, type: 3}
       propertyPath: m_IsActive
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 100002, guid: 4b0d0f8998c99834ab1b60a6886519e8, type: 3}
+      propertyPath: m_Layer
+      value: 12
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: 4b0d0f8998c99834ab1b60a6886519e8, type: 3}
       propertyPath: m_LocalPosition.x

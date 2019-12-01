@@ -56,6 +56,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   resourceType: 0
+  collidedObjects: []
   harvestTime: 5
   availableResource: 100
   gatherers: 0
@@ -83,6 +84,8 @@ MonoBehaviour:
   energy: 100
   maxEnergy: 100
   icon: {fileID: 21300000, guid: 3b3dfb2064fb52c448df64334d252424, type: 3}
+  foundation: {fileID: 0}
+  inCollider: 0
   placeable: 1
   isPlaced: 1
   location: {x: 0, y: 0, z: 0}
@@ -100,6 +103,10 @@ PrefabInstance:
     - target: {fileID: 100000, guid: 638ae3fd6b287f34f9e5ea7a03e37483, type: 3}
       propertyPath: m_TagString
       value: Resource
+      objectReference: {fileID: 0}
+    - target: {fileID: 100000, guid: 638ae3fd6b287f34f9e5ea7a03e37483, type: 3}
+      propertyPath: m_Layer
+      value: 12
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: 638ae3fd6b287f34f9e5ea7a03e37483, type: 3}
       propertyPath: m_LocalPosition.x

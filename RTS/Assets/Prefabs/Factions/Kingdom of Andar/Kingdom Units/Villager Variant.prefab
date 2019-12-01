@@ -106,7 +106,7 @@ PrefabInstance:
     - target: {fileID: 5708971625227228986, guid: 05dcb862907ebd443902a00688e27034,
         type: 3}
       propertyPath: m_Name
-      value: Villager Variant
+      value: Dan
       objectReference: {fileID: 0}
     - target: {fileID: 5708971625227228986, guid: 05dcb862907ebd443902a00688e27034,
         type: 3}
@@ -192,7 +192,7 @@ PrefabInstance:
     - target: {fileID: 5708971625227228989, guid: 05dcb862907ebd443902a00688e27034,
         type: 3}
       propertyPath: unitName
-      value: Ferra
+      value: Sid
       objectReference: {fileID: 0}
     - target: {fileID: 5708971625227228988, guid: 05dcb862907ebd443902a00688e27034,
         type: 3}
