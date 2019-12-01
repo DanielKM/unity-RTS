@@ -6,21 +6,61 @@ using UnityEngine.EventSystems;
 
 public class ResearchController : MonoBehaviour
 {
-    //Research variables
-    public bool basicBlacksmithing;
-    public bool basicToolSmithing;
-    public bool basicArmourSmithing;
-    public bool basicWeaponSmithing;
- 
-    public bool artisanBlacksmithing;
-    public bool artisanToolSmithing;
-    public bool artisanArmourSmithing;
-    public bool artisanWeaponSmithing;
+    public GameObject player;
+    UIController UI;
+    ResourceManager RM;
 
+    //Research variables
+    //Basic blacksmithing
+    public bool basicBlacksmithing;
+    public float basicBlacksmithingGold;
+    public float basicBlacksmithingIron;
+
+    public bool basicToolSmithing;
+    public float basicToolSmithingGold;
+    public float basicToolSmithingIron;
+
+    public bool basicArmourSmithing;
+    public float basicArmourSmithingGold;
+    public float basicArmourSmithingIron;
+
+    public bool basicWeaponSmithing;
+    public float basicWeaponSmithingGold;
+    public float basicWeaponSmithingIron;
+
+    //Artisan blacksmithing
+    public bool artisanBlacksmithing;
+    public float artisanBlacksmithingGold;
+    public float artisanBlacksmithingIron;
+
+    public bool artisanToolSmithing;
+    public float artisanToolSmithingGold;
+    public float artisanToolSmithingIron;
+
+    public bool artisanArmourSmithing;
+    public float artisanArmourSmithingGold;
+    public float artisanArmourSmithingIron;
+
+    public bool artisanWeaponSmithing;
+    public float artisanWeaponSmithingGold;
+    public float artisanWeaponSmithingIron;
+
+    //Extra blacksmithing
     public bool horshoes;
+    public float horshoesGold;
+    public float horshoesIron;
+
     public bool minecarts;
+    public float minecartsGold;
+    public float minecartsIron;
+
     public bool caltrops;
+    public float caltropsGold;
+    public float caltropsIron;
+
     public bool reinforcedBuildings;
+    public float reinforcedBuildingsGold;
+    public float reinforcedBuildingsIron;
 
     //Research Buttons
     public Button basicBlacksmithingButton;
@@ -42,6 +82,10 @@ public class ResearchController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        player = GameObject.FindGameObjectWithTag("Player");
+        RM = player.GetComponent<ResourceManager>();
+        UI = player.GetComponent<UIController>();
+
         basicBlacksmithingButton.onClick.AddListener(ResearchBlacksmithing);
         basicToolSmithingButton.onClick.AddListener(ResearchBasicToolSmithing);
         basicArmourSmithingButton.onClick.AddListener(ResearchBasicArmourSmithing);
@@ -70,8 +114,16 @@ public class ResearchController : MonoBehaviour
     // BASIC BLACKSMITHING
     void ResearchBlacksmithing () 
     { 
-        basicBlacksmithing = true;
-        Debug.Log("basicBlacksmithing complete");
+        if(RM.gold < basicBlacksmithingGold || RM.iron < basicBlacksmithingIron) {
+            UI.noResourcesText.SetActive(true);
+            StartCoroutine(CloseResourcesText());
+        } else {
+            RM.gold -= basicBlacksmithingGold;
+            RM.iron -= basicBlacksmithingIron;
+            StartCoroutine(BasicResearch());
+            basicBlacksmithing = true;
+            Debug.Log("basicBlacksmithing complete");
+        }
     }
 
     void ResearchBasicToolSmithing () 
@@ -142,5 +194,28 @@ public class ResearchController : MonoBehaviour
         Debug.Log("reinforcedBuildings complete");
     }
 
+    IEnumerator BasicResearch()
+    {
+        yield return new WaitForSeconds(20);
+        //my code here after 3 seconds
+    }
 
+    IEnumerator ArtisanResearch()
+    {
+        yield return new WaitForSeconds(30);
+        //my code here after 3 seconds
+    }
+    
+    IEnumerator ExtraResearch()
+    {
+        yield return new WaitForSeconds(20);
+        //my code here after 3 seconds
+    }
+    
+    IEnumerator CloseResourcesText()
+    {
+        yield return new WaitForSeconds(3);
+        //my code here after 3 seconds
+        UI.noResourcesText.SetActive(false);
+    }
 }
