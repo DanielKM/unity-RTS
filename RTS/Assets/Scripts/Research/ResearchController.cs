@@ -118,6 +118,7 @@ public class ResearchController : MonoBehaviour
             UI.noResourcesText.SetActive(true);
             StartCoroutine(CloseResourcesText());
         } else {
+            basicBlacksmithingButton.interactable = false;
             RM.gold -= basicBlacksmithingGold;
             RM.iron -= basicBlacksmithingIron;
             StartCoroutine(BasicResearch());
@@ -128,70 +129,169 @@ public class ResearchController : MonoBehaviour
 
     void ResearchBasicToolSmithing () 
     { 
-        basicToolSmithing = true;
-        Debug.Log("basicToolSmithing complete");
+        if(RM.gold < basicToolSmithingGold || RM.iron < basicToolSmithingIron) {
+            UI.noResourcesText.SetActive(true);
+            StartCoroutine(CloseResourcesText());
+        } else {
+            basicToolSmithingButton.interactable = false;
+            RM.gold -= basicToolSmithingGold;
+            RM.iron -= basicToolSmithingIron;
+            StartCoroutine(BasicResearch());
+            basicToolSmithing = true;
+            Debug.Log("basicToolSmithing complete");
+        }
     }
 
     void ResearchBasicArmourSmithing () 
     { 
-        basicArmourSmithing = true;
-        Debug.Log("basicArmourSmithing complete");
+        if(RM.gold < basicArmourSmithingGold || RM.iron < basicArmourSmithingIron) {
+            UI.noResourcesText.SetActive(true);
+            StartCoroutine(CloseResourcesText());
+        } else {
+            basicArmourSmithingButton.interactable = false;
+            RM.gold -= basicArmourSmithingGold;
+            RM.iron -= basicArmourSmithingIron;
+            StartCoroutine(BasicResearch());
+            basicArmourSmithing = true;
+            Debug.Log("basicarmourSmithing complete");
+        }
     }
 
     void ResearchBasicWeaponSmithing () 
     { 
-        basicWeaponSmithing = true;
-        Debug.Log("basicWeaponSmithing complete");
+        if(RM.gold < basicWeaponSmithingGold || RM.iron < basicWeaponSmithingIron) {
+            UI.noResourcesText.SetActive(true);
+            StartCoroutine(CloseResourcesText());
+        } else {
+            basicWeaponSmithingButton.interactable = false;
+            RM.gold -= basicWeaponSmithingGold;
+            RM.iron -= basicWeaponSmithingIron;
+            StartCoroutine(BasicResearch());
+            basicWeaponSmithing = true;
+            Debug.Log("basic weapon smithing complete");
+        }
     }
 
     // ARTISAN BLACKSMITHING
     void ResearchArtisanBlacksmithing () 
     { 
-        artisanBlacksmithing = true;
-        Debug.Log("artisanBlacksmithing complete");
+        if(RM.gold < artisanBlacksmithingGold || RM.iron < artisanBlacksmithingIron) {
+            UI.noResourcesText.SetActive(true);
+            StartCoroutine(CloseResourcesText());
+        } else {
+            artisanBlacksmithingButton.interactable = false;
+            RM.gold -= artisanBlacksmithingGold;
+            RM.iron -= artisanBlacksmithingIron;
+            StartCoroutine(BasicResearch());
+            artisanBlacksmithing = true;
+            Debug.Log("artisan blacksmithing complete");
+        }
     }
 
     void ResearchArtisanToolSmithing () 
     { 
-        artisanToolSmithing = true;
-        Debug.Log("artisanToolSmithing complete");
+        if(RM.gold < artisanToolSmithingGold || RM.iron < artisanToolSmithingIron) {
+            UI.noResourcesText.SetActive(true);
+            StartCoroutine(CloseResourcesText());
+        } else {
+            artisanToolSmithingButton.interactable = false;
+            RM.gold -= artisanToolSmithingGold;
+            RM.iron -= artisanToolSmithingIron;
+            StartCoroutine(BasicResearch());
+            artisanWeaponSmithing = true;
+            Debug.Log("artisanToolSmithingGold complete");
+        }
     }
 
     void ResearchArtisanArmourSmithing () 
     { 
-        artisanArmourSmithing = true;
-        Debug.Log("artisanArmourSmithing complete");
+        if(RM.gold < artisanArmourSmithingGold || RM.iron < artisanArmourSmithingIron) {
+            UI.noResourcesText.SetActive(true);
+            StartCoroutine(CloseResourcesText());
+        } else {
+            artisanArmourSmithingButton.interactable = false;
+            RM.gold -= artisanArmourSmithingGold;
+            RM.iron -= artisanArmourSmithingIron;
+            StartCoroutine(BasicResearch());
+            artisanArmourSmithing = true;
+            Debug.Log("artisanArmourSmithingIron complete");
+        }
     }
 
     void ResearchArtisanWeaponSmithingButton () 
     { 
-        artisanWeaponSmithing = true;
-        Debug.Log("artisanWeaponSmithingButton complete");
+        if(RM.gold < artisanWeaponSmithingGold || RM.iron < artisanWeaponSmithingIron) {
+            UI.noResourcesText.SetActive(true);
+            StartCoroutine(CloseResourcesText());
+        } else {
+            artisanWeaponSmithingButton.interactable = false;
+            RM.gold -= artisanWeaponSmithingGold;
+            RM.iron -= artisanWeaponSmithingIron;
+            StartCoroutine(BasicResearch());
+            artisanWeaponSmithing = true;
+            Debug.Log("artisan weaponsmithing complete");
+        }
     }
 
     // OTHER BLACKSMITHING
     void ResearchHorshoes () 
     { 
-        horshoes = true;
-        Debug.Log("horshoes complete");
+        if(RM.gold < horshoesGold || RM.iron < horshoesIron) {
+            UI.noResourcesText.SetActive(true);
+            StartCoroutine(CloseResourcesText());
+        } else {
+            horshoesButton.interactable = false;
+            RM.gold -= horshoesGold;
+            RM.iron -= horshoesIron;
+            StartCoroutine(BasicResearch());
+            horshoes = true;
+            Debug.Log("horseshoes complete");
+        }
     }
 
     void ResearchMinecarts () 
     { 
-        minecarts = true;
-        Debug.Log("minecarts complete");
+        if(RM.gold < minecartsGold || RM.iron < minecartsGold) {
+            UI.noResourcesText.SetActive(true);
+            StartCoroutine(CloseResourcesText());
+        } else {
+            minecartsButton.interactable = false;
+            RM.gold -= minecartsGold;
+            RM.iron -= minecartsIron;
+            StartCoroutine(BasicResearch());
+            minecarts = true;
+            Debug.Log("minecarts complete");
+        }
     }
 
     void ResearchCaltrops () 
     { 
-        caltrops = true;
-        Debug.Log("caltrops complete");
+        if(RM.gold < caltropsGold || RM.iron < caltropsIron) {
+            UI.noResourcesText.SetActive(true);
+            StartCoroutine(CloseResourcesText());
+        } else {
+            caltropsButton.interactable = false;
+            RM.gold -= caltropsGold;
+            RM.iron -= caltropsIron;
+            StartCoroutine(BasicResearch());
+            caltrops = true;
+            Debug.Log("artisan blacksmithing complete");
+        }
     }
 
     void ResearchReinforcedBuildings () 
     { 
-        reinforcedBuildings = true;
-        Debug.Log("reinforcedBuildings complete");
+        if(RM.gold < reinforcedBuildingsGold || RM.iron < reinforcedBuildingsIron) {
+            UI.noResourcesText.SetActive(true);
+            StartCoroutine(CloseResourcesText());
+        } else {
+            reinforcedBuildingsButton.interactable = false;
+            RM.gold -= reinforcedBuildingsGold;
+            RM.iron -= reinforcedBuildingsIron;
+            StartCoroutine(BasicResearch());
+            reinforcedBuildings = true;
+            Debug.Log("reinforced buildings complete");
+        }
     }
 
     IEnumerator BasicResearch()
