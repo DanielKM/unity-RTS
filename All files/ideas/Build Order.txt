@@ -53,6 +53,7 @@ Healing Academy
 - doctors
 Military Academy
 - commanders
+Artisan's Guild
 
 Keep
 
