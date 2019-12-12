@@ -1,5 +1,19 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!136 &8443315163210188851
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6338029655906934226}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  m_Radius: 1
+  m_Height: 3
+  m_Direction: 1
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &1724313325718070250
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -18,6 +32,53 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
+--- !u!114 &2638921969042974935
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6338029655906934226}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 943fdc1ce6143464c986eb33dea6e1f9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  heldResourceType: 0
+  task: 2
+  peasantMoveClip: {fileID: 0}
+  player: {fileID: 0}
+  targetNode: {fileID: 0}
+  selected: 0
+  isGathering: 0
+  isBuilding: 0
+  heldResource: 0
+  maxHeldResource: 0
+  drops: []
+--- !u!114 &5451102580674571618
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6338029655906934226}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 07b3cc11225f13e4d85c1b5ecd816095, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  unitType: Goblin
+  unitRank: Hobgoblin
+  unitName: Garan
+  unitKills: 0
+  weapon: Hands
+  armour: Tattered Leather
+  items: None
+  health: 100
+  maxHealth: 100
+  energy: 0
+  maxEnergy: 0
+  unitIcon: {fileID: 0}
 --- !u!1001 &4618663180801719867
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -28,22 +89,22 @@ PrefabInstance:
     - target: {fileID: 1724313325718070249, guid: b6f0bac8b6a86194d80c2415eb1e3aad,
         type: 3}
       propertyPath: m_Name
-      value: Proto Gobs
+      value: Goblin Distance Aggro
       objectReference: {fileID: 0}
     - target: {fileID: 1724313325717848009, guid: b6f0bac8b6a86194d80c2415eb1e3aad,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: -21.43
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1724313325717848009, guid: b6f0bac8b6a86194d80c2415eb1e3aad,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: -4.616
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1724313325717848009, guid: b6f0bac8b6a86194d80c2415eb1e3aad,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: -0.19000006
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1724313325717848009, guid: b6f0bac8b6a86194d80c2415eb1e3aad,
         type: 3}
@@ -85,10 +146,15 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 3455339074913302324, guid: b6f0bac8b6a86194d80c2415eb1e3aad,
+    - target: {fileID: 1724313325717848011, guid: b6f0bac8b6a86194d80c2415eb1e3aad,
         type: 3}
-      propertyPath: m_Center.y
-      value: 0.1
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1724313325717848011, guid: b6f0bac8b6a86194d80c2415eb1e3aad,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3455339074913302326, guid: b6f0bac8b6a86194d80c2415eb1e3aad,
         type: 3}
@@ -100,15 +166,20 @@ PrefabInstance:
       propertyPath: m_Height
       value: 1.4
       objectReference: {fileID: 0}
-    - target: {fileID: 1724313325717848011, guid: b6f0bac8b6a86194d80c2415eb1e3aad,
+    - target: {fileID: 3455339074913302324, guid: b6f0bac8b6a86194d80c2415eb1e3aad,
         type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 8.55
+      propertyPath: m_Center.y
+      value: 0.1
       objectReference: {fileID: 0}
-    - target: {fileID: 1724313325717848011, guid: b6f0bac8b6a86194d80c2415eb1e3aad,
+    - target: {fileID: 3455339074913302324, guid: b6f0bac8b6a86194d80c2415eb1e3aad,
         type: 3}
-      propertyPath: m_LocalPosition.y
-      value: -1.48
+      propertyPath: m_Radius
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3455339074913302324, guid: b6f0bac8b6a86194d80c2415eb1e3aad,
+        type: 3}
+      propertyPath: m_Height
+      value: 3
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b6f0bac8b6a86194d80c2415eb1e3aad, type: 3}

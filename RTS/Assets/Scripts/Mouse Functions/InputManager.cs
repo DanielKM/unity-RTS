@@ -170,7 +170,7 @@ public class InputManager : MonoBehaviour
 
                 if (Physics.Raycast(raycast, out hit1, 350))
                 {
-                    if (hit1.transform.tag == "Selectable" || hit1.transform.tag == "Foundation" || hit1.transform.tag == "Ground" || hit1.transform.tag == "Yard" || hit1.transform.tag == "Barracks" || hit1.transform.tag == "House" || hit1.transform.tag == "Resource" || hit1.transform.tag == "Fort" || hit1.transform.tag == "Blacksmith" || hit1.transform.tag == "Lumber Yard" || hit1.transform.tag == "Stables")
+                    if (hit1.transform.tag == "Enemy Unit" || hit1.transform.tag == "Selectable" || hit1.transform.tag == "Foundation" || hit1.transform.tag == "Ground" || hit1.transform.tag == "Yard" || hit1.transform.tag == "Barracks" || hit1.transform.tag == "House" || hit1.transform.tag == "Resource" || hit1.transform.tag == "Fort" || hit1.transform.tag == "Blacksmith" || hit1.transform.tag == "Lumber Yard" || hit1.transform.tag == "Stables")
                     {
                         LeftClick();
                     }
@@ -449,6 +449,33 @@ public class InputManager : MonoBehaviour
                    // Debug.Log("Standing down, Sir!");
                 }
             }
+            if (hit.collider.tag == "Enemy Unit" && (!Input.GetKey(KeyCode.LeftShift)))
+            {
+                Debug.Log("Enemy Unit");
+                selectedObj = hit.collider.gameObject;
+                selectedInfo = selectedObj.GetComponent<Selection>();
+                unitScript = selectedObj.GetComponent<UnitController>();
+                if (selectedInfo.selected == true)
+                {
+                    DeselectUnits();
+                }
+                else 
+                {
+                    selectedInfo.selected = true;
+
+                    //  OPEN ENEMY PANELS!!
+
+                    
+                    // Selection indicators
+                    // selectedObj.transform.GetChild(2).gameObject.SetActive(true);
+                    // peasantAudio = selectedObj.GetComponent<AudioSource>();
+                    // peasantAudio.clip = peasantAudioClip;
+                    // peasantAudio.Play();
+                    UI.CloseBuildingPanels();
+                    isSelected = true;
+                    UI.OpenVillagerPanels();
+                }
+            }
             else if (hit.collider.tag == "Selectable")
             {
                 selectedObj = hit.collider.gameObject;
@@ -495,7 +522,7 @@ public class InputManager : MonoBehaviour
                     UI.OpenVillagerPanels();
                 }
             }
-            else if (hit.collider.tag == "Yard" || hit.collider.tag == "Foundation" || hit.collider.tag == "Barracks" || hit.collider.tag == "House" || hit.collider.tag == "Resource" || hit.collider.tag == "Fort" || hit.collider.tag == "Blacksmith" || hit.transform.tag == "Lumber Yard" || hit.transform.tag == "Stables" )
+            else if (hit.collider.tag == "Enemy Unit" || hit.collider.tag == "Yard" || hit.collider.tag == "Foundation" || hit.collider.tag == "Barracks" || hit.collider.tag == "House" || hit.collider.tag == "Resource" || hit.collider.tag == "Fort" || hit.collider.tag == "Blacksmith" || hit.transform.tag == "Lumber Yard" || hit.transform.tag == "Stables" )
             {
                 UI.CloseAllPanels();
                 if (selectedObjects.Length >= 0)
@@ -542,7 +569,7 @@ public class InputManager : MonoBehaviour
                 else if (selectedObj.tag == "Blacksmith") {
                     UI.OpenBlacksmithActionPanel();
                 }
-
+ 
                 UpdateBuildingPanel();
                 UI.OpenBuildingPanel();
             }
