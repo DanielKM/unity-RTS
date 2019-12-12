@@ -298,9 +298,8 @@ public class InputManager : MonoBehaviour
             }
             else
             {
-                Cursor.SetCursor(combat, new Vector2(0, 0), CursorMode.Auto);
+                Cursor.SetCursor(pointer, new Vector2(0, 0), CursorMode.Auto);
             }
-
         }
         else
         {
