@@ -1,9 +1,0 @@
-
-Trigger to remove transform.position when returning things from harvest
-
-
-
-recoloring placing buildings occurs every frame - move to buildingcontroller ontriggerexit
-
-
-handle triggers on building!!!
