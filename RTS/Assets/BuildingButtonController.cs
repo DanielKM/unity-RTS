@@ -19,8 +19,6 @@ public class BuildingButtonController : MonoBehaviour
 
     [SerializeField]
     private float nextSpawnTime;
-    // private GameObject PeasantProgressBar;
-    // private Slider PeasantProgressSlider;
 
     public bool isTraining;
 
@@ -54,8 +52,6 @@ public class BuildingButtonController : MonoBehaviour
         inputScript = player.GetComponent<InputManager>();
         RM = player.GetComponent<ResourceManager>();
         UI = player.GetComponent<UIController>();
-        // PeasantProgressBar = GameObject.Find("VillagerProgressBar");
-        // PeasantProgressSlider = PeasantProgressBar.GetComponent<Slider>();
 
         buttonOne.onClick.AddListener(HireVillager);
     }

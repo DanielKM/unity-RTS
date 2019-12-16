@@ -28,27 +28,13 @@ public class UIController : MonoBehaviour
     public CanvasGroup BuildingProgressPanel;
     public CanvasGroup BlacksmithActionPanel;
     public CanvasGroup BlacksmithProgressPanel;
+    public CanvasGroup LumberYardActionPanel;
 
     public GameObject noResourcesText;
     // Start is called before the first frame update
     void Start()
     {
-        GameMenuPanel = GameObject.Find("GameMenu").GetComponent<CanvasGroup>();
-
-        UnitPanel = GameObject.Find("UnitPanel").GetComponent<CanvasGroup>();
-        VillagerPanel = GameObject.Find("VillagerPanel").GetComponent<CanvasGroup>();
-        BasicBuildingsPanel = GameObject.Find("BasicBuildingsPanel").GetComponent<CanvasGroup>();
-        AdvancedBuildingsPanel = GameObject.Find("AdvancedBuildingsPanel").GetComponent<CanvasGroup>();
-                
-        BuildingPanel = GameObject.Find("BuildingPanel").GetComponent<CanvasGroup>();
-        BlacksmithActionPanel = GameObject.Find("BlacksmithActionPanel").GetComponent<CanvasGroup>();
-        BlacksmithProgressPanel = GameObject.Find("BlacksmithProgressPanel").GetComponent<CanvasGroup>();
-        BuildingProgressPanel = GameObject.Find("BuildingProgressPanel").GetComponent<CanvasGroup>();
-        BuildingActionPanel = GameObject.Find("BuildingActions").GetComponent<CanvasGroup>();
-
-        player = GameObject.FindGameObjectWithTag("Player");
-        RM = player.GetComponent<ResourceManager>();
-
+        FindAllPanels();
         CloseGameMenuPanel();
         CloseAllPanels();
     }
@@ -59,47 +45,25 @@ public class UIController : MonoBehaviour
 
     }
     
-    public void CloseAllPanels() {
-        CloseUnitPanel();
-        CloseVillagerPanel();
-        CloseBasicBuildingsPanel();
-        CloseAdvancedBuildingsPanel();
+    public void FindAllPanels() {
+        GameMenuPanel = GameObject.Find("GameMenu").GetComponent<CanvasGroup>();
 
-        CloseBuildingPanel();
-        CloseBuildingActionPanel();
-        CloseBuildingProgressPanel();
-        CloseBlacksmithActionPanel();
-        CloseBlacksmithProgressPanel();
+        UnitPanel = GameObject.Find("UnitPanel").GetComponent<CanvasGroup>();
+        VillagerPanel = GameObject.Find("VillagerPanel").GetComponent<CanvasGroup>();
+        BasicBuildingsPanel = GameObject.Find("BasicBuildingsPanel").GetComponent<CanvasGroup>();
+        AdvancedBuildingsPanel = GameObject.Find("AdvancedBuildingsPanel").GetComponent<CanvasGroup>();
+                
+        BuildingPanel = GameObject.Find("BuildingPanel").GetComponent<CanvasGroup>();
+        BlacksmithActionPanel = GameObject.Find("BlacksmithActionPanel").GetComponent<CanvasGroup>();
+        BlacksmithProgressPanel = GameObject.Find("BlacksmithProgressPanel").GetComponent<CanvasGroup>();
+        LumberYardActionPanel = GameObject.Find("LumberYardActionPanel").GetComponent<CanvasGroup>();
+
+        BuildingProgressPanel = GameObject.Find("BuildingProgressPanel").GetComponent<CanvasGroup>();
+        BuildingActionPanel = GameObject.Find("BuildingActions").GetComponent<CanvasGroup>();
+
+        player = GameObject.FindGameObjectWithTag("Player");
+        RM = player.GetComponent<ResourceManager>();
     }
-
-    public void CloseBuildingPanels() {
-        CloseBuildingPanel();
-        CloseBuildingActionPanel();
-        CloseBuildingProgressPanel();
-        CloseBlacksmithActionPanel();
-        CloseBlacksmithProgressPanel();
-    }
-
-    public void CloseUnitPanels() {
-        CloseUnitPanel();
-        CloseVillagerPanel();
-        CloseBasicBuildingsPanel();
-        CloseAdvancedBuildingsPanel();
-    }
-
-    public void OpenVillagerPanels() {
-        CloseAllPanels();
-
-        OpenUnitPanel();
-        OpenVillagerPanel();
-    }
-
-    public void OpenBuildingPanels() {
-        CloseAllPanels();
-
-        OpenBuildingPanel();
-    }
-
 
     public void OpenGameMenuPanel()
     {
@@ -115,41 +79,96 @@ public class UIController : MonoBehaviour
         GameMenuPanel.interactable = false;
     }
 
-    // UNIT PANEL
-    public void OpenUnitPanel()
-    {
+    public void CloseAllPanels() {
+        // UNITS
+        UnitPanel.alpha = 0;
+        UnitPanel.blocksRaycasts = false;
+        UnitPanel.interactable = false;
+        VillagerPanel.alpha = 0;
+        VillagerPanel.blocksRaycasts = false;
+        VillagerPanel.interactable = false;
+
+        // VILLAGER PANELS
+        BasicBuildingsPanel.alpha = 0;
+        BasicBuildingsPanel.blocksRaycasts = false;
+        BasicBuildingsPanel.interactable = false;
+        AdvancedBuildingsPanel.alpha = 0;
+        AdvancedBuildingsPanel.blocksRaycasts = false;
+        AdvancedBuildingsPanel.interactable = false;
+        // BUILDINGS
+        BuildingPanel.alpha = 0;
+        BuildingPanel.blocksRaycasts = false;
+        BuildingPanel.interactable = false;
+        BuildingActionPanel.alpha = 0;
+        BuildingActionPanel.blocksRaycasts = false;
+        BuildingActionPanel.interactable = false;
+        BuildingProgressPanel.alpha = 0;
+        BuildingProgressPanel.blocksRaycasts = false;
+        BuildingProgressPanel.interactable = false;
+
+        // BLACKSMITH
+        BlacksmithActionPanel.alpha = 0;
+        BlacksmithActionPanel.blocksRaycasts = false;
+        BlacksmithActionPanel.interactable = false;
+        BlacksmithProgressPanel.alpha = 0;
+        BlacksmithProgressPanel.blocksRaycasts = false;
+        BlacksmithProgressPanel.interactable = false;
+
+        // LUMBER YARD
+        LumberYardActionPanel.alpha = 0;
+        LumberYardActionPanel.blocksRaycasts = false;
+        LumberYardActionPanel.interactable = false;
+
+        panelOpen = 0;        
+    }
+
+    // DIFFERENT STATES
+    // On villager selection
+    public void VillagerSelect() {
+        CloseAllPanels();
+
         UnitPanel.alpha = 1;
         UnitPanel.blocksRaycasts = true;
         UnitPanel.interactable = true;
 
-        panelOpen = 1;
-    }
-
-    public void CloseUnitPanel()
-    {
-        UnitPanel.alpha = 0;
-        UnitPanel.blocksRaycasts = false;
-        UnitPanel.interactable = false;
-    }
-    
-    // VILLAGER PANELS
-    public void OpenVillagerPanel()
-    {
+        panelOpen = 1;        
         VillagerPanel.alpha = 1;
         VillagerPanel.blocksRaycasts = true;
         VillagerPanel.interactable = true;
     }
 
-    public void CloseVillagerPanel()
-    {
-        VillagerPanel.alpha = 0;
-        VillagerPanel.blocksRaycasts = false;
-        VillagerPanel.interactable = false;
+    // On villager clicking basic buildings
+    public void VillagerBasicBuildings() {
+        CloseAllPanels();
+
+        UnitPanel.alpha = 1;
+        UnitPanel.blocksRaycasts = true;
+        UnitPanel.interactable = true;
+
+        panelOpen = 1;        
+        BasicBuildingsPanel.alpha = 1;
+        BasicBuildingsPanel.blocksRaycasts = true;
+        BasicBuildingsPanel.interactable = true;
     }
 
-    // BASIC BUILDING PANELS
-    public void OpenBuildingPanel()
-    {
+    // On villager clicking advanced buildings
+    public void VillagerAdvancedBuildings() {
+        CloseAllPanels();
+
+        UnitPanel.alpha = 1;
+        UnitPanel.blocksRaycasts = true;
+        UnitPanel.interactable = true;
+
+        panelOpen = 1;        
+        AdvancedBuildingsPanel.alpha = 1;
+        AdvancedBuildingsPanel.blocksRaycasts = true;
+        AdvancedBuildingsPanel.interactable = true;
+    }
+    
+    // On house selection
+    public void HouseSelect() {
+        CloseAllPanels();
+
         BuildingPanel.alpha = 1;
         BuildingPanel.blocksRaycasts = true;
         BuildingPanel.interactable = true;
@@ -157,173 +176,118 @@ public class UIController : MonoBehaviour
         panelOpen = 2;
     }
 
-    public void CloseBuildingPanel()
-    {
-        BuildingPanel.alpha = 0;
-        BuildingPanel.blocksRaycasts = false;
-        BuildingPanel.interactable = false;
-    }
-    
-    public void OpenBlacksmithActionPanel() {
-        BlacksmithActionPanel.alpha = 1;
-        BlacksmithActionPanel.blocksRaycasts = true;
-        BlacksmithActionPanel.interactable = true;
-    }
+    // On town hall selection
+    public void TownHallSelect() {
+        CloseAllPanels();
 
-    public void CloseBlacksmithActionPanel() {
-        BlacksmithActionPanel.alpha = 0;
-        BlacksmithActionPanel.blocksRaycasts = false;
-        BlacksmithActionPanel.interactable = false;
-    }
+        BuildingPanel.alpha = 1;
+        BuildingPanel.blocksRaycasts = true;
+        BuildingPanel.interactable = true;
 
-    public void OpenBlacksmithProgressPanel() {
-        BlacksmithProgressPanel.alpha = 1;
-        BlacksmithProgressPanel.blocksRaycasts = true;
-        BlacksmithProgressPanel.interactable = true;
-    }
-
-    public void CloseBlacksmithProgressPanel() {
-        BlacksmithProgressPanel.alpha = 0;
-        BlacksmithProgressPanel.blocksRaycasts = false;
-        BlacksmithProgressPanel.interactable = false;
-    }
-
-    public void OpenBuildingActionPanel()
-    {
         BuildingActionPanel.alpha = 1;
         BuildingActionPanel.blocksRaycasts = true;
         BuildingActionPanel.interactable = true;
+        panelOpen = 2;
     }
 
-    public void CloseBuildingActionPanel()
-    {
-        BuildingActionPanel.alpha = 0;
-        BuildingActionPanel.blocksRaycasts = false;
-        BuildingActionPanel.interactable = false;
-    }
+    // On town hall selection if it is training
+    public void TownHallTraining() {
+        CloseAllPanels();
 
-    public void OpenBuildingProgressPanel()
-    {
+        BuildingPanel.alpha = 1;
+        BuildingPanel.blocksRaycasts = true;
+        BuildingPanel.interactable = true;
+
         BuildingProgressPanel.alpha = 1;
         BuildingProgressPanel.blocksRaycasts = true;
         BuildingProgressPanel.interactable = true;
+        panelOpen = 2;
     }
 
-    public void CloseBuildingProgressPanel()
-    {
-        BuildingProgressPanel.alpha = 0;
-        BuildingProgressPanel.blocksRaycasts = false;
-        BuildingProgressPanel.interactable = false;
+    // On town hall selection
+    public void BlacksmithSelect() {
+        CloseAllPanels();
+
+        BuildingPanel.alpha = 1;
+        BuildingPanel.blocksRaycasts = true;
+        BuildingPanel.interactable = true;
+
+        BlacksmithActionPanel.alpha = 1;
+        BlacksmithActionPanel.blocksRaycasts = true;
+        BlacksmithActionPanel.interactable = true;
+
+        panelOpen = 2;
     }
 
-    // BASIC BUILDINGS PANEL
-    public void OpenBasicBuildingsPanel()
-    {
-        BasicBuildingsPanel.alpha = 1;
-        BasicBuildingsPanel.blocksRaycasts = true;
-        BasicBuildingsPanel.interactable = true;
+    // On town hall selection
+    public void LumberYardSelect() {
+        CloseAllPanels();
+
+        BuildingPanel.alpha = 1;
+        BuildingPanel.blocksRaycasts = true;
+        BuildingPanel.interactable = true;
+
+        LumberYardActionPanel.alpha = 1;
+        LumberYardActionPanel.blocksRaycasts = true;
+        LumberYardActionPanel.interactable = true;
+        panelOpen = 2;
+    }
+
+    // On town hall selection
+    public void BarracksSelect() {
+        CloseAllPanels();
+
+        BuildingPanel.alpha = 1;
+        BuildingPanel.blocksRaycasts = true;
+        BuildingPanel.interactable = true;
+
+        panelOpen = 2;
+    }
+
+    // On town hall selection
+    public void StablesSelect() {
+        CloseAllPanels();
+
+        BuildingPanel.alpha = 1;
+        BuildingPanel.blocksRaycasts = true;
+        BuildingPanel.interactable = true;
+
+        panelOpen = 2;
+    }
+
+    // On resource node selection (including farms)
+    public void ResourceSelect() {
+        CloseAllPanels();
+
+        BuildingPanel.alpha = 1;
+        BuildingPanel.blocksRaycasts = true;
+        BuildingPanel.interactable = true;
+
+        panelOpen = 2;
+    }
+
+   // On resource node selection (including farms)
+    public void FoundationSelect() {
+        CloseAllPanels();
+
+        BuildingPanel.alpha = 1;
+        BuildingPanel.blocksRaycasts = true;
+        BuildingPanel.interactable = true;
+
+        panelOpen = 2;
     }
     
-    public void CloseBasicBuildingsPanel()
-    {
-        BasicBuildingsPanel.alpha = 0;
-        BasicBuildingsPanel.blocksRaycasts = false;
-        BasicBuildingsPanel.interactable = false;
-    }
+   // On resource node selection (including farms)
+    public void FoundationBuilding() {
+        CloseAllPanels();
 
-    // ADVANCED BUILDINGS PANELS
-    public void OpenAdvancedBuildingsPanel()
-    {
-        AdvancedBuildingsPanel.alpha = 1;
-        AdvancedBuildingsPanel.blocksRaycasts = true;
-        AdvancedBuildingsPanel.interactable = true;
-    }
+        BuildingPanel.alpha = 1;
+        BuildingPanel.blocksRaycasts = true;
+        BuildingPanel.interactable = true;
 
-    public void CloseAdvancedBuildingsPanel()
-    {
-        AdvancedBuildingsPanel.alpha = 0;
-        AdvancedBuildingsPanel.blocksRaycasts = false;
-        AdvancedBuildingsPanel.interactable = false;
-    }
-
-    // UPDATING FUNCTIONS
-    public void SwapProgressIcon()
-    {
-        // progressIcon = GameObject.Find("ProgressIcon").GetComponent<Image>();
-
-        // UI Functions
-        // buildingScript = selectedObj.GetComponent<BuildingController>();
-        // if (buildingScript.unitType == "Town Hall")
-        // {
-        //     progressIcon.sprite = townHallScript.villagerPrefab.GetComponent<UnitController>().unitIcon;
-
-        // } else if (buildingScript.tag == "Foundation")
-        // {
-        //     foundationScript = selectedObj.GetComponent<FoundationController>();
-        //     progressIcon.sprite = foundationScript.buildingPrefab.GetComponent<BuildingController>().icon;
-        // }
-        // else
-        // {
-        //     progressIcon.sprite = buildingScript.icon;
-        // }
-    }
-
-    public void UpdateUnitPanel()
-    {
-        // UI Functions
-        // unitScript = selectedInfo.GetComponent<UnitController>();
-        // selectScript = selectedInfo.GetComponent<Selection>();
-
-        // HB.maxValue = unitScript.maxHealth;
-        // HB.value = unitScript.health;
-
-        // EB.maxValue = unitScript.maxEnergy;
-        // EB.value = unitScript.energy;
-
-        // healthDisp.text = "HEALTH: " + unitScript.health;
-        // energyDisp.text = "ENERGY: " + unitScript.energy;
-
-        // nameDisp.text = unitScript.unitName;
-        // unitName.text = unitScript.unitType;
-        // rankDisp.text = unitScript.unitRank;
-        // killDisp.text = "Kills: " + unitScript.unitKills;
-
-        // weaponDisp.text = unitScript.weapon;
-        // armourDisp.text = unitScript.armour;
-        // NodeManager.ResourceTypes resourceType = selectScript.heldResourceType;
-        // float resourceHeld = selectScript.heldResource;
-        // itemDisp.text = resourceType + ": " + resourceHeld.ToString();
-    }
-
-    public void UpdateBuildingPanel()
-    {
-        // UI Functions
-        // buildingScript = selectedObj.GetComponent<BuildingController>();
-        // Image icon = buildingIcon.GetComponent<Image>();
-        // icon.sprite = buildingScript.icon;
-
-        // buildingHB.maxValue = buildingScript.maxHealth;
-        // buildingHB.value = buildingScript.health;
-
-        // buildingEB.maxValue = buildingScript.maxEnergy;
-        // buildingEB.value = buildingScript.energy;
-
-        // buildingHealthDisp.text = "HEALTH: " + buildingScript.health;
-        // buildingEnergyDisp.text = "ENERGY: " + buildingScript.energy;
-
-        // buildingNameDisp.text = buildingScript.unitName;
-        // buildingName.text = buildingScript.unitType;
-        // buildingRankDisp.text = buildingScript.unitRank;
-        // buildingKillDisp.text = "Kills: " + buildingScript.unitKills;
-
-        // buildingWeaponDisp.text = buildingScript.weapon;
-        // buildingArmourDisp.text = buildingScript.armour;
-
-        // buildingItemDisp.text = "None";
-        // if (selectedObj.transform.tag == "Resource")
-        // {
-        //     nodeScript = selectedObj.GetComponent<NodeManager>();
-        //     buildingItemDisp.text = nodeScript.resourceType + ": " + nodeScript.availableResource;
-        // }
+        BuildingProgressPanel.alpha = 1;
+        BuildingProgressPanel.blocksRaycasts = true;
+        BuildingProgressPanel.interactable = true;
+        panelOpen = 2;
     }
 }

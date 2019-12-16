@@ -7,6 +7,7 @@ using UnityEngine.UI;
 public class TownHallController : MonoBehaviour
 {
     // Villager names
+    UIController UI;
     string[] villagers = new string[14]{ "Farah", "Dan", "Dave", "Steve", "Katie", "Sam", "Ryan", "Sid", "Bill", "Will", "Sarah", "Arj", "Izzy", "Aron"};
 
     private float nextSpawnTime;
@@ -32,6 +33,7 @@ public class TownHallController : MonoBehaviour
     //Progress bar
     private GameObject VillagerProgressBar;
     private Slider VillagerProgressSlider;
+    public Image progressIcon;
 
     //UI Elements
     private CanvasGroup BuildingProgressPanel;
@@ -72,22 +74,7 @@ public class TownHallController : MonoBehaviour
     {
         return Time.time >= nextSpawnTime;
     }
-
-
-    void HideBuildingProgressPanel()
-    {
-        BuildingProgressPanel.alpha = 0;
-        BuildingProgressPanel.blocksRaycasts = false;
-        BuildingProgressPanel.interactable = false;
-    }
-
-    void ShowBuildingActionPanel()
-    {
-        BuildingActionPanel.alpha = 1;
-        BuildingActionPanel.blocksRaycasts = true;
-        BuildingActionPanel.interactable = true;
-    }
-
+    
     IEnumerator VillagerSpawn()
     {
         isTraining = true;
@@ -95,6 +82,7 @@ public class TownHallController : MonoBehaviour
         buildingScript = selectedObj.GetComponent<BuildingController>();
         spawnPosition = new Vector3(buildingScript.location.x, buildingScript.location.y, buildingScript.location.z - 5f);
         nextSpawnTime = Time.time + spawnDelay;
+
         for (i = 1; i < 11; i++)
         {
             yield return new WaitForSeconds(1);
@@ -102,14 +90,14 @@ public class TownHallController : MonoBehaviour
         isTraining = false;
 
         var iteration = Random.Range(0,villagers.Length);
+        progressIcon = GameObject.Find("ProgressIcon").GetComponent<Image>();
+        progressIcon.sprite = villagerPrefab.GetComponent<UnitController>().unitIcon;
         villagerPrefab.GetComponent<UnitController>().unitName = villagers[iteration];
 
         Instantiate(villagerPrefab, spawnPosition, Quaternion.identity);
         villagerAudio = selectedObj.GetComponent<AudioSource>();
         villagerAudio.clip = villagerReporting;
         villagerAudio.Play();
-
-        HideBuildingProgressPanel();
-        //ShowBuildingActionPanel();
+        UI.TownHallSelect();
     }
 }

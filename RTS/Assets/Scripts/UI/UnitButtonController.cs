@@ -49,11 +49,11 @@ public class UnitButtonController : MonoBehaviour
 
         //Calls the TaskOnClick/TaskWithParameters/ButtonClicked method when you click the Button
 
-        basicBack.onClick.AddListener(UI.OpenVillagerPanels);
-        advancedBack.onClick.AddListener(UI.OpenVillagerPanels);
+        basicBack.onClick.AddListener(UI.VillagerSelect);
+        advancedBack.onClick.AddListener(UI.VillagerSelect);
 
-        basicBuildings.onClick.AddListener(UI.OpenBasicBuildingsPanel);
-        advancedBuildings.onClick.AddListener(UI.OpenAdvancedBuildingsPanel);
+        basicBuildings.onClick.AddListener(UI.VillagerBasicBuildings);
+        advancedBuildings.onClick.AddListener(UI.VillagerAdvancedBuildings);
 
         buttonTwo.onClick.AddListener(BuildHouse);
         buttonThree.onClick.AddListener(BuildFarm);

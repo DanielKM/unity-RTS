@@ -25,10 +25,6 @@ public class InputManager : MonoBehaviour
     FoundationController foundationScript;
 
     // UI FOR UNITS
-    private CanvasGroup UnitPanel;
-    private CanvasGroup UnitActionPanel;
-    private CanvasGroup VillagerPanel;
-
     private AudioSource peasantAudio;
     public AudioClip peasantAudioClip;
 
@@ -368,8 +364,7 @@ public class InputManager : MonoBehaviour
                     peasantAudio.clip = peasantAudioClip;
                     peasantAudio.Play();
 
-                    UI.CloseBuildingPanels();
-                    UI.OpenVillagerPanels();
+                    UI.VillagerSelect();
                 }
             }
         }
@@ -471,9 +466,8 @@ public class InputManager : MonoBehaviour
                     // peasantAudio = selectedObj.GetComponent<AudioSource>();
                     // peasantAudio.clip = peasantAudioClip;
                     // peasantAudio.Play();
-                    UI.CloseBuildingPanels();
                     isSelected = true;
-                    UI.OpenVillagerPanels();
+                    UI.VillagerSelect();
                 }
             }
             else if (hit.collider.tag == "Selectable")
@@ -494,9 +488,8 @@ public class InputManager : MonoBehaviour
                     peasantAudio = selectedObj.GetComponent<AudioSource>();
                     peasantAudio.clip = peasantAudioClip;
                     peasantAudio.Play();
-                    UI.CloseBuildingPanels();
                     isSelected = true;
-                    UI.OpenVillagerPanels();
+                    UI.VillagerSelect();
                 }
                 else
                 {
@@ -517,9 +510,8 @@ public class InputManager : MonoBehaviour
                     peasantAudio = selectedObj.GetComponent<AudioSource>();
                     peasantAudio.clip = peasantAudioClip;
                     peasantAudio.Play();
-                    UI.CloseBuildingPanels();
                     isSelected = true;
-                    UI.OpenVillagerPanels();
+                    UI.VillagerSelect();
                 }
             }
             else if (hit.collider.tag == "Enemy Unit" || hit.collider.tag == "Yard" || hit.collider.tag == "Foundation" || hit.collider.tag == "Barracks" || hit.collider.tag == "House" || hit.collider.tag == "Resource" || hit.collider.tag == "Fort" || hit.collider.tag == "Blacksmith" || hit.transform.tag == "Lumber Yard" || hit.transform.tag == "Stables" )
@@ -528,8 +520,7 @@ public class InputManager : MonoBehaviour
                 if (selectedObjects.Length >= 0)
                 {
                     DeselectUnits();
-                    UI.CloseUnitPanels();
-                   // Debug.Log("Standing down, Sir!");
+                    Debug.Log("Standing down, Sir!");
                 }
 
                 selectedObj = hit.collider.gameObject;
@@ -542,14 +533,18 @@ public class InputManager : MonoBehaviour
                     if (isTraining)
                     {
                         SwapProgressIcon();
-                        UI.CloseBuildingActionPanel();
-                        UI.OpenBuildingProgressPanel();
+                        UI.TownHallTraining();
                     }
                     else
                     {
-                        UI.CloseBuildingProgressPanel();
-                        UI.OpenBuildingActionPanel();
+                        UI.TownHallSelect();
                     }
+                } else if (selectedObj.tag == "House")
+                {
+                    UI.HouseSelect();
+                } else if (selectedObj.tag == "Resource")
+                {
+                    UI.ResourceSelect();
                 }
                 else if (selectedObj.tag == "Foundation")
                 {
@@ -558,26 +553,32 @@ public class InputManager : MonoBehaviour
                     if (isBuilding)
                     {
                         SwapProgressIcon();
-                        UI.CloseBuildingActionPanel();
-                        UI.OpenBuildingProgressPanel();
+                        UI.FoundationBuilding();
                     }
                     else
                     {
-                        UI.CloseBuildingProgressPanel();
+                        UI.FoundationSelect();
                     }
                 } 
                 else if (selectedObj.tag == "Blacksmith") {
-                    UI.OpenBlacksmithActionPanel();
+                    UI.BlacksmithSelect();
+                }
+                else if (selectedObj.tag == "Lumber Yard") {
+                    UI.LumberYardSelect();
+                }
+                else if (selectedObj.tag == "Barracks") {
+                    UI.BarracksSelect();
+                }
+                else if (selectedObj.tag == "Stables") {
+                    UI.StablesSelect();
                 }
  
                 UpdateBuildingPanel();
-                UI.OpenBuildingPanel();
             }
             else if (hit.collider.tag != "Selectable" && (!Input.GetKey(KeyCode.LeftShift)))
             {
                 DeselectUnits();
-                UI.CloseBuildingPanel();
-                UI.CloseVillagerPanel();
+                UI.CloseAllPanels();
             }
         }
     }
@@ -605,9 +606,8 @@ public class InputManager : MonoBehaviour
 
     private void DeselectUnits()
     {
-        UI.panelOpen = 0;
         selectedObj = null;
-        UI.CloseUnitPanels();
+        UI.CloseAllPanels();
         for (int i = 0; i < selectedObjects.Length; i++)
         {
             // Grabs all objects in selected array and deselects them
