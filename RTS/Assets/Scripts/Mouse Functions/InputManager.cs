@@ -141,8 +141,8 @@ public class InputManager : MonoBehaviour
         rotation = Camera.main.transform.rotation;
         cam = Camera.main;
         minimap = GameObject.Find("Minimap").GetComponent<Camera>();
-        StartCoroutine(UpdateUnitPanels());
-        StartCoroutine(UpdateBuildingPanels());
+        // RESEARCH COROUTINES - only one working
+        StartCoroutine(UpdatePanels());
      }
 
     // Update is called once per frame
@@ -398,32 +398,35 @@ public class InputManager : MonoBehaviour
     {
         // UI Functions
         //ERROR - Object reference not set to an instance of an object - when you select a tree that is being harvested then switch to a villager
-        buildingScript = selectedObj.GetComponent<BuildingController>();
-        Image icon = buildingIcon.GetComponent<Image>();
-        icon.sprite = buildingScript.icon;
+   
+        if(selectedObj != null ) {
+            buildingScript = selectedObj.GetComponent<BuildingController>();
+            Image icon = buildingIcon.GetComponent<Image>();
+            icon.sprite = buildingScript.icon;
 
-        buildingHB.maxValue = buildingScript.maxHealth;
-        buildingHB.value = buildingScript.health;
+            buildingHB.maxValue = buildingScript.maxHealth;
+            buildingHB.value = buildingScript.health;
 
-        buildingEB.maxValue = buildingScript.maxEnergy;
-        buildingEB.value = buildingScript.energy;
+            buildingEB.maxValue = buildingScript.maxEnergy;
+            buildingEB.value = buildingScript.energy;
 
-        buildingHealthDisp.text = "HEALTH: " + buildingScript.health;
-        buildingEnergyDisp.text = "ENERGY: " + buildingScript.energy;
+            buildingHealthDisp.text = "HEALTH: " + buildingScript.health;
+            buildingEnergyDisp.text = "ENERGY: " + buildingScript.energy;
 
-        buildingNameDisp.text = buildingScript.unitName;
-        buildingName.text = buildingScript.unitType;
-        buildingRankDisp.text = buildingScript.unitRank;
-        buildingKillDisp.text = "Kills: " + buildingScript.unitKills;
+            buildingNameDisp.text = buildingScript.unitName;
+            buildingName.text = buildingScript.unitType;
+            buildingRankDisp.text = buildingScript.unitRank;
+            buildingKillDisp.text = "Kills: " + buildingScript.unitKills;
 
-        buildingWeaponDisp.text = buildingScript.weapon;
-        buildingArmourDisp.text = buildingScript.armour;
+            buildingWeaponDisp.text = buildingScript.weapon;
+            buildingArmourDisp.text = buildingScript.armour;
 
-        buildingItemDisp.text = "None";
-        if (selectedObj.transform.tag == "Resource")
-        {
-            nodeScript = selectedObj.GetComponent<NodeManager>();
-            buildingItemDisp.text = nodeScript.resourceType + ": " + nodeScript.availableResource;
+            buildingItemDisp.text = "None";
+            if (selectedObj.transform.tag == "Resource")
+            {
+                nodeScript = selectedObj.GetComponent<NodeManager>();
+                buildingItemDisp.text = nodeScript.resourceType + ": " + nodeScript.availableResource;
+            }
         }
     }
 
@@ -530,9 +533,9 @@ public class InputManager : MonoBehaviour
                 {
                     townHallScript = selectedObj.GetComponent<TownHallController>();
                     isTraining = townHallScript.isTraining;
+                    SwapProgressIcon();
                     if (isTraining)
                     {
-                        SwapProgressIcon();
                         UI.TownHallTraining();
                     }
                     else
@@ -573,7 +576,7 @@ public class InputManager : MonoBehaviour
                     UI.StablesSelect();
                 }
  
-                UpdateBuildingPanel();
+                // UpdateBuildingPanel();
             }
             else if (hit.collider.tag != "Selectable" && (!Input.GetKey(KeyCode.LeftShift)))
             {
@@ -629,27 +632,19 @@ public class InputManager : MonoBehaviour
         isSelected = false;
     }
 
-    IEnumerator UpdateUnitPanels()
+    IEnumerator UpdatePanels()
     {
         while (true)
         {
             if(UI.panelOpen == 1) {
                 UpdateUnitPanel();
                 yield return new WaitForSeconds(0.1f);
-            }
-                yield return new WaitForSeconds(0.1f);
-        }
-    }
-
-    IEnumerator UpdateBuildingPanels()
-    {
-        while (true)
-        {
-            if(UI.panelOpen == 2) {
+            } else if (UI.panelOpen == 2){
                 UpdateBuildingPanel();
                 yield return new WaitForSeconds(0.1f);
-            }
+            } else {
                 yield return new WaitForSeconds(0.1f);
+            }
         }
     }
 }
