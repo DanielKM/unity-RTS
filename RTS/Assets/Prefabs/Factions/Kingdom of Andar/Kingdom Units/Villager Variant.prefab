@@ -106,7 +106,7 @@ PrefabInstance:
     - target: {fileID: 5708971625227228986, guid: 05dcb862907ebd443902a00688e27034,
         type: 3}
       propertyPath: m_Name
-      value: Dan
+      value: Villager Variant
       objectReference: {fileID: 0}
     - target: {fileID: 5708971625227228986, guid: 05dcb862907ebd443902a00688e27034,
         type: 3}
@@ -183,6 +183,16 @@ PrefabInstance:
       propertyPath: peasantMoveClip
       value: 
       objectReference: {fileID: 8300000, guid: 13287b3ae51578f44b338a9e619a7929, type: 3}
+    - target: {fileID: 5708971625227228990, guid: 05dcb862907ebd443902a00688e27034,
+        type: 3}
+      propertyPath: m_Acceleration
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 5708971625227228990, guid: 05dcb862907ebd443902a00688e27034,
+        type: 3}
+      propertyPath: m_StoppingDistance
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 5708971625227228989, guid: 05dcb862907ebd443902a00688e27034,
         type: 3}
       propertyPath: unitIcon

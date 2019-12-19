@@ -86,9 +86,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   heldResourceType: 4
   task: 0
+  peasantMoveClip: {fileID: 0}
   player: {fileID: 0}
+  targetNode: {fileID: 0}
   selected: 0
   isGathering: 0
+  isBuilding: 0
   heldResource: 0
   maxHeldResource: 5
   drops: []
@@ -115,6 +118,7 @@ MonoBehaviour:
   maxHealth: 100
   energy: 100
   maxEnergy: 100
+  unitIcon: {fileID: 0}
 --- !u!195 &5708971625227228990
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -125,8 +129,8 @@ NavMeshAgent:
   m_Enabled: 1
   m_AgentTypeID: 0
   m_Radius: 0.6
-  m_Speed: 5
-  m_Acceleration: 30
+  m_Speed: 4
+  m_Acceleration: 5
   avoidancePriority: 50
   m_AngularSpeed: 800
   m_StoppingDistance: 1
