@@ -658,7 +658,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 57994888639720294}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -9.23, y: -0.2, z: -76.66901}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 57994888640149300}
@@ -727,18 +727,18 @@ AudioSource:
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 8300000, guid: b2a15ec8752ac4f4bb8dcd694ed6089c, type: 3}
-  m_PlayOnAwake: 1
-  m_Volume: 0.767
-  m_Pitch: 1
+  m_PlayOnAwake: 0
+  m_Volume: 1
+  m_Pitch: 0.86
   Loop: 0
   Mute: 0
   Spatialize: 0
   SpatializePostEffects: 0
-  Priority: 128
+  Priority: 256
   DopplerLevel: 1
   MinDistance: 1
   MaxDistance: 500
-  Pan2D: 0
+  Pan2D: 0.02
   rolloffMode: 0
   BypassEffects: 0
   BypassListenerEffects: 0
@@ -821,12 +821,12 @@ NavMeshAgent:
   m_GameObject: {fileID: 57994888639720294}
   m_Enabled: 1
   m_AgentTypeID: 0
-  m_Radius: 0.6
-  m_Speed: 4
-  m_Acceleration: 2
+  m_Radius: 0.5
+  m_Speed: 5
+  m_Acceleration: 5
   avoidancePriority: 50
-  m_AngularSpeed: 400
-  m_StoppingDistance: 2
+  m_AngularSpeed: 600
+  m_StoppingDistance: 1
   m_AutoTraverseOffMeshLink: 1
   m_AutoBraking: 1
   m_AutoRepath: 1
@@ -848,7 +848,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   unitType: Footman
   unitRank: Recruit
-  unitName: Davos Seaworth
+  unitName: Kolin
   unitKills: 0
   weapon: Sword
   armour: Plate
@@ -857,7 +857,7 @@ MonoBehaviour:
   maxHealth: 200
   energy: 100
   maxEnergy: 100
-  unitIcon: {fileID: 21300000, guid: 7517b78990e6c1b469a09c23c14a0be2, type: 3}
+  unitIcon: {fileID: 21300000, guid: 306d55d36efa3c24b90770585090620e, type: 3}
 --- !u!114 &57994888615245522
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1157,12 +1157,12 @@ PrefabInstance:
     - target: {fileID: 8011227951827080642, guid: d487392e16e00ac489c06da2ceb635d8,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0
+      value: 0.801
       objectReference: {fileID: 0}
     - target: {fileID: 8011227951827080642, guid: d487392e16e00ac489c06da2ceb635d8,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 8011227951827080642, guid: d487392e16e00ac489c06da2ceb635d8,
         type: 3}

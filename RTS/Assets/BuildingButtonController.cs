@@ -12,8 +12,11 @@ public class BuildingButtonController : MonoBehaviour
     UIController UI;
 
     public Button buttonOne;
+    public Button barracksButtonOne;
+
     public AudioSource playerAudio;
-    public AudioClip trainPeasantAudio;
+    public AudioClip trainVillagerAudio;
+    public AudioClip trainFootmanAudio;
 
     public GameObject villager;
 
@@ -31,8 +34,11 @@ public class BuildingButtonController : MonoBehaviour
     private CanvasGroup BuildingActionPanel;
 
     TownHallController townHallScript;
+    BarracksController barracksScript;
+
     InputManager inputScript;
     BuildingController buildingScript;
+
     public GameObject selectedObj;
     private Vector3 spawnPosition;
 
@@ -54,6 +60,7 @@ public class BuildingButtonController : MonoBehaviour
         UI = player.GetComponent<UIController>();
 
         buttonOne.onClick.AddListener(HireVillager);
+        barracksButtonOne.onClick.AddListener(HireFootman);
     }
 
     // Update is called once per frame
@@ -66,8 +73,7 @@ public class BuildingButtonController : MonoBehaviour
     {
         if (RM.gold >= 400 && RM.food >= 200 && RM.housing < RM.maxHousing)
         {
-            HideBuildingActionPanel();
-            ShowBuildingProgressPanel();
+            UI.TownHallTraining();
             RM.gold -= 400;
             RM.food -= 200;
             RM.housing += 1;
@@ -78,7 +84,7 @@ public class BuildingButtonController : MonoBehaviour
            
           //  spawnPosition = new Vector3(buildingScript.location.x, buildingScript.location.y, buildingScript.location.z +50f);
 
-            playerAudio.clip = trainPeasantAudio;
+            playerAudio.clip = trainVillagerAudio;
             playerAudio.Play();
             townHallScript.HireVillager();
         }
@@ -89,6 +95,31 @@ public class BuildingButtonController : MonoBehaviour
         }
     }
 
+    void HireFootman()
+    {
+        if (RM.gold >= 400 && RM.iron >= 200 && RM.food >= 200 && RM.housing < RM.maxHousing)
+        {
+            UI.BarracksTraining();
+            RM.gold -= 400;
+            RM.iron -= 200;
+            RM.food -= 200;
+            RM.housing += 1;
+            selectedObj = inputScript.selectedObj;
+            barracksScript = selectedObj.GetComponent<BarracksController>();
+            buildingScript = selectedObj.GetComponent<BuildingController>();
+           
+          //  spawnPosition = new Vector3(buildingScript.location.x, buildingScript.location.y, buildingScript.location.z +50f);
+
+            playerAudio.clip = trainFootmanAudio;
+            playerAudio.Play();
+            barracksScript.HireFootman();
+        }
+        else if (RM.gold < 400 || RM.iron < 200 || RM.food < 200 || RM.housing >= RM.maxHousing)
+        {
+            UI.noResourcesText.SetActive(true);
+            StartCoroutine(Wait());
+        }
+    }
     void HideBuildingActionPanel()
     {
         BuildingActionPanel.alpha = 0;

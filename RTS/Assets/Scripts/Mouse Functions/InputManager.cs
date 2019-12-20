@@ -22,6 +22,7 @@ public class InputManager : MonoBehaviour
     NodeManager nodeScript;
     BuildingButtonController buildingButtonScript;
     TownHallController townHallScript;
+    BarracksController barracksScript;
     FoundationController foundationScript;
 
     // UI FOR UNITS
@@ -73,6 +74,7 @@ public class InputManager : MonoBehaviour
 
     public Image progressIcon;
     public GameObject unitIcon;
+    
     public GameObject buildingIcon;
 
     // TownHall variables
@@ -134,7 +136,7 @@ public class InputManager : MonoBehaviour
        // progressIcon = GameObject.Find("ProgressIcon").GetComponent<Image>();
        // foundationScript = selectedObj.GetComponent<FoundationController>();
         // progressIcon.sprite = foundationScript.buildingPrefab.GetComponent<BuildingController>().icon;
-
+        unitIcon = GameObject.Find("UnitIcon");
         VillagerProgressBar = GameObject.Find("VillagerProgressBar");
         VillagerProgressSlider = VillagerProgressBar.GetComponent<Slider>();
 
@@ -188,6 +190,13 @@ public class InputManager : MonoBehaviour
                     if (townHallScript != null && townHallScript.isTraining)
                     {
                         VillagerProgressSlider.value = townHallScript.i * 10;
+                    }
+                }
+                else if (buildingScript.unitType == "Barracks")
+                {
+                    if (barracksScript != null && barracksScript.isTraining)
+                    {
+                        VillagerProgressSlider.value = barracksScript.i * 10;
                     }
                 }
                 else if (selectedObj.tag == "Foundation")
@@ -374,6 +383,9 @@ public class InputManager : MonoBehaviour
     {
         // UI Functions
         // unitScript = selectedObj.GetComponent<UnitController>();
+        Image icon = unitIcon.GetComponent<Image>();
+        icon.sprite = unitScript.unitIcon;
+
         HB.maxValue = unitScript.maxHealth;
         HB.value = unitScript.health;
 
@@ -570,7 +582,17 @@ public class InputManager : MonoBehaviour
                     UI.LumberYardSelect();
                 }
                 else if (selectedObj.tag == "Barracks") {
-                    UI.BarracksSelect();
+                    barracksScript = selectedObj.GetComponent<BarracksController>();
+                    isTraining = barracksScript.isTraining;
+                    SwapProgressIcon();
+                    if (isTraining)
+                    {
+                        UI.BarracksTraining();
+                    }
+                    else
+                    {
+                        UI.BarracksSelect();
+                    }
                 }
                 else if (selectedObj.tag == "Stables") {
                     UI.StablesSelect();
@@ -595,6 +617,10 @@ public class InputManager : MonoBehaviour
         if (buildingScript.unitType == "Town Hall")
         {
             progressIcon.sprite = townHallScript.villagerPrefab.GetComponent<UnitController>().unitIcon;
+
+        } else if (buildingScript.unitType == "Barracks")
+        {
+            progressIcon.sprite = barracksScript.footmanPrefab.GetComponent<UnitController>().unitIcon;
 
         } else if (buildingScript.tag == "Foundation")
         {

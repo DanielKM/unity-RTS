@@ -29,6 +29,7 @@ public class UIController : MonoBehaviour
     public CanvasGroup BlacksmithActionPanel;
     public CanvasGroup BlacksmithProgressPanel;
     public CanvasGroup LumberYardActionPanel;
+    public CanvasGroup BarracksActionPanel;
 
     public GameObject noResourcesText;
     // Start is called before the first frame update
@@ -57,6 +58,7 @@ public class UIController : MonoBehaviour
         BlacksmithActionPanel = GameObject.Find("BlacksmithActionPanel").GetComponent<CanvasGroup>();
         BlacksmithProgressPanel = GameObject.Find("BlacksmithProgressPanel").GetComponent<CanvasGroup>();
         LumberYardActionPanel = GameObject.Find("LumberYardActionPanel").GetComponent<CanvasGroup>();
+        BarracksActionPanel = GameObject.Find("BarracksActionPanel").GetComponent<CanvasGroup>();
 
         BuildingProgressPanel = GameObject.Find("BuildingProgressPanel").GetComponent<CanvasGroup>();
         BuildingActionPanel = GameObject.Find("BuildingActions").GetComponent<CanvasGroup>();
@@ -118,6 +120,11 @@ public class UIController : MonoBehaviour
         LumberYardActionPanel.alpha = 0;
         LumberYardActionPanel.blocksRaycasts = false;
         LumberYardActionPanel.interactable = false;
+
+        // BARRACKS
+        BarracksActionPanel.alpha = 0;
+        BarracksActionPanel.blocksRaycasts = false;
+        BarracksActionPanel.interactable = false;
 
         panelOpen = 0;        
     }
@@ -241,6 +248,24 @@ public class UIController : MonoBehaviour
         BuildingPanel.blocksRaycasts = true;
         BuildingPanel.interactable = true;
 
+        BarracksActionPanel.alpha = 1;
+        BarracksActionPanel.blocksRaycasts = true;
+        BarracksActionPanel.interactable = true;
+
+        panelOpen = 2;
+    }
+
+    public void BarracksTraining() {
+        CloseAllPanels();
+
+        BuildingPanel.alpha = 1;
+        BuildingPanel.blocksRaycasts = true;
+        BuildingPanel.interactable = true;
+
+        BuildingProgressPanel.alpha = 1;
+        BuildingProgressPanel.blocksRaycasts = true;
+        BuildingProgressPanel.interactable = true;
+        
         panelOpen = 2;
     }
 

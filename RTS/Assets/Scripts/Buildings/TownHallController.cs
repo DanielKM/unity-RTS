@@ -19,7 +19,6 @@ public class TownHallController : MonoBehaviour
 
     [SerializeField]
     public float spawnDelay;
-
     public bool selected = false;
 
     GameObject player;
@@ -45,6 +44,8 @@ public class TownHallController : MonoBehaviour
     void Start()
     {
         player = GameObject.FindGameObjectWithTag("Player");
+        UI = player.GetComponent<UIController>();
+
         inputScript = player.GetComponent<InputManager>();
         BuildingProgressPanel = GameObject.Find("BuildingProgressPanel").GetComponent<CanvasGroup>();
         BuildingActionPanel = GameObject.Find("BuildingActions").GetComponent<CanvasGroup>();
@@ -66,13 +67,6 @@ public class TownHallController : MonoBehaviour
         buildingScript = selectedObj.GetComponent<BuildingController>();
 
         StartCoroutine(VillagerSpawn());
-     //   nextSpawnTime = Time.time + spawnDelay;
-       // Instantiate(villagerPrefab, spawnPosition, Quaternion.identity);
-    }
-
-    private bool ShouldSpawn()
-    {
-        return Time.time >= nextSpawnTime;
     }
     
     IEnumerator VillagerSpawn()
