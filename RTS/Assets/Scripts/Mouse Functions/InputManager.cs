@@ -664,12 +664,12 @@ public class InputManager : MonoBehaviour
         {
             if(UI.panelOpen == 1) {
                 UpdateUnitPanel();
-                yield return new WaitForSeconds(0.1f);
+                yield return new WaitForSeconds(0.01f);
             } else if (UI.panelOpen == 2){
                 UpdateBuildingPanel();
-                yield return new WaitForSeconds(0.1f);
+                yield return new WaitForSeconds(0.01f);
             } else {
-                yield return new WaitForSeconds(0.1f);
+                yield return new WaitForSeconds(0.01f);
             }
         }
     }
