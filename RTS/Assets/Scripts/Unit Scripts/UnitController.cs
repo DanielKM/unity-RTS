@@ -9,27 +9,36 @@ public class UnitController : MonoBehaviour
     // UI Variables
     private bool isSelected;
 
-    // Unit variables
+    // Naming
     public string unitType;
-
     public string unitRank;
-
     public string unitName;
-
     public string unitKills;
 
+    // Equipment
     public string weapon;
     public string armour;
     public string items;
 
+    // Attributes
     public int health;
     public int maxHealth;
-
     public int energy;
     public int maxEnergy;
 
+    // Cost
+    public int gold;
+    public int wood;
+    public int food;
+    public int stone;
+    public int iron;
+    public int steel;
+    public int skymetal;
+
+
     private Animator anim;
     private NavMeshAgent agent;
+    private Selection selection;
 
     public Sprite unitIcon;
 
@@ -39,6 +48,7 @@ public class UnitController : MonoBehaviour
     {
         anim = GetComponent<Animator>();
         agent = GetComponent<NavMeshAgent>();
+        selection = GetComponent<Selection>();
     }
 
     // Update is called once per frame
@@ -46,16 +56,19 @@ public class UnitController : MonoBehaviour
     {
         //For attacking
         anim.SetFloat("Speed", agent.velocity.magnitude);
-        if (Input.GetKeyDown(KeyCode.Mouse1))
-        {
-            anim.SetLayerWeight(1, 1f);
-            anim.SetTrigger("IsAttacking");
-//print("Attacking!");
-        }
-        else
-        {
-            anim.SetLayerWeight(0, 0f);
-        }
+        // if(selection.isGathering || selection.isBuilding) {
+        //     Debug.Log("harvest/build");
+        // }
+//         if (Input.GetKeyDown(KeyCode.Mouse1))
+//         {
+//             anim.SetLayerWeight(1, 1f);
+//             anim.SetTrigger("IsAttacking");
+// //print("Attacking!");
+//         }
+//         else
+//         {
+//             anim.SetLayerWeight(0, 0f);
+//         }
     }
 
 }

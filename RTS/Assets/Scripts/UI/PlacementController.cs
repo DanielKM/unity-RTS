@@ -69,19 +69,19 @@ public class PlacementController : MonoBehaviour
         if(Input.GetMouseButtonDown(0) && currentPlaceableObject.tag == "House")
         {
             RM.gold -= 200;
-            RM.Wood -= 200;
+            RM.wood -= 200;
             currentPlaceableObject = null;
         } else if(Input.GetMouseButtonDown(0) && currentPlaceableObject.tag == "Yard")
         {
             RM.gold -= 1200;
-            RM.Wood -= 800;
+            RM.wood -= 800;
             RM.lumberYardCount += 1;
             currentPlaceableObject = null;
         }
         else if (Input.GetMouseButtonDown(0) && currentPlaceableObject.tag == "Barracks")
         {
             RM.gold -= 500;
-            RM.Wood -= 400;
+            RM.wood -= 400;
             RM.barracksCount += 1;
             currentPlaceableObject = null;
         }
@@ -130,11 +130,11 @@ public class PlacementController : MonoBehaviour
     {
         if (Input.GetKeyDown(newObjectHotkey))
         {
-            if (currentPlaceableObject == null && RM.gold >= 200 && RM.Wood >= 200)
+            if (currentPlaceableObject == null && RM.gold >= 200 && RM.wood >= 200)
             {
                 currentPlaceableObject = Instantiate(housePrefab);
             }
-            else if (currentPlaceableObject == null && RM.gold < 200 || currentPlaceableObject == null && RM.Wood < 200)
+            else if (currentPlaceableObject == null && RM.gold < 200 || currentPlaceableObject == null && RM.wood < 200)
             {
                 StartCoroutine(Wait());
             }
@@ -144,11 +144,11 @@ public class PlacementController : MonoBehaviour
             }
         }else if (Input.GetKeyDown(townHallObjectHotkey))
         {
-            if (currentPlaceableObject == null && RM.gold >= 1200 && RM.Wood >= 800)
+            if (currentPlaceableObject == null && RM.gold >= 1200 && RM.wood >= 800)
             {
                 currentPlaceableObject = Instantiate(townHallPrefab);
             }
-            else if (currentPlaceableObject == null && RM.gold < 1200 || currentPlaceableObject == null && RM.Wood < 800)
+            else if (currentPlaceableObject == null && RM.gold < 1200 || currentPlaceableObject == null && RM.wood < 800)
             {
                 StartCoroutine(Wait());
             }
@@ -159,11 +159,11 @@ public class PlacementController : MonoBehaviour
         }
         else if (Input.GetKeyDown(barracksObjectHotkey))
         {
-            if (currentPlaceableObject == null && RM.gold >= 500 && RM.Wood >= 400)
+            if (currentPlaceableObject == null && RM.gold >= 500 && RM.wood >= 400)
             {
                 currentPlaceableObject = Instantiate(barracksPrefab);
             }
-            else if (currentPlaceableObject == null && RM.gold < 500 || currentPlaceableObject == null && RM.Wood < 400)
+            else if (currentPlaceableObject == null && RM.gold < 500 || currentPlaceableObject == null && RM.wood < 400)
             {
                 StartCoroutine(Wait());
             }

@@ -22,7 +22,6 @@ public class BuildingButtonController : MonoBehaviour
 
     [SerializeField]
     private float nextSpawnTime;
-
     public bool isTraining;
 
     // UI Elements
@@ -38,12 +37,21 @@ public class BuildingButtonController : MonoBehaviour
 
     InputManager inputScript;
     BuildingController buildingScript;
+    UnitController footmanUC;
+    UnitController villagerUC;
 
     public GameObject selectedObj;
     private Vector3 spawnPosition;
 
     [SerializeField]
     private float spawnDelay;
+
+    // Trained units
+    public GameObject footmanPrefab;
+    public GameObject villagerPrefab;
+
+
+
     // Start is called before the first frame update
     void Start()
     {
@@ -53,6 +61,10 @@ public class BuildingButtonController : MonoBehaviour
         AdvancedBuildingsPanel = GameObject.Find("AdvancedBuildingsPanel").GetComponent<CanvasGroup>();
         PeasantPanel = GameObject.Find("VillagerPanel").GetComponent<CanvasGroup>();
         BuildingActionPanel = GameObject.Find("BuildingActions").GetComponent<CanvasGroup>();
+
+        // Trained units
+        footmanUC = footmanPrefab.GetComponent<UnitController>();
+        villagerUC = villagerPrefab.GetComponent<UnitController>();
 
         player = GameObject.FindGameObjectWithTag("Player");
         inputScript = player.GetComponent<InputManager>();
@@ -71,11 +83,16 @@ public class BuildingButtonController : MonoBehaviour
 
     void HireVillager()
     {
-        if (RM.gold >= 400 && RM.food >= 200 && RM.housing < RM.maxHousing)
+        if (RM.gold >= villagerUC.gold && RM.wood >= villagerUC.wood && RM.food >= villagerUC.food && RM.iron >= villagerUC.iron && RM.steel >= villagerUC.steel && RM.skymetal >= villagerUC.skymetal && RM.stone >= villagerUC.stone && RM.housing < RM.maxHousing)
         {
             UI.TownHallTraining();
-            RM.gold -= 400;
-            RM.food -= 200;
+            RM.gold -= villagerUC.gold;
+            RM.wood -= villagerUC.wood;
+            RM.food -= villagerUC.food;
+            RM.iron -= villagerUC.iron;
+            RM.steel -= villagerUC.steel;
+            RM.skymetal -= villagerUC.skymetal;
+            RM.stone -= villagerUC.stone;
             RM.housing += 1;
             selectedObj = inputScript.selectedObj;
             townHallScript = selectedObj.GetComponent<TownHallController>();
@@ -83,12 +100,11 @@ public class BuildingButtonController : MonoBehaviour
 
            
           //  spawnPosition = new Vector3(buildingScript.location.x, buildingScript.location.y, buildingScript.location.z +50f);
-
             playerAudio.clip = trainVillagerAudio;
             playerAudio.Play();
             townHallScript.HireVillager();
         }
-        else if (RM.gold < 400 || RM.food < 200 || RM.housing >= RM.maxHousing)
+        else 
         {
             UI.noResourcesText.SetActive(true);
             StartCoroutine(Wait());
@@ -97,55 +113,31 @@ public class BuildingButtonController : MonoBehaviour
 
     void HireFootman()
     {
-        if (RM.gold >= 400 && RM.iron >= 200 && RM.food >= 200 && RM.housing < RM.maxHousing)
+         if (RM.gold >= footmanUC.gold && RM.wood >= footmanUC.wood && RM.food >= footmanUC.food && RM.iron >= footmanUC.iron && RM.steel >= footmanUC.steel && RM.skymetal >= footmanUC.skymetal && RM.stone >= footmanUC.stone && RM.housing < RM.maxHousing)
         {
             UI.BarracksTraining();
-            RM.gold -= 400;
-            RM.iron -= 200;
-            RM.food -= 200;
+            RM.gold -= footmanUC.gold;
+            RM.wood -= footmanUC.wood;
+            RM.food -= footmanUC.food;
+            RM.iron -= footmanUC.iron;
+            RM.steel -= footmanUC.steel;
+            RM.skymetal -= footmanUC.skymetal;
+            RM.stone -= footmanUC.stone;
             RM.housing += 1;
             selectedObj = inputScript.selectedObj;
             barracksScript = selectedObj.GetComponent<BarracksController>();
             buildingScript = selectedObj.GetComponent<BuildingController>();
            
           //  spawnPosition = new Vector3(buildingScript.location.x, buildingScript.location.y, buildingScript.location.z +50f);
-
             playerAudio.clip = trainFootmanAudio;
             playerAudio.Play();
             barracksScript.HireFootman();
-        }
-        else if (RM.gold < 400 || RM.iron < 200 || RM.food < 200 || RM.housing >= RM.maxHousing)
+        } 
+        else   
         {
             UI.noResourcesText.SetActive(true);
             StartCoroutine(Wait());
         }
-    }
-    void HideBuildingActionPanel()
-    {
-        BuildingActionPanel.alpha = 0;
-        BuildingActionPanel.blocksRaycasts = false;
-        BuildingActionPanel.interactable = false;
-    }
-
-    void ShowBuildingProgressPanel()
-    {
-        BuildingProgressPanel.alpha = 1;
-        BuildingProgressPanel.blocksRaycasts = true;
-        BuildingProgressPanel.interactable = true;
-    }
-
-    void ShowBuildingActionPanel()
-    {
-        BuildingActionPanel.alpha = 1;
-        BuildingActionPanel.blocksRaycasts = true;
-        BuildingActionPanel.interactable = true;
-    }
-
-    void HideBuildingProgressPanel()
-    {
-        BuildingProgressPanel.alpha = 0;
-        BuildingProgressPanel.blocksRaycasts = false;
-        BuildingProgressPanel.interactable = false;
     }
 
     IEnumerator Wait()

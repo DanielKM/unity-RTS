@@ -8,6 +8,10 @@ public class BarracksController : MonoBehaviour
 {
     UIController UI;
     string[] footmen = new string[14]{ "Bron", "Darek", "Krom", "Turin", "Zerk", "Rua", "Vos", "Barros", "Braxis", "Kraye", "Sloa", "Kolin", "Kaleb", "Arvan"};
+    string[] firstNames = new string[14]{ "Aubrey", "Braum", "Braxis", "Davin", "Garen", "Oren", "Gavin", "Derek", "Kevan", "Stephen", "David", "Ruan", "Edward", "Marcus"};
+
+    string[] lastNameFirst = new string[14]{ "Foe", "Strong", "Ox", "Deer", "Swift", "Bright", "Light", "Dark", "Fire", "Shade", "Stout", "Quick", "Moose", "Dread"};
+    string[] lastNameSecond = new string[14]{ "hammer", "fist", "bridge", "wind", "blade", "spear", "shield", "bane", "sheen", "whip", "strike", "stone", "wind", "arm"};
 
     private float nextSpawnTime;
     public int i = 0;
@@ -89,15 +93,17 @@ public class BarracksController : MonoBehaviour
         }
         isTraining = false;
 
-        var iteration = Random.Range(0, footmen.Length);
+        var iteration1 = Random.Range(0, firstNames.Length);
+        var iteration2 = Random.Range(0, lastNameFirst.Length);
+        var iteration3 = Random.Range(0, lastNameSecond.Length);
         progressIcon = GameObject.Find("ProgressIcon").GetComponent<Image>();
         progressIcon.sprite = footmanPrefab.GetComponent<UnitController>().unitIcon;
-        footmanPrefab.GetComponent<UnitController>().unitName = footmen[iteration];
+        footmanPrefab.GetComponent<UnitController>().unitName = firstNames[iteration1] + " " + lastNameFirst[iteration2] + lastNameSecond[iteration3];
 
         Instantiate(footmanPrefab, spawnPosition, Quaternion.identity);
         footmanAudio = selectedObj.GetComponent<AudioSource>();
         footmanAudio.clip = footmanReporting;
         footmanAudio.Play();
-        UI.BarracksSelect();
+        // UI.BarracksSelect();
     }
 }

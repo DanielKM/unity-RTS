@@ -79,11 +79,10 @@ public class FoundationController : MonoBehaviour
             } else if(buildingScript.unitType == "Blacksmith") {
                 RM.blacksmithCount += 1;
             }
-
-
-
             currentBuilding.layer = 11;
             isBuilding = false;
+        } else {
+            isBuilding = true;
         }
     }
     private void OnCollisionExit(Collision collision)
@@ -111,7 +110,6 @@ public class FoundationController : MonoBehaviour
             BuildingProgressPanel.blocksRaycasts = false;
             BuildingProgressPanel.interactable = false;
             BuildingProgressPanel.alpha = 0;
-
         }
     }
        

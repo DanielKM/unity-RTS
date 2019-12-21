@@ -848,7 +848,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   unitType: Footman
   unitRank: Recruit
-  unitName: Kolin
+  unitName: David Quicksheen
   unitKills: 0
   weapon: Sword
   armour: Plate
@@ -857,6 +857,13 @@ MonoBehaviour:
   maxHealth: 200
   energy: 100
   maxEnergy: 100
+  gold: 500
+  wood: 0
+  food: 200
+  stone: 0
+  iron: 200
+  steel: 0
+  skymetal: 0
   unitIcon: {fileID: 21300000, guid: 306d55d36efa3c24b90770585090620e, type: 3}
 --- !u!114 &57994888615245522
 MonoBehaviour:

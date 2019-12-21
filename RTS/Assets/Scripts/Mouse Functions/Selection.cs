@@ -30,8 +30,8 @@ public class Selection : MonoBehaviour
     public bool selected = false;
 
     // shows if villager is gathering
-    public bool isGathering = false;
-    public bool isBuilding = false;
+    public bool isGathering;
+    public bool isBuilding;
 
     private NavMeshAgent agent;
 
@@ -292,7 +292,7 @@ public class Selection : MonoBehaviour
     public void DropWood()
     {
         //Handle drop off!
-        if (RM.Wood >= RM.maxWood)
+        if (RM.wood >= RM.maxWood)
         {
             task = Tasklist.Idle;
         }
@@ -309,7 +309,7 @@ public class Selection : MonoBehaviour
                     drops = GameObject.FindGameObjectsWithTag("Yard");
                     agent.destination = GetClosestDropOff(drops).transform.position;
 
-                    RM.Wood += heldResource;
+                    RM.wood += heldResource;
                     heldResource = 0;
                     task = Tasklist.Delivering;
                     drops = null;
@@ -321,7 +321,7 @@ public class Selection : MonoBehaviour
             }
             else
             {
-                RM.Wood += heldResource;
+                RM.wood += heldResource;
                 heldResource = 0;
                 task = Tasklist.Gathering;
                 agent.destination = targetNode.transform.position;

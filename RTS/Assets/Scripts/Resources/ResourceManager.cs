@@ -20,7 +20,7 @@ public class ResourceManager : MonoBehaviour
     public float stone;
     public float maxStone;
 
-    public float Wood;
+    public float wood;
     public float maxWood;
 
     public float food;
@@ -66,7 +66,7 @@ public class ResourceManager : MonoBehaviour
         SkyMetalDisp.text = "" + skymetal + "/" + maxSkymetal;
         IronDisp.text = "" + iron + "/" + maxIron;
         SteelDisp.text = "" + steel + "/" + maxSteel;
-        WoodDisp.text = "" + Wood + "/" + maxWood;
+        WoodDisp.text = "" + wood + "/" + maxWood;
         FoodDisp.text = "" + food + "/" + maxFood;
         StoneDisp.text = "" + stone + "/" + maxStone;
         GoldDisp.text = "" + gold + "/" + maxGold;
