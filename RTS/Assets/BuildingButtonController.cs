@@ -50,7 +50,8 @@ public class BuildingButtonController : MonoBehaviour
     public GameObject footmanPrefab;
     public GameObject villagerPrefab;
 
-
+    // Button text
+    Text [] blacksmithText;
 
     // Start is called before the first frame update
     void Start()
@@ -73,6 +74,10 @@ public class BuildingButtonController : MonoBehaviour
 
         buttonOne.onClick.AddListener(HireVillager);
         barracksButtonOne.onClick.AddListener(HireFootman);
+        // blacksmithText = barracksButtonOne.GetComponentsInChildren<Text>();
+        // blacksmithText[0].text = "Train Footman \r\n" + "\r\n" + "\r\n" + footmanUC.gold + "\r\n" + footmanUC.food + "\r\n" + footmanUC.iron + "\r\n";
+
+
     }
 
     // Update is called once per frame

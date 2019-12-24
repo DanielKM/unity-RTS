@@ -5,15 +5,33 @@ Bannon
 Victor
 Guy
 
-
 Hillard
+Axel
+Mitch
+Grant 
+Guy
+Abram
+Lukas
+Alister
 
+Louise
+August
+Ohare
 
-
-
+berg
 
 --------------------
 Combat
+Animation
 Research
-More Units
------------------
+Units+
+--------------------
+
+Depandant on General
+---------
+Footmen can build
+
+Spellforce
+
+Too much clicking 
+Too busy

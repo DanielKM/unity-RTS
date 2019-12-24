@@ -32,6 +32,14 @@ public class BuildingController : MonoBehaviour
     public bool isPlaced = true;
     public Vector3 location;
 
+    // Cost
+    public int gold;
+    public int wood;
+    public int food;
+    public int stone;
+    public int iron;
+    public int steel;
+    public int skymetal;
 
     private MeshRenderer[] meshes;
 

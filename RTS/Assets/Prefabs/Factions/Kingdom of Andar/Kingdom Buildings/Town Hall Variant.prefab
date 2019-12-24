@@ -29,6 +29,19 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 7.5, y: 3, z: 5.5}
   m_Center: {x: -0.8, y: 1.5, z: -0.5}
+--- !u!65 &6690506698446770037
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4247186984801027523}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 7.5, y: 3, z: 5.5}
+  m_Center: {x: -0.8, y: 1.5, z: -0.5}
 --- !u!208 &1605814868
 NavMeshObstacle:
   m_ObjectHideFlags: 0
@@ -141,19 +154,6 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
---- !u!65 &6690506698446770037
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4247186984801027523}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 7.5, y: 3, z: 5.5}
-  m_Center: {x: -0.8, y: 1.5, z: -0.5}
 --- !u!114 &1580131184395129742
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -184,6 +184,13 @@ MonoBehaviour:
   placeable: 1
   isPlaced: 0
   location: {x: 0, y: 0, z: 0}
+  gold: 800
+  wood: 800
+  food: 0
+  stone: 0
+  iron: 0
+  steel: 0
+  skymetal: 0
 --- !u!114 &6988346457819367031
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -204,6 +211,7 @@ MonoBehaviour:
   selected: 0
   selectedObj: {fileID: 0}
   isTraining: 0
+  progressIcon: {fileID: 0}
 --- !u!1001 &4247186984801125145
 PrefabInstance:
   m_ObjectHideFlags: 0

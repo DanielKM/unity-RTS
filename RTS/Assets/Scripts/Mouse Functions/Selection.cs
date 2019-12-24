@@ -161,7 +161,7 @@ public class Selection : MonoBehaviour
                 else if (hit.collider.tag == "Doorway")
                 {
                     Debug.Log("Smashing down that door, Sir!");
-                }
+                } 
             }
             else if (hit.collider.tag == "Yard")
             {
@@ -169,6 +169,10 @@ public class Selection : MonoBehaviour
                 targetNode = hit.collider.gameObject;
                 task = Tasklist.Delivering;
                 Debug.Log("Dropping off resources, Sir!");
+            } 
+            else 
+            {
+                task = Tasklist.Idle;
             }
             peasantAudio = agent.GetComponent<AudioSource>();
             peasantAudio.clip = peasantMoveClip;
@@ -492,11 +496,16 @@ public class Selection : MonoBehaviour
     public void OnTriggerExit(Collider other)
     {
         GameObject hitObject = other.gameObject;
-
-        if (hitObject.tag == "Resource" && hitObject.gameObject == targetNode)
+        if (hitObject.tag == "Resource" && isGathering == true)
         {
             isGathering = false;
-        } 
+        }  else if (hitObject.tag == "Foundation" && isBuilding == true)
+        {
+            isBuilding = false;
+            hitObject.GetComponent<FoundationController>().builders--;
+        } else if (hitObject.layer == 11 && isBuilding == true) {
+            isBuilding = false;
+        }
     }
 
     // Ticks down while villager is gathering - Adjust with heldResource in GatherTick in Selection Script

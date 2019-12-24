@@ -4773,6 +4773,13 @@ MonoBehaviour:
   placeable: 1
   isPlaced: 1
   location: {x: 0, y: 0, z: 0}
+  gold: 500
+  wood: 700
+  food: 0
+  stone: 0
+  iron: 0
+  steel: 0
+  skymetal: 0
 --- !u!1001 &3904504068563238540
 PrefabInstance:
   m_ObjectHideFlags: 0

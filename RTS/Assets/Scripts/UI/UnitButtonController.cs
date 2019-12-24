@@ -9,6 +9,8 @@ public class UnitButtonController : MonoBehaviour
     public GameObject player;
     ResourceManager RM;
     UIController UI;
+    BuildingController BC;
+
     public BuildingController building;
     public bool isPlaceable;
 
@@ -121,8 +123,9 @@ public class UnitButtonController : MonoBehaviour
 
     void BuildHouse()
     {
-        //Output this to console when Button1 or Button3 is clicked
-        if (currentPlaceableObject == null && RM.gold >= 200 && RM.wood >= 200)
+        BC = house.GetComponent<BuildingController>();
+        //Output this to console when the Button2 is clicked
+        if (currentPlaceableObject == null && RM.gold >= BC.gold && RM.wood >= BC.wood && RM.stone >= BC.stone && RM.iron >= BC.iron && RM.steel >= BC.steel && RM.skymetal >= BC.skymetal && RM.food >= BC.food)
         {
             currentPlaceableObject = Instantiate(house);
             meshes = currentPlaceableObject.GetComponentsInChildren<MeshRenderer>();
@@ -139,8 +142,8 @@ public class UnitButtonController : MonoBehaviour
             }
             iter = 0;
         }
-        else if (currentPlaceableObject == null && RM.gold < 200 || currentPlaceableObject == null && RM.wood < 200)
-        {
+       else if (currentPlaceableObject == null || RM.gold < BC.gold || RM.wood < BC.wood || RM.stone < BC.stone || RM.food < BC.food  || RM.iron < BC.iron  || RM.steel < BC.steel  || RM.skymetal < BC.skymetal)
+         {
             UI.noResourcesText.SetActive(true);
             StartCoroutine(Wait());
         }
@@ -152,9 +155,10 @@ public class UnitButtonController : MonoBehaviour
 
     void BuildFarm()
     {
+        BC = farm.GetComponent<BuildingController>();
         //Output this to console when the Button2 is clicked
-        if (currentPlaceableObject == null && RM.gold >= 400 && RM.wood >= 400)
-        {
+        if (currentPlaceableObject == null && RM.gold >= BC.gold && RM.wood >= BC.wood && RM.stone >= BC.stone && RM.iron >= BC.iron && RM.steel >= BC.steel && RM.skymetal >= BC.skymetal && RM.food >= BC.food)
+          {
             currentPlaceableObject = Instantiate(farm);
             meshes = currentPlaceableObject.GetComponentsInChildren<MeshRenderer>();
 
@@ -174,8 +178,8 @@ public class UnitButtonController : MonoBehaviour
             }
             iter = 0;
         }
-        else if (currentPlaceableObject == null && RM.gold < 400 || currentPlaceableObject == null && RM.wood < 400)
-        {
+       else if (currentPlaceableObject == null || RM.gold < BC.gold || RM.wood < BC.wood || RM.stone < BC.stone || RM.food < BC.food  || RM.iron < BC.iron  || RM.steel < BC.steel  || RM.skymetal < BC.skymetal)
+       {
             UI.noResourcesText.SetActive(true);
             StartCoroutine(Wait());
         }
@@ -187,9 +191,10 @@ public class UnitButtonController : MonoBehaviour
 
     void BuildTownHall()
     {
+        BC = townHall.GetComponent<BuildingController>();
         //Output this to console when the Button2 is clicked
-        if (currentPlaceableObject == null && RM.gold >= 800 && RM.wood >= 800)
-        {
+        if (currentPlaceableObject == null && RM.gold >= BC.gold && RM.wood >= BC.wood && RM.stone >= BC.stone && RM.iron >= BC.iron && RM.steel >= BC.steel && RM.skymetal >= BC.skymetal && RM.food >= BC.food)
+       {
             currentPlaceableObject = Instantiate(townHall);
             meshes = currentPlaceableObject.GetComponentsInChildren<MeshRenderer>();
 
@@ -209,7 +214,7 @@ public class UnitButtonController : MonoBehaviour
             }
             iter = 0;
         }
-        else if (currentPlaceableObject == null && RM.gold < 800 || currentPlaceableObject == null && RM.wood < 800)
+          else if (currentPlaceableObject == null || RM.gold < BC.gold || RM.wood < BC.wood || RM.stone < BC.stone || RM.food < BC.food  || RM.iron < BC.iron  || RM.steel < BC.steel  || RM.skymetal < BC.skymetal)
         {
             UI.noResourcesText.SetActive(true);
             StartCoroutine(Wait());
@@ -222,9 +227,10 @@ public class UnitButtonController : MonoBehaviour
 
     void BuildLumberMill()
     {
+        BC = lumberMill.GetComponent<BuildingController>();
         //Output this to console when the Button2 is clicked
-        if (currentPlaceableObject == null && RM.gold >= 500 && RM.wood >= 500 && RM.townHallCount > 0)
-        {
+        if (currentPlaceableObject == null && RM.gold >= BC.gold && RM.wood >= BC.wood && RM.stone >= BC.stone && RM.iron >= BC.iron && RM.steel >= BC.steel && RM.skymetal >= BC.skymetal && RM.food >= BC.food)
+      {
             currentPlaceableObject = Instantiate(lumberMill);
             meshes = currentPlaceableObject.GetComponentsInChildren<MeshRenderer>();
 
@@ -240,7 +246,7 @@ public class UnitButtonController : MonoBehaviour
             }
             iter = 0;
         }
-        else if (currentPlaceableObject == null && RM.gold < 500 || currentPlaceableObject == null && RM.wood < 500 || RM.townHallCount < 1)
+         else if (currentPlaceableObject == null || RM.gold < BC.gold || RM.wood < BC.wood || RM.stone < BC.stone || RM.food < BC.food  || RM.iron < BC.iron  || RM.steel < BC.steel  || RM.skymetal < BC.skymetal)
         {
             UI.noResourcesText.SetActive(true);
             StartCoroutine(Wait());
@@ -253,9 +259,10 @@ public class UnitButtonController : MonoBehaviour
 
     void BuildStables()
     {
+        BC = stables.GetComponent<BuildingController>();
         //Output this to console when the Button2 is clicked
-        if (currentPlaceableObject == null && RM.gold >= 500 && RM.wood >= 700 & RM.townHallCount > 0)
-        {
+        if (currentPlaceableObject == null && RM.gold >= BC.gold && RM.wood >= BC.wood && RM.stone >= BC.stone && RM.iron >= BC.iron && RM.steel >= BC.steel && RM.skymetal >= BC.skymetal && RM.food >= BC.food)
+       {
             currentPlaceableObject = Instantiate(stables);
             meshes = currentPlaceableObject.GetComponentsInChildren<MeshRenderer>();
 
@@ -271,8 +278,8 @@ public class UnitButtonController : MonoBehaviour
             }
             iter = 0;
         }
-        else if (currentPlaceableObject == null && RM.gold < 500 || currentPlaceableObject == null && RM.wood < 700 || RM.townHallCount < 1)
-        {
+      else if (currentPlaceableObject == null || RM.gold < BC.gold || RM.wood < BC.wood || RM.stone < BC.stone || RM.food < BC.food  || RM.iron < BC.iron  || RM.steel < BC.steel  || RM.skymetal < BC.skymetal)
+         {
             UI.noResourcesText.SetActive(true);
             StartCoroutine(Wait());
         }
@@ -284,9 +291,10 @@ public class UnitButtonController : MonoBehaviour
 
     void BuildBarracks()
     {
+        BC = barracks.GetComponent<BuildingController>();
         //Output this to console when the Button2 is clicked
-        if (currentPlaceableObject == null && RM.gold >= 600 && RM.wood >= 600 && RM.townHallCount > 0)
-        {
+        if (currentPlaceableObject == null && RM.gold >= BC.gold && RM.wood >= BC.wood && RM.stone >= BC.stone && RM.iron >= BC.iron && RM.steel >= BC.steel && RM.skymetal >= BC.skymetal && RM.food >= BC.food)
+       {
             currentPlaceableObject = Instantiate(barracks);
             meshes = currentPlaceableObject.GetComponentsInChildren<MeshRenderer>();
             
@@ -302,7 +310,7 @@ public class UnitButtonController : MonoBehaviour
             }
             iter = 0;
         }
-        else if (currentPlaceableObject == null && RM.gold < 600 || currentPlaceableObject == null && RM.wood < 600 || RM.townHallCount < 1)
+         else if (currentPlaceableObject == null || RM.gold < BC.gold || RM.wood < BC.wood || RM.stone < BC.stone || RM.food < BC.food  || RM.iron < BC.iron  || RM.steel < BC.steel  || RM.skymetal < BC.skymetal)
         {
             UI.noResourcesText.SetActive(true);
             StartCoroutine(Wait());
@@ -315,9 +323,10 @@ public class UnitButtonController : MonoBehaviour
 
     void BuildFort()
     {
+        BC = fort.GetComponent<BuildingController>();
         //Output this to console when the Button2 is clicked
-        if (currentPlaceableObject == null && RM.gold >= 1400 && RM.wood >= 1400 && RM.stone >= 1400)
-        {
+        if (currentPlaceableObject == null && RM.gold >= BC.gold && RM.wood >= BC.wood && RM.stone >= BC.stone && RM.iron >= BC.iron && RM.steel >= BC.steel && RM.skymetal >= BC.skymetal && RM.food >= BC.food)
+      {
             currentPlaceableObject = Instantiate(fort);
             meshes = currentPlaceableObject.GetComponentsInChildren<MeshRenderer>();
 
@@ -333,7 +342,7 @@ public class UnitButtonController : MonoBehaviour
             }
             iter = 0;
         }
-        else if (currentPlaceableObject == null && RM.gold < 1400 || currentPlaceableObject == null && RM.wood < 1400 || currentPlaceableObject == null && RM.stone < 1400)
+          else if (currentPlaceableObject == null || RM.gold < BC.gold || RM.wood < BC.wood || RM.stone < BC.stone || RM.food < BC.food  || RM.iron < BC.iron  || RM.steel < BC.steel  || RM.skymetal < BC.skymetal)
         {
             UI.noResourcesText.SetActive(true);
             StartCoroutine(Wait());
@@ -346,9 +355,10 @@ public class UnitButtonController : MonoBehaviour
 
     void BuildBlacksmith()
     {
+        BC = blacksmith.GetComponent<BuildingController>();
         //Output this to console when the Button2 is clicked
-        if (currentPlaceableObject == null && RM.gold >= 800 && RM.wood >= 800 && RM.townHallCount > 0)
-        {
+        if (currentPlaceableObject == null && RM.gold >= BC.gold && RM.wood >= BC.wood && RM.stone >= BC.stone && RM.iron >= BC.iron && RM.steel >= BC.steel && RM.skymetal >= BC.skymetal && RM.food >= BC.food)
+       {
             currentPlaceableObject = Instantiate(blacksmith);
             meshes = currentPlaceableObject.GetComponentsInChildren<MeshRenderer>();
 
@@ -364,7 +374,7 @@ public class UnitButtonController : MonoBehaviour
             }
             iter = 0;
         }
-        else if (currentPlaceableObject == null && RM.gold < 800 || currentPlaceableObject == null && RM.wood < 800 || RM.townHallCount < 1)
+         else if (currentPlaceableObject == null || RM.gold < BC.gold || RM.wood < BC.wood || RM.stone < BC.stone || RM.food < BC.food  || RM.iron < BC.iron  || RM.steel < BC.steel  || RM.skymetal < BC.skymetal)
         {
             UI.noResourcesText.SetActive(true);
             StartCoroutine(Wait());
@@ -378,7 +388,6 @@ public class UnitButtonController : MonoBehaviour
     private void MoveCurrentPlaceableObjectToMouse()
     {
         building.isPlaced = false;
-
 
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
         RaycastHit hitInfo;
@@ -458,8 +467,8 @@ public class UnitButtonController : MonoBehaviour
     {
         if (Input.GetMouseButtonDown(0) && building.unitType == "House")
         {
-            RM.gold -= 200;
-            RM.wood -= 200;
+            RM.gold -= BC.gold;
+            RM.wood -= BC.wood;
             building.isPlaced = true;
             currentPlaceableObject.layer = 11;
             Destroy(currentPlaceableObject);
@@ -470,8 +479,8 @@ public class UnitButtonController : MonoBehaviour
         }
         else if (Input.GetMouseButtonDown(0) && building.unitType == "Farm")
         {
-            RM.gold -= 400;
-            RM.wood -= 400;
+            RM.gold -= BC.gold;
+            RM.wood -= BC.wood;
             building.isPlaced = true;
             currentPlaceableObject.layer = 11;
             Destroy(currentPlaceableObject);
@@ -482,8 +491,8 @@ public class UnitButtonController : MonoBehaviour
         }
         else if (Input.GetMouseButtonDown(0) && building.unitType == "Town Hall")
         {
-            RM.gold -= 800;
-            RM.wood -= 800;
+            RM.gold -= BC.gold;
+            RM.wood -= BC.wood;
             building.isPlaced = true;
             currentPlaceableObject.layer = 11;
             Destroy(currentPlaceableObject);
@@ -494,8 +503,8 @@ public class UnitButtonController : MonoBehaviour
         }
         else if (Input.GetMouseButtonDown(0) && building.unitType == "Lumber Yard")
         {
-            RM.gold -= 500;
-            RM.wood -= 500;
+            RM.gold -= BC.gold;
+            RM.wood -= BC.wood;
             building.isPlaced = true;
             currentPlaceableObject.layer = 11;
             Destroy(currentPlaceableObject);
@@ -506,8 +515,8 @@ public class UnitButtonController : MonoBehaviour
         }
         else if (Input.GetMouseButtonDown(0) && building.unitType == "Stables")
         {
-            RM.gold -= 500;
-            RM.wood -= 700;
+            RM.gold -= BC.gold;
+            RM.wood -= BC.wood;
             building.isPlaced = true;
             currentPlaceableObject.layer = 11;
             Destroy(currentPlaceableObject);
@@ -518,8 +527,8 @@ public class UnitButtonController : MonoBehaviour
         }
         else if (Input.GetMouseButtonDown(0) && building.unitType == "Barracks")
         {
-            RM.gold -= 600;
-            RM.wood -= 600;
+            RM.gold -= BC.gold;
+            RM.wood -= BC.wood;
             building.isPlaced = true;
             currentPlaceableObject.layer = 11;
             Destroy(currentPlaceableObject);
@@ -530,9 +539,9 @@ public class UnitButtonController : MonoBehaviour
         }
         else if (Input.GetMouseButtonDown(0) && building.unitType == "Fort")
         {
-            RM.gold -= 1400;
-            RM.wood -= 1400;
-            RM.stone -= 1400;
+            RM.gold -= BC.gold;
+            RM.wood -= BC.wood;
+            RM.stone -= BC.stone;
             building.isPlaced = true;
             currentPlaceableObject.layer = 11;
             Destroy(currentPlaceableObject);
@@ -543,8 +552,8 @@ public class UnitButtonController : MonoBehaviour
         }
         else if (Input.GetMouseButtonDown(0) && building.unitType == "Resource")
         {
-            RM.gold -= 200;
-            RM.wood -= 400;
+            RM.gold -= BC.gold;
+            RM.wood -= BC.wood;
             building.isPlaced = true;
             currentPlaceableObject.layer = 11;
             Destroy(currentPlaceableObject);
@@ -555,8 +564,8 @@ public class UnitButtonController : MonoBehaviour
         }
         else if (Input.GetMouseButtonDown(0) && building.unitType == "Blacksmith")
         {
-            RM.gold -= 800;
-            RM.wood -= 800;
+            RM.gold -= BC.gold;
+            RM.wood -= BC.wood;
             building.isPlaced = true;
             currentPlaceableObject.layer = 11;
             Destroy(currentPlaceableObject);
