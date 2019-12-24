@@ -10,6 +10,11 @@ public class TownHallController : MonoBehaviour
     UIController UI;
     string[] villagers = new string[14]{ "Farah", "Dan", "Dave", "Steve", "Katie", "Sam", "Ryan", "Sid", "Bill", "Will", "Sarah", "Arj", "Izzy", "Aron"};
 
+    string[] villagerFN = new string[14]{ "Victor", "Dominik", "Kevan", "Criston", "Alistar", "Grant", "Abram", "Guy", "Grant", "Will", "Grant", "Grant", "Grant", "Grant"};
+    string[] villagerSN = new string[14]{ "Strong", "Fast", "Frost", "Hard", "Banner", "Sam", "Sam", "Sam", "Sam", "Sam", "Sam", "Sam", "Sam", "Sam"};
+    string[] villagerSN2 = new string[14]{ "beam", "arm", "bull", "hammer", "saw", "pike", "mont", "court", "berg", "berg", "berg", "berg", "berg", "berg"};
+
+
     private float nextSpawnTime;
     public int i = 0;
 

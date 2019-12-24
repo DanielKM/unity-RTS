@@ -204,7 +204,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   i: 0
-  villagerPrefab: {fileID: 4804534610097456925, guid: c2da89567b823fc44b85b9516a8e8c6a,
+  villagerPrefab: {fileID: 3389560421852583913, guid: b53a6d07210063e4cbb21c14f1e3863d,
     type: 3}
   villagerReporting: {fileID: 8300000, guid: b2a15ec8752ac4f4bb8dcd694ed6089c, type: 3}
   spawnDelay: 1000

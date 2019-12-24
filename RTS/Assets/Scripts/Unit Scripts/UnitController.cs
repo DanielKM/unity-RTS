@@ -38,11 +38,11 @@ public class UnitController : MonoBehaviour
     private Animator anim;
     private NavMeshAgent agent;
     private Selection selection;
-    public Tasklist task;
-    public Tasklist newTask;
+    private Tasklist newTask;
 
     public bool isBuilding;
     public bool isGathering;
+
     public Sprite unitIcon;
 
 
@@ -60,13 +60,13 @@ public class UnitController : MonoBehaviour
         //For attacking
         anim.SetFloat("Speed", agent.velocity.magnitude);
         newTask = selection.task;
+
         isBuilding = selection.isBuilding;
         isGathering = selection.isGathering;
         
-        Debug.Log(isBuilding);
-        if(isBuilding || isGathering) {
+        if(isBuilding && newTask == Tasklist.Building || isGathering && newTask == Tasklist.Gathering ) {
             anim.SetInteger("condition", 1);
-        } else if(!isBuilding && !isGathering) {
+        } else if (!isBuilding && !isGathering || newTask != Tasklist.Building && newTask != Tasklist.Gathering) {
             anim.SetInteger("condition", 0);
         }
 //         if (Input.GetKeyDown(KeyCode.Mouse1))
