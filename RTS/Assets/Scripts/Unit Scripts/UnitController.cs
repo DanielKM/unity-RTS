@@ -70,26 +70,30 @@ public class UnitController : MonoBehaviour
         isGathering = selection.isGathering;
         
         // Setting animation state
-        if(heldResource > 0) {
-            if(resourceType == NodeManager.ResourceTypes.Wood) {
-                if(isBuilding && newTask == Tasklist.Building || isGathering && newTask == Tasklist.Gathering ) {
-                    anim.SetInteger("condition", 5);
-                } else if (!isBuilding && !isGathering || newTask != Tasklist.Building && newTask != Tasklist.Gathering) {
-                    anim.SetInteger("condition", 4);
+        if(unitType == "Worker") {
+            if(heldResource > 0) {
+                if(resourceType == NodeManager.ResourceTypes.Wood) {
+                    if(isBuilding && newTask == Tasklist.Building || isGathering && newTask == Tasklist.Gathering ) {
+                        anim.SetInteger("condition", 5);
+                    } else if (!isBuilding && !isGathering || newTask != Tasklist.Building && newTask != Tasklist.Gathering) {
+                        anim.SetInteger("condition", 4);
+                    }
+                } else {
+                    if(isBuilding && newTask == Tasklist.Building || isGathering && newTask == Tasklist.Gathering ) {
+                        anim.SetInteger("condition", 3);
+                    } else if (!isBuilding && !isGathering || newTask != Tasklist.Building && newTask != Tasklist.Gathering) {
+                        anim.SetInteger("condition", 2);
+                    }
                 }
             } else {
                 if(isBuilding && newTask == Tasklist.Building || isGathering && newTask == Tasklist.Gathering ) {
-                    anim.SetInteger("condition", 3);
+                    anim.SetInteger("condition", 1);
                 } else if (!isBuilding && !isGathering || newTask != Tasklist.Building && newTask != Tasklist.Gathering) {
-                    anim.SetInteger("condition", 2);
+                    anim.SetInteger("condition", 0);
                 }
             }
-        } else {
-            if(isBuilding && newTask == Tasklist.Building || isGathering && newTask == Tasklist.Gathering ) {
-                anim.SetInteger("condition", 1);
-            } else if (!isBuilding && !isGathering || newTask != Tasklist.Building && newTask != Tasklist.Gathering) {
-                anim.SetInteger("condition", 0);
-            }
+        } else if (unitType == "Footman") {
+            
         }
 //         if (Input.GetKeyDown(KeyCode.Mouse1))
 //         {
