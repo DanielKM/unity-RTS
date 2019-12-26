@@ -2,6 +2,13 @@ Different time pieces for each faction - sun dial/hourglass etc.
 kingdom - > 20 footmen, formation/armour
 having a commander on the ground
  
+
+Multiplayer bonuses:
+experience
+generals 
+
+
+
 Influences:
 Morrowind - Adventure
 Skyrim - Epicness/Atmosphere
