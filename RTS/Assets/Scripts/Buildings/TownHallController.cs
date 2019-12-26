@@ -10,9 +10,9 @@ public class TownHallController : MonoBehaviour
     UIController UI;
     string[] villagers = new string[14]{ "Farah", "Dan", "Dave", "Steve", "Katie", "Sam", "Ryan", "Sid", "Bill", "Will", "Sarah", "Arj", "Izzy", "Aron"};
 
-    string[] villagerFN = new string[14]{ "Victor", "Dominik", "Kevan", "Criston", "Alistar", "Grant", "Abram", "Guy", "Grant", "Will", "Grant", "Grant", "Grant", "Grant"};
-    string[] villagerSN = new string[14]{ "Strong", "Fast", "Frost", "Hard", "Banner", "Sam", "Sam", "Sam", "Sam", "Sam", "Sam", "Sam", "Sam", "Sam"};
-    string[] villagerSN2 = new string[14]{ "beam", "arm", "bull", "hammer", "saw", "pike", "mont", "court", "berg", "berg", "berg", "berg", "berg", "berg"};
+    string[] firstNames = new string[14]{ "Victor", "Dominik", "Kevan", "Criston", "Alistar", "Grant", "Abram", "Guy", "Braum", "Will", "David", "Kevan", "Ryan", "Daniel"};
+    string[] lastNameFirst = new string[14]{ "Strong", "Fast", "Frost", "Hard", "Quick", "Brick", "Stone", "Dawn", "Sky", "Storm", "Thunder", "Rock", "Fair", "Swift"};
+    string[] lastNameSecond = new string[14]{ "beam", "arm", "bull", "hammer", "saw", "pike", "healer", "cook", "smith", "hunter", "mason", "builder", "fletcher", "swimmer"};
 
 
     private float nextSpawnTime;
@@ -88,10 +88,12 @@ public class TownHallController : MonoBehaviour
         }
         isTraining = false;
 
-        var iteration = Random.Range(0,villagers.Length);
+        var random1 = Random.Range(0, firstNames.Length);
+        var random2 = Random.Range(0, lastNameFirst.Length);
+        var random3 = Random.Range(0, lastNameSecond.Length);
         progressIcon = GameObject.Find("ProgressIcon").GetComponent<Image>();
         progressIcon.sprite = villagerPrefab.GetComponent<UnitController>().unitIcon;
-        villagerPrefab.GetComponent<UnitController>().unitName = villagers[iteration];
+        villagerPrefab.GetComponent<UnitController>().unitName = firstNames[random1] + " " + lastNameFirst[random2] + lastNameSecond[random3];
 
         Instantiate(villagerPrefab, spawnPosition, Quaternion.identity);
         villagerAudio = selectedObj.GetComponent<AudioSource>();

@@ -25,6 +25,9 @@ August
 Ohare
 Criston
 Dale
+
+lea
+court
 berg
 mont
 
@@ -45,3 +48,8 @@ Spellforce
 
 Too much clicking 
 Too busy
+
+---------------------
+Game mechanics
+- assign a certain number of workers to each task
+- use getclosestdropoff function to find resource types

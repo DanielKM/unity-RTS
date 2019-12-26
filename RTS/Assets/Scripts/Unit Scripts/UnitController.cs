@@ -39,6 +39,8 @@ public class UnitController : MonoBehaviour
     private NavMeshAgent agent;
     private Selection selection;
     private Tasklist newTask;
+    NodeManager.ResourceTypes resourceType;
+    public int heldResource;
 
     public bool isBuilding;
     public bool isGathering;
@@ -57,6 +59,9 @@ public class UnitController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        resourceType = selection.heldResourceType;
+        heldResource = selection.heldResource;
+
         //For attacking
         anim.SetFloat("Speed", agent.velocity.magnitude);
         newTask = selection.task;
@@ -64,10 +69,27 @@ public class UnitController : MonoBehaviour
         isBuilding = selection.isBuilding;
         isGathering = selection.isGathering;
         
-        if(isBuilding && newTask == Tasklist.Building || isGathering && newTask == Tasklist.Gathering ) {
-            anim.SetInteger("condition", 1);
-        } else if (!isBuilding && !isGathering || newTask != Tasklist.Building && newTask != Tasklist.Gathering) {
-            anim.SetInteger("condition", 0);
+        // Setting animation state
+        if(heldResource > 0) {
+            if(resourceType == NodeManager.ResourceTypes.Wood) {
+                if(isBuilding && newTask == Tasklist.Building || isGathering && newTask == Tasklist.Gathering ) {
+                    anim.SetInteger("condition", 5);
+                } else if (!isBuilding && !isGathering || newTask != Tasklist.Building && newTask != Tasklist.Gathering) {
+                    anim.SetInteger("condition", 4);
+                }
+            } else {
+                if(isBuilding && newTask == Tasklist.Building || isGathering && newTask == Tasklist.Gathering ) {
+                    anim.SetInteger("condition", 3);
+                } else if (!isBuilding && !isGathering || newTask != Tasklist.Building && newTask != Tasklist.Gathering) {
+                    anim.SetInteger("condition", 2);
+                }
+            }
+        } else {
+            if(isBuilding && newTask == Tasklist.Building || isGathering && newTask == Tasklist.Gathering ) {
+                anim.SetInteger("condition", 1);
+            } else if (!isBuilding && !isGathering || newTask != Tasklist.Building && newTask != Tasklist.Gathering) {
+                anim.SetInteger("condition", 0);
+            }
         }
 //         if (Input.GetKeyDown(KeyCode.Mouse1))
 //         {

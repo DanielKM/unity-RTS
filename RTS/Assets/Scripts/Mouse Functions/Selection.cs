@@ -78,7 +78,7 @@ public class Selection : MonoBehaviour
             }
         } else
         {
-            if (heldResource >= maxHeldResource && targetNode.tag == "Resource")
+            if (heldResource >= maxHeldResource)
             {
                 //stop gathering immediately
                 isGathering = false;
@@ -140,6 +140,8 @@ public class Selection : MonoBehaviour
             {
                 if (hit.collider.tag == "Ground")
                 {
+                    isBuilding = false;
+                    isGathering = false;
                     task = Tasklist.Moving;
                     agent.destination = hit.point;
 
@@ -147,6 +149,7 @@ public class Selection : MonoBehaviour
                 }
                 else if (hit.collider.tag == "Resource")
                 {
+                    isBuilding = false;
                     task = Tasklist.Gathering;
                     agent.destination = hit.collider.gameObject.transform.position;
                     Debug.Log("Harvesting, Sir!");
@@ -154,6 +157,7 @@ public class Selection : MonoBehaviour
                 }
                 else if (hit.collider.tag == "Foundation")
                 {
+                    isGathering = false;
                     task = Tasklist.Building;
                     agent.destination = hit.collider.gameObject.transform.position;
                     Debug.Log("Building, Sir!");
@@ -166,6 +170,8 @@ public class Selection : MonoBehaviour
             }
             else if (hit.collider.tag == "Yard")
             {
+                isBuilding = false;
+                isGathering = false;
                 agent.destination = hit.collider.gameObject.transform.position;
                 targetNode = hit.collider.gameObject;
                 task = Tasklist.Delivering;
