@@ -56,6 +56,7 @@ public class Selection : MonoBehaviour
         // if target node is destroyed
         if (targetNode == null)
         {
+            isBuilding = false;
             isGathering = false;
             if (heldResource != 0)
             {
@@ -195,60 +196,6 @@ public class Selection : MonoBehaviour
             //{
             //    DropWood();
             //}
-        }
-    }
-
-    // Allows collider of resources 
-    public void OnTriggerEnter(Collider other)
-    {
-        GameObject hitObject = other.gameObject;
-        // add  (&& task == Tasklist.Gathering) once u know whats up
-        if (hitObject.tag == "Resource" && hitObject.gameObject == targetNode)
-        {
-            isGathering = true;
-           // hitObject.GetComponent<NodeManager>().gatherers++;
-            harvestScript = targetNode.GetComponent<NodeManager>();
-            harvestSpeed = harvestScript.harvestTime;
-
-            heldResourceType = hitObject.GetComponent<NodeManager>().resourceType;
-        } else if (hitObject.tag == "Foundation" && hitObject.gameObject == targetNode)
-        {
-            isBuilding = true;
-            hitObject.GetComponent<FoundationController>().builders++;
-            buildScript = targetNode.GetComponent<FoundationController>();
-            buildSpeed = buildScript.buildTime;
-        }
-        else if(hitObject.tag == "Yard" && task == Tasklist.Delivering)
-        {
-            if (heldResourceType == NodeManager.ResourceTypes.Skymetal)
-            {
-                DropSkyMetal();
-            }
-
-            if (heldResourceType == NodeManager.ResourceTypes.Wood)
-            {
-                DropWood();
-            }
-
-            if (heldResourceType == NodeManager.ResourceTypes.Iron)
-            {
-                DropIron();
-            }
-
-            if (heldResourceType == NodeManager.ResourceTypes.Stone)
-            {
-                DropStone();
-            }
-
-            if (heldResourceType == NodeManager.ResourceTypes.Gold)
-            {
-                DropGold();
-            }
-
-            if (heldResourceType == NodeManager.ResourceTypes.Food)
-            {
-                DropFood();
-            }
         }
     }
 
@@ -493,19 +440,70 @@ public class Selection : MonoBehaviour
         }
     }
 
+    // Allows collider of resources 
+    public void OnTriggerEnter(Collider other)
+    {
+        GameObject hitObject = other.gameObject;
+        // add  (&& task == Tasklist.Gathering) once u know whats up
+        if (hitObject.tag == "Resource" && hitObject.gameObject == targetNode)
+        {
+            isGathering = true;
+           // hitObject.GetComponent<NodeManager>().gatherers++;
+            harvestScript = targetNode.GetComponent<NodeManager>();
+            harvestSpeed = harvestScript.harvestTime;
+            heldResourceType = hitObject.GetComponent<NodeManager>().resourceType;
+        } else if (hitObject.tag == "Foundation" && hitObject.gameObject == targetNode)
+        {
+            isBuilding = true;
+            hitObject.GetComponent<FoundationController>().builders++;
+            buildScript = targetNode.GetComponent<FoundationController>();
+            buildSpeed = buildScript.buildTime;
+        }
+        else if(hitObject.tag == "Yard" && task == Tasklist.Delivering)
+        {
+            if (heldResourceType == NodeManager.ResourceTypes.Skymetal)
+            {
+                DropSkyMetal();
+            }
+
+            if (heldResourceType == NodeManager.ResourceTypes.Wood)
+            {
+                DropWood();
+            }
+
+            if (heldResourceType == NodeManager.ResourceTypes.Iron)
+            {
+                DropIron();
+            }
+
+            if (heldResourceType == NodeManager.ResourceTypes.Stone)
+            {
+                DropStone();
+            }
+
+            if (heldResourceType == NodeManager.ResourceTypes.Gold)
+            {
+                DropGold();
+            }
+
+            if (heldResourceType == NodeManager.ResourceTypes.Food)
+            {
+                DropFood();
+            }
+        }
+    }
+
     public void OnTriggerExit(Collider other)
     {
         GameObject hitObject = other.gameObject;
-        if (hitObject.tag == "Resource" && isGathering == true)
+        if (hitObject.tag == "Resource" && hitObject.gameObject == targetNode)
         {
             isGathering = false;
-        }  else if (hitObject.tag == "Foundation" && isBuilding == true)
+        }  else if (hitObject.tag == "Foundation" && hitObject.gameObject == targetNode)
         {
             isBuilding = false;
             hitObject.GetComponent<FoundationController>().builders--;
-        } else if (hitObject.layer == 11 && isBuilding == true) {
-            isBuilding = false;
-        }
+        } 
     }
 
     // Ticks down while villager is gathering - Adjust with heldResource in GatherTick in Selection Script
