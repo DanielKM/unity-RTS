@@ -22,6 +22,7 @@ public class Selection : MonoBehaviour
     float buildSpeed;
     NodeManager harvestScript;
     UnitController UC;
+    Selection targetScript;
     float harvestSpeed;
 
     // villager target node
@@ -33,6 +34,7 @@ public class Selection : MonoBehaviour
     // shows if villager is gathering
     public bool isGathering;
     public bool isBuilding;
+    public bool isFollowing;
 
     private NavMeshAgent agent;
 
@@ -55,6 +57,7 @@ public class Selection : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+
         if(UC.unitType == "Worker") {
             // if target node is destroyed
             if (targetNode == null)
@@ -135,13 +138,25 @@ public class Selection : MonoBehaviour
     {
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
         RaycastHit hit;
+        isFollowing = false;
 
         if (Physics.Raycast(ray, out hit, 350))
         {
             targetNode = hit.collider.gameObject;
+            targetScript = targetNode.GetComponent<Selection>();
+
             if (hit.collider.tag != "Yard")
             {
-                if (hit.collider.tag == "Ground")
+                // For following friends and enemies
+                if(targetScript != null) {
+                    agent.destination = hit.collider.gameObject.transform.position;
+                    isFollowing = true;
+                    StartCoroutine(Follow());
+                    if(targetScript.player == player) {
+                        Debug.Log("Follow");
+                    } 
+
+                } else if (hit.collider.tag == "Ground")
                 {
                     isBuilding = false;
                     isGathering = false;
@@ -515,12 +530,18 @@ public class Selection : MonoBehaviour
         } 
     }
 
+    IEnumerator Follow() {
+        Debug.Log(isFollowing);
+        while(isFollowing) {
+            agent.destination = targetNode.transform.position;
+            yield return new WaitForSeconds(0.2f);
+        }
+    }
     // Ticks down while villager is gathering - Adjust with heldResource in GatherTick in Selection Script
     IEnumerator GatherTick()
     {
         while(true)
         {
-
             yield return new WaitForSeconds(harvestSpeed);
             if(isGathering && heldResourceType == NodeManager.ResourceTypes.Skymetal)
             {
