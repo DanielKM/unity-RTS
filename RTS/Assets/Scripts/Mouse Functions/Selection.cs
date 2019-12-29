@@ -531,10 +531,18 @@ public class Selection : MonoBehaviour
     }
 
     IEnumerator Follow() {
-        Debug.Log(isFollowing);
+        int counter = 0;
         while(isFollowing) {
-            agent.destination = targetNode.transform.position;
-            yield return new WaitForSeconds(0.2f);
+            while(counter <6) {
+                bool followed = targetNode.transform.GetChild(2).gameObject.activeInHierarchy;
+                Debug.Log(followed);
+                targetNode.transform.GetChild(2).gameObject.SetActive(!followed);
+                counter += 1;
+                agent.destination = targetNode.transform.position;
+                yield return new WaitForSeconds(0.2f);
+            }
+                agent.destination = targetNode.transform.position;
+                yield return new WaitForSeconds(0.2f);
         }
     }
     // Ticks down while villager is gathering - Adjust with heldResource in GatherTick in Selection Script
