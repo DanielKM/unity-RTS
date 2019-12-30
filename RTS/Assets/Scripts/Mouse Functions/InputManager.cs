@@ -461,7 +461,6 @@ public class InputManager : MonoBehaviour
             }
             if (hit.collider.tag == "Enemy Unit" && (!Input.GetKey(KeyCode.LeftShift)))
             {
-                Debug.Log("Enemy Unit");
                 selectedObj = hit.collider.gameObject;
                 selectedInfo = selectedObj.GetComponent<Selection>();
                 unitScript = selectedObj.GetComponent<UnitController>();

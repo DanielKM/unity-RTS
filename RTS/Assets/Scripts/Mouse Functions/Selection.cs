@@ -16,6 +16,7 @@ public class Selection : MonoBehaviour
 
     // Player 
     public GameObject player;
+    public GameObject owner;
 
     // Grab nodemanager script and harvest speed on gameobject
     FoundationController buildScript;
@@ -35,6 +36,8 @@ public class Selection : MonoBehaviour
     public bool isGathering;
     public bool isBuilding;
     public bool isFollowing;
+    public bool isAttacking;
+    public bool isMeleeing;
 
     private NavMeshAgent agent;
 
@@ -152,10 +155,6 @@ public class Selection : MonoBehaviour
                     agent.destination = hit.collider.gameObject.transform.position;
                     isFollowing = true;
                     StartCoroutine(Follow());
-                    if(targetScript.player == player) {
-                        Debug.Log("Follow");
-                    } 
-
                 } else if (hit.collider.tag == "Ground")
                 {
                     isBuilding = false;
@@ -532,17 +531,37 @@ public class Selection : MonoBehaviour
 
     IEnumerator Follow() {
         int counter = 0;
+        if(targetScript.owner != player) {
+            isAttacking = true;
+            Debug.Log("Attack!");
+        } else if(targetScript.owner == player) {
+            isAttacking = false;
+            Debug.Log("Follow!");
+        } 
+
         while(isFollowing) {
-            while(counter <6) {
-                bool followed = targetNode.transform.GetChild(2).gameObject.activeInHierarchy;
-                Debug.Log(followed);
-                targetNode.transform.GetChild(2).gameObject.SetActive(!followed);
-                counter += 1;
-                agent.destination = targetNode.transform.position;
-                yield return new WaitForSeconds(0.2f);
+            
+            if(targetNode == null) {
+                isMeleeing = false;
+                isFollowing = false;
+                break;
             }
-                agent.destination = targetNode.transform.position;
-                yield return new WaitForSeconds(0.2f);
+            float dist = Vector3.Distance(targetNode.transform.position, agent.transform.position);
+            if(!isMeleeing && isAttacking && dist < UC.attackRange) {
+                isMeleeing = true;
+                StartCoroutine(UC.Attack());
+            } else {
+                // isMeleeing = false;
+            }
+            
+            if (counter < 6) {
+                bool followed = targetNode.transform.GetChild(2).gameObject.activeInHierarchy;
+                targetNode.transform.GetChild(2).gameObject.SetActive(!followed);
+            }
+            
+            counter += 1;
+            agent.destination = targetNode.transform.position;
+            yield return new WaitForSeconds(0.2f);
         }
     }
     // Ticks down while villager is gathering - Adjust with heldResource in GatherTick in Selection Script
