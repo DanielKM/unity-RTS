@@ -43,6 +43,10 @@ public class UnitController : MonoBehaviour
     private GameObject enemy;
     private int enemyHealth;
 
+    // Audio
+    private AudioSource workerAudio;
+    public AudioClip workerAudioClip;
+
     private Animator anim;
     private NavMeshAgent agent;
     private Selection selection;
@@ -94,6 +98,7 @@ public class UnitController : MonoBehaviour
                     }
                 } else {
                     if(isBuilding && newTask == Tasklist.Building || isGathering && newTask == Tasklist.Gathering || isMeleeing) {
+
                         anim.SetInteger("condition", 3);
                     } else if (!isBuilding && !isGathering || newTask != Tasklist.Building && newTask != Tasklist.Gathering) {
                         anim.SetInteger("condition", 2);
@@ -125,7 +130,10 @@ public class UnitController : MonoBehaviour
         enemy = selection.targetNode;
         enemyUC = enemy.GetComponent<UnitController>();
 
-        while(selection.isMeleeing) {
+        while(selection.isMeleeing) {                        
+            workerAudio = agent.GetComponent<AudioSource>();
+            workerAudio.clip = workerAudioClip;
+            workerAudio.Play();
             enemyUC.health -= attackDamage;
             enemyHealth = enemyUC.health;
             yield return new WaitForSeconds(attackSpeed);

@@ -780,11 +780,14 @@ MonoBehaviour:
   task: 2
   peasantMoveClip: {fileID: 8300000, guid: 13287b3ae51578f44b338a9e619a7929, type: 3}
   player: {fileID: 0}
+  owner: {fileID: 0}
   targetNode: {fileID: 0}
   selected: 0
   isGathering: 0
   isBuilding: 0
   isFollowing: 0
+  isAttacking: 0
+  isMeleeing: 0
   heldResource: 0
   maxHeldResource: 100
   drops: []
@@ -811,6 +814,9 @@ MonoBehaviour:
   maxHealth: 100
   energy: 100
   maxEnergy: 100
+  attackDamage: 0
+  attackRange: 0
+  attackSpeed: 0
   gold: 400
   wood: 0
   food: 200
@@ -818,9 +824,11 @@ MonoBehaviour:
   iron: 0
   steel: 0
   skymetal: 0
+  workerAudioClip: {fileID: 8300000, guid: 07c38e0499aea4acd81b44991c0e4d07, type: 3}
   heldResource: 0
   isBuilding: 0
   isGathering: 0
+  isMeleeing: 0
   unitIcon: {fileID: 21300000, guid: 1f0fa3795ead58949beec803ce5dd640, type: 3}
 --- !u!195 &9219922493757422231
 NavMeshAgent:
