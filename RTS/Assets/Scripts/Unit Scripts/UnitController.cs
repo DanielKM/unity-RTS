@@ -44,8 +44,9 @@ public class UnitController : MonoBehaviour
     private int enemyHealth;
 
     // Audio
-    private AudioSource workerAudio;
+    public AudioSource workerAudio;
     public AudioClip workerAudioClip;
+    public AudioClip workerWoodChop;
 
     private Animator anim;
     private NavMeshAgent agent;
@@ -132,8 +133,10 @@ public class UnitController : MonoBehaviour
 
         while(selection.isMeleeing) {                        
             workerAudio = agent.GetComponent<AudioSource>();
-            workerAudio.clip = workerAudioClip;
+            workerAudio.clip = workerWoodChop;
+            workerAudio.maxDistance = 55;
             workerAudio.Play();
+            
             enemyUC.health -= attackDamage;
             enemyHealth = enemyUC.health;
             yield return new WaitForSeconds(attackSpeed);

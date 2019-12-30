@@ -159,6 +159,7 @@ public class Selection : MonoBehaviour
                 {
                     isBuilding = false;
                     isGathering = false;
+                    isMeleeing = false;
                     task = Tasklist.Moving;
                     agent.destination = hit.point;
 
@@ -167,6 +168,7 @@ public class Selection : MonoBehaviour
                 else if (hit.collider.tag == "Resource")
                 {
                     isBuilding = false;
+                    isMeleeing = false;
                     task = Tasklist.Gathering;
                     agent.destination = hit.collider.gameObject.transform.position;
                     Debug.Log("Harvesting, Sir!");
@@ -175,6 +177,7 @@ public class Selection : MonoBehaviour
                 else if (hit.collider.tag == "Foundation")
                 {
                     isGathering = false;
+                    isMeleeing = false;
                     task = Tasklist.Building;
                     agent.destination = hit.collider.gameObject.transform.position;
                     Debug.Log("Building, Sir!");
@@ -200,6 +203,7 @@ public class Selection : MonoBehaviour
             }
             peasantAudio = agent.GetComponent<AudioSource>();
             peasantAudio.clip = peasantMoveClip;
+            peasantAudio.maxDistance = 100000;
             peasantAudio.Play();
         }
     }
@@ -573,29 +577,58 @@ public class Selection : MonoBehaviour
             if(isGathering && heldResourceType == NodeManager.ResourceTypes.Skymetal)
             {
                 heldResource += 5;
-            } else if (isGathering && heldResourceType == NodeManager.ResourceTypes.Wood)
+                UC.workerAudio = agent.GetComponent<AudioSource>();
+                UC.workerAudio.clip = UC.workerAudioClip;
+                UC.workerAudio.maxDistance = 45;
+                UC.workerAudio.Play();
+            } 
+            else if (isGathering && heldResourceType == NodeManager.ResourceTypes.Wood)
             {
                 heldResource += 5;
+                UC.workerAudio = agent.GetComponent<AudioSource>();
+                UC.workerAudio.clip = UC.workerWoodChop;
+                UC.workerAudio.maxDistance = 55;
+                UC.workerAudio.Play();
             }
             else if (isGathering && heldResourceType == NodeManager.ResourceTypes.Iron)
             {
                 heldResource += 5;
+                UC.workerAudio = agent.GetComponent<AudioSource>();
+                UC.workerAudio.clip = UC.workerAudioClip;
+                UC.workerAudio.maxDistance = 45;
+                UC.workerAudio.Play();
             }
             else if (isGathering && heldResourceType == NodeManager.ResourceTypes.Stone)
             {
                 heldResource += 5;
+                UC.workerAudio = agent.GetComponent<AudioSource>();
+                UC.workerAudio.clip = UC.workerAudioClip;
+                UC.workerAudio.maxDistance = 45;
+                UC.workerAudio.Play();
             }
             else if (isGathering && heldResourceType == NodeManager.ResourceTypes.Gold)
             {
                 heldResource += 5;
+                UC.workerAudio = agent.GetComponent<AudioSource>();
+                UC.workerAudio.clip = UC.workerAudioClip;
+                UC.workerAudio.maxDistance = 45;
+                UC.workerAudio.Play();
             }
             else if (isGathering && heldResourceType == NodeManager.ResourceTypes.Food)
             {
                 heldResource += 5;
+                UC.workerAudio = agent.GetComponent<AudioSource>();
+                UC.workerAudio.clip = UC.workerAudioClip;
+                UC.workerAudio.maxDistance = 45;
+                UC.workerAudio.Play();
             }
             else if (isGathering)
             {
-                heldResource += 5;
+                heldResource += 5;               
+                UC.workerAudio = agent.GetComponent<AudioSource>();
+                UC.workerAudio.clip = UC.workerAudioClip;
+                UC.workerAudio.maxDistance = 45;
+                UC.workerAudio.Play();
             }
         }
     }

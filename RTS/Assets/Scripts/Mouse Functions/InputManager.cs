@@ -370,7 +370,9 @@ public class InputManager : MonoBehaviour
                     selectedInfo.transform.GetChild(2).gameObject.SetActive(true);
 
                     peasantAudio = selectedInfo.GetComponent<AudioSource>();
+
                     peasantAudio.clip = peasantAudioClip;
+                    peasantAudio.maxDistance = 100000;
                     peasantAudio.Play();
 
                     UI.VillagerSelect();
@@ -378,7 +380,7 @@ public class InputManager : MonoBehaviour
             }
         }
     }
-    
+      
     public void UpdateUnitPanel()
     {
         // UI Functions
@@ -501,6 +503,7 @@ public class InputManager : MonoBehaviour
                     selectedObj.transform.GetChild(2).gameObject.SetActive(true);
                     peasantAudio = selectedObj.GetComponent<AudioSource>();
                     peasantAudio.clip = peasantAudioClip;
+                    peasantAudio.maxDistance = 100000;
                     peasantAudio.Play();
                     isSelected = true;
                     UI.VillagerSelect();
@@ -523,6 +526,7 @@ public class InputManager : MonoBehaviour
                     selectedObj.transform.GetChild(2).gameObject.SetActive(true);
                     peasantAudio = selectedObj.GetComponent<AudioSource>();
                     peasantAudio.clip = peasantAudioClip;
+                    peasantAudio.maxDistance = 100000;
                     peasantAudio.Play();
                     isSelected = true;
                     UI.VillagerSelect();
