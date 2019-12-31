@@ -11,7 +11,7 @@ public class Selection : MonoBehaviour
         
     public Tasklist task;
     private ResourceManager RM;
-    private AudioSource peasantAudio;
+    private AudioSource unitAudio;
     public AudioClip peasantMoveClip;
 
     // Player 
@@ -148,14 +148,71 @@ public class Selection : MonoBehaviour
             targetNode = hit.collider.gameObject;
             targetScript = targetNode.GetComponent<Selection>();
 
-            if (hit.collider.tag != "Yard")
-            {
-                // For following friends and enemies
+            if(UC.unitType == "Worker") {
+                if (hit.collider.tag != "Yard")
+                {
+                    // For following friends and enemies
+                    if(targetScript != null) {
+                        agent.destination = hit.collider.gameObject.transform.position;
+                        isFollowing = true;
+                        StartCoroutine(Follow());
+                    } else if (hit.collider.tag == "Ground")
+                    {
+                        isBuilding = false;
+                        isGathering = false;
+                        isMeleeing = false;
+                        task = Tasklist.Moving;
+                        agent.destination = hit.point;
+
+                        Debug.Log("Moving, Sir!");
+                    }
+                    else if (hit.collider.tag == "Resource")
+                    {
+                        isBuilding = false;
+                        isMeleeing = false;
+                        task = Tasklist.Gathering;
+                        agent.destination = hit.collider.gameObject.transform.position;
+                        Debug.Log("Harvesting, Sir!");
+                        targetNode = hit.collider.gameObject;
+                    }
+                    else if (hit.collider.tag == "Foundation")
+                    {
+                        isGathering = false;
+                        isMeleeing = false;
+                        task = Tasklist.Building;
+                        agent.destination = hit.collider.gameObject.transform.position;
+                        Debug.Log("Building, Sir!");
+                        targetNode = hit.collider.gameObject;
+                    }
+                    else if (hit.collider.tag == "Doorway")
+                    {
+                        Debug.Log("Smashing down that door, Sir!");
+                    } 
+                }
+                else if (hit.collider.tag == "Yard")
+                {
+                    isBuilding = false;
+                    isGathering = false;
+                    agent.destination = hit.collider.gameObject.transform.position;
+                    targetNode = hit.collider.gameObject;
+                    task = Tasklist.Delivering;
+                    Debug.Log("Dropping off resources, Sir!");
+                } 
+                else 
+                {
+                    task = Tasklist.Idle;
+                }
+                unitAudio = agent.GetComponent<AudioSource>();
+                unitAudio.clip = peasantMoveClip;
+                unitAudio.maxDistance = 100000;
+                unitAudio.Play();
+            } else if (UC.unitType == "Footman") {
                 if(targetScript != null) {
                     agent.destination = hit.collider.gameObject.transform.position;
                     isFollowing = true;
                     StartCoroutine(Follow());
-                } else if (hit.collider.tag == "Ground")
+                }
+                else if (hit.collider.tag == "Ground")
                 {
                     isBuilding = false;
                     isGathering = false;
@@ -165,46 +222,18 @@ public class Selection : MonoBehaviour
 
                     Debug.Log("Moving, Sir!");
                 }
-                else if (hit.collider.tag == "Resource")
-                {
-                    isBuilding = false;
-                    isMeleeing = false;
-                    task = Tasklist.Gathering;
-                    agent.destination = hit.collider.gameObject.transform.position;
-                    Debug.Log("Harvesting, Sir!");
-                    targetNode = hit.collider.gameObject;
-                }
-                else if (hit.collider.tag == "Foundation")
-                {
-                    isGathering = false;
-                    isMeleeing = false;
-                    task = Tasklist.Building;
-                    agent.destination = hit.collider.gameObject.transform.position;
-                    Debug.Log("Building, Sir!");
-                    targetNode = hit.collider.gameObject;
-                }
                 else if (hit.collider.tag == "Doorway")
                 {
                     Debug.Log("Smashing down that door, Sir!");
                 } 
+                else {
+                    agent.destination = hit.collider.gameObject.transform.position;
+                }
+                unitAudio = agent.GetComponent<AudioSource>();
+                unitAudio.clip = peasantMoveClip;
+                unitAudio.maxDistance = 100000;
+                unitAudio.Play();
             }
-            else if (hit.collider.tag == "Yard")
-            {
-                isBuilding = false;
-                isGathering = false;
-                agent.destination = hit.collider.gameObject.transform.position;
-                targetNode = hit.collider.gameObject;
-                task = Tasklist.Delivering;
-                Debug.Log("Dropping off resources, Sir!");
-            } 
-            else 
-            {
-                task = Tasklist.Idle;
-            }
-            peasantAudio = agent.GetComponent<AudioSource>();
-            peasantAudio.clip = peasantMoveClip;
-            peasantAudio.maxDistance = 100000;
-            peasantAudio.Play();
         }
     }
 
@@ -579,7 +608,7 @@ public class Selection : MonoBehaviour
                 heldResource += 5;
                 UC.unitAudio = agent.GetComponent<AudioSource>();
                 UC.unitAudio.clip = UC.metalChop;
-                UC.unitAudio.maxDistance = 45;
+                UC.unitAudio.maxDistance = 55;
                 UC.unitAudio.Play();
             } 
             else if (isGathering && heldResourceType == NodeManager.ResourceTypes.Wood)
@@ -595,7 +624,7 @@ public class Selection : MonoBehaviour
                 heldResource += 5;
                 UC.unitAudio = agent.GetComponent<AudioSource>();
                 UC.unitAudio.clip = UC.metalChop;
-                UC.unitAudio.maxDistance = 45;
+                UC.unitAudio.maxDistance = 55;
                 UC.unitAudio.Play();
             }
             else if (isGathering && heldResourceType == NodeManager.ResourceTypes.Stone)
@@ -603,7 +632,7 @@ public class Selection : MonoBehaviour
                 heldResource += 5;
                 UC.unitAudio = agent.GetComponent<AudioSource>();
                 UC.unitAudio.clip = UC.metalChop;
-                UC.unitAudio.maxDistance = 45;
+                UC.unitAudio.maxDistance = 55;
                 UC.unitAudio.Play();
             }
             else if (isGathering && heldResourceType == NodeManager.ResourceTypes.Gold)
@@ -611,7 +640,7 @@ public class Selection : MonoBehaviour
                 heldResource += 5;
                 UC.unitAudio = agent.GetComponent<AudioSource>();
                 UC.unitAudio.clip = UC.metalChop;
-                UC.unitAudio.maxDistance = 45;
+                UC.unitAudio.maxDistance = 55;
                 UC.unitAudio.Play();
             }
             else if (isGathering && heldResourceType == NodeManager.ResourceTypes.Food)
@@ -627,7 +656,7 @@ public class Selection : MonoBehaviour
                 heldResource += 5;               
                 UC.unitAudio = agent.GetComponent<AudioSource>();
                 UC.unitAudio.clip = UC.metalChop;
-                UC.unitAudio.maxDistance = 45;
+                UC.unitAudio.maxDistance = 55;
                 UC.unitAudio.Play();
             }
         }

@@ -26,8 +26,8 @@ public class InputManager : MonoBehaviour
     FoundationController foundationScript;
 
     // UI FOR UNITS
-    private AudioSource peasantAudio;
-    public AudioClip peasantAudioClip;
+    private AudioSource unitAudio;
+    public AudioClip unitAudioClip;
 
     public Slider HB;
     public Text healthDisp;
@@ -369,17 +369,18 @@ public class InputManager : MonoBehaviour
                     selectedInfo.selected = true;
                     selectedInfo.transform.GetChild(2).gameObject.SetActive(true);
 
-                    peasantAudio = selectedInfo.GetComponent<AudioSource>();
+                    unitAudio = selectedInfo.GetComponent<AudioSource>();
 
-                    peasantAudio.clip = peasantAudioClip;
-                    peasantAudio.maxDistance = 100000;
-                    peasantAudio.Play();
-
+                    unitAudio.clip = unitAudioClip;
+                    unitAudio.maxDistance = 100000;
                     if(unitScript.unitType == "Worker") {
+                        unitAudio.volume = 0.5f;
                         UI.VillagerSelect();
                     } else if (unitScript.unitType == "Footman") {
                         UI.FootmanSelect();
                     }
+                    unitAudio.Play();
+
                 }
             }
         }
@@ -483,9 +484,9 @@ public class InputManager : MonoBehaviour
                     
                     // Selection indicators
                     selectedObj.transform.GetChild(2).gameObject.SetActive(true);
-                    // peasantAudio = selectedObj.GetComponent<AudioSource>();
-                    // peasantAudio.clip = peasantAudioClip;
-                    // peasantAudio.Play();
+                    // unitAudio = selectedObj.GetComponent<AudioSource>();
+                    // unitAudio.clip = unitAudioClip;
+                    // unitAudio.Play();
                     isSelected = true;
                     UI.EnemySelect();
                 }
@@ -505,10 +506,10 @@ public class InputManager : MonoBehaviour
 
                     // Selection indicators
                     selectedObj.transform.GetChild(2).gameObject.SetActive(true);
-                    peasantAudio = selectedObj.GetComponent<AudioSource>();
-                    peasantAudio.clip = peasantAudioClip;
-                    peasantAudio.maxDistance = 100000;
-                    peasantAudio.Play();
+                    unitAudio = selectedObj.GetComponent<AudioSource>();
+                    unitAudio.clip = unitAudioClip;
+                    unitAudio.maxDistance = 100000;
+                    unitAudio.Play();
                     isSelected = true;
 
                     if(unitScript.unitType == "Worker") {
@@ -533,10 +534,10 @@ public class InputManager : MonoBehaviour
 
                     // Selection indicators
                     selectedObj.transform.GetChild(2).gameObject.SetActive(true);
-                    peasantAudio = selectedObj.GetComponent<AudioSource>();
-                    peasantAudio.clip = peasantAudioClip;
-                    peasantAudio.maxDistance = 100000;
-                    peasantAudio.Play();
+                    unitAudio = selectedObj.GetComponent<AudioSource>();
+                    unitAudio.clip = unitAudioClip;
+                    unitAudio.maxDistance = 100000;
+                    unitAudio.Play();
                     isSelected = true;
                     if(unitScript.unitType == "Worker") {
                         UI.VillagerSelect();
