@@ -824,9 +824,12 @@ MonoBehaviour:
   iron: 0
   steel: 0
   skymetal: 0
-  workerAudio: {fileID: 0}
-  workerAudioClip: {fileID: 8300000, guid: 07c38e0499aea4acd81b44991c0e4d07, type: 3}
-  workerWoodChop: {fileID: 8300000, guid: 795e0eda1c479474ab93de36a1afe9f4, type: 3}
+  unitAudio: {fileID: 0}
+  metalChop: {fileID: 8300000, guid: 4ae4fe17d19c04e10920bfaca3bd8290, type: 3}
+  metalChop2: {fileID: 0}
+  metalChop3: {fileID: 0}
+  metalChop4: {fileID: 0}
+  woodChop: {fileID: 8300000, guid: 795e0eda1c479474ab93de36a1afe9f4, type: 3}
   heldResource: 0
   isBuilding: 0
   isGathering: 0

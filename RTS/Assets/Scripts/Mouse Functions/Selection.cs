@@ -577,58 +577,58 @@ public class Selection : MonoBehaviour
             if(isGathering && heldResourceType == NodeManager.ResourceTypes.Skymetal)
             {
                 heldResource += 5;
-                UC.workerAudio = agent.GetComponent<AudioSource>();
-                UC.workerAudio.clip = UC.workerAudioClip;
-                UC.workerAudio.maxDistance = 45;
-                UC.workerAudio.Play();
+                UC.unitAudio = agent.GetComponent<AudioSource>();
+                UC.unitAudio.clip = UC.metalChop;
+                UC.unitAudio.maxDistance = 45;
+                UC.unitAudio.Play();
             } 
             else if (isGathering && heldResourceType == NodeManager.ResourceTypes.Wood)
             {
                 heldResource += 5;
-                UC.workerAudio = agent.GetComponent<AudioSource>();
-                UC.workerAudio.clip = UC.workerWoodChop;
-                UC.workerAudio.maxDistance = 55;
-                UC.workerAudio.Play();
+                UC.unitAudio = agent.GetComponent<AudioSource>();
+                UC.unitAudio.clip = UC.woodChop;
+                UC.unitAudio.maxDistance = 55;
+                UC.unitAudio.Play();
             }
             else if (isGathering && heldResourceType == NodeManager.ResourceTypes.Iron)
             {
                 heldResource += 5;
-                UC.workerAudio = agent.GetComponent<AudioSource>();
-                UC.workerAudio.clip = UC.workerAudioClip;
-                UC.workerAudio.maxDistance = 45;
-                UC.workerAudio.Play();
+                UC.unitAudio = agent.GetComponent<AudioSource>();
+                UC.unitAudio.clip = UC.metalChop;
+                UC.unitAudio.maxDistance = 45;
+                UC.unitAudio.Play();
             }
             else if (isGathering && heldResourceType == NodeManager.ResourceTypes.Stone)
             {
                 heldResource += 5;
-                UC.workerAudio = agent.GetComponent<AudioSource>();
-                UC.workerAudio.clip = UC.workerAudioClip;
-                UC.workerAudio.maxDistance = 45;
-                UC.workerAudio.Play();
+                UC.unitAudio = agent.GetComponent<AudioSource>();
+                UC.unitAudio.clip = UC.metalChop;
+                UC.unitAudio.maxDistance = 45;
+                UC.unitAudio.Play();
             }
             else if (isGathering && heldResourceType == NodeManager.ResourceTypes.Gold)
             {
                 heldResource += 5;
-                UC.workerAudio = agent.GetComponent<AudioSource>();
-                UC.workerAudio.clip = UC.workerAudioClip;
-                UC.workerAudio.maxDistance = 45;
-                UC.workerAudio.Play();
+                UC.unitAudio = agent.GetComponent<AudioSource>();
+                UC.unitAudio.clip = UC.metalChop;
+                UC.unitAudio.maxDistance = 45;
+                UC.unitAudio.Play();
             }
             else if (isGathering && heldResourceType == NodeManager.ResourceTypes.Food)
             {
                 heldResource += 5;
-                UC.workerAudio = agent.GetComponent<AudioSource>();
-                UC.workerAudio.clip = UC.workerAudioClip;
-                UC.workerAudio.maxDistance = 45;
-                UC.workerAudio.Play();
+                UC.unitAudio = agent.GetComponent<AudioSource>();
+                UC.unitAudio.clip = UC.woodChop;
+                UC.unitAudio.maxDistance = 55;
+                UC.unitAudio.Play();
             }
             else if (isGathering)
             {
                 heldResource += 5;               
-                UC.workerAudio = agent.GetComponent<AudioSource>();
-                UC.workerAudio.clip = UC.workerAudioClip;
-                UC.workerAudio.maxDistance = 45;
-                UC.workerAudio.Play();
+                UC.unitAudio = agent.GetComponent<AudioSource>();
+                UC.unitAudio.clip = UC.metalChop;
+                UC.unitAudio.maxDistance = 45;
+                UC.unitAudio.Play();
             }
         }
     }

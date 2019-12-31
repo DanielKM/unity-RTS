@@ -728,7 +728,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 8300000, guid: b2a15ec8752ac4f4bb8dcd694ed6089c, type: 3}
   m_PlayOnAwake: 0
-  m_Volume: 1
+  m_Volume: 0.451
   m_Pitch: 0.86
   Loop: 0
   Mute: 0
@@ -737,9 +737,9 @@ AudioSource:
   Priority: 256
   DopplerLevel: 1
   MinDistance: 1
-  MaxDistance: 500
+  MaxDistance: 100
   Pan2D: 0.02
-  rolloffMode: 0
+  rolloffMode: 1
   BypassEffects: 0
   BypassListenerEffects: 0
   BypassReverbZones: 0
@@ -772,7 +772,7 @@ AudioSource:
     m_Curve:
     - serializedVersion: 3
       time: 0
-      value: 0
+      value: 1
       inSlope: 0
       outSlope: 0
       tangentMode: 0
@@ -857,6 +857,9 @@ MonoBehaviour:
   maxHealth: 200
   energy: 100
   maxEnergy: 100
+  attackDamage: 40
+  attackRange: 2
+  attackSpeed: 1
   gold: 500
   wood: 0
   food: 200
@@ -864,6 +867,16 @@ MonoBehaviour:
   iron: 200
   steel: 0
   skymetal: 0
+  unitAudio: {fileID: 0}
+  metalChop: {fileID: 8300000, guid: 0ecf18972377e4652ab7377a0993f14a, type: 3}
+  metalChop2: {fileID: 8300000, guid: 07c38e0499aea4acd81b44991c0e4d07, type: 3}
+  metalChop3: {fileID: 8300000, guid: ebcbb664018f947728cb9b67468b0f48, type: 3}
+  metalChop4: {fileID: 8300000, guid: 44b3696bd5132401cafdca8526812f63, type: 3}
+  woodChop: {fileID: 8300000, guid: 795e0eda1c479474ab93de36a1afe9f4, type: 3}
+  heldResource: 0
+  isBuilding: 0
+  isGathering: 0
+  isMeleeing: 0
   unitIcon: {fileID: 21300000, guid: 306d55d36efa3c24b90770585090620e, type: 3}
 --- !u!114 &57994888615245522
 MonoBehaviour:
@@ -881,10 +894,14 @@ MonoBehaviour:
   task: 0
   peasantMoveClip: {fileID: 8300000, guid: 13287b3ae51578f44b338a9e619a7929, type: 3}
   player: {fileID: 0}
+  owner: {fileID: 0}
   targetNode: {fileID: 0}
   selected: 0
   isGathering: 0
   isBuilding: 0
+  isFollowing: 0
+  isAttacking: 0
+  isMeleeing: 0
   heldResource: 0
   maxHeldResource: 0
   drops: []
