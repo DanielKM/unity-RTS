@@ -21,6 +21,7 @@ public class UIController : MonoBehaviour
     public CanvasGroup VillagerPanel;
     public CanvasGroup BasicBuildingsPanel;
     public CanvasGroup AdvancedBuildingsPanel;
+    public CanvasGroup FootmanPanel;
 
     // BUILDING PANELS
     public CanvasGroup BuildingPanel;
@@ -53,6 +54,7 @@ public class UIController : MonoBehaviour
         VillagerPanel = GameObject.Find("VillagerPanel").GetComponent<CanvasGroup>();
         BasicBuildingsPanel = GameObject.Find("BasicBuildingsPanel").GetComponent<CanvasGroup>();
         AdvancedBuildingsPanel = GameObject.Find("AdvancedBuildingsPanel").GetComponent<CanvasGroup>();
+        FootmanPanel = GameObject.Find("FootmanPanel").GetComponent<CanvasGroup>();
                 
         BuildingPanel = GameObject.Find("BuildingPanel").GetComponent<CanvasGroup>();
         BlacksmithActionPanel = GameObject.Find("BlacksmithActionPanel").GetComponent<CanvasGroup>();
@@ -97,6 +99,12 @@ public class UIController : MonoBehaviour
         AdvancedBuildingsPanel.alpha = 0;
         AdvancedBuildingsPanel.blocksRaycasts = false;
         AdvancedBuildingsPanel.interactable = false;
+
+        // FOOTMAN PANELS
+        FootmanPanel.alpha = 0;
+        FootmanPanel.blocksRaycasts = false;
+        FootmanPanel.interactable = false;
+
         // BUILDINGS
         BuildingPanel.alpha = 0;
         BuildingPanel.blocksRaycasts = false;
@@ -171,7 +179,31 @@ public class UIController : MonoBehaviour
         AdvancedBuildingsPanel.blocksRaycasts = true;
         AdvancedBuildingsPanel.interactable = true;
     }
+
+    public void FootmanSelect() {
+        CloseAllPanels();
+
+        UnitPanel.alpha = 1;
+        UnitPanel.blocksRaycasts = true;
+        UnitPanel.interactable = true;
+
+        panelOpen = 1;        
+        FootmanPanel.alpha = 1;
+        FootmanPanel.blocksRaycasts = true;
+        FootmanPanel.interactable = true;
+    }
     
+    // Enemy selection
+    public void EnemySelect() {
+        CloseAllPanels();
+
+        UnitPanel.alpha = 1;
+        UnitPanel.blocksRaycasts = true;
+        UnitPanel.interactable = true;
+
+        panelOpen = 1;        
+    }
+
     // On house selection
     public void HouseSelect() {
         CloseAllPanels();

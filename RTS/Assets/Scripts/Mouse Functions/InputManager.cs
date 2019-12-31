@@ -375,7 +375,11 @@ public class InputManager : MonoBehaviour
                     peasantAudio.maxDistance = 100000;
                     peasantAudio.Play();
 
-                    UI.VillagerSelect();
+                    if(unitScript.unitType == "Worker") {
+                        UI.VillagerSelect();
+                    } else if (unitScript.unitType == "Footman") {
+                        UI.FootmanSelect();
+                    }
                 }
             }
         }
@@ -461,7 +465,7 @@ public class InputManager : MonoBehaviour
                    // Debug.Log("Standing down, Sir!");
                 }
             }
-            if (hit.collider.tag == "Enemy Unit" && (!Input.GetKey(KeyCode.LeftShift)))
+            else if (hit.collider.tag == "Enemy Unit" && (!Input.GetKey(KeyCode.LeftShift)))
             {
                 selectedObj = hit.collider.gameObject;
                 selectedInfo = selectedObj.GetComponent<Selection>();
@@ -478,12 +482,12 @@ public class InputManager : MonoBehaviour
 
                     
                     // Selection indicators
-                    // selectedObj.transform.GetChild(2).gameObject.SetActive(true);
+                    selectedObj.transform.GetChild(2).gameObject.SetActive(true);
                     // peasantAudio = selectedObj.GetComponent<AudioSource>();
                     // peasantAudio.clip = peasantAudioClip;
                     // peasantAudio.Play();
                     isSelected = true;
-                    UI.VillagerSelect();
+                    UI.EnemySelect();
                 }
             }
             else if (hit.collider.tag == "Selectable")
@@ -506,7 +510,12 @@ public class InputManager : MonoBehaviour
                     peasantAudio.maxDistance = 100000;
                     peasantAudio.Play();
                     isSelected = true;
-                    UI.VillagerSelect();
+
+                    if(unitScript.unitType == "Worker") {
+                        UI.VillagerSelect();
+                    } else if (unitScript.unitType == "Footman") {
+                        UI.FootmanSelect();
+                    }
                 }
                 else
                 {
@@ -529,7 +538,11 @@ public class InputManager : MonoBehaviour
                     peasantAudio.maxDistance = 100000;
                     peasantAudio.Play();
                     isSelected = true;
-                    UI.VillagerSelect();
+                    if(unitScript.unitType == "Worker") {
+                        UI.VillagerSelect();
+                    } else if (unitScript.unitType == "Footman") {
+                        UI.FootmanSelect();
+                    }
                 }
             }
             else if (hit.collider.tag == "Enemy Unit" || hit.collider.tag == "Yard" || hit.collider.tag == "Foundation" || hit.collider.tag == "Barracks" || hit.collider.tag == "House" || hit.collider.tag == "Resource" || hit.collider.tag == "Fort" || hit.collider.tag == "Blacksmith" || hit.transform.tag == "Lumber Yard" || hit.transform.tag == "Stables" )
