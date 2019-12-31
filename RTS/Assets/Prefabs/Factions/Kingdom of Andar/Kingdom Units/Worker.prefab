@@ -778,7 +778,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   heldResourceType: 4
   task: 2
-  peasantMoveClip: {fileID: 8300000, guid: 13287b3ae51578f44b338a9e619a7929, type: 3}
+  unitMoveClip: {fileID: 8300000, guid: 13287b3ae51578f44b338a9e619a7929, type: 3}
   player: {fileID: 0}
   owner: {fileID: 0}
   targetNode: {fileID: 0}

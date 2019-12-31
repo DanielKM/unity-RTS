@@ -487,7 +487,7 @@ public class InputManager : MonoBehaviour
                     // unitAudio = selectedObj.GetComponent<AudioSource>();
                     // unitAudio.clip = unitAudioClip;
                     // unitAudio.Play();
-                    isSelected = true;
+                    // isSelected = true;
                     UI.EnemySelect();
                 }
             }

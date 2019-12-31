@@ -69,7 +69,6 @@ public class Patroller : MonoBehaviour
                 {
                     arrived = true;
                     StartCoroutine("GoToNextPoint");
-
                 }
             }
             else
