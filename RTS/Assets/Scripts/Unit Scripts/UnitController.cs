@@ -53,10 +53,16 @@ public class UnitController : MonoBehaviour
     public AudioClip metalChop4;
     public AudioClip woodChop;
 
+    // Player scripts
+    private GameObject player;
+    private ResourceManager RM;
+
+    // Unit scripts
     private Animator anim;
     private NavMeshAgent agent;
     private Selection selection;
     private Tasklist newTask;
+
     NodeManager.ResourceTypes resourceType;
     public int heldResource;
 
@@ -73,6 +79,9 @@ public class UnitController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        player = GameObject.FindGameObjectWithTag("Player");
+        RM = player.GetComponent<ResourceManager>();
+
         anim = GetComponent<Animator>();
         agent = GetComponent<NavMeshAgent>();
         selection = GetComponent<Selection>();
@@ -111,6 +120,7 @@ public class UnitController : MonoBehaviour
                 selection.isAttacking = false;
                 selection.isMeleeing = false;
             }
+            RM.housing -= 1.0f;
         }
         if(!isDead) {
             resourceType = selection.heldResourceType;

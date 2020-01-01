@@ -43,6 +43,8 @@ public class ResourceManager : MonoBehaviour
 
     public GameObject[] houses;
     public GameObject[] oneFoodUnit;
+    private int housingTotal;
+    private int requiredfood;
 
     public float barracksCount;
     public float houseCount;
@@ -72,9 +74,18 @@ public class ResourceManager : MonoBehaviour
         GoldDisp.text = "" + gold + "/" + maxGold;
 
         oneFoodUnit = GameObject.FindGameObjectsWithTag("Selectable");
+        housingTotal = oneFoodUnit.Length;
+
+        for(int i=0; i<oneFoodUnit.Length; i++) {
+            if(oneFoodUnit[i].GetComponent<UnitController>().isDead) {
+                housingTotal -= 1;
+            }
+        }
+        requiredfood = housingTotal;
+
         houses = GameObject.FindGameObjectsWithTag("House");
 
-        housing = oneFoodUnit.Length;
+        housing = requiredfood;
         maxHousing = houses.Length * 5;
         HousingDisp.text = "" + housing + "/" + maxHousing;
     }

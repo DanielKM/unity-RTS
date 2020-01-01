@@ -163,8 +163,6 @@ public class Selection : MonoBehaviour
                             isMeleeing = false;
                             task = Tasklist.Moving;
                             agent.destination = hit.point;
-
-                            Debug.Log("Moving, Sir!");
                         }
                         else if (hit.collider.tag == "Resource")
                         {
@@ -172,7 +170,6 @@ public class Selection : MonoBehaviour
                             isMeleeing = false;
                             task = Tasklist.Gathering;
                             agent.destination = hit.collider.gameObject.transform.position;
-                            Debug.Log("Harvesting, Sir!");
                             targetNode = hit.collider.gameObject;
                         }
                         else if (hit.collider.tag == "Foundation")
@@ -181,7 +178,6 @@ public class Selection : MonoBehaviour
                             isMeleeing = false;
                             task = Tasklist.Building;
                             agent.destination = hit.collider.gameObject.transform.position;
-                            Debug.Log("Building, Sir!");
                             targetNode = hit.collider.gameObject;
                         }
                         else if (hit.collider.tag == "Doorway")
@@ -196,7 +192,6 @@ public class Selection : MonoBehaviour
                         agent.destination = hit.collider.gameObject.transform.position;
                         targetNode = hit.collider.gameObject;
                         task = Tasklist.Delivering;
-                        Debug.Log("Dropping off resources, Sir!");
                     } 
                     else 
                     {
@@ -219,8 +214,6 @@ public class Selection : MonoBehaviour
                         isMeleeing = false;
                         task = Tasklist.Moving;
                         agent.destination = hit.point;
-
-                        Debug.Log("Moving, Sir!");
                     }
                     else if (hit.collider.tag == "Doorway")
                     {

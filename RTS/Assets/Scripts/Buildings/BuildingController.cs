@@ -68,7 +68,6 @@ public class BuildingController : MonoBehaviour
         if (other.gameObject.tag != "Ground")
         {
             inCollider = true;
-            //Debug.Log("collided with: " + other.gameObject.tag);
             placeable = false;
         }
     }
@@ -82,7 +81,6 @@ public class BuildingController : MonoBehaviour
         if (other.gameObject.tag != "Ground")
         {
             inCollider = true;
-            //Debug.Log("collided with: " + other.gameObject.tag);
             placeable = false;
         }
     }
