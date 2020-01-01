@@ -26,6 +26,7 @@ public class BarracksController : MonoBehaviour
 
     GameObject player;
     InputManager inputScript;
+    Selection footmanSelection;
     BuildingController buildingScript;
 
     public GameObject selectedObj;
@@ -99,6 +100,8 @@ public class BarracksController : MonoBehaviour
         progressIcon = GameObject.Find("ProgressIcon").GetComponent<Image>();
         progressIcon.sprite = footmanPrefab.GetComponent<UnitController>().unitIcon;
         footmanPrefab.GetComponent<UnitController>().unitName = firstNames[iteration1] + " " + lastNameFirst[iteration2] + lastNameSecond[iteration3];
+        footmanSelection = footmanPrefab.GetComponent<Selection>();
+        footmanSelection.owner = player;
 
         Instantiate(footmanPrefab, spawnPosition, Quaternion.identity);
         footmanAudio = selectedObj.GetComponent<AudioSource>();

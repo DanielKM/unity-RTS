@@ -87,8 +87,9 @@ public class UnitController : MonoBehaviour
     {
         if(health <= 0) {
             if(unitType == "Worker") { 
-               anim.SetInteger("condition", 10);
-               isDead = true;
+                anim.SetInteger("condition", 10);
+                isDead = true;
+                agent.destination = gameObject.transform.position;
                 agent.radius = 0;
                 agent.height = 0;
                 agent.avoidancePriority = 1;
@@ -97,9 +98,18 @@ public class UnitController : MonoBehaviour
                 selection.isFollowing = false;
                 selection.isAttacking = false;
                 selection.isMeleeing = false;
-            } else {
-                Debug.Log("Play death");
-                Destroy(gameObject);
+            } else if(unitType == "Footman") {
+                anim.SetInteger("condition", 10);
+                isDead = true;
+                agent.destination = gameObject.transform.position;
+                agent.radius = 0;
+                agent.height = 0;
+                agent.avoidancePriority = 1;
+                selection.isBuilding = false;
+                selection.isGathering = false;
+                selection.isFollowing = false;
+                selection.isAttacking = false;
+                selection.isMeleeing = false;
             }
         }
         if(!isDead) {
@@ -164,7 +174,7 @@ public class UnitController : MonoBehaviour
             if(selection.owner == selection.player) {
                 enemyUnits = GameObject.FindGameObjectsWithTag("Enemy Unit");
                 GameObject currentTarget = GetClosestEnemy(enemyUnits);
-                if(!currentTarget.GetComponent<UnitController>().isDead) {
+                if(currentTarget && !currentTarget.GetComponent<UnitController>().isDead) {
                     if (currentTarget != null && Vector3.Distance(transform.position, currentTarget.transform.position) < aggroRange)
                     {
                         selection.targetNode = currentTarget;
@@ -194,7 +204,7 @@ public class UnitController : MonoBehaviour
             } else {
                 enemyUnits = GameObject.FindGameObjectsWithTag("Selectable");
                 GameObject currentTarget = GetClosestEnemy(enemyUnits);
-                if(!currentTarget.GetComponent<UnitController>().isDead) {
+                if(currentTarget && !currentTarget.GetComponent<UnitController>().isDead) {
                     if (currentTarget != null && Vector3.Distance(transform.position, currentTarget.transform.position) < aggroRange)
                     {
                         selection.targetNode = currentTarget;

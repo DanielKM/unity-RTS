@@ -147,8 +147,8 @@ public class Selection : MonoBehaviour
         {
             targetNode = hit.collider.gameObject;
             targetScript = targetNode.GetComponent<Selection>();
-            if(owner == player) {     
-                if(UC.unitType == "Worker" && !UC.isDead) {
+            if(owner == player  && !UC.isDead) {     
+                if(UC.unitType == "Worker") {
                     if (hit.collider.tag != "Yard")
                     {
                         // For following friends and enemies

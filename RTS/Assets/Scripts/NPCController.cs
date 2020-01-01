@@ -76,38 +76,40 @@ public class NPCController : MonoBehaviour
 
     void Tick()
     {
-        playerunits = GameObject.FindGameObjectsWithTag("Selectable");
-        agent.destination = waypoints[index].position;
-        agent.speed = agentSpeed / 2;
-        
-        GameObject currentTarget = GetClosestEnemy(playerunits);
+        if(!UC.isDead) {
+            playerunits = GameObject.FindGameObjectsWithTag("Selectable");
+            agent.destination = waypoints[index].position;
+            agent.speed = agentSpeed / 2;
+            
+            GameObject currentTarget = GetClosestEnemy(playerunits);
 
-        if(!currentTarget.GetComponent<UnitController>().isDead) {
-            if (currentTarget != null && Vector3.Distance(transform.position, currentTarget.transform.position) < aggroRange)
-            {
-                selection.targetNode = currentTarget;
-                Debug.Log("Enemy " + currentTarget.GetComponent<UnitController>().unitType + " spotted!");
-                float dist = Vector3.Distance(agent.transform.position, currentTarget.transform.position);
-                agent.destination = currentTarget.transform.position;
-                agent.speed = agentSpeed;
-                selection.isFollowing = true;
+            if(currentTarget && !currentTarget.GetComponent<UnitController>().isDead) {
+                if (currentTarget != null && Vector3.Distance(transform.position, currentTarget.transform.position) < aggroRange)
+                {
+                    selection.targetNode = currentTarget;
+                    Debug.Log("Enemy " + currentTarget.GetComponent<UnitController>().unitType + " spotted!");
+                    float dist = Vector3.Distance(agent.transform.position, currentTarget.transform.position);
+                    agent.destination = currentTarget.transform.position;
+                    agent.speed = agentSpeed;
+                    selection.isFollowing = true;
 
-                if(dist < UC.attackRange && currentTarget != null) {
-                    selection.isMeleeing = true;
-                    enemy = currentTarget;
-                    if(!currentlyMeleeing && enemy != null && !enemy.GetComponent<UnitController>().isDead) {
-                        StartCoroutine(NPCAttack());
+                    if(dist < UC.attackRange && currentTarget != null) {
+                        selection.isMeleeing = true;
+                        enemy = currentTarget;
+                        if(!currentlyMeleeing && enemy != null && !enemy.GetComponent<UnitController>().isDead) {
+                            StartCoroutine(NPCAttack());
+                        }
+                    } else {
+                        Debug.Log("No enemies");
+                        currentlyMeleeing = false;
+                        selection.isMeleeing = false;
+                        selection.isFollowing = false;
                     }
-                } else {
-                    Debug.Log("No enemies");
+                } else if (currentTarget == null) {
                     currentlyMeleeing = false;
                     selection.isMeleeing = false;
                     selection.isFollowing = false;
                 }
-            } else if (currentTarget == null) {
-                currentlyMeleeing = false;
-                selection.isMeleeing = false;
-                selection.isFollowing = false;
             }
         }
     }
@@ -171,7 +173,6 @@ public class NPCController : MonoBehaviour
             }
             enemyUC.health -= UC.attackDamage;
             enemyHealth = enemyUC.health;
-            Debug.Log("Hi1");
             yield return new WaitForSeconds(UC.attackSpeed);
         }
     }

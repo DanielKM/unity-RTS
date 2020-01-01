@@ -47,6 +47,7 @@ public class InputManager : MonoBehaviour
     public int resourceHeld;
 
     public bool isSelected;
+    private bool inSelectionBox;
 
     // UI FOR BUILDINGS
     private CanvasGroup BuildingPanel;
@@ -351,6 +352,7 @@ public class InputManager : MonoBehaviour
 
             var selectRect = Utils.GetScreenRect(mouse1, mouse2);
 
+            inSelectionBox = false;
             for (int i = 0; i < units.Length; i++)
             {
                 unitPosX = units[i].transform.position.x;
@@ -365,14 +367,13 @@ public class InputManager : MonoBehaviour
                 {
                     selectedInfo = units[i].GetComponent<Selection>();
                     unitScript = units[i].GetComponent<UnitController>();
+                    unitAudio = selectedInfo.GetComponent<AudioSource>();
 
                     if(!unitScript.isDead) {
                         isSelected = true;
 
                         selectedInfo.selected = true;
                         selectedInfo.transform.GetChild(2).gameObject.SetActive(true);
-
-                        unitAudio = selectedInfo.GetComponent<AudioSource>();
 
                         unitAudio.clip = unitAudioClip;
                         unitAudio.maxDistance = 100000;
@@ -382,10 +383,13 @@ public class InputManager : MonoBehaviour
                         } else if (unitScript.unitType == "Footman") {
                             UI.FootmanSelect();
                         }
-                        unitAudio.Play();
+                        inSelectionBox = true;
                     }
-
                 }
+            }
+
+            if(inSelectionBox) {
+                unitAudio.Play();
             }
         }
     }
@@ -506,51 +510,55 @@ public class InputManager : MonoBehaviour
                 }
                 else if (Input.GetKey(KeyCode.LeftShift))
                 {
-                    selectedInfo.selected = true;
-
-                    // Selection indicators
-                    selectedObj.transform.GetChild(2).gameObject.SetActive(true);
-                    unitAudio = selectedObj.GetComponent<AudioSource>();
-                    unitAudio.clip = unitAudioClip;
-                    unitAudio.maxDistance = 100000;
-                    unitAudio.Play();
                     if(!unitScript.isDead) {
-                        isSelected = true;
-                    }
+                        selectedInfo.selected = true;
 
-                    if(unitScript.unitType == "Worker") {
-                        UI.VillagerSelect();
-                    } else if (unitScript.unitType == "Footman") {
-                        UI.FootmanSelect();
+                        // Selection indicators
+                        selectedObj.transform.GetChild(2).gameObject.SetActive(true);
+                        unitAudio = selectedObj.GetComponent<AudioSource>();
+                        unitAudio.clip = unitAudioClip;
+                        unitAudio.maxDistance = 100000;
+                        unitAudio.Play();
+                        if(!unitScript.isDead) {
+                            isSelected = true;
+                        }
+
+                        if(unitScript.unitType == "Worker") {
+                            UI.VillagerSelect();
+                        } else if (unitScript.unitType == "Footman") {
+                            UI.FootmanSelect();
+                        }
                     }
                 }
                 else
                 {
-                    GameObject[] selectedIndicators = GameObject.FindGameObjectsWithTag("SelectedIndicator");
-                    for (int j = 0; j < selectedIndicators.Length; j++)
-                    {
-                        // Turns the unit selection indicator off
-                        selectedIndicators[j].transform.gameObject.SetActive(false);
-
-                        // Deselects the unit
-                        selectedIndicators[j].transform.parent.GetComponent<Selection>().selected = false;
-                    }
-
-                    selectedInfo.selected = true;
-
-                    // Selection indicators
-                    selectedObj.transform.GetChild(2).gameObject.SetActive(true);
-                    unitAudio = selectedObj.GetComponent<AudioSource>();
-                    unitAudio.clip = unitAudioClip;
-                    unitAudio.maxDistance = 100000;
-                    unitAudio.Play();
                     if(!unitScript.isDead) {
-                        isSelected = true;
-                    }
-                    if(unitScript.unitType == "Worker") {
-                        UI.VillagerSelect();
-                    } else if (unitScript.unitType == "Footman") {
-                        UI.FootmanSelect();
+                        GameObject[] selectedIndicators = GameObject.FindGameObjectsWithTag("SelectedIndicator");
+                        for (int j = 0; j < selectedIndicators.Length; j++)
+                        {
+                            // Turns the unit selection indicator off
+                            selectedIndicators[j].transform.gameObject.SetActive(false);
+
+                            // Deselects the unit
+                            selectedIndicators[j].transform.parent.GetComponent<Selection>().selected = false;
+                        }
+
+                        selectedInfo.selected = true;
+
+                        // Selection indicators
+                        selectedObj.transform.GetChild(2).gameObject.SetActive(true);
+                        unitAudio = selectedObj.GetComponent<AudioSource>();
+                        unitAudio.clip = unitAudioClip;
+                        unitAudio.maxDistance = 100000;
+                        unitAudio.Play();
+                        if(!unitScript.isDead) {
+                            isSelected = true;
+                        }
+                        if(unitScript.unitType == "Worker") {
+                            UI.VillagerSelect();
+                        } else if (unitScript.unitType == "Footman") {
+                            UI.FootmanSelect();
+                        }
                     }
                 }
             }
