@@ -365,21 +365,25 @@ public class InputManager : MonoBehaviour
                 {
                     selectedInfo = units[i].GetComponent<Selection>();
                     unitScript = units[i].GetComponent<UnitController>();
-                    isSelected = true;
-                    selectedInfo.selected = true;
-                    selectedInfo.transform.GetChild(2).gameObject.SetActive(true);
 
-                    unitAudio = selectedInfo.GetComponent<AudioSource>();
+                    if(!unitScript.isDead) {
+                        isSelected = true;
 
-                    unitAudio.clip = unitAudioClip;
-                    unitAudio.maxDistance = 100000;
-                    if(unitScript.unitType == "Worker") {
-                        unitAudio.volume = 0.5f;
-                        UI.VillagerSelect();
-                    } else if (unitScript.unitType == "Footman") {
-                        UI.FootmanSelect();
+                        selectedInfo.selected = true;
+                        selectedInfo.transform.GetChild(2).gameObject.SetActive(true);
+
+                        unitAudio = selectedInfo.GetComponent<AudioSource>();
+
+                        unitAudio.clip = unitAudioClip;
+                        unitAudio.maxDistance = 100000;
+                        if(unitScript.unitType == "Worker") {
+                            unitAudio.volume = 0.5f;
+                            UI.VillagerSelect();
+                        } else if (unitScript.unitType == "Footman") {
+                            UI.FootmanSelect();
+                        }
+                        unitAudio.Play();
                     }
-                    unitAudio.Play();
 
                 }
             }
@@ -510,7 +514,9 @@ public class InputManager : MonoBehaviour
                     unitAudio.clip = unitAudioClip;
                     unitAudio.maxDistance = 100000;
                     unitAudio.Play();
-                    isSelected = true;
+                    if(!unitScript.isDead) {
+                        isSelected = true;
+                    }
 
                     if(unitScript.unitType == "Worker") {
                         UI.VillagerSelect();
@@ -538,7 +544,9 @@ public class InputManager : MonoBehaviour
                     unitAudio.clip = unitAudioClip;
                     unitAudio.maxDistance = 100000;
                     unitAudio.Play();
-                    isSelected = true;
+                    if(!unitScript.isDead) {
+                        isSelected = true;
+                    }
                     if(unitScript.unitType == "Worker") {
                         UI.VillagerSelect();
                     } else if (unitScript.unitType == "Footman") {

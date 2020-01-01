@@ -81,35 +81,38 @@ public class NPCController : MonoBehaviour
         agent.speed = agentSpeed / 2;
         
         GameObject currentTarget = GetClosestEnemy(playerunits);
-        if (currentTarget != null && Vector3.Distance(transform.position, currentTarget.transform.position) < aggroRange)
-        {
-            selection.targetNode = currentTarget;
-            Debug.Log("Enemy " + currentTarget.GetComponent<UnitController>().unitType + " spotted!");
-            float dist = Vector3.Distance(agent.transform.position, currentTarget.transform.position);
-            agent.destination = currentTarget.transform.position;
-            agent.speed = agentSpeed;
-            selection.isFollowing = true;
 
-            if(dist < UC.attackRange && currentTarget != null) {
-                selection.isMeleeing = true;
-                enemy = currentTarget;
-                if(!currentlyMeleeing && enemy != null) {
-                    StartCoroutine(NPCAttack());
+        if(!currentTarget.GetComponent<UnitController>().isDead) {
+            if (currentTarget != null && Vector3.Distance(transform.position, currentTarget.transform.position) < aggroRange)
+            {
+                selection.targetNode = currentTarget;
+                Debug.Log("Enemy " + currentTarget.GetComponent<UnitController>().unitType + " spotted!");
+                float dist = Vector3.Distance(agent.transform.position, currentTarget.transform.position);
+                agent.destination = currentTarget.transform.position;
+                agent.speed = agentSpeed;
+                selection.isFollowing = true;
+
+                if(dist < UC.attackRange && currentTarget != null) {
+                    selection.isMeleeing = true;
+                    enemy = currentTarget;
+                    if(!currentlyMeleeing && enemy != null && !enemy.GetComponent<UnitController>().isDead) {
+                        StartCoroutine(NPCAttack());
+                    }
+                } else {
+                    Debug.Log("No enemies");
+                    currentlyMeleeing = false;
+                    selection.isMeleeing = false;
+                    selection.isFollowing = false;
                 }
-            } else {
-                Debug.Log("No enemies");
+            } else if (currentTarget == null) {
                 currentlyMeleeing = false;
                 selection.isMeleeing = false;
                 selection.isFollowing = false;
             }
-        } else if (currentTarget == null) {
-            currentlyMeleeing = false;
-            selection.isMeleeing = false;
-            selection.isFollowing = false;
         }
     }
 
-        // Find the closest dropoff after gathering and go there
+        // Find the closest enemy
     GameObject GetClosestEnemy(GameObject[] enemies)
     {
         GameObject closestEnemy = null;
@@ -119,11 +122,13 @@ public class NPCController : MonoBehaviour
         foreach(GameObject targetEnemy in enemies)
         {
             Vector3 direction = targetEnemy.transform.position - position;
-            float distance = direction.sqrMagnitude;
-            if(distance < closestDistance)
-            {
-                closestDistance = distance;
-                closestEnemy = targetEnemy;
+            if(!targetEnemy.GetComponent<UnitController>().isDead) {
+                float distance = direction.sqrMagnitude;
+                if(distance < closestDistance)
+                {
+                    closestDistance = distance;
+                    closestEnemy = targetEnemy;
+                }
             }
         }
         return closestEnemy;
@@ -134,7 +139,7 @@ public class NPCController : MonoBehaviour
         currentlyMeleeing = true;
 
         while(selection.isMeleeing) {      
-        enemy = selection.targetNode;
+            enemy = selection.targetNode;
             if(enemy == null) {
                 currentlyMeleeing = false;
                 selection.isMeleeing = false;
@@ -142,14 +147,20 @@ public class NPCController : MonoBehaviour
                 break;
             } else {
                 enemyUC = enemy.GetComponent<UnitController>();    
-            }               
+                if(enemyUC.isDead) {
+                    currentlyMeleeing = false;
+                    selection.isMeleeing = false;
+                    selection.isFollowing = false;
+                    break;
+                }   
+            } 
+
             if(UC.unitType == "Worker") {
                 UC.unitAudio = agent.GetComponent<AudioSource>();
                 UC.unitAudio.clip = UC.woodChop;
                 UC.unitAudio.maxDistance = 55;
                 UC.unitAudio.Play();
             } else if (UC.unitType == "Footman") {
-
                 AudioClip[] metalAttacks = new AudioClip[4]{ UC.metalChop, UC.metalChop2, UC.metalChop3, UC.metalChop4};
                 UC.unitAudio = agent.GetComponent<AudioSource>();
                     
@@ -158,10 +169,9 @@ public class NPCController : MonoBehaviour
                 UC.unitAudio.maxDistance = 55;
                 UC.unitAudio.Play();
             }
-            Debug.Log(enemyUC.health);
-            Debug.Log(enemy);
             enemyUC.health -= UC.attackDamage;
             enemyHealth = enemyUC.health;
+            Debug.Log("Hi1");
             yield return new WaitForSeconds(UC.attackSpeed);
         }
     }

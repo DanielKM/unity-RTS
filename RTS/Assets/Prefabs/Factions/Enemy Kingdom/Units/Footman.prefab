@@ -473,13 +473,14 @@ MonoBehaviour:
   weapon: Sword
   armour: Plate
   items: Sweet Plume
-  health: 200
-  maxHealth: 200
+  health: 300
+  maxHealth: 300
   energy: 100
   maxEnergy: 100
   attackDamage: 40
   attackRange: 2
   attackSpeed: 1
+  aggroRange: 10
   gold: 500
   wood: 0
   food: 200
@@ -497,6 +498,7 @@ MonoBehaviour:
   isBuilding: 0
   isGathering: 0
   isMeleeing: 0
+  currentlyMeleeing: 0
   unitIcon: {fileID: 21300000, guid: 306d55d36efa3c24b90770585090620e, type: 3}
 --- !u!114 &9113625356773968908
 MonoBehaviour:
@@ -543,6 +545,7 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
+  currentlyMeleeing: 0
 --- !u!1 &9113625355995500986
 GameObject:
   m_ObjectHideFlags: 0

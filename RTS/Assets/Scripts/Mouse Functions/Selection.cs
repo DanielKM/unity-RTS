@@ -61,7 +61,7 @@ public class Selection : MonoBehaviour
     void Update()
     {
 
-        if(UC.unitType == "Worker") {
+        if(UC.unitType == "Worker" && !UC.isDead) {
             // if target node is destroyed
             if (targetNode == null)
             {
@@ -148,7 +148,7 @@ public class Selection : MonoBehaviour
             targetNode = hit.collider.gameObject;
             targetScript = targetNode.GetComponent<Selection>();
             if(owner == player) {     
-                if(UC.unitType == "Worker") {
+                if(UC.unitType == "Worker" && !UC.isDead) {
                     if (hit.collider.tag != "Yard")
                     {
                         // For following friends and enemies
