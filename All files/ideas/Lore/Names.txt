@@ -20,6 +20,11 @@ summer
 fall
 spring
 
+wise
+
+broom
+staff
+
 Hillard
 Axel
 Mitch

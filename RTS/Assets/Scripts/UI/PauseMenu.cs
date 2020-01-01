@@ -24,18 +24,18 @@ public class PauseMenu : MonoBehaviour
 
     public void PauseGame()
     {
-        pauseMenu.SetActive(true);
-        // Slow MO?
         Time.timeScale = 0f;
         gamePaused = true;
+        pauseMenu.SetActive(true);
+        // Slow MO?
     }
 
     public void ResumeGame()
     {
+        gamePaused = false;
+        Time.timeScale = 1f;
         pauseMenu.SetActive(false);
         // Slow MO?
-        Time.timeScale = 1f;
-        gamePaused = false;
     }
 
     public void QuitGame()
