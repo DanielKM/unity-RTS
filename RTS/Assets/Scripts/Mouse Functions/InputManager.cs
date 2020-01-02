@@ -379,7 +379,9 @@ public class InputManager : MonoBehaviour
                         unitAudio.maxDistance = 100000;
                         if(unitScript.unitType == "Worker") {
                             unitAudio.volume = 0.5f;
-                            UI.VillagerSelect();
+                            UI.WorkerSelect();
+                        } else if (unitScript.unitType == "Swordsman") {
+                            UI.SwordsmanSelect();
                         } else if (unitScript.unitType == "Footman") {
                             UI.FootmanSelect();
                         }
@@ -524,7 +526,9 @@ public class InputManager : MonoBehaviour
                         }
 
                         if(unitScript.unitType == "Worker") {
-                            UI.VillagerSelect();
+                            UI.WorkerSelect();
+                        } else if (unitScript.unitType == "Swordsman") {
+                            UI.SwordsmanSelect();
                         } else if (unitScript.unitType == "Footman") {
                             UI.FootmanSelect();
                         }
@@ -554,8 +558,11 @@ public class InputManager : MonoBehaviour
                         if(!unitScript.isDead) {
                             isSelected = true;
                         }
+
                         if(unitScript.unitType == "Worker") {
-                            UI.VillagerSelect();
+                            UI.WorkerSelect();
+                        } else if (unitScript.unitType == "Swordsman") {
+                            UI.SwordsmanSelect();
                         } else if (unitScript.unitType == "Footman") {
                             UI.FootmanSelect();
                         }
@@ -653,7 +660,11 @@ public class InputManager : MonoBehaviour
 
         } else if (buildingScript.unitType == "Barracks")
         {
-            progressIcon.sprite = barracksScript.footmanPrefab.GetComponent<UnitController>().unitIcon;
+            if(buildingScript.GetComponent<BarracksController>().unit == "Footman") {
+                progressIcon.sprite = barracksScript.footmanPrefab.GetComponent<UnitController>().unitIcon;
+            } else if (buildingScript.GetComponent<BarracksController>().unit == "Swordsman") {
+                progressIcon.sprite = barracksScript.swordsmanPrefab.GetComponent<UnitController>().unitIcon;
+            }
 
         } else if (buildingScript.tag == "Foundation")
         {

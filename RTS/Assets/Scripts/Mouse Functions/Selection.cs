@@ -147,7 +147,7 @@ public class Selection : MonoBehaviour
         {
             targetNode = hit.collider.gameObject;
             targetScript = targetNode.GetComponent<Selection>();
-            if(owner == player  && !UC.isDead) {     
+            if(owner == player && !UC.isDead) {     
                 if(UC.unitType == "Worker") {
                     if (hit.collider.tag != "Yard")
                     {
@@ -201,7 +201,32 @@ public class Selection : MonoBehaviour
                     unitAudio.clip = unitMoveClip;
                     unitAudio.maxDistance = 100000;
                     unitAudio.Play();
-                } else if (UC.unitType == "Footman") {
+                } else if (UC.unitType == "Footman" || UC.unitType == "Swordsman") {
+                    if(targetScript != null) {
+                        agent.destination = hit.collider.gameObject.transform.position;
+                        isFollowing = true;
+                        StartCoroutine(Follow());
+                    }
+                    else if (hit.collider.tag == "Ground")
+                    {
+                        isBuilding = false;
+                        isGathering = false;
+                        isMeleeing = false;
+                        task = Tasklist.Moving;
+                        agent.destination = hit.point;
+                    }
+                    else if (hit.collider.tag == "Doorway")
+                    {
+                        Debug.Log("Smashing down that door, Sir!");
+                    } 
+                    else {
+                        agent.destination = hit.collider.gameObject.transform.position;
+                    }
+                    unitAudio = agent.GetComponent<AudioSource>();
+                    unitAudio.clip = unitMoveClip;
+                    unitAudio.maxDistance = 100000;
+                    unitAudio.Play();
+                } else if (UC.unitType == "Footman" || UC.unitType == "Swordsman") {
                     if(targetScript != null) {
                         agent.destination = hit.collider.gameObject.transform.position;
                         isFollowing = true;
@@ -567,8 +592,10 @@ public class Selection : MonoBehaviour
         } 
 
         while(isFollowing) {
-            if(targetNode == null) {
+            // Debug.Log(targetNode.GetComponent<UnitController>().isDead);
+            if(targetNode == null || targetNode.GetComponent<UnitController>().isDead) {
                 isMeleeing = false;
+                isAttacking = false;
                 isFollowing = false;
                 break;
             }

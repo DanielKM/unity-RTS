@@ -87,7 +87,7 @@ public class NPCController : MonoBehaviour
                 if (currentTarget != null && Vector3.Distance(transform.position, currentTarget.transform.position) < aggroRange)
                 {
                     selection.targetNode = currentTarget;
-                    Debug.Log("Enemy " + currentTarget.GetComponent<UnitController>().unitType + " spotted!");
+                    // Debug.Log("Enemy " + currentTarget.GetComponent<UnitController>().unitType + " spotted!");
                     float dist = Vector3.Distance(agent.transform.position, currentTarget.transform.position);
                     agent.destination = currentTarget.transform.position;
                     agent.speed = agentSpeed;
@@ -96,17 +96,18 @@ public class NPCController : MonoBehaviour
                     if(dist < UC.attackRange && currentTarget != null) {
                         selection.isMeleeing = true;
                         enemy = currentTarget;
-                        if(!currentlyMeleeing && enemy != null && !enemy.GetComponent<UnitController>().isDead) {
+                        if(!currentlyMeleeing && !enemy.GetComponent<UnitController>().isDead) {
                             StartCoroutine(NPCAttack());
                         }
-                    } else {
-                        Debug.Log("No enemies");
+                    } else if (dist < UC.attackRange && currentTarget == null) {
                         currentlyMeleeing = false;
+                        selection.isAttacking = false;
                         selection.isMeleeing = false;
                         selection.isFollowing = false;
                     }
                 } else if (currentTarget == null) {
                     currentlyMeleeing = false;
+                    selection.isAttacking = false;
                     selection.isMeleeing = false;
                     selection.isFollowing = false;
                 }
@@ -123,8 +124,8 @@ public class NPCController : MonoBehaviour
 
         foreach(GameObject targetEnemy in enemies)
         {
-            Vector3 direction = targetEnemy.transform.position - position;
             if(!targetEnemy.GetComponent<UnitController>().isDead) {
+                Vector3 direction = targetEnemy.transform.position - position;
                 float distance = direction.sqrMagnitude;
                 if(distance < closestDistance)
                 {
@@ -162,7 +163,7 @@ public class NPCController : MonoBehaviour
                 UC.unitAudio.clip = UC.woodChop;
                 UC.unitAudio.maxDistance = 55;
                 UC.unitAudio.Play();
-            } else if (UC.unitType == "Footman") {
+            } else if (UC.unitType == "Footman" || UC.unitType == "Swordsman") {
                 AudioClip[] metalAttacks = new AudioClip[4]{ UC.metalChop, UC.metalChop2, UC.metalChop3, UC.metalChop4};
                 UC.unitAudio = agent.GetComponent<AudioSource>();
                     

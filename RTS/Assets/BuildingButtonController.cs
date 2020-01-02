@@ -13,10 +13,12 @@ public class BuildingButtonController : MonoBehaviour
 
     public Button buttonOne;
     public Button barracksButtonOne;
+    public Button barracksButtonTwo;
 
     public AudioSource playerAudio;
     public AudioClip trainVillagerAudio;
     public AudioClip trainFootmanAudio;
+    public AudioClip trainSwordsmanAudio;
 
     public GameObject villager;
 
@@ -37,7 +39,9 @@ public class BuildingButtonController : MonoBehaviour
 
     InputManager inputScript;
     BuildingController buildingScript;
+
     UnitController footmanUC;
+    UnitController swordsmanUC;
     UnitController villagerUC;
 
     public GameObject selectedObj;
@@ -47,6 +51,7 @@ public class BuildingButtonController : MonoBehaviour
     private float spawnDelay;
 
     // Trained units
+    public GameObject swordsmanPrefab;
     public GameObject footmanPrefab;
     public GameObject villagerPrefab;
 
@@ -64,6 +69,7 @@ public class BuildingButtonController : MonoBehaviour
         BuildingActionPanel = GameObject.Find("BuildingActions").GetComponent<CanvasGroup>();
 
         // Trained units
+        swordsmanUC = swordsmanPrefab.GetComponent<UnitController>();
         footmanUC = footmanPrefab.GetComponent<UnitController>();
         villagerUC = villagerPrefab.GetComponent<UnitController>();
 
@@ -73,7 +79,8 @@ public class BuildingButtonController : MonoBehaviour
         UI = player.GetComponent<UIController>();
 
         buttonOne.onClick.AddListener(HireVillager);
-        barracksButtonOne.onClick.AddListener(HireFootman);
+        barracksButtonOne.onClick.AddListener(HireSwordsman);
+        barracksButtonTwo.onClick.AddListener(HireFootman);
         // blacksmithText = barracksButtonOne.GetComponentsInChildren<Text>();
         // blacksmithText[0].text = "Train Footman \r\n" + "\r\n" + "\r\n" + footmanUC.gold + "\r\n" + footmanUC.food + "\r\n" + footmanUC.iron + "\r\n";
 
@@ -110,6 +117,35 @@ public class BuildingButtonController : MonoBehaviour
             townHallScript.HireVillager();
         }
         else 
+        {
+            UI.noResourcesText.SetActive(true);
+            StartCoroutine(Wait());
+        }
+    }
+
+    void HireSwordsman()
+    {
+         if (RM.gold >= swordsmanUC.gold && RM.wood >= swordsmanUC.wood && RM.food >= swordsmanUC.food && RM.iron >= swordsmanUC.iron && RM.steel >= swordsmanUC.steel && RM.skymetal >= swordsmanUC.skymetal && RM.stone >= swordsmanUC.stone && RM.housing < RM.maxHousing)
+        {
+            UI.BarracksTraining();
+            RM.gold -= swordsmanUC.gold;
+            RM.wood -= swordsmanUC.wood;
+            RM.food -= swordsmanUC.food;
+            RM.iron -= swordsmanUC.iron;
+            RM.steel -= swordsmanUC.steel;
+            RM.skymetal -= swordsmanUC.skymetal;
+            RM.stone -= swordsmanUC.stone;
+            RM.housing += 1;
+            selectedObj = inputScript.selectedObj;
+            barracksScript = selectedObj.GetComponent<BarracksController>();
+            buildingScript = selectedObj.GetComponent<BuildingController>();
+           
+          //  spawnPosition = new Vector3(buildingScript.location.x, buildingScript.location.y, buildingScript.location.z +50f);
+            playerAudio.clip = trainSwordsmanAudio;
+            playerAudio.Play();
+            barracksScript.HireSwordsman();
+        } 
+        else   
         {
             UI.noResourcesText.SetActive(true);
             StartCoroutine(Wait());

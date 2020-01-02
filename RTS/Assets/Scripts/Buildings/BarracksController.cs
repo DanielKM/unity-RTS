@@ -7,17 +7,28 @@ using UnityEngine.UI;
 public class BarracksController : MonoBehaviour
 {
     UIController UI;
+    // footmen names
     string[] footmen = new string[14]{ "Bron", "Darek", "Krom", "Turin", "Zerk", "Rua", "Vos", "Barros", "Braxis", "Kraye", "Sloa", "Kolin", "Kaleb", "Arvan"};
     string[] firstNames = new string[14]{ "Aubrey", "Braum", "Braxis", "Davin", "Garen", "Oren", "Gavin", "Derek", "Kevan", "Stephen", "David", "Ruan", "Edward", "Marcus"};
 
     string[] lastNameFirst = new string[14]{ "Foe", "Strong", "Ox", "Deer", "Swift", "Bright", "Light", "Dark", "Fire", "Shade", "Stout", "Quick", "Moose", "Dread"};
     string[] lastNameSecond = new string[14]{ "hammer", "fist", "bridge", "wind", "blade", "spear", "shield", "bane", "sheen", "whip", "strike", "stone", "wind", "arm"};
 
+    string[] SMFirstNames = new string[14]{ "Aubrey", "Braum", "Braxis", "Davin", "Garen", "Oren", "Gavin", "Derek", "Kevan", "Stephen", "David", "Ruan", "Edward", "Marcus"};
+
+    string[] SMLastNameFirst = new string[14]{ "Foe", "Fear", "Doom", "Gloom", "Dusk", "Dawn", "Light", "Dark", "Hope", "Swift", "Summer", "Winter", "Fall", "Tall"};
+    string[] SMLastNameSecond = new string[14]{ "arm", "fist", "biter", "slayer", "hammer", "fighter", "shield", "crusher", "shredder", "rune", "strike", "stone", "wind", "arm"};
+
+
     private float nextSpawnTime;
     public int i = 0;
 
+    public GameObject swordsmanPrefab;
     public GameObject footmanPrefab;
+
+    private AudioSource swordsmanAudio;
     private AudioSource footmanAudio;
+    public AudioClip swordsmanReporting;
     public AudioClip footmanReporting;
 
     [SerializeField]
@@ -26,12 +37,14 @@ public class BarracksController : MonoBehaviour
 
     GameObject player;
     InputManager inputScript;
+    Selection swordsmanSelection;
     Selection footmanSelection;
     BuildingController buildingScript;
 
     public GameObject selectedObj;
     private Vector3 spawnPosition;
     public bool isTraining;
+    public string unit;
 
     //Progress bar
     private GameObject VillagerProgressBar;
@@ -66,21 +79,23 @@ public class BarracksController : MonoBehaviour
         //}
     }
 
+    public void HireSwordsman()
+    {
+        selectedObj = inputScript.selectedObj;
+        buildingScript = selectedObj.GetComponent<BuildingController>();
+        unit = "Swordsman";
+        StartCoroutine(Train());
+    }
+
     public void HireFootman()
     {
         selectedObj = inputScript.selectedObj;
         buildingScript = selectedObj.GetComponent<BuildingController>();
-
-        StartCoroutine(FootmanSpawn());
+        unit = "Footman";
+        StartCoroutine(Train());
     }
 
-    private void Spawn()
-    {
-        nextSpawnTime = Time.time + spawnDelay;
-        Instantiate(footmanPrefab, transform.position, transform.rotation);
-    }
-
-    IEnumerator FootmanSpawn() 
+    IEnumerator Train() 
     {
         isTraining = true;
         selectedObj = inputScript.selectedObj;
@@ -88,25 +103,45 @@ public class BarracksController : MonoBehaviour
         spawnPosition = new Vector3(buildingScript.location.x, buildingScript.location.y, buildingScript.location.z - 5f);
         nextSpawnTime = Time.time + spawnDelay;
 
+        if(unit == "Footman") {
+            var iteration1 = Random.Range(0, firstNames.Length);
+            var iteration2 = Random.Range(0, lastNameFirst.Length);
+            var iteration3 = Random.Range(0, lastNameSecond.Length);
+            progressIcon = GameObject.Find("ProgressIcon").GetComponent<Image>();
+            progressIcon.sprite = footmanPrefab.GetComponent<UnitController>().unitIcon;
+            footmanPrefab.GetComponent<UnitController>().unitName = firstNames[iteration1] + " " + lastNameFirst[iteration2] + lastNameSecond[iteration3];
+            footmanSelection = footmanPrefab.GetComponent<Selection>();
+            footmanSelection.owner = player;
+
+            Instantiate(footmanPrefab, spawnPosition, Quaternion.identity);
+            footmanAudio = selectedObj.GetComponent<AudioSource>();
+            footmanAudio.clip = footmanReporting;
+        } else if (unit == "Swordsman") {
+            var iteration1 = Random.Range(0, SMFirstNames.Length);
+            var iteration2 = Random.Range(0, SMLastNameFirst.Length);
+            var iteration3 = Random.Range(0, SMLastNameSecond.Length);
+            progressIcon = GameObject.Find("ProgressIcon").GetComponent<Image>();
+            progressIcon.sprite = swordsmanPrefab.GetComponent<UnitController>().unitIcon;
+            swordsmanPrefab.GetComponent<UnitController>().unitName = SMFirstNames[iteration1] + " " + SMLastNameFirst[iteration2] + SMLastNameSecond[iteration3];
+            swordsmanSelection = swordsmanPrefab.GetComponent<Selection>();
+            swordsmanSelection.owner = player;
+
+            Instantiate(swordsmanPrefab, spawnPosition, Quaternion.identity);
+            swordsmanAudio = selectedObj.GetComponent<AudioSource>();
+            swordsmanAudio.clip = swordsmanReporting;
+            swordsmanAudio.Play();
+        }
         for (i = 1; i < 11; i++)
         {
             yield return new WaitForSeconds(1);
         }
+
+        if(unit == "Footman") {
+            footmanAudio.Play();
+        } else if (unit == "Swordsman") {
+            swordsmanAudio.Play();
+        }
         isTraining = false;
-
-        var iteration1 = Random.Range(0, firstNames.Length);
-        var iteration2 = Random.Range(0, lastNameFirst.Length);
-        var iteration3 = Random.Range(0, lastNameSecond.Length);
-        progressIcon = GameObject.Find("ProgressIcon").GetComponent<Image>();
-        progressIcon.sprite = footmanPrefab.GetComponent<UnitController>().unitIcon;
-        footmanPrefab.GetComponent<UnitController>().unitName = firstNames[iteration1] + " " + lastNameFirst[iteration2] + lastNameSecond[iteration3];
-        footmanSelection = footmanPrefab.GetComponent<Selection>();
-        footmanSelection.owner = player;
-
-        Instantiate(footmanPrefab, spawnPosition, Quaternion.identity);
-        footmanAudio = selectedObj.GetComponent<AudioSource>();
-        footmanAudio.clip = footmanReporting;
-        footmanAudio.Play();
         // UI.BarracksSelect();
     }
 }

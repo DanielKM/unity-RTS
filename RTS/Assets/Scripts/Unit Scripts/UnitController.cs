@@ -65,10 +65,7 @@ public class UnitController : MonoBehaviour
 
     NodeManager.ResourceTypes resourceType;
     public int heldResource;
-
-    public bool isBuilding;
-    public bool isGathering;
-    public bool isMeleeing;
+    
     public bool currentlyMeleeing;
 
     public bool isDead;
@@ -107,7 +104,7 @@ public class UnitController : MonoBehaviour
                 selection.isFollowing = false;
                 selection.isAttacking = false;
                 selection.isMeleeing = false;
-            } else if(unitType == "Footman") {
+            } else if(unitType == "Footman" || unitType == "Swordsman") {
                 anim.SetInteger("condition", 10);
                 isDead = true;
                 agent.destination = gameObject.transform.position;
@@ -122,6 +119,7 @@ public class UnitController : MonoBehaviour
             }
             RM.housing -= 1.0f;
         }
+
         if(!isDead) {
             resourceType = selection.heldResourceType;
             heldResource = selection.heldResource;
@@ -130,37 +128,33 @@ public class UnitController : MonoBehaviour
             anim.SetFloat("Speed", agent.velocity.magnitude);
             newTask = selection.task;
 
-            isBuilding = selection.isBuilding;
-            isGathering = selection.isGathering;
-            isMeleeing = selection.isMeleeing;
-            
             // Setting animation state
             if(unitType == "Worker") {
                 if(heldResource > 0) {
                     if(resourceType == NodeManager.ResourceTypes.Wood) {
-                        if(isBuilding && newTask == Tasklist.Building || isGathering && newTask == Tasklist.Gathering || isMeleeing) {
+                        if(selection.isBuilding && newTask == Tasklist.Building || selection.isGathering && newTask == Tasklist.Gathering || selection.isMeleeing) {
                             anim.SetInteger("condition", 5);
-                        } else if (!isBuilding && !isGathering || newTask != Tasklist.Building && newTask != Tasklist.Gathering) {
+                        } else if (!selection.isBuilding && !selection.isGathering || newTask != Tasklist.Building && newTask != Tasklist.Gathering) {
                             anim.SetInteger("condition", 4);
                         }
                     } else {
-                        if(isBuilding && newTask == Tasklist.Building || isGathering && newTask == Tasklist.Gathering || isMeleeing) {
+                        if(selection.isBuilding && newTask == Tasklist.Building || selection.isGathering && newTask == Tasklist.Gathering || selection.isMeleeing) {
                             anim.SetInteger("condition", 3);
-                        } else if (!isBuilding && !isGathering || newTask != Tasklist.Building && newTask != Tasklist.Gathering) {
+                        } else if (!selection.isBuilding && !selection.isGathering || newTask != Tasklist.Building && newTask != Tasklist.Gathering) {
                             anim.SetInteger("condition", 2);
                         }
                     }
                 } else {
-                    if(isBuilding && newTask == Tasklist.Building || isGathering && newTask == Tasklist.Gathering || isMeleeing) {
+                    if(selection.isBuilding && newTask == Tasklist.Building || selection.isGathering && newTask == Tasklist.Gathering || selection.isMeleeing) {
                         anim.SetInteger("condition", 1);
-                    } else if (!isBuilding && !isGathering || newTask != Tasklist.Building && newTask != Tasklist.Gathering) {
+                    } else if (!selection.isBuilding && !selection.isGathering || newTask != Tasklist.Building && newTask != Tasklist.Gathering) {
                         anim.SetInteger("condition", 0);
                     }
                 }
-            } else if (unitType == "Footman") {
-                if(isMeleeing) {
+            } else if (unitType == "Footman" || unitType == "Swordsman") {
+                if(selection.isMeleeing) {
                     anim.SetInteger("condition", 1);
-                } else if (!isMeleeing) {
+                } else if (!selection.isMeleeing ) {
                     anim.SetInteger("condition", 0);
                 }
             }
@@ -188,19 +182,18 @@ public class UnitController : MonoBehaviour
                     if (currentTarget != null && Vector3.Distance(transform.position, currentTarget.transform.position) < aggroRange)
                     {
                         selection.targetNode = currentTarget;
-                        Debug.Log("Enemy " + currentTarget.GetComponent<UnitController>().unitType + " spotted!");
+                        // Debug.Log("Enemy " + currentTarget.GetComponent<UnitController>().unitType + " spotted!");
                         float dist = Vector3.Distance(agent.transform.position, currentTarget.transform.position);
                         agent.destination = currentTarget.transform.position;
                         selection.isFollowing = true;
 
-                        if(dist < attackRange && currentTarget != null) {
+                        if(dist < attackRange && currentTarget != null && !currentTarget.GetComponent<UnitController>().isDead) {
                             selection.isMeleeing = true;
                             enemy = currentTarget;
                             if(!currentlyMeleeing && enemy != null) {
                                 StartCoroutine(Attack());
                             }
                         } else {
-                            Debug.Log("No enemies");
                             currentlyMeleeing = false;
                             selection.isMeleeing = false;
                             selection.isFollowing = false;
@@ -210,6 +203,10 @@ public class UnitController : MonoBehaviour
                         selection.isMeleeing = false;
                         selection.isFollowing = false;
                     }
+                } else {
+                    currentlyMeleeing = false;
+                    selection.isMeleeing = false;
+                    selection.isFollowing = false;
                 }
             } else {
                 enemyUnits = GameObject.FindGameObjectsWithTag("Selectable");
@@ -218,7 +215,7 @@ public class UnitController : MonoBehaviour
                     if (currentTarget != null && Vector3.Distance(transform.position, currentTarget.transform.position) < aggroRange)
                     {
                         selection.targetNode = currentTarget;
-                        Debug.Log("Enemy " + currentTarget.GetComponent<UnitController>().unitType + " spotted!");
+                        // Debug.Log("Enemy " + currentTarget.GetComponent<UnitController>().unitType + " spotted!");
                         float dist = Vector3.Distance(agent.transform.position, currentTarget.transform.position);
                         agent.destination = currentTarget.transform.position;
                         selection.isFollowing = true;
@@ -230,7 +227,6 @@ public class UnitController : MonoBehaviour
                                 // StartCoroutine(Attack());
                             }
                         } else {
-                            Debug.Log("No enemies");
                             currentlyMeleeing = false;
                             selection.isMeleeing = false;
                             selection.isFollowing = false;
@@ -240,6 +236,10 @@ public class UnitController : MonoBehaviour
                         selection.isMeleeing = false;
                         selection.isFollowing = false;
                     }
+                } else {
+                    currentlyMeleeing = false;
+                    selection.isMeleeing = false;
+                    selection.isFollowing = false;
                 }
             }
         }
@@ -254,28 +254,46 @@ public class UnitController : MonoBehaviour
 
         foreach(GameObject targetEnemy in enemies)
         {
-            Vector3 direction = targetEnemy.transform.position - position;
-            float distance = direction.sqrMagnitude;
-            if(distance < closestDistance)
-            {
-                closestDistance = distance;
-                closestEnemy = targetEnemy;
+            if(!targetEnemy.GetComponent<UnitController>().isDead) {
+                Vector3 direction = targetEnemy.transform.position - position;
+                float distance = direction.sqrMagnitude;
+                if(distance < closestDistance)
+                {
+                    closestDistance = distance;
+                    closestEnemy = targetEnemy;
+                }
             }
         }
         return closestEnemy;
     }
 
     public IEnumerator Attack() {
-        enemy = selection.targetNode;
-        enemyUC = enemy.GetComponent<UnitController>();
+        currentlyMeleeing = true;
 
-        while(selection.isMeleeing) {                       
+
+        while(selection.isMeleeing) {          
+            enemy = selection.targetNode;            
+            
+            if(enemy == null) {
+                currentlyMeleeing = false;
+                selection.isMeleeing = false;
+                selection.isFollowing = false;
+                break;
+            } else {
+                enemyUC = enemy.GetComponent<UnitController>();    
+                if(enemyUC.isDead) {
+                    currentlyMeleeing = false;
+                    selection.isMeleeing = false;
+                    selection.isFollowing = false;
+                    break;
+                }   
+            }          
             if(unitType == "Worker") {
                 unitAudio = agent.GetComponent<AudioSource>();
                 unitAudio.clip = woodChop;
                 unitAudio.maxDistance = 55;
                 unitAudio.Play();
-            } else if (unitType == "Footman") {
+            } else if (unitType == "Footman" || unitType == "Swordsman") {
                 AudioClip[] metalAttacks = new AudioClip[4]{ metalChop, metalChop2, metalChop3, metalChop4};
                 unitAudio = agent.GetComponent<AudioSource>();
                     

@@ -138,8 +138,8 @@ public class UIController : MonoBehaviour
     }
 
     // DIFFERENT STATES
-    // On villager selection
-    public void VillagerSelect() {
+    // On worker selection
+    public void WorkerSelect() {
         CloseAllPanels();
 
         UnitPanel.alpha = 1;
@@ -178,6 +178,19 @@ public class UIController : MonoBehaviour
         AdvancedBuildingsPanel.alpha = 1;
         AdvancedBuildingsPanel.blocksRaycasts = true;
         AdvancedBuildingsPanel.interactable = true;
+    }
+
+    public void SwordsmanSelect() {
+        CloseAllPanels();
+
+        UnitPanel.alpha = 1;
+        UnitPanel.blocksRaycasts = true;
+        UnitPanel.interactable = true;
+
+        panelOpen = 1;        
+        FootmanPanel.alpha = 1;
+        FootmanPanel.blocksRaycasts = true;
+        FootmanPanel.interactable = true;
     }
 
     public void FootmanSelect() {

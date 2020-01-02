@@ -88,5 +88,9 @@ public class ResourceManager : MonoBehaviour
         housing = requiredfood;
         maxHousing = houses.Length * 5;
         HousingDisp.text = "" + housing + "/" + maxHousing;
+
+        if(gold >= 5000) {
+            Debug.Log("You win: Economic victory!");
+        }
     }
 }
