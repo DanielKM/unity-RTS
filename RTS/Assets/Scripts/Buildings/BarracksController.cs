@@ -102,6 +102,7 @@ public class BarracksController : MonoBehaviour
         buildingScript = selectedObj.GetComponent<BuildingController>();
         spawnPosition = new Vector3(buildingScript.location.x, buildingScript.location.y, buildingScript.location.z - 5f);
         nextSpawnTime = Time.time + spawnDelay;
+        GameObject prefab = swordsmanPrefab;
 
         if(unit == "Footman") {
             var iteration1 = Random.Range(0, firstNames.Length);
@@ -113,9 +114,9 @@ public class BarracksController : MonoBehaviour
             footmanSelection = footmanPrefab.GetComponent<Selection>();
             footmanSelection.owner = player;
 
-            Instantiate(footmanPrefab, spawnPosition, Quaternion.identity);
             footmanAudio = selectedObj.GetComponent<AudioSource>();
             footmanAudio.clip = footmanReporting;
+            prefab = footmanPrefab;
         } else if (unit == "Swordsman") {
             var iteration1 = Random.Range(0, SMFirstNames.Length);
             var iteration2 = Random.Range(0, SMLastNameFirst.Length);
@@ -126,15 +127,17 @@ public class BarracksController : MonoBehaviour
             swordsmanSelection = swordsmanPrefab.GetComponent<Selection>();
             swordsmanSelection.owner = player;
 
-            Instantiate(swordsmanPrefab, spawnPosition, Quaternion.identity);
             swordsmanAudio = selectedObj.GetComponent<AudioSource>();
             swordsmanAudio.clip = swordsmanReporting;
-            swordsmanAudio.Play();
+            prefab = swordsmanPrefab;
         }
+
         for (i = 1; i < 11; i++)
         {
             yield return new WaitForSeconds(1);
         }
+
+        Instantiate(prefab, spawnPosition, Quaternion.identity);
 
         if(unit == "Footman") {
             footmanAudio.Play();

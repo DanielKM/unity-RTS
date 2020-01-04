@@ -65,11 +65,8 @@ public class UnitController : MonoBehaviour
 
     NodeManager.ResourceTypes resourceType;
     public int heldResource;
-    
     public bool currentlyMeleeing;
-
     public bool isDead;
-
     public Sprite unitIcon;
 
 
@@ -91,14 +88,11 @@ public class UnitController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(health <= 0) {
+        if(health <= 0) { 
+            gameObject.GetComponent<NavMeshAgent>().enabled = false;
             if(unitType == "Worker") { 
                 anim.SetInteger("condition", 10);
                 isDead = true;
-                agent.destination = gameObject.transform.position;
-                agent.radius = 0;
-                agent.height = 0;
-                agent.avoidancePriority = 1;
                 selection.isBuilding = false;
                 selection.isGathering = false;
                 selection.isFollowing = false;
@@ -107,10 +101,6 @@ public class UnitController : MonoBehaviour
             } else if(unitType == "Footman" || unitType == "Swordsman") {
                 anim.SetInteger("condition", 10);
                 isDead = true;
-                agent.destination = gameObject.transform.position;
-                agent.radius = 0;
-                agent.height = 0;
-                agent.avoidancePriority = 1;
                 selection.isBuilding = false;
                 selection.isGathering = false;
                 selection.isFollowing = false;
@@ -191,20 +181,24 @@ public class UnitController : MonoBehaviour
                             selection.isMeleeing = true;
                             enemy = currentTarget;
                             if(!currentlyMeleeing && enemy != null) {
+                                agent.destination = agent.transform.position;
                                 StartCoroutine(Attack());
                             }
                         } else {
                             currentlyMeleeing = false;
+                            selection.isAttacking = false;
                             selection.isMeleeing = false;
                             selection.isFollowing = false;
                         }
                     } else if (currentTarget == null) {
                         currentlyMeleeing = false;
+                        selection.isAttacking = false;
                         selection.isMeleeing = false;
                         selection.isFollowing = false;
                     }
                 } else {
                     currentlyMeleeing = false;
+                    selection.isAttacking = false;
                     selection.isMeleeing = false;
                     selection.isFollowing = false;
                 }
@@ -270,10 +264,8 @@ public class UnitController : MonoBehaviour
     public IEnumerator Attack() {
         currentlyMeleeing = true;
 
-
         while(selection.isMeleeing) {          
             enemy = selection.targetNode;            
-            
             if(enemy == null) {
                 currentlyMeleeing = false;
                 selection.isMeleeing = false;
@@ -302,7 +294,6 @@ public class UnitController : MonoBehaviour
                 unitAudio.maxDistance = 55;
                 unitAudio.Play();
             }
-            
             enemyUC.health -= attackDamage;
             enemyHealth = enemyUC.health;
             yield return new WaitForSeconds(attackSpeed);

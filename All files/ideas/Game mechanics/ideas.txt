@@ -2,12 +2,22 @@ Different time pieces for each faction - sun dial/hourglass etc.
 kingdom - > 20 footmen, formation/armour
 having a commander on the ground
  
+Sound: put unit confirmation into audiosource
 
 Multiplayer bonuses:
 experience
 stagnation
 conqueror
 
+Victory conditions:
+Economic
+Conquest
+base gone - hire hunters
+
+ilitary becomes workers
+
+GAMEPLAY
+Armour - UC int - prevents damage
 generals 
 heroes of might and magic - towns
 taking buildings

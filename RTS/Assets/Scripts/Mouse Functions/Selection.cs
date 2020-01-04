@@ -17,11 +17,13 @@ public class Selection : MonoBehaviour
     // Player 
     public GameObject player;
     public GameObject owner;
+    private AudioSource playerAudio;
 
     // Grab nodemanager script and harvest speed on gameobject
     FoundationController buildScript;
     float buildSpeed;
     NodeManager harvestScript;
+    InputManager IM;
     UnitController UC;
     Selection targetScript;
     float harvestSpeed;
@@ -51,9 +53,10 @@ public class Selection : MonoBehaviour
     void Start()
     {
         player = GameObject.FindGameObjectWithTag("Player");
+        playerAudio = GameObject.FindGameObjectWithTag("Main Audio").GetComponent<AudioSource>();
         RM = player.GetComponent<ResourceManager>();
+        IM = player.GetComponent<InputManager>();
         UC = GetComponent<UnitController>();
-        StartCoroutine(GatherTick());
         agent = GetComponent<NavMeshAgent>();
     }
 
@@ -106,11 +109,10 @@ public class Selection : MonoBehaviour
                 }
             }
         }
-        
         if (Input.GetMouseButtonDown(1) && selected == true)
         {
             if (!EventSystem.current.IsPointerOverGameObject(-1))
-            {
+            {   
                 RightClick();
             }
         }
@@ -197,10 +199,8 @@ public class Selection : MonoBehaviour
                     {
                         task = Tasklist.Idle;
                     }
-                    unitAudio = agent.GetComponent<AudioSource>();
-                    unitAudio.clip = unitMoveClip;
-                    unitAudio.maxDistance = 100000;
-                    unitAudio.Play();
+                    playerAudio.clip = unitMoveClip;
+                    playerAudio.Play();
                 } else if (UC.unitType == "Footman" || UC.unitType == "Swordsman") {
                     if(targetScript != null) {
                         agent.destination = hit.collider.gameObject.transform.position;
@@ -222,36 +222,9 @@ public class Selection : MonoBehaviour
                     else {
                         agent.destination = hit.collider.gameObject.transform.position;
                     }
-                    unitAudio = agent.GetComponent<AudioSource>();
-                    unitAudio.clip = unitMoveClip;
-                    unitAudio.maxDistance = 100000;
-                    unitAudio.Play();
-                } else if (UC.unitType == "Footman" || UC.unitType == "Swordsman") {
-                    if(targetScript != null) {
-                        agent.destination = hit.collider.gameObject.transform.position;
-                        isFollowing = true;
-                        StartCoroutine(Follow());
-                    }
-                    else if (hit.collider.tag == "Ground")
-                    {
-                        isBuilding = false;
-                        isGathering = false;
-                        isMeleeing = false;
-                        task = Tasklist.Moving;
-                        agent.destination = hit.point;
-                    }
-                    else if (hit.collider.tag == "Doorway")
-                    {
-                        Debug.Log("Smashing down that door, Sir!");
-                    } 
-                    else {
-                        agent.destination = hit.collider.gameObject.transform.position;
-                    }
-                    unitAudio = agent.GetComponent<AudioSource>();
-                    unitAudio.clip = unitMoveClip;
-                    unitAudio.maxDistance = 100000;
-                    unitAudio.Play();
-                }
+                    playerAudio.clip = unitMoveClip;
+                    playerAudio.Play();
+                } 
             }
         }
     }
@@ -527,6 +500,7 @@ public class Selection : MonoBehaviour
             harvestScript = targetNode.GetComponent<NodeManager>();
             harvestSpeed = harvestScript.harvestTime;
             heldResourceType = hitObject.GetComponent<NodeManager>().resourceType;
+            StartCoroutine(Tick());
         } else if (hitObject.tag == "Foundation" && hitObject.gameObject == targetNode)
         {
             isBuilding = true;
@@ -617,10 +591,10 @@ public class Selection : MonoBehaviour
             yield return new WaitForSeconds(0.2f);
         }
     }
-    // Ticks down while villager is gathering - Adjust with heldResource in GatherTick in Selection Script
-    IEnumerator GatherTick()
+    // Ticks down while villager is gathering - Adjust with heldResource in Tick in Selection Script
+    IEnumerator Tick()
     {
-        while(true)
+        while(isGathering)
         {
             yield return new WaitForSeconds(harvestSpeed);
             if(isGathering && heldResourceType == NodeManager.ResourceTypes.Skymetal)

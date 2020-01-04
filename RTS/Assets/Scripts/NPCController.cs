@@ -68,11 +68,11 @@ public class NPCController : MonoBehaviour
         animator.SetFloat("Speed", agent.velocity.magnitude);
     }
 
-    private void OnDrawGizmos()
-    {
-        Gizmos.color = Color.red;
-        Gizmos.DrawWireSphere(transform.position, aggroRange);
-    }
+    // private void OnDrawGizmos()
+    // {
+    //     Gizmos.color = Color.red;
+    //     Gizmos.DrawWireSphere(transform.position, aggroRange);
+    // }
 
     void Tick()
     {
@@ -80,7 +80,6 @@ public class NPCController : MonoBehaviour
             playerunits = GameObject.FindGameObjectsWithTag("Selectable");
             agent.destination = waypoints[index].position;
             agent.speed = agentSpeed / 2;
-            
             GameObject currentTarget = GetClosestEnemy(playerunits);
 
             if(currentTarget && !currentTarget.GetComponent<UnitController>().isDead) {
@@ -93,7 +92,7 @@ public class NPCController : MonoBehaviour
                     agent.speed = agentSpeed;
                     selection.isFollowing = true;
 
-                    if(dist < UC.attackRange && currentTarget != null) {
+                    if(dist < UC.attackRange && currentTarget != null && !currentTarget.GetComponent<UnitController>().isDead) {
                         selection.isMeleeing = true;
                         enemy = currentTarget;
                         if(!currentlyMeleeing && !enemy.GetComponent<UnitController>().isDead) {
@@ -111,6 +110,11 @@ public class NPCController : MonoBehaviour
                     selection.isMeleeing = false;
                     selection.isFollowing = false;
                 }
+            } else {
+                currentlyMeleeing = false;
+                selection.isAttacking = false;
+                selection.isMeleeing = false;
+                selection.isFollowing = false;
             }
         }
     }
@@ -138,7 +142,6 @@ public class NPCController : MonoBehaviour
     }
 
     public IEnumerator NPCAttack() {
-        
         currentlyMeleeing = true;
 
         while(selection.isMeleeing) {      
@@ -157,7 +160,6 @@ public class NPCController : MonoBehaviour
                     break;
                 }   
             } 
-
             if(UC.unitType == "Worker") {
                 UC.unitAudio = agent.GetComponent<AudioSource>();
                 UC.unitAudio.clip = UC.woodChop;

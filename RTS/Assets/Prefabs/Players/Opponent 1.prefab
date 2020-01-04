@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &6863223145430164467
+--- !u!1 &6687884576793589997
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,27 +8,27 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 6863223145430164363}
-  - component: {fileID: 6863223145430164362}
-  - component: {fileID: 6863223145430164469}
-  - component: {fileID: 6863223145430164468}
-  - component: {fileID: 6863223145430164471}
-  - component: {fileID: 6863223145430164470}
-  - component: {fileID: 6863223145430164464}
+  - component: {fileID: 6687884576793589909}
+  - component: {fileID: 6687884576793589995}
+  - component: {fileID: 6687884576793589994}
+  - component: {fileID: 6687884576793589993}
+  - component: {fileID: 6687884576793589992}
+  - component: {fileID: 6687884576793589999}
+  - component: {fileID: 6687884576793589998}
   m_Layer: 10
-  m_Name: Player 2
+  m_Name: Opponent 1
   m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &6863223145430164363
+--- !u!4 &6687884576793589909
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6863223145430164467}
+  m_GameObject: {fileID: 6687884576793589997}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
@@ -36,13 +36,13 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &6863223145430164362
+--- !u!114 &6687884576793589995
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6863223145430164467}
+  m_GameObject: {fileID: 6687884576793589997}
   m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: aa6cb78ff53c2b6459d81b2e0026e698, type: 3}
@@ -82,13 +82,13 @@ MonoBehaviour:
   townHallCount: 1
   lumberYardCount: 0
   blacksmithCount: 0
---- !u!114 &6863223145430164469
+--- !u!114 &6687884576793589994
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6863223145430164467}
+  m_GameObject: {fileID: 6687884576793589997}
   m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 0f9313fd1ff589d4c9c1a71cab43a2e1, type: 3}
@@ -163,19 +163,19 @@ MonoBehaviour:
   selectedObjects: []
   selectedInfo: {fileID: 0}
   selectedObj: {fileID: 0}
---- !u!114 &6863223145430164468
+--- !u!114 &6687884576793589993
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6863223145430164467}
+  m_GameObject: {fileID: 6687884576793589997}
   m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 376099924c689344f88e141ff1a90756, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  player: {fileID: 6863223145430164467}
+  player: {fileID: 6687884576793589997}
   building: {fileID: 0}
   isPlaceable: 0
   buttonOne: {fileID: 0}
@@ -207,41 +207,44 @@ MonoBehaviour:
   stables: {fileID: 3904504068563203642, guid: 4712f6d29236dd94a867c843fcaf0182, type: 3}
   placing: {fileID: 2100000, guid: b80600cf60ea5f447ae5cc8acb8697cd, type: 2}
   childColors: []
---- !u!114 &6863223145430164471
+--- !u!114 &6687884576793589992
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6863223145430164467}
+  m_GameObject: {fileID: 6687884576793589997}
   m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a7d9c8148aeb7814c915a46efe74b240, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  player: {fileID: 6863223145430164467}
+  player: {fileID: 6687884576793589997}
   buttonOne: {fileID: 0}
   barracksButtonOne: {fileID: 0}
+  barracksButtonTwo: {fileID: 0}
   playerAudio: {fileID: 0}
   trainVillagerAudio: {fileID: 8300000, guid: 9b5f90fda9e2648cfb0c641ed933ce78, type: 3}
   trainFootmanAudio: {fileID: 8300000, guid: 9b5f90fda9e2648cfb0c641ed933ce78, type: 3}
+  trainSwordsmanAudio: {fileID: 0}
   villager: {fileID: 4804534610097456925, guid: c2da89567b823fc44b85b9516a8e8c6a,
     type: 3}
   nextSpawnTime: 0
   isTraining: 0
   selectedObj: {fileID: 0}
   spawnDelay: 0
+  swordsmanPrefab: {fileID: 0}
   footmanPrefab: {fileID: 57994888639720294, guid: 1003ba60e89eda545b2a676cc324163f,
     type: 3}
   villagerPrefab: {fileID: 4804534610097456925, guid: c2da89567b823fc44b85b9516a8e8c6a,
     type: 3}
---- !u!54 &6863223145430164470
+--- !u!54 &6687884576793589999
 Rigidbody:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6863223145430164467}
+  m_GameObject: {fileID: 6687884576793589997}
   serializedVersion: 2
   m_Mass: 1
   m_Drag: 0
@@ -251,13 +254,13 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!114 &6863223145430164464
+--- !u!114 &6687884576793589998
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6863223145430164467}
+  m_GameObject: {fileID: 6687884576793589997}
   m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a5473c1516d25a94bb1a2ad553411cc9, type: 3}

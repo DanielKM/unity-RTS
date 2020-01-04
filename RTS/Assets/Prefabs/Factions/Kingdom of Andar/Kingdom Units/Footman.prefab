@@ -728,16 +728,16 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 8300000, guid: b2a15ec8752ac4f4bb8dcd694ed6089c, type: 3}
   m_PlayOnAwake: 0
-  m_Volume: 0.451
+  m_Volume: 0.1
   m_Pitch: 0.86
   Loop: 0
   Mute: 0
   Spatialize: 0
   SpatializePostEffects: 0
-  Priority: 256
+  Priority: 98
   DopplerLevel: 1
   MinDistance: 1
-  MaxDistance: 100
+  MaxDistance: 150
   Pan2D: 0.02
   rolloffMode: 1
   BypassEffects: 0
@@ -861,11 +861,11 @@ MonoBehaviour:
   attackRange: 2
   attackSpeed: 1
   aggroRange: 5
-  gold: 500
+  gold: 800
   wood: 0
   food: 200
   stone: 0
-  iron: 200
+  iron: 300
   steel: 0
   skymetal: 0
   unitAudio: {fileID: 0}
@@ -875,9 +875,6 @@ MonoBehaviour:
   metalChop4: {fileID: 8300000, guid: 44b3696bd5132401cafdca8526812f63, type: 3}
   woodChop: {fileID: 8300000, guid: 795e0eda1c479474ab93de36a1afe9f4, type: 3}
   heldResource: 0
-  isBuilding: 0
-  isGathering: 0
-  isMeleeing: 0
   currentlyMeleeing: 0
   isDead: 0
   unitIcon: {fileID: 21300000, guid: 306d55d36efa3c24b90770585090620e, type: 3}

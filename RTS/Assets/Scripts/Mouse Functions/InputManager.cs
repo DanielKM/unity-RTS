@@ -29,6 +29,8 @@ public class InputManager : MonoBehaviour
     private AudioSource unitAudio;
     public AudioClip unitAudioClip;
 
+    private AudioSource playerAudio;
+
     public Slider HB;
     public Text healthDisp;
 
@@ -128,11 +130,12 @@ public class InputManager : MonoBehaviour
 
     public Selection selectedInfo;
     public GameObject selectedObj;
-        
+
     // Start is called before the first frame update
     void Start()
     {
         player = GameObject.FindGameObjectWithTag("Player");
+        playerAudio = GameObject.FindGameObjectWithTag("Main Audio").GetComponent<AudioSource>();
         UI = player.GetComponent<UIController>();
        // progressIcon = GameObject.Find("ProgressIcon").GetComponent<Image>();
        // foundationScript = selectedObj.GetComponent<FoundationController>();
@@ -367,7 +370,6 @@ public class InputManager : MonoBehaviour
                 {
                     selectedInfo = units[i].GetComponent<Selection>();
                     unitScript = units[i].GetComponent<UnitController>();
-                    unitAudio = selectedInfo.GetComponent<AudioSource>();
 
                     if(!unitScript.isDead) {
                         isSelected = true;
@@ -375,10 +377,9 @@ public class InputManager : MonoBehaviour
                         selectedInfo.selected = true;
                         selectedInfo.transform.GetChild(2).gameObject.SetActive(true);
 
-                        unitAudio.clip = unitAudioClip;
-                        unitAudio.maxDistance = 100000;
+                        playerAudio.clip = unitAudioClip;
                         if(unitScript.unitType == "Worker") {
-                            unitAudio.volume = 0.5f;
+                            // unitAudio.volume = 0.5f;
                             UI.WorkerSelect();
                         } else if (unitScript.unitType == "Swordsman") {
                             UI.SwordsmanSelect();
@@ -391,7 +392,7 @@ public class InputManager : MonoBehaviour
             }
 
             if(inSelectionBox) {
-                unitAudio.Play();
+                playerAudio.Play();
             }
         }
     }
@@ -517,10 +518,8 @@ public class InputManager : MonoBehaviour
 
                         // Selection indicators
                         selectedObj.transform.GetChild(2).gameObject.SetActive(true);
-                        unitAudio = selectedObj.GetComponent<AudioSource>();
-                        unitAudio.clip = unitAudioClip;
-                        unitAudio.maxDistance = 100000;
-                        unitAudio.Play();
+                        playerAudio.clip = unitAudioClip;
+                        playerAudio.Play();
                         if(!unitScript.isDead) {
                             isSelected = true;
                         }
@@ -551,10 +550,8 @@ public class InputManager : MonoBehaviour
 
                         // Selection indicators
                         selectedObj.transform.GetChild(2).gameObject.SetActive(true);
-                        unitAudio = selectedObj.GetComponent<AudioSource>();
-                        unitAudio.clip = unitAudioClip;
-                        unitAudio.maxDistance = 100000;
-                        unitAudio.Play();
+                        playerAudio.clip = unitAudioClip;
+                        playerAudio.Play();
                         if(!unitScript.isDead) {
                             isSelected = true;
                         }

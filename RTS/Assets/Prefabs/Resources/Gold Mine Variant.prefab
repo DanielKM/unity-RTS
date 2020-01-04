@@ -12,7 +12,20 @@ SphereCollider:
   m_Enabled: 1
   serializedVersion: 2
   m_Radius: 2.5
-  m_Center: {x: -0.2, y: 0, z: 0}
+  m_Center: {x: -0.2, y: 0, z: -1}
+--- !u!135 &8779916006128373424
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7227999192448887380}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 1.4
+  m_Center: {x: 0, y: 0.6, z: -1}
 --- !u!208 &1727290168
 NavMeshObstacle:
   m_ObjectHideFlags: 0
@@ -29,19 +42,6 @@ NavMeshObstacle:
   m_CarveOnlyStationary: 1
   m_Center: {x: 0, y: 1, z: -0.23}
   m_TimeToStationary: 0.5
---- !u!135 &8779916006128373424
-SphereCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7227999192448887380}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 1.4
-  m_Center: {x: 0, y: 0.6, z: -0.3}
 --- !u!114 &1727290166
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -88,6 +88,13 @@ MonoBehaviour:
   placeable: 1
   isPlaced: 1
   location: {x: 0, y: 0, z: 0}
+  gold: 0
+  wood: 0
+  food: 0
+  stone: 0
+  iron: 0
+  steel: 0
+  skymetal: 0
 --- !u!1001 &7227999192448789756
 PrefabInstance:
   m_ObjectHideFlags: 0
