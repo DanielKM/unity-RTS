@@ -17,12 +17,13 @@ public class UnitController : MonoBehaviour
 
     // Equipment
     public string weapon;
-    public string armour;
+    public string armourType;
     public string items;
 
     // Attributes
     public int health;
     public int maxHealth;
+    public int armour;
     public int energy;
     public int maxEnergy;
     public int attackDamage;
@@ -294,8 +295,12 @@ public class UnitController : MonoBehaviour
                 unitAudio.maxDistance = 55;
                 unitAudio.Play();
             }
-            enemyUC.health -= attackDamage;
-            enemyHealth = enemyUC.health;
+            if(enemyUC.armour > 0) {
+                enemyUC.armour -= 1;
+            } else {
+                enemyUC.health -= attackDamage;
+                enemyHealth = enemyUC.health;
+            }
             yield return new WaitForSeconds(attackSpeed);
         }
     }

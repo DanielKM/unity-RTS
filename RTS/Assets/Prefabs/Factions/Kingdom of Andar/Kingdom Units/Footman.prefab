@@ -851,10 +851,11 @@ MonoBehaviour:
   unitName: David Quicksheen
   unitKills: 0
   weapon: Heavy Broadsword
-  armour: Plate
+  armourType: 
   items: Sweet Plume
   health: 500
   maxHealth: 500
+  armour: 10
   energy: 100
   maxEnergy: 100
   attackDamage: 50

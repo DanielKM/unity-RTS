@@ -174,8 +174,12 @@ public class NPCController : MonoBehaviour
                 UC.unitAudio.maxDistance = 55;
                 UC.unitAudio.Play();
             }
-            enemyUC.health -= UC.attackDamage;
-            enemyHealth = enemyUC.health;
+            if(enemyUC.armour > 0) {
+                enemyUC.armour -= 1;
+            } else {
+                enemyUC.health -= UC.attackDamage;
+                enemyHealth = enemyUC.health;
+            }
             yield return new WaitForSeconds(UC.attackSpeed);
         }
     }
