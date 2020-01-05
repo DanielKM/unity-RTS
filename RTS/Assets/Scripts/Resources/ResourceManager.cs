@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 // PART 13 - 4:17
 
@@ -65,32 +66,35 @@ public class ResourceManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        SkyMetalDisp.text = "" + skymetal + "/" + maxSkymetal;
-        IronDisp.text = "" + iron + "/" + maxIron;
-        SteelDisp.text = "" + steel + "/" + maxSteel;
-        WoodDisp.text = "" + wood + "/" + maxWood;
-        FoodDisp.text = "" + food + "/" + maxFood;
-        StoneDisp.text = "" + stone + "/" + maxStone;
-        GoldDisp.text = "" + gold + "/" + maxGold;
+        Scene currentScene = SceneManager.GetActiveScene();
+        if(currentScene.name != "Main Menu") {
+            SkyMetalDisp.text = "" + skymetal + "/" + maxSkymetal;
+            IronDisp.text = "" + iron + "/" + maxIron;
+            SteelDisp.text = "" + steel + "/" + maxSteel;
+            WoodDisp.text = "" + wood + "/" + maxWood;
+            FoodDisp.text = "" + food + "/" + maxFood;
+            StoneDisp.text = "" + stone + "/" + maxStone;
+            GoldDisp.text = "" + gold + "/" + maxGold;
 
-        oneFoodUnit = GameObject.FindGameObjectsWithTag("Selectable");
-        housingTotal = oneFoodUnit.Length;
+            oneFoodUnit = GameObject.FindGameObjectsWithTag("Selectable");
+            housingTotal = oneFoodUnit.Length;
 
-        for(int i=0; i<oneFoodUnit.Length; i++) {
-            if(oneFoodUnit[i].GetComponent<UnitController>().isDead) {
-                housingTotal -= 1;
+            for(int i=0; i<oneFoodUnit.Length; i++) {
+                if(oneFoodUnit[i].GetComponent<UnitController>().isDead) {
+                    housingTotal -= 1;
+                }
             }
-        }
-        requiredfood = housingTotal;
+            requiredfood = housingTotal;
 
-        houses = GameObject.FindGameObjectsWithTag("House");
+            houses = GameObject.FindGameObjectsWithTag("House");
 
-        housing = requiredfood;
-        maxHousing = houses.Length * 5;
-        HousingDisp.text = "" + housing + "/" + maxHousing;
+            housing = requiredfood;
+            maxHousing = houses.Length * 5;
+            HousingDisp.text = "" + housing + "/" + maxHousing;
 
-        if(gold >= 5000) {
-            Debug.Log("You win: Economic victory!");
+            if(gold >= 5000) {
+                Debug.Log("You win: Economic victory!");
+            }
         }
     }
 }

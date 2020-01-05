@@ -61,30 +61,32 @@ public class BuildingButtonController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        isTraining = false;
-        BuildingProgressPanel = GameObject.Find("BuildingProgressPanel").GetComponent<CanvasGroup>();
-        BasicBuildingsPanel = GameObject.Find("BasicBuildingsPanel").GetComponent<CanvasGroup>();
-        AdvancedBuildingsPanel = GameObject.Find("AdvancedBuildingsPanel").GetComponent<CanvasGroup>();
-        PeasantPanel = GameObject.Find("VillagerPanel").GetComponent<CanvasGroup>();
-        BuildingActionPanel = GameObject.Find("BuildingActions").GetComponent<CanvasGroup>();
+        Scene currentScene = SceneManager.GetActiveScene();
+        if(currentScene.name != "Main Menu") {
+            isTraining = false;
+            BuildingProgressPanel = GameObject.Find("BuildingProgressPanel").GetComponent<CanvasGroup>();
+            BasicBuildingsPanel = GameObject.Find("BasicBuildingsPanel").GetComponent<CanvasGroup>();
+            AdvancedBuildingsPanel = GameObject.Find("AdvancedBuildingsPanel").GetComponent<CanvasGroup>();
+            PeasantPanel = GameObject.Find("VillagerPanel").GetComponent<CanvasGroup>();
+            BuildingActionPanel = GameObject.Find("BuildingActions").GetComponent<CanvasGroup>();
 
-        // Trained units
-        swordsmanUC = swordsmanPrefab.GetComponent<UnitController>();
-        footmanUC = footmanPrefab.GetComponent<UnitController>();
-        villagerUC = villagerPrefab.GetComponent<UnitController>();
+            // Trained units
+            swordsmanUC = swordsmanPrefab.GetComponent<UnitController>();
+            footmanUC = footmanPrefab.GetComponent<UnitController>();
+            villagerUC = villagerPrefab.GetComponent<UnitController>();
 
-        player = GameObject.FindGameObjectWithTag("Player");
-        inputScript = player.GetComponent<InputManager>();
-        RM = player.GetComponent<ResourceManager>();
-        UI = player.GetComponent<UIController>();
+            player = GameObject.FindGameObjectWithTag("Player");
+            inputScript = player.GetComponent<InputManager>();
+            RM = player.GetComponent<ResourceManager>();
+            UI = player.GetComponent<UIController>();
 
-        buttonOne.onClick.AddListener(HireVillager);
-        barracksButtonOne.onClick.AddListener(HireSwordsman);
-        barracksButtonTwo.onClick.AddListener(HireFootman);
-        // blacksmithText = barracksButtonOne.GetComponentsInChildren<Text>();
-        // blacksmithText[0].text = "Train Footman \r\n" + "\r\n" + "\r\n" + footmanUC.gold + "\r\n" + footmanUC.food + "\r\n" + footmanUC.iron + "\r\n";
+            buttonOne.onClick.AddListener(HireVillager);
+            barracksButtonOne.onClick.AddListener(HireSwordsman);
+            barracksButtonTwo.onClick.AddListener(HireFootman);
+            // blacksmithText = barracksButtonOne.GetComponentsInChildren<Text>();
+            // blacksmithText[0].text = "Train Footman \r\n" + "\r\n" + "\r\n" + footmanUC.gold + "\r\n" + footmanUC.food + "\r\n" + footmanUC.iron + "\r\n";
 
-
+        }
     }
 
     // Update is called once per frame

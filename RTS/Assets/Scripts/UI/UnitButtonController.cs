@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
+using UnityEngine.SceneManagement;
 
 public class UnitButtonController : MonoBehaviour
 {
@@ -45,78 +46,84 @@ public class UnitButtonController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        player = GameObject.FindGameObjectWithTag("Player");
-        RM = player.GetComponent<ResourceManager>();
-        UI = player.GetComponent<UIController>();
+        Scene currentScene = SceneManager.GetActiveScene();
+        if(currentScene.name != "Main Menu") {
+            player = GameObject.FindGameObjectWithTag("Player");
+            RM = player.GetComponent<ResourceManager>();
+            UI = player.GetComponent<UIController>();
 
-        //Calls the TaskOnClick/TaskWithParameters/ButtonClicked method when you click the Button
+            //Calls the TaskOnClick/TaskWithParameters/ButtonClicked method when you click the Button
 
-        basicBack.onClick.AddListener(UI.WorkerSelect);
-        advancedBack.onClick.AddListener(UI.WorkerSelect);
+            basicBack.onClick.AddListener(UI.WorkerSelect);
+            advancedBack.onClick.AddListener(UI.WorkerSelect);
 
-        basicBuildings.onClick.AddListener(UI.VillagerBasicBuildings);
-        advancedBuildings.onClick.AddListener(UI.VillagerAdvancedBuildings);
+            basicBuildings.onClick.AddListener(UI.VillagerBasicBuildings);
+            advancedBuildings.onClick.AddListener(UI.VillagerAdvancedBuildings);
 
-        buttonTwo.onClick.AddListener(BuildHouse);
-        buttonThree.onClick.AddListener(BuildFarm);
-        buttonFour.onClick.AddListener(BuildTownHall);
+            buttonTwo.onClick.AddListener(BuildHouse);
+            buttonThree.onClick.AddListener(BuildFarm);
+            buttonFour.onClick.AddListener(BuildTownHall);
 
-        buttonFive.onClick.AddListener(BuildBlacksmith);
-        buttonSix.onClick.AddListener(BuildLumberMill);
-        buttonSeven.onClick.AddListener(BuildStables);
-        buttonEight.onClick.AddListener(BuildBarracks);
+            buttonFive.onClick.AddListener(BuildBlacksmith);
+            buttonSix.onClick.AddListener(BuildLumberMill);
+            buttonSeven.onClick.AddListener(BuildStables);
+            buttonEight.onClick.AddListener(BuildBarracks);
+        }
     }
 
 
     // Update is called once per frame
     void Update()
     {
-        if(RM.townHallCount == 0) {
-            buttonFive.interactable = false; 
-            buttonSix.interactable = false;
-            buttonSeven.interactable = false;
-            buttonEight.interactable = false;
-        } else if (RM.townHallCount > 0) {
-            buttonFive.interactable = true; 
-            buttonSix.interactable = true;
-            buttonSeven.interactable = true;
-            buttonEight.interactable = true;
-        }
-        
-        if (currentPlaceableObject != null)
-        {
-            if (!EventSystem.current.IsPointerOverGameObject(-1))
-            {
-                building = currentPlaceableObject.GetComponent<BuildingController>();
-                isPlaceable = building.placeable;
-                MoveCurrentPlaceableObjectToMouse();
-                if (isPlaceable == true)
-                {
-                    ReleaseIfClicked();
-                }
+        Scene currentScene = SceneManager.GetActiveScene();
+        if(currentScene.name != "Main Menu") {
+            if(RM.townHallCount == 0) {
+                buttonFive.interactable = false; 
+                buttonSix.interactable = false;
+                buttonSeven.interactable = false;
+                buttonEight.interactable = false;
+            } else if (RM.townHallCount > 0) {
+                buttonFive.interactable = true; 
+                buttonSix.interactable = true;
+                buttonSeven.interactable = true;
+                buttonEight.interactable = true;
             }
+            
+            if (currentPlaceableObject != null)
+            {
+                if (!EventSystem.current.IsPointerOverGameObject(-1))
+                {
+                    building = currentPlaceableObject.GetComponent<BuildingController>();
+                    isPlaceable = building.placeable;
+                    MoveCurrentPlaceableObjectToMouse();
+                    if (isPlaceable == true)
+                    {
+                        ReleaseIfClicked();
+                    }
+                }
 
-            if (isPlaceable == false)
-            {
-                foreach (MeshRenderer mesh in meshes)
+                if (isPlaceable == false)
                 {
-                    mesh.material.SetColor("_Color", Color.red);
+                    foreach (MeshRenderer mesh in meshes)
+                    {
+                        mesh.material.SetColor("_Color", Color.red);
+                    }
                 }
-            }
-            else
-            {
-                int colorIter = 0;
-                foreach (MeshRenderer mesh in meshes)
+                else
                 {
-                    mesh.material.SetColor("_Color", colors[colorIter]);
-                    colorIter += 1;
+                    int colorIter = 0;
+                    foreach (MeshRenderer mesh in meshes)
+                    {
+                        mesh.material.SetColor("_Color", colors[colorIter]);
+                        colorIter += 1;
+                    }
+                    colorIter = 0;
                 }
-                colorIter = 0;
-            }
 
-            if (Input.GetKeyDown(KeyCode.Escape))
-            {
-                Destroy(currentPlaceableObject);
+                if (Input.GetKeyDown(KeyCode.Escape))
+                {
+                    Destroy(currentPlaceableObject);
+                }
             }
         }
     }

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.EventSystems;
+using UnityEngine.SceneManagement;
 
 public class Selection : MonoBehaviour
 {
@@ -52,68 +53,73 @@ public class Selection : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        player = GameObject.FindGameObjectWithTag("Player");
-        playerAudio = GameObject.FindGameObjectWithTag("Main Audio").GetComponent<AudioSource>();
-        RM = player.GetComponent<ResourceManager>();
-        IM = player.GetComponent<InputManager>();
-        UC = GetComponent<UnitController>();
-        agent = GetComponent<NavMeshAgent>();
+        Scene currentScene = SceneManager.GetActiveScene();
+        if(currentScene.name != "Main Menu") {
+            player = GameObject.FindGameObjectWithTag("Player");
+            playerAudio = GameObject.FindGameObjectWithTag("Main Audio").GetComponent<AudioSource>();
+            RM = player.GetComponent<ResourceManager>();
+            IM = player.GetComponent<InputManager>();
+            UC = GetComponent<UnitController>();
+            agent = GetComponent<NavMeshAgent>();
+        }
     }
 
     // Update is called once per frame
     void Update()
     {
-
-        if(UC.unitType == "Worker" && !UC.isDead) {
-            // if target node is destroyed
-            if (targetNode == null)
-            {
-                isBuilding = false;
-                isGathering = false;
-                if (heldResource != 0)
+        Scene currentScene = SceneManager.GetActiveScene();
+        if(currentScene.name != "Main Menu") {
+            if(UC.unitType == "Worker" && !UC.isDead) {
+                // if target node is destroyed
+                if (targetNode == null)
                 {
-                    //stop gathering immediately
-                    //Drop off point here for resource yards
-                    drops = GameObject.FindGameObjectsWithTag("Yard");
-                    if(drops.Length > 0)
+                    isBuilding = false;
+                    isGathering = false;
+                    if (heldResource != 0)
                     {
-                        agent.destination = GetClosestDropOff(drops).transform.position;
-                        drops = null;
-                        task = Tasklist.Delivering;
+                        //stop gathering immediately
+                        //Drop off point here for resource yards
+                        drops = GameObject.FindGameObjectsWithTag("Yard");
+                        if(drops.Length > 0)
+                        {
+                            agent.destination = GetClosestDropOff(drops).transform.position;
+                            drops = null;
+                            task = Tasklist.Delivering;
+                        } else
+                        {
+                            task = Tasklist.Idle;
+                        }
                     } else
                     {
-                        task = Tasklist.Idle;
+                        //task = Tasklist.Idle;
                     }
                 } else
                 {
-                    //task = Tasklist.Idle;
-                }
-            } else
-            {
-                if (heldResource >= maxHeldResource)
-                {
-                    //stop gathering immediately
-                    isGathering = false;
-                    //Drop off point here for resource yards
-                    drops = GameObject.FindGameObjectsWithTag("Yard");
-                    if (drops.Length > 0)
+                    if (heldResource >= maxHeldResource)
                     {
-                        agent.destination = GetClosestDropOff(drops).transform.position;
-                        drops = null;
-                        task = Tasklist.Delivering;
-                    }
-                    else
-                    {
-                        task = Tasklist.Idle;
+                        //stop gathering immediately
+                        isGathering = false;
+                        //Drop off point here for resource yards
+                        drops = GameObject.FindGameObjectsWithTag("Yard");
+                        if (drops.Length > 0)
+                        {
+                            agent.destination = GetClosestDropOff(drops).transform.position;
+                            drops = null;
+                            task = Tasklist.Delivering;
+                        }
+                        else
+                        {
+                            task = Tasklist.Idle;
+                        }
                     }
                 }
             }
-        }
-        if (Input.GetMouseButtonDown(1) && selected == true)
-        {
-            if (!EventSystem.current.IsPointerOverGameObject(-1))
-            {   
-                RightClick();
+            if (Input.GetMouseButtonDown(1) && selected == true)
+            {
+                if (!EventSystem.current.IsPointerOverGameObject(-1))
+                {   
+                    RightClick();
+                }
             }
         }
     }

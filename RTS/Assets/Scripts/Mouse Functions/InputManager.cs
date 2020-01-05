@@ -5,6 +5,7 @@ using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class InputManager : MonoBehaviour
 {
@@ -134,80 +135,87 @@ public class InputManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        player = GameObject.FindGameObjectWithTag("Player");
-        playerAudio = GameObject.FindGameObjectWithTag("Main Audio").GetComponent<AudioSource>();
-        UI = player.GetComponent<UIController>();
-       // progressIcon = GameObject.Find("ProgressIcon").GetComponent<Image>();
-       // foundationScript = selectedObj.GetComponent<FoundationController>();
-        // progressIcon.sprite = foundationScript.buildingPrefab.GetComponent<BuildingController>().icon;
-        unitIcon = GameObject.Find("UnitIcon");
-        VillagerProgressBar = GameObject.Find("VillagerProgressBar");
-        VillagerProgressSlider = VillagerProgressBar.GetComponent<Slider>();
+        Scene currentScene = SceneManager.GetActiveScene();
+        if(currentScene.name != "Main Menu") {
+            Debug.Log(currentScene.name);
+            player = GameObject.FindGameObjectWithTag("Player");
+            playerAudio = GameObject.FindGameObjectWithTag("Main Audio").GetComponent<AudioSource>();
+            UI = player.GetComponent<UIController>();
+        // progressIcon = GameObject.Find("ProgressIcon").GetComponent<Image>();
+        // foundationScript = selectedObj.GetComponent<FoundationController>();
+            // progressIcon.sprite = foundationScript.buildingPrefab.GetComponent<BuildingController>().icon;
+            unitIcon = GameObject.Find("UnitIcon");
+            VillagerProgressBar = GameObject.Find("VillagerProgressBar");
+            VillagerProgressSlider = VillagerProgressBar.GetComponent<Slider>();
 
-        rotation = Camera.main.transform.rotation;
-        cam = Camera.main;
-        minimap = GameObject.Find("Minimap").GetComponent<Camera>();
-        // RESEARCH COROUTINES - only one working
-        StartCoroutine(UpdatePanels());
+            rotation = Camera.main.transform.rotation;
+            cam = Camera.main;
+            minimap = GameObject.Find("Minimap").GetComponent<Camera>();
+            // RESEARCH COROUTINES - only one working
+            StartCoroutine(UpdatePanels());
+        }
      }
 
     // Update is called once per frame
     void Update()
     {
-        SelectCursor();
-        MoveCamera();
-        //RotateCamera();
-        Multiselect();
+        Scene currentScene = SceneManager.GetActiveScene();
+        if(currentScene.name != "Main Menu") {
+            SelectCursor();
+            MoveCamera();
+            //RotateCamera();
+            Multiselect();
 
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            Camera.main.transform.rotation = rotation;
-        }
-        if (Input.GetMouseButtonDown(0))
-        {
-            if (!EventSystem.current.IsPointerOverGameObject(-1))
+            if (Input.GetKeyDown(KeyCode.Space))
             {
-                Ray raycast = Camera.main.ScreenPointToRay(Input.mousePosition);
-                RaycastHit hit1;
-
-                if (Physics.Raycast(raycast, out hit1, 350))
+                Camera.main.transform.rotation = rotation;
+            }
+            if (Input.GetMouseButtonDown(0))
+            {
+                if (!EventSystem.current.IsPointerOverGameObject(-1))
                 {
-                    if (hit1.transform.tag == "Enemy Unit" || hit1.transform.tag == "Selectable" || hit1.transform.tag == "Foundation" || hit1.transform.tag == "Ground" || hit1.transform.tag == "Yard" || hit1.transform.tag == "Barracks" || hit1.transform.tag == "House" || hit1.transform.tag == "Resource" || hit1.transform.tag == "Fort" || hit1.transform.tag == "Blacksmith" || hit1.transform.tag == "Lumber Yard" || hit1.transform.tag == "Stables")
+                    Ray raycast = Camera.main.ScreenPointToRay(Input.mousePosition);
+                    RaycastHit hit1;
+
+                    if (Physics.Raycast(raycast, out hit1, 350))
                     {
-                        LeftClick();
+                        if (hit1.transform.tag == "Enemy Unit" || hit1.transform.tag == "Selectable" || hit1.transform.tag == "Foundation" || hit1.transform.tag == "Ground" || hit1.transform.tag == "Yard" || hit1.transform.tag == "Barracks" || hit1.transform.tag == "House" || hit1.transform.tag == "Resource" || hit1.transform.tag == "Fort" || hit1.transform.tag == "Blacksmith" || hit1.transform.tag == "Lumber Yard" || hit1.transform.tag == "Stables")
+                        {
+                            LeftClick();
+                        }
                     }
                 }
             }
-        }
 
-        if(Input.GetKeyDown(KeyCode.F10))
-        {
-            UI.OpenGameMenuPanel();
-        }
-        
+            if(Input.GetKeyDown(KeyCode.F10))
+            {
+                UI.OpenGameMenuPanel();
+            }
+            
 
-        if(selectedObj != null)
-        {
-            if(buildingScript != null) {
-                if (buildingScript.unitType == "Town Hall")
-                {
-                    if (townHallScript != null && townHallScript.isTraining)
+            if(selectedObj != null)
+            {
+                if(buildingScript != null) {
+                    if (buildingScript.unitType == "Town Hall")
                     {
-                        VillagerProgressSlider.value = townHallScript.i * 10;
+                        if (townHallScript != null && townHallScript.isTraining)
+                        {
+                            VillagerProgressSlider.value = townHallScript.i * 10;
+                        }
                     }
-                }
-                else if (buildingScript.unitType == "Barracks")
-                {
-                    if (barracksScript != null && barracksScript.isTraining)
+                    else if (buildingScript.unitType == "Barracks")
                     {
-                        VillagerProgressSlider.value = barracksScript.i * 10;
+                        if (barracksScript != null && barracksScript.isTraining)
+                        {
+                            VillagerProgressSlider.value = barracksScript.i * 10;
+                        }
                     }
-                }
-                else if (selectedObj.tag == "Foundation")
-                {
-                    if (foundationScript != null && foundationScript.isBuilding)
+                    else if (selectedObj.tag == "Foundation")
                     {
-                        VillagerProgressSlider.value = foundationScript.buildPercent;
+                        if (foundationScript != null && foundationScript.isBuilding)
+                        {
+                            VillagerProgressSlider.value = foundationScript.buildPercent;
+                        }
                     }
                 }
             }
@@ -419,7 +427,7 @@ public class InputManager : MonoBehaviour
         killDisp.text = "Kills: " + unitScript.unitKills;
 
         weaponDisp.text = unitScript.weapon;
-        armourDisp.text = unitScript.armour;
+        armourDisp.text = unitScript.armourType;
         NodeManager.ResourceTypes resourceType = selectedInfo.heldResourceType;
         itemDisp.text = resourceType + ": " + selectedInfo.heldResource;
     }

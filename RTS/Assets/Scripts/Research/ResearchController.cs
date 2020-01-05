@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
+using UnityEngine.SceneManagement;
 
 public class ResearchController : MonoBehaviour
 {
@@ -82,24 +83,27 @@ public class ResearchController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        player = GameObject.FindGameObjectWithTag("Player");
-        RM = player.GetComponent<ResourceManager>();
-        UI = player.GetComponent<UIController>();
+        Scene currentScene = SceneManager.GetActiveScene();
+        if(currentScene.name != "Main Menu") {
+            player = GameObject.FindGameObjectWithTag("Player");
+            RM = player.GetComponent<ResourceManager>();
+            UI = player.GetComponent<UIController>();
 
-        basicBlacksmithingButton.onClick.AddListener(ResearchBlacksmithing);
-        basicToolSmithingButton.onClick.AddListener(ResearchBasicToolSmithing);
-        basicArmourSmithingButton.onClick.AddListener(ResearchBasicArmourSmithing);
-        basicWeaponSmithingButton.onClick.AddListener(ResearchBasicWeaponSmithing);
-        
-        artisanBlacksmithingButton.onClick.AddListener(ResearchArtisanBlacksmithing);
-        artisanToolSmithingButton.onClick.AddListener(ResearchArtisanToolSmithing);
-        artisanArmourSmithingButton.onClick.AddListener(ResearchArtisanArmourSmithing);
-        artisanWeaponSmithingButton.onClick.AddListener(ResearchArtisanWeaponSmithingButton);
-        
-        horshoesButton.onClick.AddListener(ResearchHorshoes);
-        minecartsButton.onClick.AddListener(ResearchMinecarts);
-        caltropsButton.onClick.AddListener(ResearchCaltrops);
-        reinforcedBuildingsButton.onClick.AddListener(ResearchReinforcedBuildings);
+            basicBlacksmithingButton.onClick.AddListener(ResearchBlacksmithing);
+            basicToolSmithingButton.onClick.AddListener(ResearchBasicToolSmithing);
+            basicArmourSmithingButton.onClick.AddListener(ResearchBasicArmourSmithing);
+            basicWeaponSmithingButton.onClick.AddListener(ResearchBasicWeaponSmithing);
+            
+            artisanBlacksmithingButton.onClick.AddListener(ResearchArtisanBlacksmithing);
+            artisanToolSmithingButton.onClick.AddListener(ResearchArtisanToolSmithing);
+            artisanArmourSmithingButton.onClick.AddListener(ResearchArtisanArmourSmithing);
+            artisanWeaponSmithingButton.onClick.AddListener(ResearchArtisanWeaponSmithingButton);
+            
+            horshoesButton.onClick.AddListener(ResearchHorshoes);
+            minecartsButton.onClick.AddListener(ResearchMinecarts);
+            caltropsButton.onClick.AddListener(ResearchCaltrops);
+            reinforcedBuildingsButton.onClick.AddListener(ResearchReinforcedBuildings);
+        }
     }
 
     // Update is called once per frame
