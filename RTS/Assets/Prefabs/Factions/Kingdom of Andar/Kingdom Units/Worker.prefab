@@ -808,10 +808,11 @@ MonoBehaviour:
   unitName: Abram Dawnhealer
   unitKills: 0
   weapon: Pickaxe
-  armour: None
+  armourType: None
   items: Sack
   health: 100
   maxHealth: 100
+  armour: 0
   energy: 100
   maxEnergy: 100
   attackDamage: 25

@@ -296,20 +296,24 @@ public class InputManager : MonoBehaviour
     void SelectCursor()
     {
         RaycastHit hit;
-
-        if (Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out hit, 350, clickableLayer.value))
+        if (Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out hit, 500, clickableLayer.value))
         {
             bool isAttackable = hit.collider.GetComponent(typeof(IAttackable)) != null;
                        
-            if (hit.collider.gameObject.tag == "Doorway")
+            Debug.Log(hit.collider.tag);
+            if (hit.collider.tag == "Doorway")
             {
                 Cursor.SetCursor(doorway, new Vector2(0, 0), CursorMode.Auto);
             }
-            else if (isAttackable)
+            else if (hit.collider.tag == "Enemy Unit")
             {
                 Cursor.SetCursor(combat, new Vector2(0, 0), CursorMode.Auto);
             }
-            else if (hit.collider.gameObject.tag == "Selectable" || hit.collider.gameObject.layer == 11 || hit.collider.gameObject.layer == 12)
+            else if (hit.collider.tag == "Ground")
+            {
+                Cursor.SetCursor(combat, new Vector2(0, 0), CursorMode.Auto);
+            }
+            else if (hit.collider.tag == "Selectable" || hit.collider.gameObject.layer == 11 || hit.collider.gameObject.layer == 12)
             {
                 Cursor.SetCursor(pointer, new Vector2(0, 0), CursorMode.Auto);
             }
@@ -407,6 +411,43 @@ public class InputManager : MonoBehaviour
       
     public void UpdateUnitPanel()
     {
+        if(unitScript.armour == 0) {
+            UI.armour1.alpha = 0;
+            UI.armour2.alpha = 0;
+            UI.armour3.alpha = 0;
+            UI.armour4.alpha = 0;
+            UI.armour5.alpha = 0;
+        } else if(unitScript.armour == 1) {
+            UI.armour1.alpha = 1;
+            UI.armour2.alpha = 0;
+            UI.armour3.alpha = 0;
+            UI.armour4.alpha = 0;
+            UI.armour5.alpha = 0;
+        } else if(unitScript.armour == 2) {
+            UI.armour1.alpha = 1;
+            UI.armour2.alpha = 1;
+            UI.armour3.alpha = 0;
+            UI.armour4.alpha = 0;
+            UI.armour5.alpha = 0;
+        } else if(unitScript.armour == 3) {
+            UI.armour1.alpha = 1;
+            UI.armour2.alpha = 1;
+            UI.armour3.alpha = 1;
+            UI.armour4.alpha = 0;
+            UI.armour5.alpha = 0;
+        } else if(unitScript.armour == 4) {
+            UI.armour1.alpha = 1;
+            UI.armour2.alpha = 1;
+            UI.armour3.alpha = 1;
+            UI.armour4.alpha = 1;
+            UI.armour5.alpha = 0;
+        } else if(unitScript.armour == 5) {
+            UI.armour1.alpha = 1;
+            UI.armour2.alpha = 1;
+            UI.armour3.alpha = 1;
+            UI.armour4.alpha = 1;
+            UI.armour5.alpha = 1;
+        }
         // UI Functions
         // unitScript = selectedObj.GetComponent<UnitController>();
         Image icon = unitIcon.GetComponent<Image>();
@@ -476,16 +517,7 @@ public class InputManager : MonoBehaviour
         RaycastHit hit;
         if(Physics.Raycast(ray, out hit, 350))
         {
-            if (hit.collider.tag == "Ground" && (!Input.GetKey(KeyCode.LeftShift)))
-            {
-                if(selectedObjects.Length >= 0)
-                {
-                    DeselectUnits();
-                    UI.CloseAllPanels();
-                   // Debug.Log("Standing down, Sir!");
-                }
-            }
-            else if (hit.collider.tag == "Enemy Unit" && (!Input.GetKey(KeyCode.LeftShift)))
+            if (hit.collider.tag == "Enemy Unit" && (!Input.GetKey(KeyCode.LeftShift)))
             {
                 selectedObj = hit.collider.gameObject;
                 selectedInfo = selectedObj.GetComponent<Selection>();
@@ -541,6 +573,15 @@ public class InputManager : MonoBehaviour
                         }
                     }
                 }
+                else if (hit.collider.tag == "Ground" && (!Input.GetKey(KeyCode.LeftShift)))
+                {
+                    if(selectedObjects.Length >= 0)
+                    {
+                        DeselectUnits();
+                        UI.CloseAllPanels();
+                    // Debug.Log("Standing down, Sir!");
+                    }
+                } 
                 else
                 {
                     if(!unitScript.isDead) {

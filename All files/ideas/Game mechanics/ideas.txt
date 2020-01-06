@@ -25,6 +25,7 @@ siphon
 crossover
 - hobbits - loyalty/cost
 - 
+mages near archers - add elements to arrows
 
 Factions:
 chilled undead

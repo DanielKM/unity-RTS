@@ -1524,7 +1524,7 @@ MonoBehaviour:
   unitName: Davin Darkwind
   unitKills: 0
   weapon: Sword
-  armourType: 
+  armourType: Leather
   items: Dorky Cap
   health: 250
   maxHealth: 250

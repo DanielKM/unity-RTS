@@ -24,6 +24,12 @@ public class UIController : MonoBehaviour
     public CanvasGroup AdvancedBuildingsPanel;
     public CanvasGroup FootmanPanel;
 
+    public CanvasGroup armour1;
+    public CanvasGroup armour2;
+    public CanvasGroup armour3;
+    public CanvasGroup armour4;
+    public CanvasGroup armour5;
+
     // BUILDING PANELS
     public CanvasGroup BuildingPanel;
     public CanvasGroup BuildingActionPanel;
@@ -69,6 +75,11 @@ public class UIController : MonoBehaviour
         BuildingProgressPanel = GameObject.Find("BuildingProgressPanel").GetComponent<CanvasGroup>();
         BuildingActionPanel = GameObject.Find("BuildingActions").GetComponent<CanvasGroup>();
 
+        armour1 = GameObject.Find("Armour1").GetComponent<CanvasGroup>();
+        armour2 = GameObject.Find("Armour2").GetComponent<CanvasGroup>();
+        armour3 = GameObject.Find("Armour3").GetComponent<CanvasGroup>();
+        armour4 = GameObject.Find("Armour4").GetComponent<CanvasGroup>();
+        armour5 = GameObject.Find("Armour5").GetComponent<CanvasGroup>();
         player = GameObject.FindGameObjectWithTag("Player");
         RM = player.GetComponent<ResourceManager>();
     }

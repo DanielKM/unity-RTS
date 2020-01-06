@@ -77,9 +77,12 @@ public class NPCController : MonoBehaviour
     void Tick()
     {
         if(!UC.isDead) {
+
+            if(waypoints.Length != 0) {
+                agent.destination = waypoints[index].position;
+                agent.speed = agentSpeed / 2;
+            }
             playerunits = GameObject.FindGameObjectsWithTag("Selectable");
-            agent.destination = waypoints[index].position;
-            agent.speed = agentSpeed / 2;
             GameObject currentTarget = GetClosestEnemy(playerunits);
 
             if(currentTarget && !currentTarget.GetComponent<UnitController>().isDead) {
@@ -96,6 +99,7 @@ public class NPCController : MonoBehaviour
                         selection.isMeleeing = true;
                         enemy = currentTarget;
                         if(!currentlyMeleeing && !enemy.GetComponent<UnitController>().isDead) {
+                            agent.destination = agent.transform.position;
                             StartCoroutine(NPCAttack());
                         }
                     } else if (dist < UC.attackRange && currentTarget == null) {

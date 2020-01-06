@@ -63,6 +63,7 @@ public class UnitController : MonoBehaviour
     private NavMeshAgent agent;
     private Selection selection;
     private Tasklist newTask;
+    UIController UI;
 
     NodeManager.ResourceTypes resourceType;
     public int heldResource;
@@ -75,6 +76,7 @@ public class UnitController : MonoBehaviour
     void Start()
     {
         player = GameObject.FindGameObjectWithTag("Player");
+        UI = player.GetComponent<UIController>();
         RM = player.GetComponent<ResourceManager>();
 
         anim = GetComponent<Animator>();
@@ -203,40 +205,41 @@ public class UnitController : MonoBehaviour
                     selection.isMeleeing = false;
                     selection.isFollowing = false;
                 }
-            } else {
-                enemyUnits = GameObject.FindGameObjectsWithTag("Selectable");
-                GameObject currentTarget = GetClosestEnemy(enemyUnits);
-                if(currentTarget && !currentTarget.GetComponent<UnitController>().isDead) {
-                    if (currentTarget != null && Vector3.Distance(transform.position, currentTarget.transform.position) < aggroRange)
-                    {
-                        selection.targetNode = currentTarget;
-                        // Debug.Log("Enemy " + currentTarget.GetComponent<UnitController>().unitType + " spotted!");
-                        float dist = Vector3.Distance(agent.transform.position, currentTarget.transform.position);
-                        agent.destination = currentTarget.transform.position;
-                        selection.isFollowing = true;
+            } 
+            // else {
+            //     enemyUnits = GameObject.FindGameObjectsWithTag("Selectable");
+            //     GameObject currentTarget = GetClosestEnemy(enemyUnits);
+            //     if(currentTarget && !currentTarget.GetComponent<UnitController>().isDead) {
+            //         if (currentTarget != null && Vector3.Distance(transform.position, currentTarget.transform.position) < aggroRange)
+            //         {
+            //             selection.targetNode = currentTarget;
+            //             // Debug.Log("Enemy " + currentTarget.GetComponent<UnitController>().unitType + " spotted!");
+            //             float dist = Vector3.Distance(agent.transform.position, currentTarget.transform.position);
+            //             agent.destination = currentTarget.transform.position;
+            //             selection.isFollowing = true;
 
-                        if(dist < attackRange && currentTarget != null) {
-                            selection.isMeleeing = true;
-                            enemy = currentTarget;
-                            if(!currentlyMeleeing && enemy != null) {
-                                // StartCoroutine(Attack());
-                            }
-                        } else {
-                            currentlyMeleeing = false;
-                            selection.isMeleeing = false;
-                            selection.isFollowing = false;
-                        }
-                    } else if (currentTarget == null) {
-                        currentlyMeleeing = false;
-                        selection.isMeleeing = false;
-                        selection.isFollowing = false;
-                    }
-                } else {
-                    currentlyMeleeing = false;
-                    selection.isMeleeing = false;
-                    selection.isFollowing = false;
-                }
-            }
+            //             if(dist < attackRange && currentTarget != null) {
+            //                 selection.isMeleeing = true;
+            //                 enemy = currentTarget;
+            //                 if(!currentlyMeleeing && enemy != null) {
+            //                     // StartCoroutine(Attack());
+            //                 }
+            //             } else {
+            //                 currentlyMeleeing = false;
+            //                 selection.isMeleeing = false;
+            //                 selection.isFollowing = false;
+            //             }
+            //         } else if (currentTarget == null) {
+            //             currentlyMeleeing = false;
+            //             selection.isMeleeing = false;
+            //             selection.isFollowing = false;
+            //         }
+            //     } else {
+            //         currentlyMeleeing = false;
+            //         selection.isMeleeing = false;
+            //         selection.isFollowing = false;
+            //     }
+            // }
         }
     }
 
