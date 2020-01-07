@@ -513,6 +513,7 @@ public class Selection : MonoBehaviour
             hitObject.GetComponent<FoundationController>().builders++;
             buildScript = targetNode.GetComponent<FoundationController>();
             buildSpeed = buildScript.buildTime;
+            StartCoroutine(Tick());
         }
         else if(hitObject.tag == "Yard" && task == Tasklist.Delivering)
         {
@@ -600,10 +601,20 @@ public class Selection : MonoBehaviour
     // Ticks down while villager is gathering - Adjust with heldResource in Tick in Selection Script
     IEnumerator Tick()
     {
-        while(isGathering)
+        while(isGathering || isBuilding)
         {
+            if(isBuilding) {
+                harvestSpeed = UC.attackSpeed;
+            }
             yield return new WaitForSeconds(harvestSpeed);
-            if(isGathering && heldResourceType == NodeManager.ResourceTypes.Skymetal)
+            if(isBuilding)
+            {
+                UC.unitAudio = agent.GetComponent<AudioSource>();
+                UC.unitAudio.clip = UC.woodChop;
+                UC.unitAudio.maxDistance = 55;
+                UC.unitAudio.Play();
+            } 
+            else if(isGathering && heldResourceType == NodeManager.ResourceTypes.Skymetal)
             {
                 heldResource += 5;
                 UC.unitAudio = agent.GetComponent<AudioSource>();

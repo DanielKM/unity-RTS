@@ -13,16 +13,19 @@ public class SceneLoader : MonoBehaviour {
     [SerializeField]
     private Text loadingText;
     public GameObject instructions;
+    private CanvasGroup hindegardeMap;
     
     Color zm;
 
     void Start() {
+        hindegardeMap = GameObject.Find("Hindegarde").GetComponent<CanvasGroup>();
         instructions.SetActive(false);
     }
 
     public void Update() {
         if (loadScene) {
             // ...then pulse the transparency of the loading text to let the player know that the computer is still working.
+
             loadingText.color = new Color(loadingText.color.r, loadingText.color.g, loadingText.color.b, Mathf.PingPong(Time.time, 1));
         }
     }
@@ -30,16 +33,16 @@ public class SceneLoader : MonoBehaviour {
     public void PlayGame()
     {
         instructions.SetActive(true);
+        hindegardeMap.alpha = 1;
         loadingText.text = "Approaching Hindegarde Village...";
         loadScene = true;
         StartCoroutine(LoadNewScene());
-
         // SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
     }
 
     // The coroutine runs on its own at the same time as Update() and takes an integer indicating which scene to load.
     IEnumerator LoadNewScene() {
-    
+        
         yield return new WaitForSeconds(3);
         // Start an asynchronous operation to load the scene that was passed to the LoadNewScene coroutine.
         AsyncOperation async = SceneManager.LoadSceneAsync(scene);

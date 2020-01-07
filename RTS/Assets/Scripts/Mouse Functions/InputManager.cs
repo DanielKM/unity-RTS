@@ -137,7 +137,6 @@ public class InputManager : MonoBehaviour
     {
         Scene currentScene = SceneManager.GetActiveScene();
         if(currentScene.name != "Main Menu") {
-            Debug.Log(currentScene.name);
             player = GameObject.FindGameObjectWithTag("Player");
             playerAudio = GameObject.FindGameObjectWithTag("Main Audio").GetComponent<AudioSource>();
             UI = player.GetComponent<UIController>();
@@ -296,11 +295,11 @@ public class InputManager : MonoBehaviour
     void SelectCursor()
     {
         RaycastHit hit;
+
         if (Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out hit, 500, clickableLayer.value))
         {
             bool isAttackable = hit.collider.GetComponent(typeof(IAttackable)) != null;
                        
-            Debug.Log(hit.collider.tag);
             if (hit.collider.tag == "Doorway")
             {
                 Cursor.SetCursor(doorway, new Vector2(0, 0), CursorMode.Auto);
@@ -324,6 +323,7 @@ public class InputManager : MonoBehaviour
         }
         else
         {
+        Debug.Log(hit.collider.tag);
             Cursor.SetCursor(pointer, new Vector2(0, 0), CursorMode.Auto);
         }
 
@@ -534,6 +534,7 @@ public class InputManager : MonoBehaviour
 
                     
                     // Selection indicators
+                    selectedObj.transform.GetChild(2).gameObject.GetComponent<Projector>().material.SetColor("_Color", Color.red);
                     selectedObj.transform.GetChild(2).gameObject.SetActive(true);
                     // unitAudio = selectedObj.GetComponent<AudioSource>();
                     // unitAudio.clip = unitAudioClip;
@@ -545,6 +546,7 @@ public class InputManager : MonoBehaviour
             else if (hit.collider.tag == "Selectable")
             {
                 selectedObj = hit.collider.gameObject;
+                selectedObj.transform.GetChild(2).gameObject.GetComponent<Projector>().material.SetColor("_Color", Color.green);
                 selectedInfo = selectedObj.GetComponent<Selection>();
                 unitScript = selectedObj.GetComponent<UnitController>();
                 if (selectedInfo.selected == true)
