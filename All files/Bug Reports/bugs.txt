@@ -1,0 +1,5 @@
+1. Camera into mountain crashes game
+- not the navmesh - probably the collider
+- can exit if you click and drag + move camera
+
+2. Workers at the farm sometimes stop working

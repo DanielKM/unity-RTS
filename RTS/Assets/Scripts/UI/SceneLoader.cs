@@ -43,6 +43,10 @@ public class SceneLoader : MonoBehaviour {
     // The coroutine runs on its own at the same time as Update() and takes an integer indicating which scene to load.
     IEnumerator LoadNewScene() {
         
+        if(loadScene) {
+            
+        }
+
         yield return new WaitForSeconds(3);
         // Start an asynchronous operation to load the scene that was passed to the LoadNewScene coroutine.
         AsyncOperation async = SceneManager.LoadSceneAsync(scene);

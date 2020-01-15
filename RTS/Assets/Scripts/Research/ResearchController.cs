@@ -10,6 +10,9 @@ public class ResearchController : MonoBehaviour
     public GameObject player;
     UIController UI;
     ResourceManager RM;
+    InputManager inputScript;
+    BuildingController buildingScript;
+    BlacksmithController blacksmithScript;
 
     //Research variables
     //Basic blacksmithing
@@ -79,7 +82,10 @@ public class ResearchController : MonoBehaviour
     public Button caltropsButton;
     public Button reinforcedBuildingsButton;
 
-
+    public GameObject selectedObj;
+    public string research;
+    public bool isTraining;
+    public int i = 0;
     // Start is called before the first frame update
     void Start()
     {
@@ -88,6 +94,7 @@ public class ResearchController : MonoBehaviour
             player = GameObject.FindGameObjectWithTag("Player");
             RM = player.GetComponent<ResourceManager>();
             UI = player.GetComponent<UIController>();
+            inputScript = player.GetComponent<InputManager>();
 
             basicBlacksmithingButton.onClick.AddListener(ResearchBlacksmithing);
             basicToolSmithingButton.onClick.AddListener(ResearchBasicToolSmithing);
@@ -118,17 +125,20 @@ public class ResearchController : MonoBehaviour
     // BASIC BLACKSMITHING
     void ResearchBlacksmithing () 
     { 
-        if(RM.gold < basicBlacksmithingGold || RM.iron < basicBlacksmithingIron) {
-            UI.noResourcesText.SetActive(true);
-            StartCoroutine(CloseResourcesText());
-        } else {
-            basicBlacksmithingButton.interactable = false;
-            RM.gold -= basicBlacksmithingGold;
-            RM.iron -= basicBlacksmithingIron;
-            StartCoroutine(BasicResearch());
-            basicBlacksmithing = true;
-            Debug.Log("basicBlacksmithing complete");
-        }
+        selectedObj = inputScript.selectedObj;
+        buildingScript = selectedObj.GetComponent<BuildingController>();
+        blacksmithScript = selectedObj.GetComponent<BlacksmithController>();
+        blacksmithScript.ResearchBlacksmithing();
+        
+        // if(RM.gold < basicBlacksmithingGold || RM.iron < basicBlacksmithingIron) {
+        //     UI.noResourcesText.SetActive(true);
+        //     StartCoroutine(CloseResourcesText());
+        // } else {
+        //     basicBlacksmithingButton.interactable = false;
+        //     RM.gold -= basicBlacksmithingGold;
+        //     RM.iron -= basicBlacksmithingIron;
+        //     StartCoroutine(BasicResearch());
+        // }
     }
 
     void ResearchBasicToolSmithing () 
@@ -300,7 +310,20 @@ public class ResearchController : MonoBehaviour
 
     IEnumerator BasicResearch()
     {
-        yield return new WaitForSeconds(20);
+        if(research == "basicBlacksmithing") {
+            isTraining = true;
+            UI.BlacksmithTraining();
+            for (i = 1; i < 11; i++)
+            {
+                yield return new WaitForSeconds(1);
+            }
+            isTraining = false;
+            basicBlacksmithing = true;
+            UI.BlacksmithSelect();
+        }
+
+        yield return new WaitForSeconds(10);
+        isTraining = false;
         //my code here after 3 seconds
     }
 

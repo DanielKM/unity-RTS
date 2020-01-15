@@ -2,6 +2,9 @@ Different time pieces for each faction - sun dial/hourglass etc.
 kingdom - > 20 footmen, formation/armour
 having a commander on the ground
  
+LEVEL 1
+Repair the watchtower
+
 Sound: put unit confirmation into audiosource
 
 Multiplayer bonuses:
@@ -17,6 +20,7 @@ base gone - hire hunters
 ilitary becomes workers
 
 GAMEPLAY
+Add unit statistics
 Armour - UC int - prevents damage
 generals 
 heroes of might and magic - towns

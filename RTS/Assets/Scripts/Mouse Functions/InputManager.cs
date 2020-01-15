@@ -24,7 +24,9 @@ public class InputManager : MonoBehaviour
     BuildingButtonController buildingButtonScript;
     TownHallController townHallScript;
     BarracksController barracksScript;
+    BlacksmithController blacksmithScript;
     FoundationController foundationScript;
+    ResearchController research;
 
     // UI FOR UNITS
     private AudioSource unitAudio;
@@ -58,8 +60,8 @@ public class InputManager : MonoBehaviour
     private CanvasGroup AdvancedBuildingsPanel;
     private CanvasGroup BuildingProgressPanel;
     
-    private GameObject VillagerProgressBar;
-    public Slider VillagerProgressSlider;
+    private GameObject BuildingProgressBar;
+    public Slider BuildingProgressSlider;
 
     public Slider buildingHB;
     public Text buildingHealthDisp;
@@ -78,7 +80,6 @@ public class InputManager : MonoBehaviour
 
     public Image progressIcon;
     public GameObject unitIcon;
-    
     public GameObject buildingIcon;
 
     // TownHall variables
@@ -140,12 +141,13 @@ public class InputManager : MonoBehaviour
             player = GameObject.FindGameObjectWithTag("Player");
             playerAudio = GameObject.FindGameObjectWithTag("Main Audio").GetComponent<AudioSource>();
             UI = player.GetComponent<UIController>();
+            research = player.GetComponent<ResearchController>();
         // progressIcon = GameObject.Find("ProgressIcon").GetComponent<Image>();
         // foundationScript = selectedObj.GetComponent<FoundationController>();
             // progressIcon.sprite = foundationScript.buildingPrefab.GetComponent<BuildingController>().icon;
             unitIcon = GameObject.Find("UnitIcon");
-            VillagerProgressBar = GameObject.Find("VillagerProgressBar");
-            VillagerProgressSlider = VillagerProgressBar.GetComponent<Slider>();
+            BuildingProgressBar = GameObject.Find("BuildingProgressBar");
+            BuildingProgressSlider = BuildingProgressBar.GetComponent<Slider>();
 
             rotation = Camera.main.transform.rotation;
             cam = Camera.main;
@@ -199,21 +201,32 @@ public class InputManager : MonoBehaviour
                     {
                         if (townHallScript != null && townHallScript.isTraining)
                         {
-                            VillagerProgressSlider.value = townHallScript.i * 10;
+                            BuildingProgressSlider.value = townHallScript.i * 10;
                         }
                     }
                     else if (buildingScript.unitType == "Barracks")
                     {
                         if (barracksScript != null && barracksScript.isTraining)
                         {
-                            VillagerProgressSlider.value = barracksScript.i * 10;
+                            BuildingProgressSlider.value = barracksScript.i * 10;
                         }
                     }
                     else if (selectedObj.tag == "Foundation")
                     {
                         if (foundationScript != null && foundationScript.isBuilding)
                         {
-                            VillagerProgressSlider.value = foundationScript.buildPercent;
+                            BuildingProgressSlider.value = foundationScript.buildPercent;
+                        }
+                    }
+                    else if (selectedObj.tag == "Blacksmith")
+                    {
+                        Debug.Log(foundationScript);
+                        Debug.Log(blacksmithScript.isTraining);
+                        Debug.Log(blacksmithScript.i);
+                        if (blacksmithScript.isTraining)
+                        {
+                            BuildingProgressSlider.value = blacksmithScript.i * 10;
+                            // handle
                         }
                     }
                 }
@@ -387,6 +400,7 @@ public class InputManager : MonoBehaviour
                         isSelected = true;
 
                         selectedInfo.selected = true;
+                        selectedInfo.transform.GetChild(2).gameObject.GetComponent<Projector>().material.SetColor("_Color", Color.green);
                         selectedInfo.transform.GetChild(2).gameObject.SetActive(true);
 
                         playerAudio.clip = unitAudioClip;
@@ -625,7 +639,6 @@ public class InputManager : MonoBehaviour
                     DeselectUnits();
                     Debug.Log("Standing down, Sir!");
                 }
-
                 selectedObj = hit.collider.gameObject;
 
                 // Handle town hall selection
@@ -664,7 +677,17 @@ public class InputManager : MonoBehaviour
                     }
                 } 
                 else if (selectedObj.tag == "Blacksmith") {
-                    UI.BlacksmithSelect();
+                    blacksmithScript = selectedObj.GetComponent<BlacksmithController>();
+                    isTraining = blacksmithScript.isTraining;
+                    SwapProgressIcon();
+                    if (isTraining)
+                    {
+                        UI.BlacksmithTraining();
+                    }
+                    else
+                    {
+                        UI.BlacksmithSelect();
+                    }
                 }
                 else if (selectedObj.tag == "Lumber Yard") {
                     UI.LumberYardSelect();
@@ -685,7 +708,6 @@ public class InputManager : MonoBehaviour
                 else if (selectedObj.tag == "Stables") {
                     UI.StablesSelect();
                 }
- 
                 // UpdateBuildingPanel();
             }
             else if (hit.collider.tag != "Selectable" && (!Input.GetKey(KeyCode.LeftShift)))
@@ -699,21 +721,19 @@ public class InputManager : MonoBehaviour
     void SwapProgressIcon()
     {
         progressIcon = GameObject.Find("ProgressIcon").GetComponent<Image>();
-
         // UI Functions
         buildingScript = selectedObj.GetComponent<BuildingController>();
         if (buildingScript.unitType == "Town Hall")
         {
             progressIcon.sprite = townHallScript.villagerPrefab.GetComponent<UnitController>().unitIcon;
-
-        } else if (buildingScript.unitType == "Barracks")
+        } 
+        else if (buildingScript.unitType == "Barracks")
         {
             if(buildingScript.GetComponent<BarracksController>().unit == "Footman") {
                 progressIcon.sprite = barracksScript.footmanPrefab.GetComponent<UnitController>().unitIcon;
             } else if (buildingScript.GetComponent<BarracksController>().unit == "Swordsman") {
                 progressIcon.sprite = barracksScript.swordsmanPrefab.GetComponent<UnitController>().unitIcon;
             }
-
         } else if (buildingScript.tag == "Foundation")
         {
             foundationScript = selectedObj.GetComponent<FoundationController>();

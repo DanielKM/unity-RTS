@@ -77,7 +77,6 @@ public class NPCController : MonoBehaviour
     void Tick()
     {
         if(!UC.isDead) {
-
             if(waypoints.Length != 0) {
                 agent.destination = waypoints[index].position;
                 agent.speed = agentSpeed / 2;

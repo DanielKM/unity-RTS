@@ -35,7 +35,6 @@ public class UIController : MonoBehaviour
     public CanvasGroup BuildingActionPanel;
     public CanvasGroup BuildingProgressPanel;
     public CanvasGroup BlacksmithActionPanel;
-    public CanvasGroup BlacksmithProgressPanel;
     public CanvasGroup LumberYardActionPanel;
     public CanvasGroup BarracksActionPanel;
 
@@ -68,7 +67,6 @@ public class UIController : MonoBehaviour
                 
         BuildingPanel = GameObject.Find("BuildingPanel").GetComponent<CanvasGroup>();
         BlacksmithActionPanel = GameObject.Find("BlacksmithActionPanel").GetComponent<CanvasGroup>();
-        BlacksmithProgressPanel = GameObject.Find("BlacksmithProgressPanel").GetComponent<CanvasGroup>();
         LumberYardActionPanel = GameObject.Find("LumberYardActionPanel").GetComponent<CanvasGroup>();
         BarracksActionPanel = GameObject.Find("BarracksActionPanel").GetComponent<CanvasGroup>();
 
@@ -135,9 +133,6 @@ public class UIController : MonoBehaviour
         BlacksmithActionPanel.alpha = 0;
         BlacksmithActionPanel.blocksRaycasts = false;
         BlacksmithActionPanel.interactable = false;
-        BlacksmithProgressPanel.alpha = 0;
-        BlacksmithProgressPanel.blocksRaycasts = false;
-        BlacksmithProgressPanel.interactable = false;
 
         // LUMBER YARD
         LumberYardActionPanel.alpha = 0;
@@ -282,6 +277,20 @@ public class UIController : MonoBehaviour
         BlacksmithActionPanel.alpha = 1;
         BlacksmithActionPanel.blocksRaycasts = true;
         BlacksmithActionPanel.interactable = true;
+
+        panelOpen = 2;
+    }
+
+    public void BlacksmithTraining() {
+        CloseAllPanels();
+
+        BuildingPanel.alpha = 1;
+        BuildingPanel.blocksRaycasts = true;
+        BuildingPanel.interactable = true;
+
+        BuildingProgressPanel.alpha = 1;
+        BuildingProgressPanel.blocksRaycasts = true;
+        BuildingProgressPanel.interactable = true;
 
         panelOpen = 2;
     }

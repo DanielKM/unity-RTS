@@ -9547,6 +9547,29 @@ MonoBehaviour:
   iron: 0
   steel: 0
   skymetal: 0
+--- !u!114 &4115579656483041289
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 13005670944554208}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a0170cecceb09784bbf67807aeb16640, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  i: 0
+  swordsmanPrefab: {fileID: 0}
+  footmanPrefab: {fileID: 0}
+  swordsmanReporting: {fileID: 0}
+  footmanReporting: {fileID: 0}
+  spawnDelay: 0
+  selected: 0
+  selectedObj: {fileID: 0}
+  isTraining: 0
+  unit: 
+  progressIcon: {fileID: 0}
 --- !u!1001 &13005670944520768
 PrefabInstance:
   m_ObjectHideFlags: 0

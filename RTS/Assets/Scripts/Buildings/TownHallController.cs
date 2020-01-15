@@ -37,8 +37,8 @@ public class TownHallController : MonoBehaviour
     public bool isTraining;
 
     //Progress bar
-    private GameObject VillagerProgressBar;
-    private Slider VillagerProgressSlider;
+    private GameObject BuildingProgressBar;
+    private Slider BuildingProgressSlider;
     public Image progressIcon;
 
     //UI Elements
@@ -58,8 +58,8 @@ public class TownHallController : MonoBehaviour
         BuildingActionPanel = GameObject.Find("BuildingActions").GetComponent<CanvasGroup>();
 
         // Progress bar
-        VillagerProgressBar = GameObject.Find("VillagerProgressBar");
-        VillagerProgressSlider = VillagerProgressBar.GetComponent<Slider>();
+        BuildingProgressBar = GameObject.Find("BuildingProgressBar");
+        BuildingProgressSlider = BuildingProgressBar.GetComponent<Slider>();
     }
 
     // Update is called once per frame

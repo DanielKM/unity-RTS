@@ -2,7 +2,7 @@ using System;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class PauseMenu : MonoBehaviour
+public class SamplePauseMenu : MonoBehaviour
 {
     private Toggle m_MenuToggle;
 	private float m_TimeScaleRef = 1f;
