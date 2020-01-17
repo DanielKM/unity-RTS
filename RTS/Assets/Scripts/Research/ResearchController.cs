@@ -106,7 +106,7 @@ public class ResearchController : MonoBehaviour
             artisanArmourSmithingButton.onClick.AddListener(ResearchArtisanArmourSmithing);
             artisanWeaponSmithingButton.onClick.AddListener(ResearchArtisanWeaponSmithingButton);
             
-            horshoesButton.onClick.AddListener(ResearchHorshoes);
+            horshoesButton.onClick.AddListener(ResearchHorseshoes);
             minecartsButton.onClick.AddListener(ResearchMinecarts);
             caltropsButton.onClick.AddListener(ResearchCaltrops);
             reinforcedBuildingsButton.onClick.AddListener(ResearchReinforcedBuildings);
@@ -129,202 +129,96 @@ public class ResearchController : MonoBehaviour
         buildingScript = selectedObj.GetComponent<BuildingController>();
         blacksmithScript = selectedObj.GetComponent<BlacksmithController>();
         blacksmithScript.ResearchBlacksmithing();
-        
-        // if(RM.gold < basicBlacksmithingGold || RM.iron < basicBlacksmithingIron) {
-        //     UI.noResourcesText.SetActive(true);
-        //     StartCoroutine(CloseResourcesText());
-        // } else {
-        //     basicBlacksmithingButton.interactable = false;
-        //     RM.gold -= basicBlacksmithingGold;
-        //     RM.iron -= basicBlacksmithingIron;
-        //     StartCoroutine(BasicResearch());
-        // }
     }
 
     void ResearchBasicToolSmithing () 
     { 
-        if(RM.gold < basicToolSmithingGold || RM.iron < basicToolSmithingIron) {
-            UI.noResourcesText.SetActive(true);
-            StartCoroutine(CloseResourcesText());
-        } else {
-            basicToolSmithingButton.interactable = false;
-            RM.gold -= basicToolSmithingGold;
-            RM.iron -= basicToolSmithingIron;
-            StartCoroutine(BasicResearch());
-            basicToolSmithing = true;
-            Debug.Log("basicToolSmithing complete");
-        }
+        selectedObj = inputScript.selectedObj;
+        buildingScript = selectedObj.GetComponent<BuildingController>();
+        blacksmithScript = selectedObj.GetComponent<BlacksmithController>();
+        blacksmithScript.ResearchBasicToolSmithing();
     }
 
     void ResearchBasicArmourSmithing () 
     { 
-        if(RM.gold < basicArmourSmithingGold || RM.iron < basicArmourSmithingIron) {
-            UI.noResourcesText.SetActive(true);
-            StartCoroutine(CloseResourcesText());
-        } else {
-            basicArmourSmithingButton.interactable = false;
-            RM.gold -= basicArmourSmithingGold;
-            RM.iron -= basicArmourSmithingIron;
-            StartCoroutine(BasicResearch());
-            basicArmourSmithing = true;
-            Debug.Log("basicarmourSmithing complete");
-        }
+        selectedObj = inputScript.selectedObj;
+        buildingScript = selectedObj.GetComponent<BuildingController>();
+        blacksmithScript = selectedObj.GetComponent<BlacksmithController>();
+        blacksmithScript.ResearchBasicArmourSmithing();
     }
 
     void ResearchBasicWeaponSmithing () 
     { 
-        if(RM.gold < basicWeaponSmithingGold || RM.iron < basicWeaponSmithingIron) {
-            UI.noResourcesText.SetActive(true);
-            StartCoroutine(CloseResourcesText());
-        } else {
-            basicWeaponSmithingButton.interactable = false;
-            RM.gold -= basicWeaponSmithingGold;
-            RM.iron -= basicWeaponSmithingIron;
-            StartCoroutine(BasicResearch());
-            basicWeaponSmithing = true;
-            Debug.Log("basic weapon smithing complete");
-        }
+        selectedObj = inputScript.selectedObj;
+        buildingScript = selectedObj.GetComponent<BuildingController>();
+        blacksmithScript = selectedObj.GetComponent<BlacksmithController>();
+        blacksmithScript.ResearchBasicWeaponSmithing();
     }
 
     // ARTISAN BLACKSMITHING
     void ResearchArtisanBlacksmithing () 
     { 
-        if(RM.gold < artisanBlacksmithingGold || RM.iron < artisanBlacksmithingIron) {
-            UI.noResourcesText.SetActive(true);
-            StartCoroutine(CloseResourcesText());
-        } else {
-            artisanBlacksmithingButton.interactable = false;
-            RM.gold -= artisanBlacksmithingGold;
-            RM.iron -= artisanBlacksmithingIron;
-            StartCoroutine(BasicResearch());
-            artisanBlacksmithing = true;
-            Debug.Log("artisan blacksmithing complete");
-        }
+        selectedObj = inputScript.selectedObj;
+        buildingScript = selectedObj.GetComponent<BuildingController>();
+        blacksmithScript = selectedObj.GetComponent<BlacksmithController>();
+        blacksmithScript.ResearchArtisanBlacksmithing();
     }
 
     void ResearchArtisanToolSmithing () 
     { 
-        if(RM.gold < artisanToolSmithingGold || RM.iron < artisanToolSmithingIron) {
-            UI.noResourcesText.SetActive(true);
-            StartCoroutine(CloseResourcesText());
-        } else {
-            artisanToolSmithingButton.interactable = false;
-            RM.gold -= artisanToolSmithingGold;
-            RM.iron -= artisanToolSmithingIron;
-            StartCoroutine(BasicResearch());
-            artisanWeaponSmithing = true;
-            Debug.Log("artisanToolSmithingGold complete");
-        }
+        selectedObj = inputScript.selectedObj;
+        buildingScript = selectedObj.GetComponent<BuildingController>();
+        blacksmithScript = selectedObj.GetComponent<BlacksmithController>();
+        blacksmithScript.ResearchArtisanToolSmithing();
     }
 
     void ResearchArtisanArmourSmithing () 
     { 
-        if(RM.gold < artisanArmourSmithingGold || RM.iron < artisanArmourSmithingIron) {
-            UI.noResourcesText.SetActive(true);
-            StartCoroutine(CloseResourcesText());
-        } else {
-            artisanArmourSmithingButton.interactable = false;
-            RM.gold -= artisanArmourSmithingGold;
-            RM.iron -= artisanArmourSmithingIron;
-            StartCoroutine(BasicResearch());
-            artisanArmourSmithing = true;
-            Debug.Log("artisanArmourSmithingIron complete");
-        }
+        selectedObj = inputScript.selectedObj;
+        buildingScript = selectedObj.GetComponent<BuildingController>();
+        blacksmithScript = selectedObj.GetComponent<BlacksmithController>();
+        blacksmithScript.ResearchArtisanArmourSmithing();
     }
 
     void ResearchArtisanWeaponSmithingButton () 
     { 
-        if(RM.gold < artisanWeaponSmithingGold || RM.iron < artisanWeaponSmithingIron) {
-            UI.noResourcesText.SetActive(true);
-            StartCoroutine(CloseResourcesText());
-        } else {
-            artisanWeaponSmithingButton.interactable = false;
-            RM.gold -= artisanWeaponSmithingGold;
-            RM.iron -= artisanWeaponSmithingIron;
-            StartCoroutine(BasicResearch());
-            artisanWeaponSmithing = true;
-            Debug.Log("artisan weaponsmithing complete");
-        }
+        selectedObj = inputScript.selectedObj;
+        buildingScript = selectedObj.GetComponent<BuildingController>();
+        blacksmithScript = selectedObj.GetComponent<BlacksmithController>();
+        blacksmithScript.ResearchArtisanWeaponSmithing();
     }
 
     // OTHER BLACKSMITHING
-    void ResearchHorshoes () 
+    void ResearchHorseshoes () 
     { 
-        if(RM.gold < horshoesGold || RM.iron < horshoesIron) {
-            UI.noResourcesText.SetActive(true);
-            StartCoroutine(CloseResourcesText());
-        } else {
-            horshoesButton.interactable = false;
-            RM.gold -= horshoesGold;
-            RM.iron -= horshoesIron;
-            StartCoroutine(BasicResearch());
-            horshoes = true;
-            Debug.Log("horseshoes complete");
-        }
+        selectedObj = inputScript.selectedObj;
+        buildingScript = selectedObj.GetComponent<BuildingController>();
+        blacksmithScript = selectedObj.GetComponent<BlacksmithController>();
+        blacksmithScript.ResearchHorseshoes();
     }
 
     void ResearchMinecarts () 
     { 
-        if(RM.gold < minecartsGold || RM.iron < minecartsGold) {
-            UI.noResourcesText.SetActive(true);
-            StartCoroutine(CloseResourcesText());
-        } else {
-            minecartsButton.interactable = false;
-            RM.gold -= minecartsGold;
-            RM.iron -= minecartsIron;
-            StartCoroutine(BasicResearch());
-            minecarts = true;
-            Debug.Log("minecarts complete");
-        }
+        selectedObj = inputScript.selectedObj;
+        buildingScript = selectedObj.GetComponent<BuildingController>();
+        blacksmithScript = selectedObj.GetComponent<BlacksmithController>();
+        blacksmithScript.ResearchMinecarts();
     }
 
     void ResearchCaltrops () 
     { 
-        if(RM.gold < caltropsGold || RM.iron < caltropsIron) {
-            UI.noResourcesText.SetActive(true);
-            StartCoroutine(CloseResourcesText());
-        } else {
-            caltropsButton.interactable = false;
-            RM.gold -= caltropsGold;
-            RM.iron -= caltropsIron;
-            StartCoroutine(BasicResearch());
-            caltrops = true;
-            Debug.Log("artisan blacksmithing complete");
-        }
+        selectedObj = inputScript.selectedObj;
+        buildingScript = selectedObj.GetComponent<BuildingController>();
+        blacksmithScript = selectedObj.GetComponent<BlacksmithController>();
+        blacksmithScript.ResearchCaltrops();
     }
 
     void ResearchReinforcedBuildings () 
     { 
-        if(RM.gold < reinforcedBuildingsGold || RM.iron < reinforcedBuildingsIron) {
-            UI.noResourcesText.SetActive(true);
-            StartCoroutine(CloseResourcesText());
-        } else {
-            reinforcedBuildingsButton.interactable = false;
-            RM.gold -= reinforcedBuildingsGold;
-            RM.iron -= reinforcedBuildingsIron;
-            StartCoroutine(BasicResearch());
-            reinforcedBuildings = true;
-            Debug.Log("reinforced buildings complete");
-        }
-    }
-
-    IEnumerator BasicResearch()
-    {
-        if(research == "basicBlacksmithing") {
-            isTraining = true;
-            UI.BlacksmithTraining();
-            for (i = 1; i < 11; i++)
-            {
-                yield return new WaitForSeconds(1);
-            }
-            isTraining = false;
-            basicBlacksmithing = true;
-            UI.BlacksmithSelect();
-        }
-
-        yield return new WaitForSeconds(10);
-        isTraining = false;
-        //my code here after 3 seconds
+        selectedObj = inputScript.selectedObj;
+        buildingScript = selectedObj.GetComponent<BuildingController>();
+        blacksmithScript = selectedObj.GetComponent<BlacksmithController>();
+        blacksmithScript.ResearchReinforcedBuildings();
     }
 
     IEnumerator ArtisanResearch()

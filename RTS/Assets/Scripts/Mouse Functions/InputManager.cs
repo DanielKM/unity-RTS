@@ -220,9 +220,6 @@ public class InputManager : MonoBehaviour
                     }
                     else if (selectedObj.tag == "Blacksmith")
                     {
-                        Debug.Log(foundationScript);
-                        Debug.Log(blacksmithScript.isTraining);
-                        Debug.Log(blacksmithScript.i);
                         if (blacksmithScript.isTraining)
                         {
                             BuildingProgressSlider.value = blacksmithScript.i * 10;
