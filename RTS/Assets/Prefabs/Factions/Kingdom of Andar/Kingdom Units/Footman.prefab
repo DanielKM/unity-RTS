@@ -907,6 +907,7 @@ MonoBehaviour:
   heldResource: 0
   maxHeldResource: 0
   drops: []
+  resources: []
 --- !u!1 &57994888639720304
 GameObject:
   m_ObjectHideFlags: 0

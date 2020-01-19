@@ -76,7 +76,7 @@ public class Selection : MonoBehaviour
         if(currentScene.name != "Main Menu") {
             if(UC.unitType == "Worker" && !UC.isDead) {
                 // if target node is destroyed
-                if (targetNode == null && task != Tasklist.Idle)
+                if (targetNode == null && task == Tasklist.Gathering)
                 {
                     if (heldResource >= maxHeldResource)
                     {
@@ -102,6 +102,10 @@ public class Selection : MonoBehaviour
                     }
                 } else
                 {
+                    if(targetNode == null && isBuilding) {
+                        task = Tasklist.Idle;
+                        isBuilding = false;
+                    }
                     if (heldResource >= maxHeldResource)
                     {
                         //stop gathering immediately
@@ -239,6 +243,8 @@ public class Selection : MonoBehaviour
                     playerAudio.clip = unitMoveClip;
                     playerAudio.Play();
                 } else if (UC.unitType == "Footman" || UC.unitType == "Swordsman") {
+                    isBuilding = false;
+                    isGathering = false;
                     if(targetScript != null) {
                         agent.destination = hit.collider.gameObject.transform.position;
                         isFollowing = true;
@@ -246,8 +252,6 @@ public class Selection : MonoBehaviour
                     }
                     else if (hit.collider.tag == "Ground")
                     {
-                        isBuilding = false;
-                        isGathering = false;
                         isMeleeing = false;
                         task = Tasklist.Moving;
                         agent.destination = hit.point;
@@ -530,7 +534,7 @@ public class Selection : MonoBehaviour
     {
         GameObject hitObject = other.gameObject;
         // add  (&& task == Tasklist.Gathering) once u know whats up
-        if (hitObject.tag == "Resource" && hitObject.gameObject == targetNode)
+        if (hitObject.tag == "Resource" && hitObject.gameObject == targetNode && gameObject.GetComponent<UnitController>().unitType == "Worker")
         {
             isGathering = true;
            // hitObject.GetComponent<NodeManager>().gatherers++;
@@ -538,7 +542,7 @@ public class Selection : MonoBehaviour
             harvestSpeed = harvestScript.harvestTime;
             heldResourceType = hitObject.GetComponent<NodeManager>().resourceType;
             StartCoroutine(Tick());
-        } else if (hitObject.tag == "Foundation" && hitObject.gameObject == targetNode)
+        } else if (hitObject.tag == "Foundation" && hitObject.gameObject == targetNode && gameObject.GetComponent<UnitController>().unitType == "Worker")
         {
             isBuilding = true;
             hitObject.GetComponent<FoundationController>().builders++;
@@ -546,7 +550,7 @@ public class Selection : MonoBehaviour
             buildSpeed = buildScript.buildTime;
             StartCoroutine(Tick());
         }
-        else if(hitObject.tag == "Yard" && task == Tasklist.Delivering)
+        else if(hitObject.tag == "Yard" && task == Tasklist.Delivering && gameObject.GetComponent<UnitController>().unitType == "Worker")
         {
             if (heldResourceType == NodeManager.ResourceTypes.Skymetal)
             {

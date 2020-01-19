@@ -57,7 +57,7 @@ MonoBehaviour:
   resourceType: 4
   collidedObjects: []
   harvestTime: 1
-  availableResource: 30
+  availableResource: 1000
   gatherers: 0
 --- !u!114 &7895211294439571344
 MonoBehaviour:
