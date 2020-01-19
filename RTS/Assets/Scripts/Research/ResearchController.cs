@@ -13,6 +13,7 @@ public class ResearchController : MonoBehaviour
     InputManager inputScript;
     BuildingController buildingScript;
     BlacksmithController blacksmithScript;
+    LumberYardController lumberYardScript;
 
     //Research variables
     //Basic blacksmithing
@@ -50,9 +51,9 @@ public class ResearchController : MonoBehaviour
     public float artisanWeaponSmithingIron;
 
     //Extra blacksmithing
-    public bool horshoes;
-    public float horshoesGold;
-    public float horshoesIron;
+    public bool horseshoes;
+    public float horseshoesGold;
+    public float horseshoesIron;
 
     public bool minecarts;
     public float minecartsGold;
@@ -66,7 +67,59 @@ public class ResearchController : MonoBehaviour
     public float reinforcedBuildingsGold;
     public float reinforcedBuildingsIron;
 
-    //Research Buttons
+    //Research variables
+    //Basic woodworking
+    public bool buildingScience;
+    public float buildingScienceGold;
+    public float buildingScienceWood;
+
+    public bool efficientBuildings;
+    public float efficientBuildingsGold;
+    public float efficientBuildingsWood;
+
+    public bool sturdyConstruction;
+    public float sturdyConstructionGold;
+    public float sturdyConstructionWood;
+
+    public bool betterGear;
+    public float betterGearGold;
+    public float betterGearWood;
+
+    //Artisan blacksmithing
+    public bool basicWoodworking;
+    public float basicWoodworkingGold;
+    public float basicWoodworkingWood;
+
+    public bool improvedHandles;
+    public float improvedHandlesGold;
+    public float improvedHandlesWood;
+
+    public bool wheelbarrows;
+    public float wheelbarrowsGold;
+    public float wheelbarrowsWood;
+
+    public bool carts;
+    public float cartsGold;
+    public float cartsWood;
+    
+    //Extra blacksmithing
+    public bool artisanWoodworking;
+    public float artisanWoodworkingGold;
+    public float artisanWoodworkingWood;
+
+    public bool bridges;
+    public float bridgesGold;
+    public float bridgesWood;
+
+    public bool walls;
+    public float wallsGold;
+    public float wallsWood;
+
+    public bool watchTowers;
+    public float watchTowersGold;
+    public float watchTowersWood;
+
+    //Blacksmith Research Buttons
     public Button basicBlacksmithingButton;
     public Button basicToolSmithingButton;
     public Button basicArmourSmithingButton;
@@ -77,11 +130,27 @@ public class ResearchController : MonoBehaviour
     public Button artisanArmourSmithingButton;
     public Button artisanWeaponSmithingButton;
 
-    public Button horshoesButton;
+    public Button horseshoesButton;
     public Button minecartsButton;
     public Button caltropsButton;
     public Button reinforcedBuildingsButton;
 
+    //Lumber Mill Research Buttons
+    public Button buildingScienceButton;
+    public Button efficientBuildingsButton;
+    public Button sturdyConstructionButton;
+    public Button betterGearButton;
+ 
+    public Button basicWoodworkingButton;
+    public Button improvedHandlesButton;
+    public Button wheelbarrowsButton;
+    public Button cartsButton;
+
+    public Button artisanWoodworkingButton;
+    public Button bridgesButton;
+    public Button wallsButton;
+    public Button watchTowersButton;
+    
     public GameObject selectedObj;
     public string research;
     public bool isTraining;
@@ -96,6 +165,7 @@ public class ResearchController : MonoBehaviour
             UI = player.GetComponent<UIController>();
             inputScript = player.GetComponent<InputManager>();
 
+            // Blacksmith Research
             basicBlacksmithingButton.onClick.AddListener(ResearchBlacksmithing);
             basicToolSmithingButton.onClick.AddListener(ResearchBasicToolSmithing);
             basicArmourSmithingButton.onClick.AddListener(ResearchBasicArmourSmithing);
@@ -106,10 +176,26 @@ public class ResearchController : MonoBehaviour
             artisanArmourSmithingButton.onClick.AddListener(ResearchArtisanArmourSmithing);
             artisanWeaponSmithingButton.onClick.AddListener(ResearchArtisanWeaponSmithingButton);
             
-            horshoesButton.onClick.AddListener(ResearchHorseshoes);
+            horseshoesButton.onClick.AddListener(ResearchHorseshoes);
             minecartsButton.onClick.AddListener(ResearchMinecarts);
             caltropsButton.onClick.AddListener(ResearchCaltrops);
             reinforcedBuildingsButton.onClick.AddListener(ResearchReinforcedBuildings);
+
+            // Lumber Mill Research            
+            buildingScienceButton.onClick.AddListener(ResearchBuildingScience);
+            efficientBuildingsButton.onClick.AddListener(ResearchEfficientBuildings);
+            sturdyConstructionButton.onClick.AddListener(ResearchSturdyConstruction);
+            betterGearButton.onClick.AddListener(ResearchBetterGear);
+            
+            basicWoodworkingButton.onClick.AddListener(ResearchBasicWoodworking);
+            improvedHandlesButton.onClick.AddListener(ResearchImprovedHandles);
+            wheelbarrowsButton.onClick.AddListener(ResearchWheelbarrows);
+            cartsButton.onClick.AddListener(ResearchCarts);
+            
+            artisanWoodworkingButton.onClick.AddListener(ResearchArtisanWoodworking);
+            bridgesButton.onClick.AddListener(ResearchBridges);
+            wallsButton.onClick.AddListener(ResearchWalls);
+            watchTowersButton.onClick.AddListener(ResearchWatchTowers);
         }
     }
 
@@ -221,22 +307,102 @@ public class ResearchController : MonoBehaviour
         blacksmithScript.ResearchReinforcedBuildings();
     }
 
-    IEnumerator ArtisanResearch()
-    {
-        yield return new WaitForSeconds(30);
-        //my code here after 3 seconds
+    // BASIC WOODWORKING
+    void ResearchBuildingScience () 
+    { 
+        selectedObj = inputScript.selectedObj;
+        buildingScript = selectedObj.GetComponent<BuildingController>();
+        lumberYardScript = selectedObj.GetComponent<LumberYardController>();
+        lumberYardScript.ResearchBuildingScience();
     }
-    
-    IEnumerator ExtraResearch()
-    {
-        yield return new WaitForSeconds(20);
-        //my code here after 3 seconds
+
+    void ResearchEfficientBuildings () 
+    { 
+        selectedObj = inputScript.selectedObj;
+        buildingScript = selectedObj.GetComponent<BuildingController>();
+        lumberYardScript = selectedObj.GetComponent<LumberYardController>();
+        lumberYardScript.ResearchEfficientBuildings();
     }
-    
-    IEnumerator CloseResourcesText()
-    {
-        yield return new WaitForSeconds(3);
-        //my code here after 3 seconds
-        UI.noResourcesText.SetActive(false);
+
+    void ResearchSturdyConstruction () 
+    { 
+        selectedObj = inputScript.selectedObj;
+        buildingScript = selectedObj.GetComponent<BuildingController>();
+        lumberYardScript = selectedObj.GetComponent<LumberYardController>();
+        lumberYardScript.ResearchSturdyConstruction();
+    }
+
+    void ResearchBetterGear () 
+    { 
+        selectedObj = inputScript.selectedObj;
+        buildingScript = selectedObj.GetComponent<BuildingController>();
+        lumberYardScript = selectedObj.GetComponent<LumberYardController>();
+        lumberYardScript.ResearchBetterGear();
+    }
+
+    // ARTISAN BLACKSMITHING
+    void ResearchBasicWoodworking () 
+    { 
+        selectedObj = inputScript.selectedObj;
+        buildingScript = selectedObj.GetComponent<BuildingController>();
+        lumberYardScript = selectedObj.GetComponent<LumberYardController>();
+        lumberYardScript.ResearchBasicWoodworking();
+    }
+
+    void ResearchImprovedHandles () 
+    { 
+        selectedObj = inputScript.selectedObj;
+        buildingScript = selectedObj.GetComponent<BuildingController>();
+        lumberYardScript = selectedObj.GetComponent<LumberYardController>();
+        lumberYardScript.ResearchImprovedHandles();
+    }
+
+    void ResearchWheelbarrows () 
+    { 
+        selectedObj = inputScript.selectedObj;
+        buildingScript = selectedObj.GetComponent<BuildingController>();
+        lumberYardScript = selectedObj.GetComponent<LumberYardController>();
+        lumberYardScript.ResearchWheelbarrows();
+    }
+
+    void ResearchCarts () 
+    { 
+        selectedObj = inputScript.selectedObj;
+        buildingScript = selectedObj.GetComponent<BuildingController>();
+        lumberYardScript = selectedObj.GetComponent<LumberYardController>();
+        lumberYardScript.ResearchCarts();
+    }
+
+    // OTHER BLACKSMITHING
+    void ResearchArtisanWoodworking () 
+    { 
+        selectedObj = inputScript.selectedObj;
+        buildingScript = selectedObj.GetComponent<BuildingController>();
+        lumberYardScript = selectedObj.GetComponent<LumberYardController>();
+        lumberYardScript.ResearchArtisanWoodworking();
+    }
+
+    void ResearchBridges () 
+    { 
+        selectedObj = inputScript.selectedObj;
+        buildingScript = selectedObj.GetComponent<BuildingController>();
+        lumberYardScript = selectedObj.GetComponent<LumberYardController>();
+        lumberYardScript.ResearchBridges();
+    }
+
+    void ResearchWalls () 
+    { 
+        selectedObj = inputScript.selectedObj;
+        buildingScript = selectedObj.GetComponent<BuildingController>();
+        lumberYardScript = selectedObj.GetComponent<LumberYardController>();
+        lumberYardScript.ResearchWalls();
+    }
+
+    void ResearchWatchTowers () 
+    { 
+        selectedObj = inputScript.selectedObj;
+        buildingScript = selectedObj.GetComponent<BuildingController>();
+        lumberYardScript = selectedObj.GetComponent<LumberYardController>();
+        lumberYardScript.ResearchWatchTowers();
     }
 }

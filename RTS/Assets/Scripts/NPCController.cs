@@ -21,16 +21,20 @@ public class NPCController : MonoBehaviour
     NavMeshAgent agent; //reference to the navmeshagent
     UnitController UC; //reference to the navmeshagent
     Selection selection; //reference to the navmeshagent
+    private GameObject player;
+    private ResearchController RC;
 
     // Enemy variables
     private UnitController enemyUC;
     private GameObject enemy;
-    private int enemyHealth;
+    private float enemyHealth;
 
     public bool currentlyMeleeing;
     // Start is called before the first frame update
     void Start()
     {
+        player = GameObject.FindGameObjectWithTag("Player");
+        RC = player.GetComponent<ResearchController>();
         playerunits = GameObject.FindGameObjectsWithTag("Selectable");
     }
 
@@ -177,12 +181,23 @@ public class NPCController : MonoBehaviour
                 UC.unitAudio.maxDistance = 55;
                 UC.unitAudio.Play();
             }
-            if(enemyUC.armour > 0) {
-                enemyUC.armour -= 1;
+
+            if(enemyUC.armour > 0.0f) {
+                float armourModifier;
+                if(RC.artisanArmourSmithing) {
+                    armourModifier = 0.25f;
+                } else if(RC.basicArmourSmithing) {
+                    armourModifier = 0.5f;
+                } else {
+                    armourModifier = 1.0f;
+                }
+                enemyUC.armour -= 1.0f * armourModifier;
+                Debug.Log(1.0f * armourModifier);
             } else {
                 enemyUC.health -= UC.attackDamage;
                 enemyHealth = enemyUC.health;
             }
+            
             yield return new WaitForSeconds(UC.attackSpeed);
         }
     }

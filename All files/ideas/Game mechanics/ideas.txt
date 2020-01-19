@@ -5,6 +5,14 @@ having a commander on the ground
 LEVEL 1
 Repair the watchtower
 
+NEW !!!!
+Minecarts - only improve iron, stone, and gold 
+Resource harvesting - transform to find closest node
+Increased bag size
+stop non workers from mining/building
+Forge - RM.iron -= maxheldresource
+turn to steel
+
 Sound: put unit confirmation into audiosource
 
 Multiplayer bonuses:

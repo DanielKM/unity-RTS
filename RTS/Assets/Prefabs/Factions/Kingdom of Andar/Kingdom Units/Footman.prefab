@@ -856,6 +856,7 @@ MonoBehaviour:
   health: 500
   maxHealth: 500
   armour: 5
+  maxArmour: 5
   energy: 100
   maxEnergy: 100
   attackDamage: 50

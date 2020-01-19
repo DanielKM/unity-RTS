@@ -7,6 +7,7 @@ public class NodeManager : MonoBehaviour
     public enum ResourceTypes { Skymetal, Iron, Steel, Stone, Wood, Food, Gold, Housing }
     public ResourceTypes resourceType;
     InputManager IM;
+    ResearchController RC;
 
     private Selection selectscript;
     public List<Collider> collidedObjects = new List<Collider>();
@@ -22,6 +23,8 @@ public class NodeManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        GameObject player = GameObject.FindGameObjectWithTag("Player");
+        RC = player.GetComponent<ResearchController>();
         // Starts the resource tick (means its true)
         StartCoroutine(ResourceTick());   
     }
@@ -37,6 +40,16 @@ public class NodeManager : MonoBehaviour
         if (availableResource <= 0)
         {
             // Need to add isGathering = false
+            foreach(Collider collidedObject in collidedObjects)
+            {
+                UnitController unit = collidedObject.gameObject.GetComponent<UnitController>();
+                Selection unitSelection = collidedObject.gameObject.GetComponent<Selection>();
+                if(unit) {
+                    if(unit.unitType == "Worker") {
+                        unitSelection.isGathering = false;
+                    }
+                }
+            }
             Destroy(gameObject);
         }
     }
@@ -44,9 +57,17 @@ public class NodeManager : MonoBehaviour
     // Ticks down while villager is gathering resource - Adjust with heldResource in GatherTick in Selection Script
     public void ResourceGather()
     {
+        int toolModifier;
+        if(RC.artisanToolSmithing) {
+            toolModifier = 3;
+        } else if (RC.basicToolSmithing) {
+            toolModifier = 2;
+        } else {
+            toolModifier = 1;
+        }
         if(collidedObjects.Count != 0)
         {
-            availableResource -= collidedObjects.Count * 5;
+            availableResource -= collidedObjects.Count * 5 * toolModifier;
         }
     }
 

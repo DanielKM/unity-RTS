@@ -21,12 +21,13 @@ public class UnitController : MonoBehaviour
     public string items;
 
     // Attributes
-    public int health;
-    public int maxHealth;
-    public int armour;
+    public float health;
+    public float maxHealth;
+    public float armour;
+    public float maxArmour;
     public int energy;
     public int maxEnergy;
-    public int attackDamage;
+    public float attackDamage;
     public int attackRange;
     public int attackSpeed;
     public float aggroRange;
@@ -44,7 +45,7 @@ public class UnitController : MonoBehaviour
     private UnitController enemyUC;
     private GameObject enemy;
     private GameObject[] enemyUnits;
-    private int enemyHealth;
+    private float enemyHealth;
 
     // Audio
     public AudioSource unitAudio;
@@ -63,6 +64,8 @@ public class UnitController : MonoBehaviour
     private NavMeshAgent agent;
     private Selection selection;
     private Tasklist newTask;
+
+    ResearchController RC;
     UIController UI;
 
     NodeManager.ResourceTypes resourceType;
@@ -70,6 +73,7 @@ public class UnitController : MonoBehaviour
     public bool currentlyMeleeing;
     public bool isDead;
     public Sprite unitIcon;
+    private bool armourUpgrade;
 
 
     // Start is called before the first frame update
@@ -78,6 +82,7 @@ public class UnitController : MonoBehaviour
         player = GameObject.FindGameObjectWithTag("Player");
         UI = player.GetComponent<UIController>();
         RM = player.GetComponent<ResourceManager>();
+        RC = player.GetComponent<ResearchController>();
 
         anim = GetComponent<Animator>();
         agent = GetComponent<NavMeshAgent>();
@@ -298,10 +303,21 @@ public class UnitController : MonoBehaviour
                 unitAudio.maxDistance = 55;
                 unitAudio.Play();
             }
-            if(enemyUC.armour > 0) {
-                enemyUC.armour -= 1;
+
+            // Research
+            float weaponModifier;
+            if(RC.artisanWeaponSmithing) {
+                weaponModifier = 2.0f;
+            } else if(RC.basicWeaponSmithing) {
+                weaponModifier = 1.5f;
             } else {
-                enemyUC.health -= attackDamage;
+                weaponModifier = 1.0f;
+            }
+
+            if(enemyUC.armour > 0.0f) {
+                enemyUC.armour -= weaponModifier;
+            } else {
+                enemyUC.health -= attackDamage * weaponModifier;
                 enemyHealth = enemyUC.health;
             }
             yield return new WaitForSeconds(attackSpeed);

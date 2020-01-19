@@ -26,7 +26,7 @@ public class InputManager : MonoBehaviour
     BarracksController barracksScript;
     BlacksmithController blacksmithScript;
     FoundationController foundationScript;
-    ResearchController research;
+    ResearchController RC;
 
     // UI FOR UNITS
     private AudioSource unitAudio;
@@ -141,7 +141,7 @@ public class InputManager : MonoBehaviour
             player = GameObject.FindGameObjectWithTag("Player");
             playerAudio = GameObject.FindGameObjectWithTag("Main Audio").GetComponent<AudioSource>();
             UI = player.GetComponent<UIController>();
-            research = player.GetComponent<ResearchController>();
+            RC = player.GetComponent<ResearchController>();
         // progressIcon = GameObject.Find("ProgressIcon").GetComponent<Image>();
         // foundationScript = selectedObj.GetComponent<FoundationController>();
             // progressIcon.sprite = foundationScript.buildingPrefab.GetComponent<BuildingController>().icon;
@@ -421,38 +421,60 @@ public class InputManager : MonoBehaviour
     }
       
     public void UpdateUnitPanel()
-    {
-        if(unitScript.armour == 0) {
+    { 
+            // FFA500
+        
+        if (RC.artisanArmourSmithing) {
+            UI.armour1.GetComponent<Image>().color = new Color32(255,165,0,255);
+            UI.armour2.GetComponent<Image>().color = new Color32(255,165,0,255);
+            UI.armour3.GetComponent<Image>().color = new Color32(255,165,0,255);
+            UI.armour4.GetComponent<Image>().color = new Color32(255,165,0,255);
+            UI.armour5.GetComponent<Image>().color = new Color32(255,165,0,255);
+        } else if (RC.basicArmourSmithing) {
+            UI.armour1.GetComponent<Image>().color = new Color32(114,160,193,255);
+            UI.armour2.GetComponent<Image>().color = new Color32(114,160,193,255);
+            UI.armour3.GetComponent<Image>().color = new Color32(114,160,193,255);
+            UI.armour4.GetComponent<Image>().color = new Color32(114,160,193,255);
+            UI.armour5.GetComponent<Image>().color = new Color32(114,160,193,255);
+        } else {
+            UI.armour1.GetComponent<Image>().color = new Color32(205,127,50,255);
+            UI.armour2.GetComponent<Image>().color = new Color32(205,127,50,255);
+            UI.armour3.GetComponent<Image>().color = new Color32(205,127,50,255);
+            UI.armour4.GetComponent<Image>().color = new Color32(205,127,50,255);
+            UI.armour5.GetComponent<Image>().color = new Color32(205,127,50,255);
+        }
+
+        if(unitScript.armour <= 0.0f) {
             UI.armour1.alpha = 0;
             UI.armour2.alpha = 0;
             UI.armour3.alpha = 0;
             UI.armour4.alpha = 0;
             UI.armour5.alpha = 0;
-        } else if(unitScript.armour == 1) {
+        } else if(unitScript.armour <= 1.0f) {
             UI.armour1.alpha = 1;
             UI.armour2.alpha = 0;
             UI.armour3.alpha = 0;
             UI.armour4.alpha = 0;
             UI.armour5.alpha = 0;
-        } else if(unitScript.armour == 2) {
+        } else if(unitScript.armour <= 2.0f) {
             UI.armour1.alpha = 1;
             UI.armour2.alpha = 1;
             UI.armour3.alpha = 0;
             UI.armour4.alpha = 0;
             UI.armour5.alpha = 0;
-        } else if(unitScript.armour == 3) {
+        } else if(unitScript.armour <= 3.0f) {
             UI.armour1.alpha = 1;
             UI.armour2.alpha = 1;
             UI.armour3.alpha = 1;
             UI.armour4.alpha = 0;
             UI.armour5.alpha = 0;
-        } else if(unitScript.armour == 4) {
+        } else if(unitScript.armour <= 4.0f) {
             UI.armour1.alpha = 1;
             UI.armour2.alpha = 1;
             UI.armour3.alpha = 1;
             UI.armour4.alpha = 1;
             UI.armour5.alpha = 0;
-        } else if(unitScript.armour == 5) {
+        } else if(unitScript.armour <= 5.0f) {
             UI.armour1.alpha = 1;
             UI.armour2.alpha = 1;
             UI.armour3.alpha = 1;

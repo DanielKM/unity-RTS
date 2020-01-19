@@ -18,12 +18,14 @@ public class FoundationController : MonoBehaviour
     private GameObject currentBuilding;
 
     public ResourceManager RM;
+    ResearchController RC;
     
     // Start is called before the first frame update
     void Start()
     {
         GameObject player = GameObject.FindGameObjectWithTag("Player");
         RM = player.GetComponent<ResourceManager>();
+        RC = player.GetComponent<ResearchController>();
 
         // Starts the resource tick (means its true)
         BuildingProgressPanel = GameObject.Find("BuildingProgressPanel").GetComponent<CanvasGroup>();
@@ -95,11 +97,20 @@ public class FoundationController : MonoBehaviour
 
     // Ticks down while villager is gathering resource - Adjust with heldResource in GatherTick in Selection Script
     public void BuildStructure()
-    {
+    {       
+        int toolModifier;
+        if(RC.artisanToolSmithing) {
+            toolModifier = 3;
+        } else if (RC.basicToolSmithing) {
+            toolModifier = 2;
+        } else {
+            toolModifier = 1;
+        }
+
         if (builders != 0)
         {
             isBuilding = true;
-            buildPercent += builders * 5;
+            buildPercent += builders * 5 * toolModifier;
         } else
         {
             isBuilding = false;

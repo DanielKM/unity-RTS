@@ -82,6 +82,27 @@ MonoBehaviour:
   iron: 0
   steel: 0
   skymetal: 0
+--- !u!114 &8499163981263363764
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3319812515624710287}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c7d3b2630507bd847bdf6afa970631a3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  i: 0
+  swordsmanReporting: {fileID: 0}
+  footmanReporting: {fileID: 0}
+  spawnDelay: 0
+  selected: 0
+  selectedObj: {fileID: 0}
+  isTraining: 0
+  research: 
+  progressIcon: {fileID: 0}
 --- !u!1001 &3319812515624744947
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -89,18 +110,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 100220, guid: ee6adcfd25e52fc4fa1ab1d5ff7d1cae, type: 3}
-      propertyPath: m_Name
-      value: lumberyard Variant
-      objectReference: {fileID: 0}
-    - target: {fileID: 100220, guid: ee6adcfd25e52fc4fa1ab1d5ff7d1cae, type: 3}
-      propertyPath: m_TagString
-      value: Lumber Yard
-      objectReference: {fileID: 0}
-    - target: {fileID: 100220, guid: ee6adcfd25e52fc4fa1ab1d5ff7d1cae, type: 3}
-      propertyPath: m_Layer
-      value: 2
-      objectReference: {fileID: 0}
     - target: {fileID: 100000, guid: ee6adcfd25e52fc4fa1ab1d5ff7d1cae, type: 3}
       propertyPath: m_Layer
       value: 2
@@ -538,6 +547,18 @@ PrefabInstance:
       value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 100218, guid: ee6adcfd25e52fc4fa1ab1d5ff7d1cae, type: 3}
+      propertyPath: m_Layer
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 100220, guid: ee6adcfd25e52fc4fa1ab1d5ff7d1cae, type: 3}
+      propertyPath: m_Name
+      value: lumberyard Variant
+      objectReference: {fileID: 0}
+    - target: {fileID: 100220, guid: ee6adcfd25e52fc4fa1ab1d5ff7d1cae, type: 3}
+      propertyPath: m_TagString
+      value: Lumber Yard
+      objectReference: {fileID: 0}
+    - target: {fileID: 100220, guid: ee6adcfd25e52fc4fa1ab1d5ff7d1cae, type: 3}
       propertyPath: m_Layer
       value: 2
       objectReference: {fileID: 0}

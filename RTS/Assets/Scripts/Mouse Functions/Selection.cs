@@ -26,6 +26,7 @@ public class Selection : MonoBehaviour
     NodeManager harvestScript;
     InputManager IM;
     UnitController UC;
+    ResearchController RC;
     Selection targetScript;
     float harvestSpeed;
 
@@ -49,6 +50,9 @@ public class Selection : MonoBehaviour
     public int maxHeldResource;
 
     public GameObject[] drops;
+    public GameObject[] resources;
+
+
 
     // Start is called before the first frame update
     void Start()
@@ -58,6 +62,7 @@ public class Selection : MonoBehaviour
             player = GameObject.FindGameObjectWithTag("Player");
             playerAudio = GameObject.FindGameObjectWithTag("Main Audio").GetComponent<AudioSource>();
             RM = player.GetComponent<ResourceManager>();
+            RC = player.GetComponent<ResearchController>();
             IM = player.GetComponent<InputManager>();
             UC = GetComponent<UnitController>();
             agent = GetComponent<NavMeshAgent>();
@@ -71,12 +76,12 @@ public class Selection : MonoBehaviour
         if(currentScene.name != "Main Menu") {
             if(UC.unitType == "Worker" && !UC.isDead) {
                 // if target node is destroyed
-                if (targetNode == null)
+                if (targetNode == null && task != Tasklist.Idle)
                 {
-                    isBuilding = false;
-                    isGathering = false;
-                    if (heldResource != 0)
+                    if (heldResource >= maxHeldResource)
                     {
+                        isBuilding = false;
+                        isGathering = false;
                         //stop gathering immediately
                         //Drop off point here for resource yards
                         drops = GameObject.FindGameObjectsWithTag("Yard");
@@ -91,7 +96,9 @@ public class Selection : MonoBehaviour
                         }
                     } else
                     {
-                        //task = Tasklist.Idle;
+                        resources = GameObject.FindGameObjectsWithTag("Resource");
+                        targetNode = GetClosestResource(resources);
+                        agent.destination = targetNode.transform.position;
                     }
                 } else
                 {
@@ -142,6 +149,30 @@ public class Selection : MonoBehaviour
             }
         }
         return closestDrop;
+    }
+
+    // Find the closest dropoff after gathering and go there
+    GameObject GetClosestResource(GameObject[] resources)
+    {
+        GameObject closestResource = null;
+        float closestDistance = Mathf.Infinity;
+        Vector3 position = transform.position;
+
+        foreach(GameObject targetResource in resources)
+        {
+            NodeManager currentNode = targetResource.GetComponent<NodeManager>();
+            if(currentNode.resourceType == heldResourceType) {
+                Vector3 direction = targetResource.transform.position - position;
+                float distance = direction.sqrMagnitude;
+                if(distance < closestDistance)
+                {
+                    closestDistance = distance;
+                    closestResource = targetResource;
+                }
+            }
+
+        }
+        return closestResource;
     }
 
     // Right click function
@@ -603,6 +634,15 @@ public class Selection : MonoBehaviour
     {
         while(isGathering || isBuilding)
         {
+            int toolModifier;
+            if(RC.artisanToolSmithing) {
+                toolModifier = 3;
+            } else if (RC.basicToolSmithing) {
+                toolModifier = 2;
+            } else {
+                toolModifier = 1;
+            }
+
             if(isBuilding) {
                 harvestSpeed = UC.attackSpeed;
             }
@@ -616,7 +656,10 @@ public class Selection : MonoBehaviour
             } 
             else if(isGathering && heldResourceType == NodeManager.ResourceTypes.Skymetal)
             {
-                heldResource += 5;
+                heldResource += 5 * toolModifier;
+                if(heldResource > maxHeldResource) {
+                    heldResource = maxHeldResource;
+                }
                 UC.unitAudio = agent.GetComponent<AudioSource>();
                 UC.unitAudio.clip = UC.metalChop;
                 UC.unitAudio.maxDistance = 55;
@@ -624,7 +667,10 @@ public class Selection : MonoBehaviour
             } 
             else if (isGathering && heldResourceType == NodeManager.ResourceTypes.Wood)
             {
-                heldResource += 5;
+                heldResource += 5 * toolModifier;
+                if(heldResource > maxHeldResource) {
+                    heldResource = maxHeldResource;
+                }
                 UC.unitAudio = agent.GetComponent<AudioSource>();
                 UC.unitAudio.clip = UC.woodChop;
                 UC.unitAudio.maxDistance = 55;
@@ -632,7 +678,10 @@ public class Selection : MonoBehaviour
             }
             else if (isGathering && heldResourceType == NodeManager.ResourceTypes.Iron)
             {
-                heldResource += 5;
+                heldResource += 5 * toolModifier;
+                if(heldResource > maxHeldResource) {
+                    heldResource = maxHeldResource;
+                }
                 UC.unitAudio = agent.GetComponent<AudioSource>();
                 UC.unitAudio.clip = UC.metalChop;
                 UC.unitAudio.maxDistance = 55;
@@ -640,7 +689,10 @@ public class Selection : MonoBehaviour
             }
             else if (isGathering && heldResourceType == NodeManager.ResourceTypes.Stone)
             {
-                heldResource += 5;
+                heldResource += 5 * toolModifier;
+                if(heldResource > maxHeldResource) {
+                    heldResource = maxHeldResource;
+                }
                 UC.unitAudio = agent.GetComponent<AudioSource>();
                 UC.unitAudio.clip = UC.metalChop;
                 UC.unitAudio.maxDistance = 55;
@@ -648,7 +700,10 @@ public class Selection : MonoBehaviour
             }
             else if (isGathering && heldResourceType == NodeManager.ResourceTypes.Gold)
             {
-                heldResource += 5;
+                heldResource += 5 * toolModifier;
+                if(heldResource > maxHeldResource) {
+                    heldResource = maxHeldResource;
+                }
                 UC.unitAudio = agent.GetComponent<AudioSource>();
                 UC.unitAudio.clip = UC.metalChop;
                 UC.unitAudio.maxDistance = 55;
@@ -656,7 +711,10 @@ public class Selection : MonoBehaviour
             }
             else if (isGathering && heldResourceType == NodeManager.ResourceTypes.Food)
             {
-                heldResource += 5;
+                heldResource += 5 * toolModifier;
+                if(heldResource > maxHeldResource) {
+                    heldResource = maxHeldResource;
+                }
                 UC.unitAudio = agent.GetComponent<AudioSource>();
                 UC.unitAudio.clip = UC.woodChop;
                 UC.unitAudio.maxDistance = 55;
@@ -664,7 +722,10 @@ public class Selection : MonoBehaviour
             }
             else if (isGathering)
             {
-                heldResource += 5;               
+                heldResource += 5 * toolModifier;    
+                if(heldResource > maxHeldResource) {
+                    heldResource = maxHeldResource;
+                }           
                 UC.unitAudio = agent.GetComponent<AudioSource>();
                 UC.unitAudio.clip = UC.metalChop;
                 UC.unitAudio.maxDistance = 55;

@@ -4,9 +4,8 @@ using UnityEngine.SceneManagement;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class BlacksmithController : MonoBehaviour
+public class LumberYardController : MonoBehaviour
 {
-    UIController UI;
     // footmen names
     string[] footmen = new string[14]{ "Bron", "Darek", "Krom", "Turin", "Zerk", "Rua", "Vos", "Barros", "Braxis", "Kraye", "Sloa", "Kolin", "Kaleb", "Arvan"};
     string[] firstNames = new string[14]{ "Aubrey", "Braum", "Braxis", "Davin", "Garen", "Oren", "Gavin", "Derek", "Kevan", "Stephen", "David", "Ruan", "Edward", "Marcus"};
@@ -33,6 +32,7 @@ public class BlacksmithController : MonoBehaviour
     public bool selected = false;
 
     GameObject player;
+    UIController UI;
     InputManager inputScript;
     Selection swordsmanSelection;
     Selection footmanSelection;
@@ -80,7 +80,7 @@ public class BlacksmithController : MonoBehaviour
         //}
     }
 
-    public void ResearchBlacksmithing () 
+    public void ResearchBuildingScience () 
     { 
         selectedObj = inputScript.selectedObj;
         buildingScript = selectedObj.GetComponent<BuildingController>();
@@ -96,7 +96,7 @@ public class BlacksmithController : MonoBehaviour
             RC.basicBlacksmithingButton.interactable = false;
         }
     }
-    public void ResearchBasicToolSmithing () 
+    public void ResearchEfficientBuildings () 
     { 
         if(RM.gold < RC.basicToolSmithingGold || RM.iron < RC.basicToolSmithingIron) {
             UI.noResourcesText.SetActive(true);
@@ -110,7 +110,7 @@ public class BlacksmithController : MonoBehaviour
         }
     }
 
-    public void ResearchBasicArmourSmithing () 
+    public void ResearchSturdyConstruction () 
     { 
         if(RM.gold < RC.basicArmourSmithingGold || RM.iron < RC.basicArmourSmithingIron) {
             UI.noResourcesText.SetActive(true);
@@ -124,7 +124,7 @@ public class BlacksmithController : MonoBehaviour
         }
     }
 
-    public void ResearchBasicWeaponSmithing () 
+    public void ResearchBetterGear () 
     { 
         if(RM.gold < RC.basicWeaponSmithingGold || RM.iron < RC.basicWeaponSmithingIron) {
             UI.noResourcesText.SetActive(true);
@@ -138,7 +138,7 @@ public class BlacksmithController : MonoBehaviour
         }
     }
 
-    public void ResearchArtisanBlacksmithing () 
+    public void ResearchBasicWoodworking () 
     { 
         if(RM.gold < RC.artisanBlacksmithingGold || RM.iron < RC.artisanBlacksmithingIron) {
             UI.noResourcesText.SetActive(true);
@@ -152,7 +152,7 @@ public class BlacksmithController : MonoBehaviour
         }
     }
 
-    public void ResearchArtisanToolSmithing () 
+    public void ResearchImprovedHandles () 
     { 
         if(RM.gold < RC.artisanToolSmithingGold || RM.iron < RC.artisanToolSmithingIron) {
             UI.noResourcesText.SetActive(true);
@@ -166,7 +166,7 @@ public class BlacksmithController : MonoBehaviour
         }
     }
 
-    public void ResearchArtisanArmourSmithing () 
+    public void ResearchWheelbarrows () 
     { 
         if(RM.gold < RC.artisanArmourSmithingGold || RM.iron < RC.artisanArmourSmithingIron) {
             UI.noResourcesText.SetActive(true);
@@ -180,7 +180,7 @@ public class BlacksmithController : MonoBehaviour
         }
     }
 
-    public void ResearchArtisanWeaponSmithing () 
+    public void ResearchCarts () 
     { 
         if(RM.gold < RC.artisanWeaponSmithingGold || RM.iron < RC.artisanWeaponSmithingIron) {
             UI.noResourcesText.SetActive(true);
@@ -194,7 +194,7 @@ public class BlacksmithController : MonoBehaviour
         }
     }
 
-    public void ResearchHorseshoes () 
+    public void ResearchArtisanWoodworking () 
     { 
         if(RM.gold < RC.horseshoesGold || RM.iron < RC.horseshoesIron) {
             UI.noResourcesText.SetActive(true);
@@ -208,7 +208,7 @@ public class BlacksmithController : MonoBehaviour
         }
     }
 
-    public void ResearchMinecarts () 
+    public void ResearchBridges () 
     { 
         if(RM.gold < RC.minecartsGold || RM.iron < RC.minecartsGold) {
             UI.noResourcesText.SetActive(true);
@@ -222,7 +222,7 @@ public class BlacksmithController : MonoBehaviour
         }
     }
     
-    public void ResearchCaltrops () 
+    public void ResearchWalls () 
     { 
         if(RM.gold < RC.caltropsGold || RM.iron < RC.caltropsIron) {
             UI.noResourcesText.SetActive(true);
@@ -236,7 +236,7 @@ public class BlacksmithController : MonoBehaviour
         }
     }
     
-    public void ResearchReinforcedBuildings () 
+    public void ResearchWatchTowers () 
     { 
         if(RM.gold < RC.reinforcedBuildingsGold || RM.iron < RC.reinforcedBuildingsIron) {
             UI.noResourcesText.SetActive(true);
