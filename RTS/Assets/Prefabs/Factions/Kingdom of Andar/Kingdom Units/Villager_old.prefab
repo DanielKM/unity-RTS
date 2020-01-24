@@ -86,15 +86,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   heldResourceType: 4
   task: 0
-  peasantMoveClip: {fileID: 0}
+  unitMoveClip: {fileID: 8300000, guid: 13287b3ae51578f44b338a9e619a7929, type: 3}
   player: {fileID: 0}
+  owner: {fileID: 0}
   targetNode: {fileID: 0}
   selected: 0
   isGathering: 0
   isBuilding: 0
+  isFollowing: 0
+  isAttacking: 0
+  isMeleeing: 0
   heldResource: 0
   maxHeldResource: 5
   drops: []
+  resources: []
 --- !u!114 &5708971625227228989
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -112,12 +117,34 @@ MonoBehaviour:
   unitName: Ferra Ateeq
   unitKills: 0
   weapon: Fists
-  armour: None
+  armourType: 
   items: Fancy Shoes
   health: 100
   maxHealth: 100
+  armour: 0
+  maxArmour: 0
   energy: 100
   maxEnergy: 100
+  attackDamage: 0
+  attackRange: 0
+  attackSpeed: 0
+  aggroRange: 0
+  gold: 0
+  wood: 0
+  food: 0
+  stone: 0
+  iron: 0
+  steel: 0
+  skymetal: 0
+  unitAudio: {fileID: 0}
+  metalChop: {fileID: 0}
+  metalChop2: {fileID: 0}
+  metalChop3: {fileID: 0}
+  metalChop4: {fileID: 0}
+  woodChop: {fileID: 0}
+  heldResource: 0
+  currentlyMeleeing: 0
+  isDead: 0
   unitIcon: {fileID: 0}
 --- !u!195 &5708971625227228990
 NavMeshAgent:

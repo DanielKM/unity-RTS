@@ -54,7 +54,7 @@ public class FoundationController : MonoBehaviour
             Destroy(gameObject);
             //adjusted placement rotation for odd models
             currentBuilding = Instantiate(buildingPrefab, location, Quaternion.identity);
-             if (buildingScript.unitType == "Stables" || buildingScript.unitType == "Barracks")
+             if (buildingScript.unitType == "Stables" || buildingScript.unitType == "Barracks" || buildingScript.unitType == "Town Hall")
             {
                 currentBuilding.transform.Rotate(0, 270, 0);
             }
@@ -62,6 +62,11 @@ public class FoundationController : MonoBehaviour
             if (buildingScript.unitType == "Stables")
             {
                 Vector3 newLocation = new Vector3(currentBuilding.transform.position.x, currentBuilding.transform.position.y, currentBuilding.transform.position.z - 2.5f);
+                currentBuilding.transform.position = newLocation;
+            }
+            if (buildingScript.unitType == "Town Hall")
+            {
+                Vector3 newLocation = new Vector3(currentBuilding.transform.position.x + 1.0f, currentBuilding.transform.position.y, currentBuilding.transform.position.z - 3.5f);
                 currentBuilding.transform.position = newLocation;
             }
 
@@ -89,7 +94,7 @@ public class FoundationController : MonoBehaviour
     }
     private void OnCollisionExit(Collision collision)
     {
-        if(collision.gameObject.tag == "Selectable" && collision.gameObject)
+        if(collision.gameObject.tag == "Player 1" && collision.gameObject)
         {
 
         }

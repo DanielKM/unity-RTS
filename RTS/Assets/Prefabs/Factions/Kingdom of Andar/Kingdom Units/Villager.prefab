@@ -103,16 +103,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 5708971625227228986, guid: 05dcb862907ebd443902a00688e27034,
-        type: 3}
-      propertyPath: m_Name
-      value: Villager
-      objectReference: {fileID: 0}
-    - target: {fileID: 5708971625227228986, guid: 05dcb862907ebd443902a00688e27034,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 5708971625227228978, guid: 05dcb862907ebd443902a00688e27034,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -168,35 +158,35 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 5708971625227228991, guid: 05dcb862907ebd443902a00688e27034,
+    - target: {fileID: 5708971625227228984, guid: 05dcb862907ebd443902a00688e27034,
         type: 3}
-      propertyPath: RM
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 5708971625227228991, guid: 05dcb862907ebd443902a00688e27034,
-        type: 3}
-      propertyPath: maxHeldResource
-      value: 100
-      objectReference: {fileID: 0}
-    - target: {fileID: 5708971625227228991, guid: 05dcb862907ebd443902a00688e27034,
-        type: 3}
-      propertyPath: peasantMoveClip
-      value: 
-      objectReference: {fileID: 8300000, guid: 13287b3ae51578f44b338a9e619a7929, type: 3}
-    - target: {fileID: 5708971625227228991, guid: 05dcb862907ebd443902a00688e27034,
-        type: 3}
-      propertyPath: isGathering
+      propertyPath: m_IsKinematic
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 5708971625227228990, guid: 05dcb862907ebd443902a00688e27034,
+    - target: {fileID: 5708971625227228984, guid: 05dcb862907ebd443902a00688e27034,
         type: 3}
-      propertyPath: m_Acceleration
-      value: 3
+      propertyPath: m_UseGravity
+      value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 5708971625227228990, guid: 05dcb862907ebd443902a00688e27034,
+    - target: {fileID: 5708971625227228984, guid: 05dcb862907ebd443902a00688e27034,
         type: 3}
-      propertyPath: m_StoppingDistance
-      value: 0.5
+      propertyPath: m_Constraints
+      value: 126
+      objectReference: {fileID: 0}
+    - target: {fileID: 5708971625227228986, guid: 05dcb862907ebd443902a00688e27034,
+        type: 3}
+      propertyPath: m_Name
+      value: Villager
+      objectReference: {fileID: 0}
+    - target: {fileID: 5708971625227228986, guid: 05dcb862907ebd443902a00688e27034,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5708971625227228988, guid: 05dcb862907ebd443902a00688e27034,
+        type: 3}
+      propertyPath: m_IsTrigger
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5708971625227228989, guid: 05dcb862907ebd443902a00688e27034,
         type: 3}
@@ -219,26 +209,41 @@ PrefabInstance:
       propertyPath: food
       value: 200
       objectReference: {fileID: 0}
-    - target: {fileID: 5708971625227228988, guid: 05dcb862907ebd443902a00688e27034,
+    - target: {fileID: 5708971625227228990, guid: 05dcb862907ebd443902a00688e27034,
         type: 3}
-      propertyPath: m_IsTrigger
+      propertyPath: m_Acceleration
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 5708971625227228990, guid: 05dcb862907ebd443902a00688e27034,
+        type: 3}
+      propertyPath: m_StoppingDistance
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 5708971625227228991, guid: 05dcb862907ebd443902a00688e27034,
+        type: 3}
+      propertyPath: RM
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 5708971625227228991, guid: 05dcb862907ebd443902a00688e27034,
+        type: 3}
+      propertyPath: maxHeldResource
+      value: 100
+      objectReference: {fileID: 0}
+    - target: {fileID: 5708971625227228991, guid: 05dcb862907ebd443902a00688e27034,
+        type: 3}
+      propertyPath: peasantMoveClip
+      value: 
+      objectReference: {fileID: 8300000, guid: 13287b3ae51578f44b338a9e619a7929, type: 3}
+    - target: {fileID: 5708971625227228991, guid: 05dcb862907ebd443902a00688e27034,
+        type: 3}
+      propertyPath: isGathering
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 5708971625227228984, guid: 05dcb862907ebd443902a00688e27034,
+    - target: {fileID: 5708971625227228991, guid: 05dcb862907ebd443902a00688e27034,
         type: 3}
-      propertyPath: m_IsKinematic
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5708971625227228984, guid: 05dcb862907ebd443902a00688e27034,
-        type: 3}
-      propertyPath: m_UseGravity
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5708971625227228984, guid: 05dcb862907ebd443902a00688e27034,
-        type: 3}
-      propertyPath: m_Constraints
-      value: 126
-      objectReference: {fileID: 0}
+      propertyPath: unitMoveClip
+      value: 
+      objectReference: {fileID: 8300000, guid: 13287b3ae51578f44b338a9e619a7929, type: 3}
     - target: {fileID: 6377242878353800106, guid: 05dcb862907ebd443902a00688e27034,
         type: 3}
       propertyPath: m_LocalPosition.y

@@ -20,7 +20,7 @@ public class NPCController : MonoBehaviour
     Animator animator; // reference to the animator component
     NavMeshAgent agent; //reference to the navmeshagent
     UnitController UC; //reference to the navmeshagent
-    Selection selection; //reference to the navmeshagent
+    UnitSelection UnitSelection; //reference to the navmeshagent
     private GameObject player;
     private ResearchController RC;
 
@@ -43,7 +43,7 @@ public class NPCController : MonoBehaviour
         animator = GetComponent<Animator>();
         agent = GetComponent<NavMeshAgent>();
         UC = GetComponent<UnitController>();
-        selection = GetComponent<Selection>();
+        UnitSelection = GetComponent<UnitSelection>();
 
         if (agent != null)
         {
@@ -91,15 +91,15 @@ public class NPCController : MonoBehaviour
             if(currentTarget && !currentTarget.GetComponent<UnitController>().isDead) {
                 if (currentTarget != null && Vector3.Distance(transform.position, currentTarget.transform.position) < aggroRange)
                 {
-                    selection.targetNode = currentTarget;
+                    UnitSelection.targetNode = currentTarget;
                     // Debug.Log("Enemy " + currentTarget.GetComponent<UnitController>().unitType + " spotted!");
                     float dist = Vector3.Distance(agent.transform.position, currentTarget.transform.position);
                     agent.destination = currentTarget.transform.position;
                     agent.speed = agentSpeed;
-                    selection.isFollowing = true;
+                    UnitSelection.isFollowing = true;
 
                     if(dist < UC.attackRange && currentTarget != null && !currentTarget.GetComponent<UnitController>().isDead) {
-                        selection.isMeleeing = true;
+                        UnitSelection.isMeleeing = true;
                         enemy = currentTarget;
                         if(!currentlyMeleeing && !enemy.GetComponent<UnitController>().isDead) {
                             agent.destination = agent.transform.position;
@@ -107,21 +107,21 @@ public class NPCController : MonoBehaviour
                         }
                     } else if (dist < UC.attackRange && currentTarget == null) {
                         currentlyMeleeing = false;
-                        selection.isAttacking = false;
-                        selection.isMeleeing = false;
-                        selection.isFollowing = false;
+                        UnitSelection.isAttacking = false;
+                        UnitSelection.isMeleeing = false;
+                        UnitSelection.isFollowing = false;
                     }
                 } else if (currentTarget == null) {
                     currentlyMeleeing = false;
-                    selection.isAttacking = false;
-                    selection.isMeleeing = false;
-                    selection.isFollowing = false;
+                    UnitSelection.isAttacking = false;
+                    UnitSelection.isMeleeing = false;
+                    UnitSelection.isFollowing = false;
                 }
             } else {
                 currentlyMeleeing = false;
-                selection.isAttacking = false;
-                selection.isMeleeing = false;
-                selection.isFollowing = false;
+                UnitSelection.isAttacking = false;
+                UnitSelection.isMeleeing = false;
+                UnitSelection.isFollowing = false;
             }
         }
     }
@@ -151,19 +151,19 @@ public class NPCController : MonoBehaviour
     public IEnumerator NPCAttack() {
         currentlyMeleeing = true;
 
-        while(selection.isMeleeing) {      
-            enemy = selection.targetNode;
+        while(UnitSelection.isMeleeing) {      
+            enemy = UnitSelection.targetNode;
             if(enemy == null) {
                 currentlyMeleeing = false;
-                selection.isMeleeing = false;
-                selection.isFollowing = false;
+                UnitSelection.isMeleeing = false;
+                UnitSelection.isFollowing = false;
                 break;
             } else {
                 enemyUC = enemy.GetComponent<UnitController>();    
                 if(enemyUC.isDead) {
                     currentlyMeleeing = false;
-                    selection.isMeleeing = false;
-                    selection.isFollowing = false;
+                    UnitSelection.isMeleeing = false;
+                    UnitSelection.isFollowing = false;
                     break;
                 }   
             } 

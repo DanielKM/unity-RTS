@@ -71,7 +71,7 @@ public class PlacementController : MonoBehaviour
             RM.gold -= 200;
             RM.wood -= 200;
             currentPlaceableObject = null;
-        } else if(Input.GetMouseButtonDown(0) && currentPlaceableObject.tag == "Yard")
+        } else if(Input.GetMouseButtonDown(0) && currentPlaceableObject.tag == "Player 1")
         {
             RM.gold -= 1200;
             RM.wood -= 800;
@@ -108,7 +108,7 @@ public class PlacementController : MonoBehaviour
             if (currentPlaceableObject.tag == "House")
             {
                 currentPlaceableObject.transform.position = new Vector3(hitInfo.point.x, 2f, hitInfo.point.z);
-            } else if (currentPlaceableObject.tag == "Yard")
+            } else if (currentPlaceableObject.tag == "Player 1")
             {
                 currentPlaceableObject.transform.position = new Vector3(hitInfo.point.x, 0.5f, hitInfo.point.z);
             }

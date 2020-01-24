@@ -29,7 +29,7 @@ public class TownHallController : MonoBehaviour
     GameObject player;
     InputManager inputScript;
     UnitController workerUC;
-    Selection workerSelection;
+    UnitSelection workerUnitSelection;
     BuildingController buildingScript;
 
     public GameObject selectedObj;
@@ -95,10 +95,10 @@ public class TownHallController : MonoBehaviour
         var random3 = Random.Range(0, lastNameSecond.Length);
         progressIcon = GameObject.Find("ProgressIcon").GetComponent<Image>();
         workerUC = villagerPrefab.GetComponent<UnitController>();
-        workerSelection = villagerPrefab.GetComponent<Selection>();
+        workerUnitSelection = villagerPrefab.GetComponent<UnitSelection>();
         progressIcon.sprite = workerUC.unitIcon;
         workerUC.unitName = firstNames[random1] + " " + lastNameFirst[random2] + lastNameSecond[random3];
-        workerSelection.owner = player;
+        workerUnitSelection.owner = player;
 
         Instantiate(villagerPrefab, spawnPosition, Quaternion.identity);
         villagerAudio = selectedObj.GetComponent<AudioSource>();

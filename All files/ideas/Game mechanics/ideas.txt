@@ -1,11 +1,76 @@
+Building take over mechanics
+- territories/influence
+- watch post
+- time
+- area base
+- individual units having influence
+
+
+
+questing
+strength for payment
+
+
+<--Unit-->
+Experience
+Honour/Loyalty
+Influence
+Territory
+Wealth -> recruit hunters/mercs
+	- > neutral towns
+	- > wizards
+	- > shows map
+
+Victory conditions
+
+
+
+Rep rewards
+- units
+- technology
+- access
+- 
+
+Age brackets
+
+
+
+
+
+UI Features
+	- Time
+	- Map
+	- Selection
+	- Stats
+	- Zoom
+	- Timers
+	- Waypoints
+	- Management
+
+
+URGENT  - Switch all units to Player 1 Tag
+	- Make all checks based off of the unit/building scripts/controllers
+	
+
+
+
 Different time pieces for each faction - sun dial/hourglass etc.
 kingdom - > 20 footmen, formation/armour
 having a commander on the ground
- 
+
 LEVEL 1
 Repair the watchtower
 
 NEW !!!!
+Magistrate to allow assigning different units to tasks
+Downtown core
+Buildings
+Unlock functions
+Lose map functions 
+Generals
+
+
+
 Minecarts - only improve iron, stone, and gold 
 Increased bag size
 Forge - RM.iron -= maxheldresource
@@ -27,8 +92,6 @@ ilitary becomes workers
 
 GAMEPLAY
 Add unit statistics
-Armour - UC int - prevents damage
-generals 
 heroes of might and magic - towns
 taking buildings
 siphon 
@@ -41,7 +104,6 @@ Factions:
 chilled undead
 footsteps in the snow
 
-
 Influences:
 Morrowind - Adventure
 Skyrim - Epicness/Atmosphere
@@ -52,6 +114,134 @@ Rise and Fall - Gameplay
 Names:
 Karsis
 Iversol
+Blackwald
+Malerweg
+Arco
+Huntly
+Auburn
+Lara
+Liana
+Aria
+Aiden
+Airon
+Irk
+Murk
+Will
+
+Towns:
+Luckport
+Woodbridge
+Vineland
+Southbridge
+Ironside
+Belvedere
+Alden
+Ninde
+Haydon Hall
+White Stone
+
+Castles:
+Karsis
+
+Places:
+Nightlands
+Island Lords
+Okra
+Arkos
+
+Buildings:
+Kennel - dogs - tracking/barking/alerts
+Beastiary - ravens/dogs/bears/horses/deer
+Alchemy Lab - chemistry/tar/poisons/oil
+Fletcher - better arrows/longbows
+Grain Silo - cheap storage
+Pits - manure/fertilizers
+Dungeons
+
+Upgrades:
+Metallurgy
+
+Units:
+-trooper
+-infantry
+-grunt
+-warrior
+-conscript
+-mercenary
+-veteran
+-dragon
+-fighter
+-swordsman
+-bladesmith
+-armoursmith
+-legionnairy
+-corpseman
+-corps
+-cur
+-marine
+-guard
+-recruit
+
+-blackguard
+-curs
+-scoundrels
+-cutthroats
+-ironguard
+-rogue
+-knave
+-scallywags
+
+Name Endings:
+land
+ton
+ville
+bridge
+ford
+rasa
+
+Factions:
+Hobbits: Commerce is king, traders, simple, friendly
+-dealmaker/sneak/mayor/boss/foreman
+-grunt labor
+-wages
+
+Marauders:
+-slaves
+-escapes
+-overthrow
+-jails
+-health
+
+Undead: 
+-OCD Clean
+-straight
+-crisp
+-caskets to heal
+
+Gutter elves: 
+-quick, dirty, cheap
+-cutthroats
+
+Warbringers
+Orcs - War Cry 	- Thick hide + speed
+		- Battle Shout - Extra damage
+		- Drum Rythm - Jog/Cardio
+
+Different time pieces for each faction - sun dial/hourglass etc.
+kingdom - > 20 footmen, formation/armour
+having a commander on the ground
+ 
+Influences:
+Morrowind - Adventure
+Skyrim - Epicness/Atmosphere
+Warcraft - Feel/Seriousness
+Diablo - Dark/Action
+Rise and Fall - Gameplay
+
+Hobbits - wages/HR policy
+
+Names:
+Karsis
 Blackwald
 Malerweg
 Arco

@@ -219,18 +219,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 100058, guid: fdaa0c1d7f0f0864caabe749423c8fff, type: 3}
-      propertyPath: m_Name
-      value: Town Hall Variant
-      objectReference: {fileID: 0}
-    - target: {fileID: 100058, guid: fdaa0c1d7f0f0864caabe749423c8fff, type: 3}
-      propertyPath: m_TagString
-      value: Yard
-      objectReference: {fileID: 0}
-    - target: {fileID: 100058, guid: fdaa0c1d7f0f0864caabe749423c8fff, type: 3}
-      propertyPath: m_Layer
-      value: 2
-      objectReference: {fileID: 0}
     - target: {fileID: 100000, guid: fdaa0c1d7f0f0864caabe749423c8fff, type: 3}
       propertyPath: m_Layer
       value: 2
@@ -344,6 +332,18 @@ PrefabInstance:
       value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 100056, guid: fdaa0c1d7f0f0864caabe749423c8fff, type: 3}
+      propertyPath: m_Layer
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 100058, guid: fdaa0c1d7f0f0864caabe749423c8fff, type: 3}
+      propertyPath: m_Name
+      value: Town Hall Variant
+      objectReference: {fileID: 0}
+    - target: {fileID: 100058, guid: fdaa0c1d7f0f0864caabe749423c8fff, type: 3}
+      propertyPath: m_TagString
+      value: Player 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 100058, guid: fdaa0c1d7f0f0864caabe749423c8fff, type: 3}
       propertyPath: m_Layer
       value: 2
       objectReference: {fileID: 0}

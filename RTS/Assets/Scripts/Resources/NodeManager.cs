@@ -9,7 +9,7 @@ public class NodeManager : MonoBehaviour
     InputManager IM;
     ResearchController RC;
 
-    private Selection selectscript;
+    private UnitSelection selectscript;
     public List<Collider> collidedObjects = new List<Collider>();
 
     // Time villager is at node
@@ -43,10 +43,10 @@ public class NodeManager : MonoBehaviour
             foreach(Collider collidedObject in collidedObjects)
             {
                 UnitController unit = collidedObject.gameObject.GetComponent<UnitController>();
-                Selection unitSelection = collidedObject.gameObject.GetComponent<Selection>();
+                UnitSelection unitUnitSelection = collidedObject.gameObject.GetComponent<UnitSelection>();
                 if(unit) {
                     if(unit.unitType == "Worker") {
-                        unitSelection.isGathering = false;
+                        unitUnitSelection.isGathering = false;
                     }
                 }
             }
@@ -54,7 +54,7 @@ public class NodeManager : MonoBehaviour
         }
     }
 
-    // Ticks down while villager is gathering resource - Adjust with heldResource in GatherTick in Selection Script
+    // Ticks down while villager is gathering resource - Adjust with heldResource in GatherTick in UnitSelection Script
     public void ResourceGather()
     {
         int toolModifier;
@@ -73,7 +73,7 @@ public class NodeManager : MonoBehaviour
 
     void OnCollisionEnter(Collision col)
     {
-        selectscript = col.gameObject.GetComponent<Selection>();
+        selectscript = col.gameObject.GetComponent<UnitSelection>();
         if (!collidedObjects.Contains(col.collider) && col.collider.tag == "Selectable" && selectscript.isGathering == true)
         {
             collidedObjects.Add(col.collider);

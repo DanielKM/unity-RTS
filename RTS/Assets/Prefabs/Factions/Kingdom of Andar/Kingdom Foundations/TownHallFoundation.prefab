@@ -7,10 +7,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 871514539, guid: 5afd6824e8816a54da98276a53a4810e, type: 3}
-      propertyPath: m_Name
-      value: TownHallFoundation
-      objectReference: {fileID: 0}
     - target: {fileID: 871514538, guid: 5afd6824e8816a54da98276a53a4810e, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -57,11 +53,19 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 871514538, guid: 5afd6824e8816a54da98276a53a4810e, type: 3}
       propertyPath: m_LocalScale.x
-      value: 6
+      value: 4.5
       objectReference: {fileID: 0}
     - target: {fileID: 871514538, guid: 5afd6824e8816a54da98276a53a4810e, type: 3}
       propertyPath: m_LocalScale.z
-      value: 5.5
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 871514538, guid: 5afd6824e8816a54da98276a53a4810e, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 871514539, guid: 5afd6824e8816a54da98276a53a4810e, type: 3}
+      propertyPath: m_Name
+      value: TownHallFoundation
       objectReference: {fileID: 0}
     - target: {fileID: 871514542, guid: 5afd6824e8816a54da98276a53a4810e, type: 3}
       propertyPath: m_Size.x
@@ -83,7 +87,7 @@ PrefabInstance:
         type: 3}
       propertyPath: buildingPrefab
       value: 
-      objectReference: {fileID: 4247186984801027523, guid: 32859feca3fc475458797204fa38b271,
+      objectReference: {fileID: 3399450528866985751, guid: 161077ecb8e598849be261e191c7f828,
         type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 5afd6824e8816a54da98276a53a4810e, type: 3}

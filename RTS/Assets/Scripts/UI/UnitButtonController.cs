@@ -451,7 +451,7 @@ public class UnitButtonController : MonoBehaviour
             }
 
             currentPlaceableObject.transform.rotation = Quaternion.FromToRotation(Vector3.up, hitInfo.normal);
-            if(building.unitType == "Stables" || building.unitType == "Barracks")
+            if(building.unitType == "Stables" || building.unitType == "Barracks" || building.unitType == "Town Hall")
             {
                 currentPlaceableObject.transform.Rotate(0, 270, 0);
             }
@@ -504,7 +504,8 @@ public class UnitButtonController : MonoBehaviour
             currentPlaceableObject.layer = 11;
             Destroy(currentPlaceableObject);
             currentPlaceableObject = Instantiate(building.foundation);
-            currentPlaceableObject.transform.position = currentLocation;
+            Vector3 newLocation = new Vector3(currentLocation.x + 2.0f, currentLocation.y, currentLocation.z + 6.0f);
+            currentPlaceableObject.transform.position = newLocation;
             currentPlaceableObject = null;
             PlayBuildingSound();
         }

@@ -34,8 +34,8 @@ public class LumberYardController : MonoBehaviour
     GameObject player;
     UIController UI;
     InputManager inputScript;
-    Selection swordsmanSelection;
-    Selection footmanSelection;
+    UnitSelection swordsmanUnitSelection;
+    UnitSelection footmanUnitSelection;
     BuildingController buildingScript;
     ResourceManager RM;
     ResearchController RC;
@@ -271,8 +271,8 @@ public class LumberYardController : MonoBehaviour
         //     // progressIcon = GameObject.Find("ProgressIcon").GetComponent<Image>();
         //     // progressIcon.sprite = footmanPrefab.GetComponent<UnitController>().unitIcon;
         //     // footmanPrefab.GetComponent<UnitController>().unitName = firstNames[iteration1] + " " + lastNameFirst[iteration2] + lastNameSecond[iteration3];
-        //     // footmanSelection = footmanPrefab.GetComponent<Selection>();
-        //     // footmanSelection.owner = player;
+        //     // footmanUnitSelection = footmanPrefab.GetComponent<UnitSelection>();
+        //     // footmanUnitSelection.owner = player;
 
         //     // footmanAudio = selectedObj.GetComponent<AudioSource>();
         //     // footmanAudio.clip = footmanReporting;
@@ -284,8 +284,8 @@ public class LumberYardController : MonoBehaviour
         //     // progressIcon = GameObject.Find("ProgressIcon").GetComponent<Image>();
         //     // progressIcon.sprite = swordsmanPrefab.GetComponent<UnitController>().unitIcon;
         //     // swordsmanPrefab.GetComponent<UnitController>().unitName = SMFirstNames[iteration1] + " " + SMLastNameFirst[iteration2] + SMLastNameSecond[iteration3];
-        //     // swordsmanSelection = swordsmanPrefab.GetComponent<Selection>();
-        //     // swordsmanSelection.owner = player;
+        //     // swordsmanUnitSelection = swordsmanPrefab.GetComponent<UnitSelection>();
+        //     // swordsmanUnitSelection.owner = player;
 
         //     // swordsmanAudio = selectedObj.GetComponent<AudioSource>();
         //     // swordsmanAudio.clip = swordsmanReporting;

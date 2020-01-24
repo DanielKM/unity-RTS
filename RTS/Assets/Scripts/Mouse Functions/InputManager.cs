@@ -18,7 +18,7 @@ public class InputManager : MonoBehaviour
     UIController UI;
 
     UnitController unitScript;
-    Selection selectScript;
+    UnitSelection selectScript;
     BuildingController buildingScript;
     NodeManager nodeScript;
     BuildingButtonController buildingButtonScript;
@@ -52,7 +52,7 @@ public class InputManager : MonoBehaviour
     public int resourceHeld;
 
     public bool isSelected;
-    private bool inSelectionBox;
+    private bool inUnitSelectionBox;
 
     // UI FOR BUILDINGS
     private CanvasGroup BuildingPanel;
@@ -130,7 +130,7 @@ public class InputManager : MonoBehaviour
     Camera cam;
     Camera minimap;
 
-    public Selection selectedInfo;
+    public UnitSelection selectedInfo;
     public GameObject selectedObj;
 
     // Start is called before the first frame update
@@ -180,7 +180,7 @@ public class InputManager : MonoBehaviour
 
                     if (Physics.Raycast(raycast, out hit1, 350))
                     {
-                        if (hit1.transform.tag == "Enemy Unit" || hit1.transform.tag == "Selectable" || hit1.transform.tag == "Foundation" || hit1.transform.tag == "Ground" || hit1.transform.tag == "Yard" || hit1.transform.tag == "Barracks" || hit1.transform.tag == "House" || hit1.transform.tag == "Resource" || hit1.transform.tag == "Fort" || hit1.transform.tag == "Blacksmith" || hit1.transform.tag == "Lumber Yard" || hit1.transform.tag == "Stables")
+                        if (hit1.transform.tag == "Enemy Unit" || hit1.transform.tag == "Selectable" || hit1.transform.tag == "Player 1" ||  hit1.transform.tag == "Foundation" || hit1.transform.tag == "Ground" || hit1.transform.tag == "Yard" || hit1.transform.tag == "Barracks" || hit1.transform.tag == "House" || hit1.transform.tag == "Resource" || hit1.transform.tag == "Fort" || hit1.transform.tag == "Blacksmith" || hit1.transform.tag == "Lumber Yard" || hit1.transform.tag == "Stables")
                         {
                             LeftClick();
                         }
@@ -322,7 +322,7 @@ public class InputManager : MonoBehaviour
             {
                 Cursor.SetCursor(combat, new Vector2(0, 0), CursorMode.Auto);
             }
-            else if (hit.collider.tag == "Selectable" || hit.collider.gameObject.layer == 11 || hit.collider.gameObject.layer == 12)
+            else if (hit.collider.tag == "Selectable" || hit.collider.gameObject.layer == 11 || hit.collider.gameObject.layer == 12  || hit.collider.tag == "Player 1")
             {
                 Cursor.SetCursor(pointer, new Vector2(0, 0), CursorMode.Auto);
             }
@@ -333,7 +333,6 @@ public class InputManager : MonoBehaviour
         }
         else
         {
-        Debug.Log(hit.collider.tag);
             Cursor.SetCursor(pointer, new Vector2(0, 0), CursorMode.Auto);
         }
 
@@ -342,13 +341,13 @@ public class InputManager : MonoBehaviour
     // Multiselect box functions
     void Multiselect()
     {
-        // If we press the left mouse button, save mouse location and begin selection
+        // If we press the left mouse button, save mouse location and begin UnitSelection
         if (Input.GetMouseButtonDown(0))
         {
             isSelecting = true;
             mousePosition1 = Input.mousePosition;
         }
-        // If we let go of the left mouse button, end selection
+        // If we let go of the left mouse button, end UnitSelection
         if (Input.GetMouseButtonUp(0))
             isSelecting = false;
     }
@@ -377,7 +376,7 @@ public class InputManager : MonoBehaviour
 
             var selectRect = Utils.GetScreenRect(mouse1, mouse2);
 
-            inSelectionBox = false;
+            inUnitSelectionBox = false;
             for (int i = 0; i < units.Length; i++)
             {
                 unitPosX = units[i].transform.position.x;
@@ -387,10 +386,10 @@ public class InputManager : MonoBehaviour
                 unitPos = new Vector3(unitPosX, unitPosY, unitPosZ);
                 Vector3 screenPos = cam.WorldToScreenPoint(unitPos);
 
-                // Adds all units in selection box to selected
+                // Adds all units in UnitSelection box to selected
                 if (selectRect.Contains(screenPos, true))
                 {
-                    selectedInfo = units[i].GetComponent<Selection>();
+                    selectedInfo = units[i].GetComponent<UnitSelection>();
                     unitScript = units[i].GetComponent<UnitController>();
 
                     if(!unitScript.isDead) {
@@ -409,12 +408,12 @@ public class InputManager : MonoBehaviour
                         } else if (unitScript.unitType == "Footman") {
                             UI.FootmanSelect();
                         }
-                        inSelectionBox = true;
+                        inUnitSelectionBox = true;
                     }
                 }
             }
 
-            if(inSelectionBox) {
+            if(inUnitSelectionBox) {
                 playerAudio.Play();
             }
         }
@@ -553,7 +552,7 @@ public class InputManager : MonoBehaviour
             if (hit.collider.tag == "Enemy Unit" && (!Input.GetKey(KeyCode.LeftShift)))
             {
                 selectedObj = hit.collider.gameObject;
-                selectedInfo = selectedObj.GetComponent<Selection>();
+                selectedInfo = selectedObj.GetComponent<UnitSelection>();
                 unitScript = selectedObj.GetComponent<UnitController>();
                 if (selectedInfo.selected == true)
                 {
@@ -566,7 +565,7 @@ public class InputManager : MonoBehaviour
                     //  OPEN ENEMY PANELS!!
 
                     
-                    // Selection indicators
+                    // UnitSelection indicators
                     selectedObj.transform.GetChild(2).gameObject.GetComponent<Projector>().material.SetColor("_Color", Color.red);
                     selectedObj.transform.GetChild(2).gameObject.SetActive(true);
                     // unitAudio = selectedObj.GetComponent<AudioSource>();
@@ -580,7 +579,7 @@ public class InputManager : MonoBehaviour
             {
                 selectedObj = hit.collider.gameObject;
                 selectedObj.transform.GetChild(2).gameObject.GetComponent<Projector>().material.SetColor("_Color", Color.green);
-                selectedInfo = selectedObj.GetComponent<Selection>();
+                selectedInfo = selectedObj.GetComponent<UnitSelection>();
                 unitScript = selectedObj.GetComponent<UnitController>();
                 if (selectedInfo.selected == true)
                 {
@@ -591,7 +590,7 @@ public class InputManager : MonoBehaviour
                     if(!unitScript.isDead) {
                         selectedInfo.selected = true;
 
-                        // Selection indicators
+                        // UnitSelection indicators
                         selectedObj.transform.GetChild(2).gameObject.SetActive(true);
                         playerAudio.clip = unitAudioClip;
                         playerAudio.Play();
@@ -623,16 +622,16 @@ public class InputManager : MonoBehaviour
                         GameObject[] selectedIndicators = GameObject.FindGameObjectsWithTag("SelectedIndicator");
                         for (int j = 0; j < selectedIndicators.Length; j++)
                         {
-                            // Turns the unit selection indicator off
+                            // Turns the unit UnitSelection indicator off
                             selectedIndicators[j].transform.gameObject.SetActive(false);
 
                             // Deselects the unit
-                            selectedIndicators[j].transform.parent.GetComponent<Selection>().selected = false;
+                            selectedIndicators[j].transform.parent.GetComponent<UnitSelection>().selected = false;
                         }
 
                         selectedInfo.selected = true;
 
-                        // Selection indicators
+                        // UnitSelection indicators
                         selectedObj.transform.GetChild(2).gameObject.SetActive(true);
                         playerAudio.clip = unitAudioClip;
                         playerAudio.Play();
@@ -650,7 +649,7 @@ public class InputManager : MonoBehaviour
                     }
                 }
             }
-            else if (hit.collider.tag == "Enemy Unit" || hit.collider.tag == "Yard" || hit.collider.tag == "Foundation" || hit.collider.tag == "Barracks" || hit.collider.tag == "House" || hit.collider.tag == "Resource" || hit.collider.tag == "Fort" || hit.collider.tag == "Blacksmith" || hit.transform.tag == "Lumber Yard" || hit.transform.tag == "Stables" )
+            else if (hit.collider.tag == "Enemy Unit" || hit.collider.tag == "Player 1" || hit.collider.tag == "Foundation" || hit.collider.tag == "Barracks" || hit.collider.tag == "House" || hit.collider.tag == "Resource" || hit.collider.tag == "Fort" || hit.collider.tag == "Blacksmith" || hit.transform.tag == "Lumber Yard" || hit.transform.tag == "Stables" )
             {
                 UI.CloseAllPanels();
                 if (selectedObjects.Length >= 0)
@@ -660,8 +659,8 @@ public class InputManager : MonoBehaviour
                 }
                 selectedObj = hit.collider.gameObject;
 
-                // Handle town hall selection
-                if(selectedObj.tag == "Yard")
+                // Handle town hall UnitSelection
+                if(selectedObj.tag == "Player 1")
                 {
                     townHallScript = selectedObj.GetComponent<TownHallController>();
                     isTraining = townHallScript.isTraining;
@@ -771,19 +770,19 @@ public class InputManager : MonoBehaviour
         for (int i = 0; i < selectedObjects.Length; i++)
         {
             // Grabs all objects in selected array and deselects them
-            selectedInfo = selectedObjects[i].GetComponent<Selection>();
+            selectedInfo = selectedObjects[i].GetComponent<UnitSelection>();
             selectedInfo.selected = false;
         }
         GameObject[] selectedIndicators = GameObject.FindGameObjectsWithTag("SelectedIndicator");
 
-        // Selection indicators
+        // UnitSelection indicators
         for (int j = 0; j < selectedIndicators.Length; j++)
         {
-            // Turns the unit selection indicator off
+            // Turns the unit UnitSelection indicator off
             selectedIndicators[j].transform.gameObject.SetActive(false);
 
             // Deselects the unit
-            selectedIndicators[j].transform.parent.GetComponent<Selection>().selected = false;
+            selectedIndicators[j].transform.parent.GetComponent<UnitSelection>().selected = false;
         }
 
         isSelected = false;

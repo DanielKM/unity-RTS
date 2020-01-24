@@ -642,7 +642,7 @@ GameObject:
   - component: {fileID: 57994888615245534}
   - component: {fileID: 57994888615245520}
   - component: {fileID: 57994888615245523}
-  - component: {fileID: 57994888615245522}
+  - component: {fileID: 7491376627668810468}
   m_Layer: 10
   m_Name: Footman
   m_TagString: Selectable
@@ -880,7 +880,7 @@ MonoBehaviour:
   currentlyMeleeing: 0
   isDead: 0
   unitIcon: {fileID: 21300000, guid: 306d55d36efa3c24b90770585090620e, type: 3}
---- !u!114 &57994888615245522
+--- !u!114 &7491376627668810468
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
