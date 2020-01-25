@@ -143,7 +143,7 @@ public class UnitButtonController : MonoBehaviour
 
             foreach (MeshRenderer mesh in meshes)
             {
-                color = mesh.material.GetColor("_Color");
+                color = mesh.material.GetColor("Base_color");
                 colors[iter] = color;
                 iter += 1;
             }
@@ -403,8 +403,8 @@ public class UnitButtonController : MonoBehaviour
             if (building.unitType == "House")
             {
                 //HERE~!
-                currentPlaceableObject.transform.position = new Vector3(hitInfo.point.x, hitInfo.point.y + 1.2f, hitInfo.point.z);
-                currentLocation = new Vector3 (hitInfo.point.x, currentPlaceableObject.transform.position.y - 1.2f, hitInfo.point.z);
+                currentPlaceableObject.transform.position = new Vector3(hitInfo.point.x, hitInfo.point.y - 1.0f, hitInfo.point.z);
+                currentLocation = new Vector3 (hitInfo.point.x, currentPlaceableObject.transform.position.y + 0.75f, hitInfo.point.z);
             }
             else if (building.unitType == "Farm")
             {

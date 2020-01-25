@@ -41,7 +41,7 @@ public class FoundationController : MonoBehaviour
             // Need to add isGathering = false
             if(buildingScript.unitType == "House")
             {
-                location = new Vector3(gameObject.transform.position.x, gameObject.transform.position.y + 1.2f, gameObject.transform.position.z);
+                location = new Vector3(gameObject.transform.position.x, gameObject.transform.position.y - 1.0f, gameObject.transform.position.z);
             }
             else if (buildingScript.unitType == "Farm")
             {

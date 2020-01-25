@@ -4,8 +4,9 @@
 Material:
   serializedVersion: 6
   m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
   m_Name: Map_Ground_10
   m_Shader: {fileID: 4800000, guid: 129ded3ea3ab2c740a0bf0b2173713e2, type: 3}
   m_ShaderKeywords: _METALLICGLOSSMAP _NORMALMAP

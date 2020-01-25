@@ -862,6 +862,13 @@ MonoBehaviour:
   placeable: 1
   isPlaced: 1
   location: {x: 0, y: 0, z: 0}
+  gold: 0
+  wood: 0
+  food: 0
+  stone: 0
+  iron: 0
+  steel: 0
+  skymetal: 0
 --- !u!114 &8901928165844825646
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -874,12 +881,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 825953bcae91c9f40a977b2724427fce, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  buildingPrefab: {fileID: 7585515422463932971, guid: 3546ea250a49cff499cb04b3efbbfec6,
+  buildingPrefab: {fileID: 3852338444680637304, guid: 6c58fb69ad71551479527ca949a683db,
     type: 3}
   isBuilding: 0
   buildTime: 1
   buildPercent: 0
   builders: 0
+  RM: {fileID: 0}
 --- !u!1 &918260437
 GameObject:
   m_ObjectHideFlags: 0
