@@ -7,10 +7,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 871514539, guid: 5afd6824e8816a54da98276a53a4810e, type: 3}
-      propertyPath: m_Name
-      value: BlacksmithFoundation
-      objectReference: {fileID: 0}
     - target: {fileID: 871514538, guid: 5afd6824e8816a54da98276a53a4810e, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -63,6 +59,10 @@ PrefabInstance:
       propertyPath: m_LocalScale.z
       value: 3.5
       objectReference: {fileID: 0}
+    - target: {fileID: 871514539, guid: 5afd6824e8816a54da98276a53a4810e, type: 3}
+      propertyPath: m_Name
+      value: BlacksmithFoundation
+      objectReference: {fileID: 0}
     - target: {fileID: 871514542, guid: 5afd6824e8816a54da98276a53a4810e, type: 3}
       propertyPath: m_Size.z
       value: 3
@@ -79,7 +79,7 @@ PrefabInstance:
         type: 3}
       propertyPath: buildingPrefab
       value: 
-      objectReference: {fileID: 13005670944554208, guid: 4d37433635805124c880e603f6ce6e21,
+      objectReference: {fileID: 2452542087011110359, guid: 247e9fdc4ccb59d4abe697442053bc5b,
         type: 3}
     - target: {fileID: 8901928165844825646, guid: 5afd6824e8816a54da98276a53a4810e,
         type: 3}

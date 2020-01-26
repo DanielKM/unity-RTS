@@ -4,8 +4,9 @@
 Material:
   serializedVersion: 6
   m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
   m_Name: House_01_wood
   m_Shader: {fileID: 4800000, guid: ca8c7b0a6e455b34a956d170adcc5914, type: 3}
   m_ShaderKeywords: 
@@ -24,6 +25,10 @@ Material:
         m_Offset: {x: 0, y: 0}
     - _Albedo:
         m_Texture: {fileID: 2800000, guid: 3f2a03fdf5c393840b0245053bd7c5d2, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _Albedo_smoothness_map_input:
+        m_Texture: {fileID: 2800000, guid: 3320889b6ffef344396a6dc6a830a0d5, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _Alpha_cutout_mask_map_input:
@@ -58,12 +63,12 @@ Material:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
-    - _Detail_mask_2_map_input:
-        m_Texture: {fileID: 0}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
     - _Detail_mask_1_map_input:
         m_Texture: {fileID: 2800000, guid: 3453423b691223b408aa45f88da69144, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _Detail_mask_2_map_input:
+        m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _Edge_mask_map_input:
@@ -96,10 +101,6 @@ Material:
         m_Offset: {x: 0, y: 0}
     - _MainTex:
         m_Texture: {fileID: 0}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
-    - _Albedo_smoothness_map_input:
-        m_Texture: {fileID: 2800000, guid: 3320889b6ffef344396a6dc6a830a0d5, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _Material_pattern:
@@ -233,6 +234,7 @@ Material:
     m_Floats:
     - _AO_Intensity: 0.6
     - _AO_shift: 0.509
+    - _Alpha_cutout_level: 1
     - _Alpha_cutout_mask_map_input_level: 1
     - _BumpScale: 1
     - _Concrete_smoothness: 1
@@ -259,6 +261,7 @@ Material:
     - _Material_Smoothness_shift: 0.441
     - _Metal_object: 0
     - _Metallic: 0
+    - _Metalobjectusesmettalicsmoothnesmap: 0
     - _Mettalic_shift: 0
     - _Mettallic_shift: 0
     - _Mode: 0
@@ -266,6 +269,7 @@ Material:
     - _Moss_Smouuthness: 1
     - _Moss_intensity: 0
     - _Moss_level: 2
+    - _Normal_intensity: 1
     - _Normal_map_input_intensity: 1
     - _OcclusionStrength: 1
     - _Paint_Smoothness: 0.283

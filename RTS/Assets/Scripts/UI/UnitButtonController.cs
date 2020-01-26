@@ -441,7 +441,7 @@ public class UnitButtonController : MonoBehaviour
             else if (building.unitType == "Blacksmith")
             {
                 currentPlaceableObject.transform.position = new Vector3(hitInfo.point.x, hitInfo.point.y, hitInfo.point.z);
-                Vector3 newLocation = new Vector3(currentPlaceableObject.transform.position.x + 1.2f, currentPlaceableObject.transform.position.y, currentPlaceableObject.transform.position.z - 2.0f);
+                Vector3 newLocation = new Vector3(currentPlaceableObject.transform.position.x, currentPlaceableObject.transform.position.y, currentPlaceableObject.transform.position.z);
                 currentLocation = newLocation;
             }
             else if (building.unitType == "Resource")
@@ -451,7 +451,7 @@ public class UnitButtonController : MonoBehaviour
             }
 
             currentPlaceableObject.transform.rotation = Quaternion.FromToRotation(Vector3.up, hitInfo.normal);
-            if(building.unitType == "Stables" || building.unitType == "Barracks" || building.unitType == "Town Hall")
+            if(building.unitType == "Stables" || building.unitType == "Barracks" || building.unitType == "Town Hall" || building.unitType == "Blacksmith")
             {
                 currentPlaceableObject.transform.Rotate(0, 270, 0);
             }

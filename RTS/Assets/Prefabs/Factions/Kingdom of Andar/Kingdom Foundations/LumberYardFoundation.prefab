@@ -7,10 +7,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 871514539, guid: 5afd6824e8816a54da98276a53a4810e, type: 3}
-      propertyPath: m_Name
-      value: LumberYardFoundation
-      objectReference: {fileID: 0}
     - target: {fileID: 871514538, guid: 5afd6824e8816a54da98276a53a4810e, type: 3}
       propertyPath: m_LocalPosition.x
       value: -24.378723
@@ -55,6 +51,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 871514539, guid: 5afd6824e8816a54da98276a53a4810e, type: 3}
+      propertyPath: m_Name
+      value: LumberYardFoundation
+      objectReference: {fileID: 0}
     - target: {fileID: 871514543, guid: 5afd6824e8816a54da98276a53a4810e, type: 3}
       propertyPath: unitType
       value: Lumber Yard Foundation
@@ -67,7 +67,7 @@ PrefabInstance:
         type: 3}
       propertyPath: buildingPrefab
       value: 
-      objectReference: {fileID: 3319812515624710287, guid: ded039f5c2495b2428d71bc0f083aa97,
+      objectReference: {fileID: 70138970605207024, guid: 441dad21bcea610479803a4d5f435645,
         type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 5afd6824e8816a54da98276a53a4810e, type: 3}
