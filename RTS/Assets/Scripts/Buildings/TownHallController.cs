@@ -81,7 +81,7 @@ public class TownHallController : MonoBehaviour
         isTraining = true;
         selectedObj = inputScript.selectedObj;
         buildingScript = selectedObj.GetComponent<BuildingController>();
-        spawnPosition = new Vector3(buildingScript.location.x, buildingScript.location.y, buildingScript.location.z - 5f);
+        spawnPosition = new Vector3(buildingScript.location.x, buildingScript.location.y, buildingScript.location.z - 10f);
         nextSpawnTime = Time.time + spawnDelay;
 
         for (i = 1; i < 11; i++)
