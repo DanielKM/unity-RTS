@@ -70,15 +70,6 @@ public class BarracksController : MonoBehaviour
         BuildingProgressSlider = BuildingProgressBar.GetComponent<Slider>();
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        //if (ShouldSpawn())
-        //{
-        //    Spawn();
-        //}
-    }
-
     public void HireSwordsman()
     {
         selectedObj = inputScript.selectedObj;
@@ -145,6 +136,5 @@ public class BarracksController : MonoBehaviour
             swordsmanAudio.Play();
         }
         isTraining = false;
-        // UI.BarracksSelect();
     }
 }

@@ -51,9 +51,6 @@ public class UnitButtonController : MonoBehaviour
             player = GameObject.FindGameObjectWithTag("Player");
             RM = player.GetComponent<ResourceManager>();
             UI = player.GetComponent<UIController>();
-
-            //Calls the TaskOnClick/TaskWithParameters/ButtonClicked method when you click the Button
-
             basicBack.onClick.AddListener(UI.WorkerSelect);
             advancedBack.onClick.AddListener(UI.WorkerSelect);
 
@@ -131,7 +128,6 @@ public class UnitButtonController : MonoBehaviour
     void BuildHouse()
     {
         BC = house.GetComponent<BuildingController>();
-        //Output this to console when the Button2 is clicked
         if (currentPlaceableObject == null && RM.gold >= BC.gold && RM.wood >= BC.wood && RM.stone >= BC.stone && RM.iron >= BC.iron && RM.steel >= BC.steel && RM.skymetal >= BC.skymetal && RM.food >= BC.food)
         {
             currentPlaceableObject = Instantiate(house);
@@ -163,7 +159,6 @@ public class UnitButtonController : MonoBehaviour
     void BuildFarm()
     {
         BC = farm.GetComponent<BuildingController>();
-        //Output this to console when the Button2 is clicked
         if (currentPlaceableObject == null && RM.gold >= BC.gold && RM.wood >= BC.wood && RM.stone >= BC.stone && RM.iron >= BC.iron && RM.steel >= BC.steel && RM.skymetal >= BC.skymetal && RM.food >= BC.food)
           {
             currentPlaceableObject = Instantiate(farm);

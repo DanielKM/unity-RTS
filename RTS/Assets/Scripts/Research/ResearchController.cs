@@ -199,15 +199,6 @@ public class ResearchController : MonoBehaviour
         }
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        //if (ShouldSpawn())
-        //{
-        //    Spawn();
-        //}
-    }
-
     // BASIC BLACKSMITHING
     void ResearchBlacksmithing () 
     { 

@@ -49,12 +49,6 @@ public class UIController : MonoBehaviour
             CloseAllPanels();
         }
     }
-
-    // Update is called once per frame
-    void Update()
-    {
-
-    }
     
     public void FindAllPanels() {
         GameMenuPanel = GameObject.Find("GameMenu").GetComponent<CanvasGroup>();

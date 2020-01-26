@@ -613,7 +613,6 @@ public class InputManager : MonoBehaviour
                     {
                         DeselectUnits();
                         UI.CloseAllPanels();
-                    // Debug.Log("Standing down, Sir!");
                     }
                 } 
                 else
@@ -622,10 +621,7 @@ public class InputManager : MonoBehaviour
                         GameObject[] selectedIndicators = GameObject.FindGameObjectsWithTag("SelectedIndicator");
                         for (int j = 0; j < selectedIndicators.Length; j++)
                         {
-                            // Turns the unit UnitSelection indicator off
                             selectedIndicators[j].transform.gameObject.SetActive(false);
-
-                            // Deselects the unit
                             selectedIndicators[j].transform.parent.GetComponent<UnitSelection>().selected = false;
                         }
 
@@ -655,11 +651,9 @@ public class InputManager : MonoBehaviour
                 if (selectedObjects.Length >= 0)
                 {
                     DeselectUnits();
-                    Debug.Log("Standing down, Sir!");
                 }
                 selectedObj = hit.collider.gameObject;
 
-                // Handle town hall UnitSelection
                 if(selectedObj.tag == "Player 1")
                 {
                     townHallScript = selectedObj.GetComponent<TownHallController>();
@@ -726,7 +720,6 @@ public class InputManager : MonoBehaviour
                 else if (selectedObj.tag == "Stables") {
                     UI.StablesSelect();
                 }
-                // UpdateBuildingPanel();
             }
             else if (hit.collider.tag != "Selectable" && (!Input.GetKey(KeyCode.LeftShift)))
             {

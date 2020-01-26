@@ -71,15 +71,6 @@ public class BlacksmithController : MonoBehaviour
         BuildingProgressSlider = BuildingProgressBar.GetComponent<Slider>();
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        //if (ShouldSpawn())
-        //{
-        //    Spawn();
-        //}
-    }
-
     public void ResearchBlacksmithing () 
     { 
         selectedObj = inputScript.selectedObj;
@@ -253,7 +244,6 @@ public class BlacksmithController : MonoBehaviour
     IEnumerator CloseResourcesText()
     {
         yield return new WaitForSeconds(3);
-        //my code here after 3 seconds
         UI.noResourcesText.SetActive(false);
     }
 
@@ -263,34 +253,6 @@ public class BlacksmithController : MonoBehaviour
         isTraining = true;
         selectedObj = inputScript.selectedObj;
         buildingScript = selectedObj.GetComponent<BuildingController>();
-
-        // if(unit == "Footman") {
-        //     // var iteration1 = Random.Range(0, firstNames.Length);
-        //     // var iteration2 = Random.Range(0, lastNameFirst.Length);
-        //     // var iteration3 = Random.Range(0, lastNameSecond.Length);
-        //     // progressIcon = GameObject.Find("ProgressIcon").GetComponent<Image>();
-        //     // progressIcon.sprite = footmanPrefab.GetComponent<UnitController>().unitIcon;
-        //     // footmanPrefab.GetComponent<UnitController>().unitName = firstNames[iteration1] + " " + lastNameFirst[iteration2] + lastNameSecond[iteration3];
-        //     // footmanUnitSelection = footmanPrefab.GetComponent<UnitSelection>();
-        //     // footmanUnitSelection.owner = player;
-
-        //     // footmanAudio = selectedObj.GetComponent<AudioSource>();
-        //     // footmanAudio.clip = footmanReporting;
-        //     // prefab = footmanPrefab;
-        // } else if (unit == "Swordsman") {
-        //     // var iteration1 = Random.Range(0, SMFirstNames.Length);
-        //     // var iteration2 = Random.Range(0, SMLastNameFirst.Length);
-        //     // var iteration3 = Random.Range(0, SMLastNameSecond.Length);
-        //     // progressIcon = GameObject.Find("ProgressIcon").GetComponent<Image>();
-        //     // progressIcon.sprite = swordsmanPrefab.GetComponent<UnitController>().unitIcon;
-        //     // swordsmanPrefab.GetComponent<UnitController>().unitName = SMFirstNames[iteration1] + " " + SMLastNameFirst[iteration2] + SMLastNameSecond[iteration3];
-        //     // swordsmanUnitSelection = swordsmanPrefab.GetComponent<UnitSelection>();
-        //     // swordsmanUnitSelection.owner = player;
-
-        //     // swordsmanAudio = selectedObj.GetComponent<AudioSource>();
-        //     // swordsmanAudio.clip = swordsmanReporting;
-        //     // prefab = swordsmanPrefab;
-        // }
 
         for (i = 1; i < 11; i++)
         {
@@ -306,7 +268,6 @@ public class BlacksmithController : MonoBehaviour
             var colors = RC.basicBlacksmithingButton.colors; 
             colors.disabledColor = Color.green;
             RC.basicBlacksmithingButton.colors = colors; 
-            // newColorBlock.disabledColor = new Color(34,139,60,255); // 50% red.
 
         } else if (research == "basicToolSmithing") {
             RC.basicToolSmithing = true;
@@ -384,6 +345,5 @@ public class BlacksmithController : MonoBehaviour
         }
             
         isTraining = false;
-        // UI.BarracksSelect();
     }
 }

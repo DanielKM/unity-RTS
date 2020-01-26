@@ -141,8 +141,6 @@ public class BuildingButtonController : MonoBehaviour
             selectedObj = inputScript.selectedObj;
             barracksScript = selectedObj.GetComponent<BarracksController>();
             buildingScript = selectedObj.GetComponent<BuildingController>();
-           
-          //  spawnPosition = new Vector3(buildingScript.location.x, buildingScript.location.y, buildingScript.location.z +50f);
             playerAudio.clip = trainSwordsmanAudio;
             playerAudio.Play();
             barracksScript.HireSwordsman();
@@ -170,8 +168,6 @@ public class BuildingButtonController : MonoBehaviour
             selectedObj = inputScript.selectedObj;
             barracksScript = selectedObj.GetComponent<BarracksController>();
             buildingScript = selectedObj.GetComponent<BuildingController>();
-           
-          //  spawnPosition = new Vector3(buildingScript.location.x, buildingScript.location.y, buildingScript.location.z +50f);
             playerAudio.clip = trainFootmanAudio;
             playerAudio.Play();
             barracksScript.HireFootman();

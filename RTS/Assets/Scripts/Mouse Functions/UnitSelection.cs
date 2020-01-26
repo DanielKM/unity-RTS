@@ -82,8 +82,6 @@ public class UnitSelection : MonoBehaviour
                     {
                         isBuilding = false;
                         isGathering = false;
-                        //stop gathering immediately
-                        //Drop off point here for resource yards
                         drops = GameObject.FindGameObjectsWithTag("Player 1");
                         if(drops.Length > 0)
                         {
@@ -108,9 +106,7 @@ public class UnitSelection : MonoBehaviour
                     }
                     if (heldResource >= maxHeldResource)
                     {
-                        //stop gathering immediately
                         isGathering = false;
-                        //Drop off point here for resource yards
                         drops = GameObject.FindGameObjectsWithTag("Player 1");
                         if (drops.Length > 0)
                         {
@@ -135,7 +131,6 @@ public class UnitSelection : MonoBehaviour
         }
     }
 
-    // Find the closest dropoff after gathering and go there
     GameObject GetClosestDropOff(GameObject[] dropOffs)
     {
         GameObject closestDrop = null;
@@ -155,7 +150,6 @@ public class UnitSelection : MonoBehaviour
         return closestDrop;
     }
 
-    // Find the closest dropoff after gathering and go there
     GameObject GetClosestResource(GameObject[] resources)
     {
         GameObject closestResource = null;
@@ -194,7 +188,6 @@ public class UnitSelection : MonoBehaviour
                 if(UC.unitType == "Worker") {
                     if (hit.collider.tag != "Player 1")
                     {
-                        // For following friends and enemies
                         if(targetScript != null) {
                             agent.destination = hit.collider.gameObject.transform.position;
                             isFollowing = true;
@@ -225,7 +218,6 @@ public class UnitSelection : MonoBehaviour
                         }
                         else if (hit.collider.tag == "Doorway")
                         {
-                            Debug.Log("Smashing down that door, Sir!");
                         } 
                     }
                     else if (hit.collider.tag == "Player 1")
@@ -258,7 +250,7 @@ public class UnitSelection : MonoBehaviour
                     }
                     else if (hit.collider.tag == "Doorway")
                     {
-                        Debug.Log("Smashing down that door, Sir!");
+
                     } 
                     else {
                         agent.destination = hit.collider.gameObject.transform.position;
@@ -276,15 +268,6 @@ public class UnitSelection : MonoBehaviour
 
         if (hitObject.tag == "Player 1" && task == Tasklist.Delivering && heldResource != 0) 
         {
-            //if (heldResourceType == Skymetal)
-            //{
-            //    DropSkyMetal();
-            //}
-
-            //if (heldResourceType == NodeManager.ResourceTypes.Wood)
-            //{
-            //    DropWood();
-            //}
         }
     }
 
@@ -303,9 +286,6 @@ public class UnitSelection : MonoBehaviour
                 isGathering = false;
                 if (heldResource != 0)
                 {
-                    //stop gathering immediately
-                    //Drop off point here for resource yards
-                   
                     drops = GameObject.FindGameObjectsWithTag("Player 1");
                     agent.destination = GetClosestDropOff(drops).transform.position;
 
@@ -344,8 +324,6 @@ public class UnitSelection : MonoBehaviour
                 isGathering = false;
                 if (heldResource != 0)
                 {
-                    //stop gathering immediately
-                    //Drop off point here for resource yards
                     drops = GameObject.FindGameObjectsWithTag("Player 1");
                     agent.destination = GetClosestDropOff(drops).transform.position;
 
@@ -378,14 +356,11 @@ public class UnitSelection : MonoBehaviour
         }
         else
         {
-            // if target node is destroyed
             if (targetNode == null)
             {
                 isGathering = false;
                 if (heldResource != 0)
                 {
-                    //stop gathering immediately
-                    //Drop off point here for resource yards
                     drops = GameObject.FindGameObjectsWithTag("Player 1");
                     agent.destination = GetClosestDropOff(drops).transform.position;
 
@@ -424,8 +399,6 @@ public class UnitSelection : MonoBehaviour
                 isGathering = false;
                 if (heldResource != 0)
                 {
-                    //stop gathering immediately
-                    //Drop off point here for resource yards
                     drops = GameObject.FindGameObjectsWithTag("Player 1");
                     agent.destination = GetClosestDropOff(drops).transform.position;
 
@@ -464,8 +437,6 @@ public class UnitSelection : MonoBehaviour
                 isGathering = false;
                 if (heldResource != 0)
                 {
-                    //stop gathering immediately
-                    //Drop off point here for resource yards
                     drops = GameObject.FindGameObjectsWithTag("Player 1");
                     agent.destination = GetClosestDropOff(drops).transform.position;
 
@@ -504,8 +475,6 @@ public class UnitSelection : MonoBehaviour
                 isGathering = false;
                 if (heldResource != 0)
                 {
-                    //stop gathering immediately
-                    //Drop off point here for resource yards
                     drops = GameObject.FindGameObjectsWithTag("Player 1");
                     agent.destination = GetClosestDropOff(drops).transform.position;
 
@@ -533,11 +502,9 @@ public class UnitSelection : MonoBehaviour
     public void OnTriggerEnter(Collider other)
     {
         GameObject hitObject = other.gameObject;
-        // add  (&& task == Tasklist.Gathering) once u know whats up
         if (hitObject.tag == "Resource" && hitObject.gameObject == targetNode && gameObject.GetComponent<UnitController>().unitType == "Worker")
         {
             isGathering = true;
-           // hitObject.GetComponent<NodeManager>().gatherers++;
             harvestScript = targetNode.GetComponent<NodeManager>();
             harvestSpeed = harvestScript.harvestTime;
             heldResourceType = hitObject.GetComponent<NodeManager>().resourceType;
@@ -601,14 +568,11 @@ public class UnitSelection : MonoBehaviour
         int counter = 0;
         if(targetScript.owner != player) {
             isAttacking = true;
-            Debug.Log("Attack!");
         } else if(targetScript.owner == player) {
             isAttacking = false;
-            Debug.Log("Follow!");
         } 
 
         while(isFollowing) {
-            // Debug.Log(targetNode.GetComponent<UnitController>().isDead);
             if(targetNode == null || targetNode.GetComponent<UnitController>().isDead) {
                 isMeleeing = false;
                 isAttacking = false;

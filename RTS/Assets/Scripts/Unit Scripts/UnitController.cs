@@ -157,17 +157,6 @@ public class UnitController : MonoBehaviour
                 }
             }
         }
-       
-//         if (Input.GetKeyDown(KeyCode.Mouse1))
-//         {
-//             anim.SetLayerWeight(1, 1f);
-//             anim.SetTrigger("IsAttacking");
-// //print("Attacking!");
-//         }
-//         else
-//         {
-//             anim.SetLayerWeight(0, 0f);
-//         }
     }
 
     void Tick()
@@ -180,7 +169,6 @@ public class UnitController : MonoBehaviour
                     if (currentTarget != null && Vector3.Distance(transform.position, currentTarget.transform.position) < aggroRange)
                     {
                         UnitSelection.targetNode = currentTarget;
-                        // Debug.Log("Enemy " + currentTarget.GetComponent<UnitController>().unitType + " spotted!");
                         float dist = Vector3.Distance(agent.transform.position, currentTarget.transform.position);
                         agent.destination = currentTarget.transform.position;
                         UnitSelection.isFollowing = true;
@@ -211,40 +199,6 @@ public class UnitController : MonoBehaviour
                     UnitSelection.isFollowing = false;
                 }
             } 
-            // else {
-            //     enemyUnits = GameObject.FindGameObjectsWithTag("Selectable");
-            //     GameObject currentTarget = GetClosestEnemy(enemyUnits);
-            //     if(currentTarget && !currentTarget.GetComponent<UnitController>().isDead) {
-            //         if (currentTarget != null && Vector3.Distance(transform.position, currentTarget.transform.position) < aggroRange)
-            //         {
-            //             UnitSelection.targetNode = currentTarget;
-            //             // Debug.Log("Enemy " + currentTarget.GetComponent<UnitController>().unitType + " spotted!");
-            //             float dist = Vector3.Distance(agent.transform.position, currentTarget.transform.position);
-            //             agent.destination = currentTarget.transform.position;
-            //             UnitSelection.isFollowing = true;
-
-            //             if(dist < attackRange && currentTarget != null) {
-            //                 UnitSelection.isMeleeing = true;
-            //                 enemy = currentTarget;
-            //                 if(!currentlyMeleeing && enemy != null) {
-            //                     // StartCoroutine(Attack());
-            //                 }
-            //             } else {
-            //                 currentlyMeleeing = false;
-            //                 UnitSelection.isMeleeing = false;
-            //                 UnitSelection.isFollowing = false;
-            //             }
-            //         } else if (currentTarget == null) {
-            //             currentlyMeleeing = false;
-            //             UnitSelection.isMeleeing = false;
-            //             UnitSelection.isFollowing = false;
-            //         }
-            //     } else {
-            //         currentlyMeleeing = false;
-            //         UnitSelection.isMeleeing = false;
-            //         UnitSelection.isFollowing = false;
-            //     }
-            // }
         }
     }
 
@@ -324,5 +278,3 @@ public class UnitController : MonoBehaviour
         }
     }
 }
-
-//https://www.youtube.com/watch?v=sb9jnpN9Chc&index=2&list=PLzDRvYVwl53t1vBNhjHANpXXz5M6EuT1q&t=0s

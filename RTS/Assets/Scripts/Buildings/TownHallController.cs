@@ -62,12 +62,6 @@ public class TownHallController : MonoBehaviour
         BuildingProgressSlider = BuildingProgressBar.GetComponent<Slider>();
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-
-    }
-
     public void HireVillager()
     {
         selectedObj = inputScript.selectedObj;

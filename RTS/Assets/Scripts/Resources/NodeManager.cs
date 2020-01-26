@@ -25,14 +25,13 @@ public class NodeManager : MonoBehaviour
     {
         GameObject player = GameObject.FindGameObjectWithTag("Player");
         RC = player.GetComponent<ResearchController>();
-        // Starts the resource tick (means its true)
         StartCoroutine(ResourceTick());   
     }
 
     // Update is called once per frame
     void Update()
     {
-        var numberOfColliders = collidedObjects.Count; // this should give you the number you need
+        var numberOfColliders = collidedObjects.Count;
         if(numberOfColliders > 0)
         {
 
@@ -54,7 +53,6 @@ public class NodeManager : MonoBehaviour
         }
     }
 
-    // Ticks down while villager is gathering resource - Adjust with heldResource in GatherTick in UnitSelection Script
     public void ResourceGather()
     {
         int toolModifier;

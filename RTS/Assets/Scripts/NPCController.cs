@@ -92,7 +92,6 @@ public class NPCController : MonoBehaviour
                 if (currentTarget != null && Vector3.Distance(transform.position, currentTarget.transform.position) < aggroRange)
                 {
                     UnitSelection.targetNode = currentTarget;
-                    // Debug.Log("Enemy " + currentTarget.GetComponent<UnitController>().unitType + " spotted!");
                     float dist = Vector3.Distance(agent.transform.position, currentTarget.transform.position);
                     agent.destination = currentTarget.transform.position;
                     agent.speed = agentSpeed;
@@ -192,7 +191,6 @@ public class NPCController : MonoBehaviour
                     armourModifier = 1.0f;
                 }
                 enemyUC.armour -= 1.0f * armourModifier;
-                Debug.Log(1.0f * armourModifier);
             } else {
                 enemyUC.health -= UC.attackDamage;
                 enemyHealth = enemyUC.health;
