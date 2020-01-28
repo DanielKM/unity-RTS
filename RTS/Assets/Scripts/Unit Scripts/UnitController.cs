@@ -98,15 +98,7 @@ public class UnitController : MonoBehaviour
     {
         if(health <= 0) { 
             gameObject.GetComponent<NavMeshAgent>().enabled = false;
-            if(unitType == "Worker") { 
-                anim.SetInteger("condition", 10);
-                isDead = true;
-                UnitSelection.isBuilding = false;
-                UnitSelection.isGathering = false;
-                UnitSelection.isFollowing = false;
-                UnitSelection.isAttacking = false;
-                UnitSelection.isMeleeing = false;
-            } else if(unitType == "Footman" || unitType == "Swordsman") {
+            if(unitType == "Worker" || unitType == "Footman" || unitType == "Swordsman" || unitType == "Archer")  { 
                 anim.SetInteger("condition", 10);
                 isDead = true;
                 UnitSelection.isBuilding = false;
@@ -149,7 +141,7 @@ public class UnitController : MonoBehaviour
                         anim.SetInteger("condition", 0);
                     }
                 }
-            } else if (unitType == "Footman" || unitType == "Swordsman") {
+            } else if (unitType == "Footman" || unitType == "Swordsman" || unitType == "Archer") {
                 if(UnitSelection.isMeleeing) {
                     anim.SetInteger("condition", 1);
                 } else if (!UnitSelection.isMeleeing ) {
@@ -166,32 +158,35 @@ public class UnitController : MonoBehaviour
                 enemyUnits = GameObject.FindGameObjectsWithTag("Enemy Unit");
                 GameObject currentTarget = GetClosestEnemy(enemyUnits);
                 if(currentTarget && !currentTarget.GetComponent<UnitController>().isDead) {
-                    if (currentTarget != null && Vector3.Distance(transform.position, currentTarget.transform.position) < aggroRange)
-                    {
-                        UnitSelection.targetNode = currentTarget;
-                        float dist = Vector3.Distance(agent.transform.position, currentTarget.transform.position);
-                        agent.destination = currentTarget.transform.position;
-                        UnitSelection.isFollowing = true;
-
-                        if(dist < attackRange && currentTarget != null && !currentTarget.GetComponent<UnitController>().isDead) {
-                            UnitSelection.isMeleeing = true;
-                            enemy = currentTarget;
+                    UnitSelection.targetNode = currentTarget;
+                    float dist = Vector3.Distance(agent.transform.position, currentTarget.transform.position);
+                    if(dist < aggroRange && currentTarget != null && !currentTarget.GetComponent<UnitController>().isDead) {
+                        UnitSelection.isMeleeing = true;
+                        UnitSelection.isFollowing = false;
+                        enemy = currentTarget;
+                        // agent.velocity = Vector3.zero;
+                        if (Vector3.Distance(transform.position, currentTarget.transform.position) <= aggroRange && Vector3.Distance(transform.position, currentTarget.transform.position) > attackRange)
+                        {
+                            agent.destination = currentTarget.transform.position;
+                            UnitSelection.isFollowing = true;
+                        } else if (Vector3.Distance(transform.position, currentTarget.transform.position) <= aggroRange && Vector3.Distance(transform.position, currentTarget.transform.position) <= attackRange) {
+                            agent.destination = agent.transform.position;
                             if(!currentlyMeleeing && enemy != null) {
-                                agent.destination = agent.transform.position;
                                 StartCoroutine(Attack());
                             }
+                        } else if (currentTarget == null) {
+                            agent.destination = agent.transform.position;
                         } else {
-                            currentlyMeleeing = false;
-                            UnitSelection.isAttacking = false;
-                            UnitSelection.isMeleeing = false;
-                            UnitSelection.isFollowing = false;
+
                         }
-                    } else if (currentTarget == null) {
+
+                    } else {
                         currentlyMeleeing = false;
                         UnitSelection.isAttacking = false;
                         UnitSelection.isMeleeing = false;
                         UnitSelection.isFollowing = false;
                     }
+
                 } else {
                     currentlyMeleeing = false;
                     UnitSelection.isAttacking = false;
@@ -242,13 +237,14 @@ public class UnitController : MonoBehaviour
                     UnitSelection.isFollowing = false;
                     break;
                 }   
-            }          
+            }  
+                    
             if(unitType == "Worker") {
                 unitAudio = agent.GetComponent<AudioSource>();
                 unitAudio.clip = woodChop;
                 unitAudio.maxDistance = 55;
                 unitAudio.Play();
-            } else if (unitType == "Footman" || unitType == "Swordsman") {
+            } else if (unitType == "Footman" || unitType == "Swordsman" || unitType == "Archer") {
                 AudioClip[] metalAttacks = new AudioClip[4]{ metalChop, metalChop2, metalChop3, metalChop4};
                 unitAudio = agent.GetComponent<AudioSource>();
                     
@@ -268,6 +264,7 @@ public class UnitController : MonoBehaviour
                 weaponModifier = 1.0f;
             }
 
+            // Actual damage
             if(enemyUC.armour > 0.0f) {
                 enemyUC.armour -= weaponModifier;
             } else {

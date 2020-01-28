@@ -405,6 +405,8 @@ public class InputManager : MonoBehaviour
                             UI.WorkerSelect();
                         } else if (unitScript.unitType == "Swordsman") {
                             UI.SwordsmanSelect();
+                        } else if (unitScript.unitType == "Archer") {
+                            UI.ArcherSelect();
                         } else if (unitScript.unitType == "Footman") {
                             UI.FootmanSelect();
                         }
@@ -602,6 +604,8 @@ public class InputManager : MonoBehaviour
                             UI.WorkerSelect();
                         } else if (unitScript.unitType == "Swordsman") {
                             UI.SwordsmanSelect();
+                        } else if (unitScript.unitType == "Archer") {
+                            UI.ArcherSelect();
                         } else if (unitScript.unitType == "Footman") {
                             UI.FootmanSelect();
                         }
@@ -639,6 +643,8 @@ public class InputManager : MonoBehaviour
                             UI.WorkerSelect();
                         } else if (unitScript.unitType == "Swordsman") {
                             UI.SwordsmanSelect();
+                        } else if (unitScript.unitType == "Archer") {
+                            UI.ArcherSelect();
                         } else if (unitScript.unitType == "Footman") {
                             UI.FootmanSelect();
                         }

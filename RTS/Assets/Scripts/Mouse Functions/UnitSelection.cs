@@ -234,7 +234,7 @@ public class UnitSelection : MonoBehaviour
                     }
                     playerAudio.clip = unitMoveClip;
                     playerAudio.Play();
-                } else if (UC.unitType == "Footman" || UC.unitType == "Swordsman") {
+                } else if (UC.unitType == "Footman" || UC.unitType == "Swordsman" || UC.unitType == "Archer") {
                     isBuilding = false;
                     isGathering = false;
                     if(targetScript != null) {
