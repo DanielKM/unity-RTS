@@ -1043,6 +1043,7 @@ GameObject:
   - component: {fileID: 195357117500002288}
   - component: {fileID: 114021366996921890}
   - component: {fileID: 114124908141745280}
+  - component: {fileID: 6758899657855979350}
   m_Layer: 10
   m_Name: Archer
   m_TagString: Selectable
@@ -1298,6 +1299,7 @@ MonoBehaviour:
   metalChop3: {fileID: 8300000, guid: ebcbb664018f947728cb9b67468b0f48, type: 3}
   metalChop4: {fileID: 8300000, guid: 44b3696bd5132401cafdca8526812f63, type: 3}
   woodChop: {fileID: 8300000, guid: 795e0eda1c479474ab93de36a1afe9f4, type: 3}
+  shootArrow: {fileID: 8300000, guid: c0ac0614aa7b64de7ba2f569a0793a16, type: 3}
   heldResource: 0
   currentlyMeleeing: 0
   isDead: 0
@@ -1330,6 +1332,19 @@ MonoBehaviour:
   maxHeldResource: 0
   drops: []
   resources: []
+--- !u!114 &6758899657855979350
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1971897941503588938}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 21d90f0c5b5b3cc4c8a23984c629041e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  arrow: {fileID: 7187081159969559781, guid: c513768c1500f974da8b83d4855fd7b1, type: 3}
 --- !u!1 &1971897941503589946
 GameObject:
   m_ObjectHideFlags: 0

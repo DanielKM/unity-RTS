@@ -582,7 +582,7 @@ public class UnitSelection : MonoBehaviour
             float dist = Vector3.Distance(targetNode.transform.position, agent.transform.position);
             if(!isMeleeing && isAttacking && dist < UC.attackRange) {
                 isMeleeing = true;
-                StartCoroutine(UC.Attack());
+                StartCoroutine(UC.Attack(targetNode, agent.transform.rotation));
             } else {
                 // isMeleeing = false;
             }

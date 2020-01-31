@@ -46,6 +46,7 @@ public class UnitController : MonoBehaviour
     private GameObject enemy;
     private GameObject[] enemyUnits;
     private float enemyHealth;
+    private GameObject arrowPrefab;
 
     // Audio
     public AudioSource unitAudio;
@@ -54,6 +55,7 @@ public class UnitController : MonoBehaviour
     public AudioClip metalChop3;
     public AudioClip metalChop4;
     public AudioClip woodChop;
+    public AudioClip shootArrow;
 
     // Player scripts
     private GameObject player;
@@ -64,6 +66,7 @@ public class UnitController : MonoBehaviour
     private NavMeshAgent agent;
     private UnitSelection UnitSelection;
     private Tasklist newTask;
+    private ArcherController archer;
 
     ResearchController RC;
     UIController UI;
@@ -87,6 +90,10 @@ public class UnitController : MonoBehaviour
         anim = GetComponent<Animator>();
         agent = GetComponent<NavMeshAgent>();
         UnitSelection = GetComponent<UnitSelection>();
+        archer = GetComponent<ArcherController>();
+        if(archer) {
+            arrowPrefab = archer.arrow;
+        }
     }
 
     private void Awake()
@@ -142,9 +149,9 @@ public class UnitController : MonoBehaviour
                     }
                 }
             } else if (unitType == "Footman" || unitType == "Swordsman" || unitType == "Archer") {
-                if(UnitSelection.isMeleeing) {
+                if(UnitSelection.isMeleeing && !UnitSelection.isFollowing) {
                     anim.SetInteger("condition", 1);
-                } else if (!UnitSelection.isMeleeing ) {
+                } else if (!UnitSelection.isMeleeing) {
                     anim.SetInteger("condition", 0);
                 }
             }
@@ -154,7 +161,8 @@ public class UnitController : MonoBehaviour
     void Tick()
     {
         if(!isDead) {
-            if(UnitSelection.owner == UnitSelection.player) {
+            if(UnitSelection.owner == UnitSelection.player && newTask != Tasklist.Moving) {
+
                 enemyUnits = GameObject.FindGameObjectsWithTag("Enemy Unit");
                 GameObject currentTarget = GetClosestEnemy(enemyUnits);
                 if(currentTarget && !currentTarget.GetComponent<UnitController>().isDead) {
@@ -171,8 +179,9 @@ public class UnitController : MonoBehaviour
                             UnitSelection.isFollowing = true;
                         } else if (Vector3.Distance(transform.position, currentTarget.transform.position) <= aggroRange && Vector3.Distance(transform.position, currentTarget.transform.position) <= attackRange) {
                             agent.destination = agent.transform.position;
+                            agent.transform.LookAt(currentTarget.transform.position);
                             if(!currentlyMeleeing && enemy != null) {
-                                StartCoroutine(Attack());
+                                StartCoroutine(Attack(currentTarget, agent.transform.rotation));
                             }
                         } else if (currentTarget == null) {
                             agent.destination = agent.transform.position;
@@ -219,7 +228,7 @@ public class UnitController : MonoBehaviour
         return closestEnemy;
     }
 
-    public IEnumerator Attack() {
+    public IEnumerator Attack(GameObject target, Quaternion currentRotation) {
         currentlyMeleeing = true;
 
         while(UnitSelection.isMeleeing) {          
@@ -244,7 +253,7 @@ public class UnitController : MonoBehaviour
                 unitAudio.clip = woodChop;
                 unitAudio.maxDistance = 55;
                 unitAudio.Play();
-            } else if (unitType == "Footman" || unitType == "Swordsman" || unitType == "Archer") {
+            } else if (unitType == "Footman" || unitType == "Swordsman") {
                 AudioClip[] metalAttacks = new AudioClip[4]{ metalChop, metalChop2, metalChop3, metalChop4};
                 unitAudio = agent.GetComponent<AudioSource>();
                     
@@ -252,8 +261,27 @@ public class UnitController : MonoBehaviour
                 unitAudio.clip = metalAttacks[random];
                 unitAudio.maxDistance = 55;
                 unitAudio.Play();
-            }
+            } else if (unitType == "Archer") {
+                unitAudio = agent.GetComponent<AudioSource>();
+                unitAudio.clip = shootArrow;
 
+                Vector3 arrowPosition = new Vector3(transform.position.x, transform.position.y + 1.0f, transform.position.z);
+
+                GameObject arrow = Instantiate(arrowPrefab, arrowPosition, Quaternion.identity);
+                Vector3 heading = enemy.transform.position - transform.position;
+                float distance = heading.magnitude;
+                Vector3 direction = heading/distance;
+                Vector3 dir = enemy.transform.position - transform.position;
+                float newAngle = Vector3.Angle(transform.forward, Vector3.right);
+
+                arrow.transform.rotation = Quaternion.Euler(new Vector3(0,180 - newAngle,0));
+                arrow.GetComponent<Rigidbody>().velocity = new Vector3( heading.x, heading.y + 4.0f, distance);
+
+                // arrow.GetComponent<Rigidbody>().AddForce(transform.forward);
+                unitAudio.maxDistance = 55;
+                unitAudio.Play();
+            }
+            
             // Research
             float weaponModifier;
             if(RC.artisanWeaponSmithing) {
