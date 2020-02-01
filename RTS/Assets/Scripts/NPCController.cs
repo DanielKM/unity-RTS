@@ -6,7 +6,7 @@ using UnityEngine.AI;
 public class NPCController : MonoBehaviour
 {
     public float patrolTime = 15; // time in seconds to wait before going to next patrol destination
-    public float aggroRange = 10; // distance in scene units below which the NPC will increase speed and seek the player
+    public float aggroRange = 15; // distance in scene units below which the NPC will increase speed and seek the player
     public Transform[] waypoints; // collection of waypoints which define a patrol area
 
     int index; // the current waypoint index in the waypoints array
@@ -89,7 +89,7 @@ public class NPCController : MonoBehaviour
             GameObject currentTarget = GetClosestEnemy(playerunits);
 
             if(currentTarget && !currentTarget.GetComponent<UnitController>().isDead) {
-                if (currentTarget != null && Vector3.Distance(transform.position, currentTarget.transform.position) < aggroRange)
+                if (currentTarget != null && Vector3.Distance(transform.position, currentTarget.transform.position) <= aggroRange)
                 {
                     UnitSelection.targetNode = currentTarget;
                     float dist = Vector3.Distance(agent.transform.position, currentTarget.transform.position);

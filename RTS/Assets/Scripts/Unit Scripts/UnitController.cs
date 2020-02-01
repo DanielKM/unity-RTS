@@ -43,7 +43,6 @@ public class UnitController : MonoBehaviour
 
     // Enemy variables
     private UnitController enemyUC;
-    private GameObject enemy;
     private GameObject[] enemyUnits;
     private float enemyHealth;
     private GameObject arrowPrefab;
@@ -161,47 +160,30 @@ public class UnitController : MonoBehaviour
     void Tick()
     {
         if(!isDead) {
-            if(UnitSelection.owner == UnitSelection.player && newTask != Tasklist.Moving) {
-
+            if(UnitSelection.owner == UnitSelection.player) {
                 enemyUnits = GameObject.FindGameObjectsWithTag("Enemy Unit");
                 GameObject currentTarget = GetClosestEnemy(enemyUnits);
-                if(currentTarget && !currentTarget.GetComponent<UnitController>().isDead) {
-                    UnitSelection.targetNode = currentTarget;
-                    float dist = Vector3.Distance(agent.transform.position, currentTarget.transform.position);
-                    if(dist < aggroRange && currentTarget != null && !currentTarget.GetComponent<UnitController>().isDead) {
-                        UnitSelection.isMeleeing = true;
-                        UnitSelection.isFollowing = false;
-                        enemy = currentTarget;
-                        // agent.velocity = Vector3.zero;
-                        if (Vector3.Distance(transform.position, currentTarget.transform.position) <= aggroRange && Vector3.Distance(transform.position, currentTarget.transform.position) > attackRange)
-                        {
-                            agent.destination = currentTarget.transform.position;
-                            UnitSelection.isFollowing = true;
-                        } else if (Vector3.Distance(transform.position, currentTarget.transform.position) <= aggroRange && Vector3.Distance(transform.position, currentTarget.transform.position) <= attackRange) {
+                    if(currentTarget && !currentTarget.GetComponent<UnitController>().isDead) {
+                        UnitSelection.targetNode = currentTarget;
+
+                        float dist = Vector3.Distance(agent.transform.position, currentTarget.transform.position);
+                        if(dist <= aggroRange && dist <= attackRange) {
+                            UnitSelection.isMeleeing = true;
+                            UnitSelection.isFollowing = false;
                             agent.destination = agent.transform.position;
                             agent.transform.LookAt(currentTarget.transform.position);
-                            if(!currentlyMeleeing && enemy != null) {
+                            if(!currentlyMeleeing) {
                                 StartCoroutine(Attack(currentTarget, agent.transform.rotation));
                             }
-                        } else if (currentTarget == null) {
-                            agent.destination = agent.transform.position;
+                        } else if (dist <= aggroRange && dist > attackRange) {
+                            UnitSelection.isMeleeing = false;
+                            UnitSelection.isFollowing = true;
+                            agent.destination = currentTarget.transform.position;
                         } else {
-
+                            UnitSelection.isMeleeing = false;
+                            UnitSelection.isFollowing = false;
                         }
-
-                    } else {
-                        currentlyMeleeing = false;
-                        UnitSelection.isAttacking = false;
-                        UnitSelection.isMeleeing = false;
-                        UnitSelection.isFollowing = false;
                     }
-
-                } else {
-                    currentlyMeleeing = false;
-                    UnitSelection.isAttacking = false;
-                    UnitSelection.isMeleeing = false;
-                    UnitSelection.isFollowing = false;
-                }
             } 
         }
     }
@@ -230,16 +212,15 @@ public class UnitController : MonoBehaviour
 
     public IEnumerator Attack(GameObject target, Quaternion currentRotation) {
         currentlyMeleeing = true;
-
-        while(UnitSelection.isMeleeing) {          
-            enemy = UnitSelection.targetNode;            
-            if(enemy == null) {
+        while(UnitSelection.isMeleeing) {    
+            target = UnitSelection.targetNode;        
+            if(target == null) {
                 currentlyMeleeing = false;
                 UnitSelection.isMeleeing = false;
                 UnitSelection.isFollowing = false;
                 break;
             } else {
-                enemyUC = enemy.GetComponent<UnitController>();    
+                enemyUC = target.GetComponent<UnitController>();    
                 if(enemyUC.isDead) {
                     currentlyMeleeing = false;
                     UnitSelection.isMeleeing = false;
@@ -266,18 +247,16 @@ public class UnitController : MonoBehaviour
                 unitAudio.clip = shootArrow;
 
                 Vector3 arrowPosition = new Vector3(transform.position.x, transform.position.y + 1.0f, transform.position.z);
-
                 GameObject arrow = Instantiate(arrowPrefab, arrowPosition, Quaternion.identity);
-                Vector3 heading = enemy.transform.position - transform.position;
-                float distance = heading.magnitude;
-                Vector3 direction = heading/distance;
-                Vector3 dir = enemy.transform.position - transform.position;
+
+                Vector3 heading = target.transform.position - transform.position;
                 float newAngle = Vector3.Angle(transform.forward, Vector3.right);
 
                 arrow.transform.rotation = Quaternion.Euler(new Vector3(0,180 - newAngle,0));
-                arrow.GetComponent<Rigidbody>().velocity = new Vector3( heading.x, heading.y + 4.0f, distance);
-
-                // arrow.GetComponent<Rigidbody>().AddForce(transform.forward);
+                arrow.GetComponent<Rigidbody>().velocity = new Vector3( heading.x, heading.y + 5.0f, heading.z);
+                
+                yield return new WaitForSeconds(1.02f);
+                Destroy(arrow);
                 unitAudio.maxDistance = 55;
                 unitAudio.Play();
             }
@@ -298,8 +277,10 @@ public class UnitController : MonoBehaviour
             } else {
                 enemyUC.health -= attackDamage * weaponModifier;
                 enemyHealth = enemyUC.health;
-            }
+            }   
             yield return new WaitForSeconds(attackSpeed);
         }
+                currentlyMeleeing = false;
+
     }
 }

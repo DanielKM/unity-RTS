@@ -1283,9 +1283,9 @@ MonoBehaviour:
   energy: 100
   maxEnergy: 100
   attackDamage: 30
-  attackRange: 20
+  attackRange: 15
   attackSpeed: 1
-  aggroRange: 30
+  aggroRange: 15
   gold: 400
   wood: 200
   food: 200
