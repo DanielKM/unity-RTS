@@ -182,6 +182,7 @@ public class UnitSelection : MonoBehaviour
 
         if (Physics.Raycast(ray, out hit, 350))
         {
+            StartCoroutine(RightIndicator(hit));
             targetNode = hit.collider.gameObject;
             targetScript = targetNode.GetComponent<UnitSelection>();
             if(owner == player && !UC.isDead) {     
@@ -699,6 +700,10 @@ public class UnitSelection : MonoBehaviour
                 UC.unitAudio.Play();
             }
         }
+    }
+
+    IEnumerator RightIndicator (RaycastHit hit) {
+        yield return new WaitForSeconds(2);
     }
 
 }
