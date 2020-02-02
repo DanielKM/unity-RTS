@@ -612,6 +612,8 @@ public class UnitSelection : MonoBehaviour
             }
 
             if(isBuilding) {
+                agent.destination = agent.transform.position;
+                
                 harvestSpeed = UC.attackSpeed;
             }
             yield return new WaitForSeconds(harvestSpeed);
