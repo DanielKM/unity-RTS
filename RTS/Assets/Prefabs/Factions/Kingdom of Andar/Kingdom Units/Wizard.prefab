@@ -3884,7 +3884,7 @@ MonoBehaviour:
   heldResource: 0
   currentlyMeleeing: 0
   isDead: 0
-  unitIcon: {fileID: 21300000, guid: 306d55d36efa3c24b90770585090620e, type: 3}
+  unitIcon: {fileID: 21300000, guid: e85e44f96082df14fbe7065095c8f299, type: 3}
 --- !u!114 &114201109847006062
 MonoBehaviour:
   m_ObjectHideFlags: 0

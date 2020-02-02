@@ -25,11 +25,15 @@ public class BarracksController : MonoBehaviour
 
     public GameObject swordsmanPrefab;
     public GameObject footmanPrefab;
+    public GameObject archerPrefab;
 
     private AudioSource swordsmanAudio;
     private AudioSource footmanAudio;
+    private AudioSource archerAudio;
+
     public AudioClip swordsmanReporting;
     public AudioClip footmanReporting;
+    public AudioClip archerReporting;
 
     [SerializeField]
     public float spawnDelay;
@@ -39,6 +43,8 @@ public class BarracksController : MonoBehaviour
     InputManager inputScript;
     UnitSelection swordsmanUnitSelection;
     UnitSelection footmanUnitSelection;
+    UnitSelection archerUnitSelection;
+
     BuildingController buildingScript;
 
     public GameObject selectedObj;
@@ -86,6 +92,14 @@ public class BarracksController : MonoBehaviour
         StartCoroutine(Train());
     }
 
+    public void HireArcher()
+    {
+        selectedObj = inputScript.selectedObj;
+        buildingScript = selectedObj.GetComponent<BuildingController>();
+        unit = "Archer";
+        StartCoroutine(Train());
+    }
+
     IEnumerator Train() 
     {
         isTraining = true;
@@ -121,6 +135,19 @@ public class BarracksController : MonoBehaviour
             swordsmanAudio = selectedObj.GetComponent<AudioSource>();
             swordsmanAudio.clip = swordsmanReporting;
             prefab = swordsmanPrefab;
+        } else if (unit == "Archer") {
+            var iteration1 = Random.Range(0, SMFirstNames.Length);
+            var iteration2 = Random.Range(0, SMLastNameFirst.Length);
+            var iteration3 = Random.Range(0, SMLastNameSecond.Length);
+            progressIcon = GameObject.Find("ProgressIcon").GetComponent<Image>();
+            progressIcon.sprite = archerPrefab.GetComponent<UnitController>().unitIcon;
+            archerPrefab.GetComponent<UnitController>().unitName = SMFirstNames[iteration1] + " " + SMLastNameFirst[iteration2] + SMLastNameSecond[iteration3];
+            archerUnitSelection = archerPrefab.GetComponent<UnitSelection>();
+            archerUnitSelection.owner = player;
+
+            archerAudio = selectedObj.GetComponent<AudioSource>();
+            archerAudio.clip = archerReporting;
+            prefab = archerPrefab;
         }
 
         for (i = 1; i < 11; i++)
@@ -134,6 +161,8 @@ public class BarracksController : MonoBehaviour
             footmanAudio.Play();
         } else if (unit == "Swordsman") {
             swordsmanAudio.Play();
+        } else if (unit == "Swordsman") {
+            archerAudio.Play();
         }
         isTraining = false;
     }

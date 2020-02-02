@@ -1271,7 +1271,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   unitType: Archer
   unitRank: Recruit
-  unitName: Will Scarlet
+  unitName: Marcus Hopearm
   unitKills: 0
   weapon: Longbow
   armourType: Leather
@@ -1286,7 +1286,7 @@ MonoBehaviour:
   attackRange: 15
   attackSpeed: 1
   aggroRange: 15
-  gold: 400
+  gold: 300
   wood: 200
   food: 200
   stone: 0
@@ -1300,10 +1300,11 @@ MonoBehaviour:
   metalChop4: {fileID: 8300000, guid: 44b3696bd5132401cafdca8526812f63, type: 3}
   woodChop: {fileID: 8300000, guid: 795e0eda1c479474ab93de36a1afe9f4, type: 3}
   shootArrow: {fileID: 8300000, guid: c0ac0614aa7b64de7ba2f569a0793a16, type: 3}
+  shootFireball: {fileID: 0}
   heldResource: 0
   currentlyMeleeing: 0
   isDead: 0
-  unitIcon: {fileID: 21300000, guid: 306d55d36efa3c24b90770585090620e, type: 3}
+  unitIcon: {fileID: 21300000, guid: 25b5acfad985f424b895526dc9e83800, type: 3}
 --- !u!114 &114124908141745280
 MonoBehaviour:
   m_ObjectHideFlags: 0

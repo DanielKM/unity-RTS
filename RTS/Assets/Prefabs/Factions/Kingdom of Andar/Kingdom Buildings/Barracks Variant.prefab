@@ -171,8 +171,11 @@ MonoBehaviour:
     type: 3}
   footmanPrefab: {fileID: 57994888639720294, guid: 1003ba60e89eda545b2a676cc324163f,
     type: 3}
+  archerPrefab: {fileID: 1971897941503588938, guid: f33325accbafcc34a93926457ef55ae8,
+    type: 3}
   swordsmanReporting: {fileID: 8300000, guid: b2a15ec8752ac4f4bb8dcd694ed6089c, type: 3}
   footmanReporting: {fileID: 8300000, guid: b2a15ec8752ac4f4bb8dcd694ed6089c, type: 3}
+  archerReporting: {fileID: 8300000, guid: b2a15ec8752ac4f4bb8dcd694ed6089c, type: 3}
   spawnDelay: 1000
   selected: 0
   selectedObj: {fileID: 0}
