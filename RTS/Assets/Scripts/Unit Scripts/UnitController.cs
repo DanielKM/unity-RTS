@@ -29,7 +29,7 @@ public class UnitController : MonoBehaviour
     public int maxEnergy;
     public float attackDamage;
     public int attackRange;
-    public int attackSpeed;
+    public float attackSpeed;
     public float aggroRange;
 
     // Cost
@@ -44,8 +44,12 @@ public class UnitController : MonoBehaviour
     // Enemy variables
     private UnitController enemyUC;
     private GameObject[] enemyUnits;
+    private GameObject currentTarget; 
     private float enemyHealth;
+
+    // Projectiles
     private GameObject arrowPrefab;
+    private GameObject fireballPrefab;
 
     // Audio
     public AudioSource unitAudio;
@@ -54,7 +58,9 @@ public class UnitController : MonoBehaviour
     public AudioClip metalChop3;
     public AudioClip metalChop4;
     public AudioClip woodChop;
+
     public AudioClip shootArrow;
+    public AudioClip shootFireball;
 
     // Player scripts
     private GameObject player;
@@ -64,8 +70,9 @@ public class UnitController : MonoBehaviour
     private Animator anim;
     private NavMeshAgent agent;
     private UnitSelection UnitSelection;
-    private Tasklist newTask;
+    private ActionList newTask;
     private ArcherController archer;
+    private WizardController wizard;
 
     ResearchController RC;
     UIController UI;
@@ -90,8 +97,12 @@ public class UnitController : MonoBehaviour
         agent = GetComponent<NavMeshAgent>();
         UnitSelection = GetComponent<UnitSelection>();
         archer = GetComponent<ArcherController>();
+        wizard = GetComponent<WizardController>();
         if(archer) {
             arrowPrefab = archer.arrow;
+        }        
+        if(wizard) {
+            fireballPrefab = wizard.fireball;
         }
     }
 
@@ -104,7 +115,7 @@ public class UnitController : MonoBehaviour
     {
         if(health <= 0) { 
             gameObject.GetComponent<NavMeshAgent>().enabled = false;
-            if(unitType == "Worker" || unitType == "Footman" || unitType == "Swordsman" || unitType == "Archer")  { 
+            if(unitType == "Worker" || unitType == "Footman" || unitType == "Swordsman" || unitType == "Archer" || unitType == "Wizard")  { 
                 anim.SetInteger("condition", 10);
                 isDead = true;
                 UnitSelection.isBuilding = false;
@@ -128,26 +139,26 @@ public class UnitController : MonoBehaviour
             if(unitType == "Worker") {
                 if(heldResource > 0) {
                     if(resourceType == NodeManager.ResourceTypes.Wood) {
-                        if(UnitSelection.isBuilding && newTask == Tasklist.Building || UnitSelection.isGathering && newTask == Tasklist.Gathering || UnitSelection.isMeleeing) {
+                        if(UnitSelection.isBuilding && newTask == ActionList.Building || UnitSelection.isGathering && newTask == ActionList.Gathering || UnitSelection.isMeleeing) {
                             anim.SetInteger("condition", 5);
-                        } else if (!UnitSelection.isBuilding && !UnitSelection.isGathering || newTask != Tasklist.Building && newTask != Tasklist.Gathering) {
+                        } else if (!UnitSelection.isBuilding && !UnitSelection.isGathering || newTask != ActionList.Building && newTask != ActionList.Gathering) {
                             anim.SetInteger("condition", 4);
                         }
                     } else {
-                        if(UnitSelection.isBuilding && newTask == Tasklist.Building || UnitSelection.isGathering && newTask == Tasklist.Gathering || UnitSelection.isMeleeing) {
+                        if(UnitSelection.isBuilding && newTask == ActionList.Building || UnitSelection.isGathering && newTask == ActionList.Gathering || UnitSelection.isMeleeing) {
                             anim.SetInteger("condition", 3);
-                        } else if (!UnitSelection.isBuilding && !UnitSelection.isGathering || newTask != Tasklist.Building && newTask != Tasklist.Gathering) {
+                        } else if (!UnitSelection.isBuilding && !UnitSelection.isGathering || newTask != ActionList.Building && newTask != ActionList.Gathering) {
                             anim.SetInteger("condition", 2);
                         }
                     }
                 } else {
-                    if(UnitSelection.isBuilding && newTask == Tasklist.Building || UnitSelection.isGathering && newTask == Tasklist.Gathering || UnitSelection.isMeleeing) {
+                    if(UnitSelection.isBuilding && newTask == ActionList.Building || UnitSelection.isGathering && newTask == ActionList.Gathering || UnitSelection.isMeleeing) {
                         anim.SetInteger("condition", 1);
-                    } else if (!UnitSelection.isBuilding && !UnitSelection.isGathering || newTask != Tasklist.Building && newTask != Tasklist.Gathering) {
+                    } else if (!UnitSelection.isBuilding && !UnitSelection.isGathering || newTask != ActionList.Building && newTask != ActionList.Gathering) {
                         anim.SetInteger("condition", 0);
                     }
                 }
-            } else if (unitType == "Footman" || unitType == "Swordsman" || unitType == "Archer") {
+            } else if (unitType == "Footman" || unitType == "Swordsman" || unitType == "Archer" || unitType == "Wizard") {
                 if(UnitSelection.isMeleeing && !UnitSelection.isFollowing) {
                     anim.SetInteger("condition", 1);
                 } else if (!UnitSelection.isMeleeing) {
@@ -162,28 +173,26 @@ public class UnitController : MonoBehaviour
         if(!isDead) {
             if(UnitSelection.owner == UnitSelection.player) {
                 enemyUnits = GameObject.FindGameObjectsWithTag("Enemy Unit");
-                GameObject currentTarget = GetClosestEnemy(enemyUnits);
-                    if(currentTarget && !currentTarget.GetComponent<UnitController>().isDead) {
-                        UnitSelection.targetNode = currentTarget;
-
-                        float dist = Vector3.Distance(agent.transform.position, currentTarget.transform.position);
-                        if(dist <= aggroRange && dist <= attackRange) {
-                            UnitSelection.isMeleeing = true;
-                            UnitSelection.isFollowing = false;
-                            agent.destination = agent.transform.position;
-                            agent.transform.LookAt(currentTarget.transform.position);
-                            if(!currentlyMeleeing) {
-                                StartCoroutine(Attack(currentTarget, agent.transform.rotation));
-                            }
-                        } else if (dist <= aggroRange && dist > attackRange) {
-                            UnitSelection.isMeleeing = false;
-                            UnitSelection.isFollowing = true;
-                            agent.destination = currentTarget.transform.position;
-                        } else {
-                            UnitSelection.isMeleeing = false;
-                            UnitSelection.isFollowing = false;
+                currentTarget = GetClosestEnemy(enemyUnits);
+                if(currentTarget && !currentTarget.GetComponent<UnitController>().isDead) {
+                    float dist = Vector3.Distance(agent.transform.position, currentTarget.transform.position);
+                    if(dist <= aggroRange && dist <= attackRange) {
+                        UnitSelection.isMeleeing = true;
+                        UnitSelection.isFollowing = false;
+                        agent.destination = agent.transform.position;
+                        agent.transform.LookAt(currentTarget.transform.position);
+                        if(!currentlyMeleeing) {
+                            StartCoroutine(Attack(currentTarget, agent.transform.rotation));
                         }
+                    } else if (dist <= aggroRange && dist > attackRange) {
+                        UnitSelection.isMeleeing = false;
+                        UnitSelection.isFollowing = true;
+                        agent.destination = currentTarget.transform.position;
+                    } else {
+                        UnitSelection.isMeleeing = false;
+                        UnitSelection.isFollowing = false;
                     }
+                }
             } 
         }
     }
@@ -213,7 +222,7 @@ public class UnitController : MonoBehaviour
     public IEnumerator Attack(GameObject target, Quaternion currentRotation) {
         currentlyMeleeing = true;
         while(UnitSelection.isMeleeing) {    
-            target = UnitSelection.targetNode;        
+            target = currentTarget;       
             if(target == null) {
                 currentlyMeleeing = false;
                 UnitSelection.isMeleeing = false;
@@ -252,11 +261,28 @@ public class UnitController : MonoBehaviour
                 Vector3 heading = target.transform.position - transform.position;
                 float newAngle = Vector3.Angle(transform.forward, Vector3.right);
 
-                arrow.transform.rotation = Quaternion.Euler(new Vector3(0,180 - newAngle,0));
+                arrow.transform.rotation = Quaternion.Euler(new Vector3(0,180 - newAngle, 0));
                 arrow.GetComponent<Rigidbody>().velocity = new Vector3( heading.x, heading.y + 5.0f, heading.z);
                 
                 yield return new WaitForSeconds(1.02f);
                 Destroy(arrow);
+                unitAudio.maxDistance = 55;
+                unitAudio.Play();
+            } else if (unitType == "Wizard") {
+                unitAudio = agent.GetComponent<AudioSource>();
+                unitAudio.clip = shootFireball;
+
+                Vector3 fireballPosition = new Vector3(transform.position.x, transform.position.y + 1.0f, transform.position.z);
+                GameObject fireball = Instantiate(fireballPrefab, fireballPosition, Quaternion.identity);
+
+                Vector3 heading = target.transform.position - transform.position;
+                float newAngle = Vector3.Angle(transform.forward, Vector3.right);
+
+                fireball.transform.rotation = Quaternion.Euler(new Vector3(0,180 - newAngle, 0));
+                fireball.GetComponent<Rigidbody>().velocity = new Vector3( heading.x, heading.y + 5.0f, heading.z);
+                
+                // yield return new WaitForSeconds(0.3f);
+                // Destroy(fireball);
                 unitAudio.maxDistance = 55;
                 unitAudio.Play();
             }

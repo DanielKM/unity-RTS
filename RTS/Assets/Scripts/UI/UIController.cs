@@ -222,6 +222,19 @@ public class UIController : MonoBehaviour
         FootmanPanel.blocksRaycasts = true;
         FootmanPanel.interactable = true;
     }
+    
+    public void WizardSelect() {
+        CloseAllPanels();
+
+        UnitPanel.alpha = 1;
+        UnitPanel.blocksRaycasts = true;
+        UnitPanel.interactable = true;
+
+        panelOpen = 1;        
+        FootmanPanel.alpha = 1;
+        FootmanPanel.blocksRaycasts = true;
+        FootmanPanel.interactable = true;
+    }
 
     // Enemy selection
     public void EnemySelect() {

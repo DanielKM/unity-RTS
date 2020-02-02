@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public enum Tasklist
+public enum ActionList
 {
     Gathering,
     Moving,

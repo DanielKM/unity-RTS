@@ -12,7 +12,7 @@ SphereCollider:
   m_Enabled: 1
   serializedVersion: 2
   m_Radius: 2.5
-  m_Center: {x: -0.2, y: 0, z: -1}
+  m_Center: {x: 0, y: 0, z: -1}
 --- !u!135 &8779916006128373424
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -24,7 +24,7 @@ SphereCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 1.4
+  m_Radius: 2
   m_Center: {x: 0, y: 0.6, z: -1}
 --- !u!208 &1727290168
 NavMeshObstacle:
@@ -40,7 +40,7 @@ NavMeshObstacle:
   m_MoveThreshold: 0.1
   m_Carve: 1
   m_CarveOnlyStationary: 1
-  m_Center: {x: 0, y: 1, z: -0.23}
+  m_Center: {x: 0, y: 1, z: -0.1}
   m_TimeToStationary: 0.5
 --- !u!114 &1727290166
 MonoBehaviour:
@@ -73,7 +73,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   unitType: Gold Mine
   unitRank: Resource
-  unitName: ' Hosteen Mine'
+  unitName: Hosteen Mine
   unitKills: 0
   weapon: None
   armour: Stone
@@ -102,18 +102,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 100008, guid: 88937fafe3f72f64b8765524d011b11a, type: 3}
-      propertyPath: m_Name
-      value: Gold Mine Variant
-      objectReference: {fileID: 0}
-    - target: {fileID: 100008, guid: 88937fafe3f72f64b8765524d011b11a, type: 3}
-      propertyPath: m_TagString
-      value: Resource
-      objectReference: {fileID: 0}
-    - target: {fileID: 100008, guid: 88937fafe3f72f64b8765524d011b11a, type: 3}
-      propertyPath: m_Layer
-      value: 12
-      objectReference: {fileID: 0}
     - target: {fileID: 100000, guid: 88937fafe3f72f64b8765524d011b11a, type: 3}
       propertyPath: m_Layer
       value: 12
@@ -130,17 +118,29 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 12
       objectReference: {fileID: 0}
+    - target: {fileID: 100008, guid: 88937fafe3f72f64b8765524d011b11a, type: 3}
+      propertyPath: m_Name
+      value: Gold Mine Variant
+      objectReference: {fileID: 0}
+    - target: {fileID: 100008, guid: 88937fafe3f72f64b8765524d011b11a, type: 3}
+      propertyPath: m_TagString
+      value: Resource
+      objectReference: {fileID: 0}
+    - target: {fileID: 100008, guid: 88937fafe3f72f64b8765524d011b11a, type: 3}
+      propertyPath: m_Layer
+      value: 12
+      objectReference: {fileID: 0}
     - target: {fileID: 400008, guid: 88937fafe3f72f64b8765524d011b11a, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 41.231564
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 400008, guid: 88937fafe3f72f64b8765524d011b11a, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.008753896
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 400008, guid: 88937fafe3f72f64b8765524d011b11a, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -17.467297
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 400008, guid: 88937fafe3f72f64b8765524d011b11a, type: 3}
       propertyPath: m_LocalRotation.x
