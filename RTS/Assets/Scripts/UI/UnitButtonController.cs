@@ -425,8 +425,9 @@ public class UnitButtonController : MonoBehaviour
             }
             else if (building.unitType == "Barracks")
             {
-                currentPlaceableObject.transform.position = new Vector3(hitInfo.point.x, hitInfo.point.y, hitInfo.point.z);
-                currentLocation = currentPlaceableObject.transform.position;
+                currentPlaceableObject.transform.position = new Vector3(hitInfo.point.x - 3.0f, hitInfo.point.y, hitInfo.point.z);
+                Vector3 newLocation = new Vector3(currentPlaceableObject.transform.position.x + 3.0f, currentPlaceableObject.transform.position.y, currentPlaceableObject.transform.position.z - 4.0f);
+                currentLocation = newLocation;
             }
             else if (building.unitType == "Fort")
             {

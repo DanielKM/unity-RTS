@@ -58,7 +58,13 @@ public class FoundationController : MonoBehaviour
             {
                 currentBuilding.transform.Rotate(0, 270, 0);
             }
+
             //adjusted placement location
+            if (buildingScript.unitType == "Barracks")
+            {
+                Vector3 newLocation = new Vector3(currentBuilding.transform.position.x - 4.0f, currentBuilding.transform.position.y, currentBuilding.transform.position.z + 4.0f);
+                currentBuilding.transform.position = newLocation;
+            }
             if (buildingScript.unitType == "Stables")
             {
                 Vector3 newLocation = new Vector3(currentBuilding.transform.position.x, currentBuilding.transform.position.y, currentBuilding.transform.position.z - 2.5f);

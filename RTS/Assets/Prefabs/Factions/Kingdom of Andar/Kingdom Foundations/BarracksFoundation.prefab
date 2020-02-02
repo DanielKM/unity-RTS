@@ -7,6 +7,17 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1240717753488192151, guid: 031a711fcf81e9641a1528cea09899d1,
+        type: 3}
+      propertyPath: buildingPrefab
+      value: 
+      objectReference: {fileID: 5068174577448363612, guid: acdbb27ba875b5542910d0a33175a74f,
+        type: 3}
+    - target: {fileID: 1240717753488192151, guid: 031a711fcf81e9641a1528cea09899d1,
+        type: 3}
+      propertyPath: buildPercent
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7691561821289104658, guid: 031a711fcf81e9641a1528cea09899d1,
         type: 3}
       propertyPath: m_Name
@@ -15,7 +26,7 @@ PrefabInstance:
     - target: {fileID: 7691561821289104659, guid: 031a711fcf81e9641a1528cea09899d1,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: -3.91
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7691561821289104659, guid: 031a711fcf81e9641a1528cea09899d1,
         type: 3}
@@ -25,7 +36,7 @@ PrefabInstance:
     - target: {fileID: 7691561821289104659, guid: 031a711fcf81e9641a1528cea09899d1,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: -48.85
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7691561821289104659, guid: 031a711fcf81e9641a1528cea09899d1,
         type: 3}
@@ -70,27 +81,17 @@ PrefabInstance:
     - target: {fileID: 7691561821289104659, guid: 031a711fcf81e9641a1528cea09899d1,
         type: 3}
       propertyPath: m_LocalScale.x
-      value: 6.2
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 7691561821289104659, guid: 031a711fcf81e9641a1528cea09899d1,
         type: 3}
       propertyPath: m_LocalScale.z
-      value: 6
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 7691561821289104659, guid: 031a711fcf81e9641a1528cea09899d1,
         type: 3}
       propertyPath: m_LocalScale.y
       value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 7691561821289104663, guid: 031a711fcf81e9641a1528cea09899d1,
-        type: 3}
-      propertyPath: m_Size.x
-      value: 3.4
-      objectReference: {fileID: 0}
-    - target: {fileID: 7691561821289104663, guid: 031a711fcf81e9641a1528cea09899d1,
-        type: 3}
-      propertyPath: m_Size.z
-      value: 2.6
       objectReference: {fileID: 0}
     - target: {fileID: 7691561821289104662, guid: 031a711fcf81e9641a1528cea09899d1,
         type: 3}
@@ -102,16 +103,15 @@ PrefabInstance:
       propertyPath: unitName
       value: Barracks Foundation
       objectReference: {fileID: 0}
-    - target: {fileID: 1240717753488192151, guid: 031a711fcf81e9641a1528cea09899d1,
+    - target: {fileID: 7691561821289104663, guid: 031a711fcf81e9641a1528cea09899d1,
         type: 3}
-      propertyPath: buildingPrefab
-      value: 
-      objectReference: {fileID: 4152907234997512173, guid: 3ba4ae6e49434894c99ab25d78d75c6a,
+      propertyPath: m_Size.x
+      value: 3.4
+      objectReference: {fileID: 0}
+    - target: {fileID: 7691561821289104663, guid: 031a711fcf81e9641a1528cea09899d1,
         type: 3}
-    - target: {fileID: 1240717753488192151, guid: 031a711fcf81e9641a1528cea09899d1,
-        type: 3}
-      propertyPath: buildPercent
-      value: 0
+      propertyPath: m_Size.z
+      value: 2.6
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 031a711fcf81e9641a1528cea09899d1, type: 3}
