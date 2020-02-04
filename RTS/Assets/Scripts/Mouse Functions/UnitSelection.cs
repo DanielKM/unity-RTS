@@ -52,7 +52,7 @@ public class UnitSelection : MonoBehaviour
     public GameObject[] drops;
     public GameObject[] resources;
 
-
+    public List<GameObject> formationList;
 
     // Start is called before the first frame update
     void Start()
@@ -96,7 +96,12 @@ public class UnitSelection : MonoBehaviour
                     {
                         resources = GameObject.FindGameObjectsWithTag("Resource");
                         targetNode = GetClosestResource(resources);
-                        agent.destination = targetNode.transform.position;
+                        if(targetNode) {
+                            agent.destination = targetNode.transform.position;
+                        } else {
+                            task = ActionList.Idle;
+                        }
+
                     }
                 } else
                 {
@@ -199,7 +204,7 @@ public class UnitSelection : MonoBehaviour
                             isGathering = false;
                             isMeleeing = false;
                             task = ActionList.Moving;
-                            agent.destination = hit.point;
+                            createBoxFormation(hit);
                         }
                         else if (hit.collider.tag == "Resource")
                         {
@@ -247,7 +252,7 @@ public class UnitSelection : MonoBehaviour
                     {
                         isMeleeing = false;
                         task = ActionList.Moving;
-                        agent.destination = hit.point;
+                        createBoxFormation(hit);
                     }
                     else if (hit.collider.tag == "Doorway")
                     {
@@ -261,6 +266,63 @@ public class UnitSelection : MonoBehaviour
                 } 
             }
         }
+    }
+
+    public void createBoxFormation(RaycastHit hit) {
+        formationList = IM.selectedObjects;
+        float row = 0.0f;
+        int counter = 0;
+        if(formationList.Count <= 4) {
+            for(int iteration = 0; iteration < formationList.Count; iteration++) {
+                
+                if(iteration % 2 == 0) {
+                    row += 1.5f;
+                    counter = 0;
+                } else {
+                    counter += 1;
+                }
+
+                if(iteration % 2 == 0) {
+                    formationList[iteration].GetComponent<NavMeshAgent>().destination = new Vector3(hit.point.x + 0.8f * counter, hit.point.y, hit.point.z + row);
+                } else {
+                    formationList[iteration].GetComponent<NavMeshAgent>().destination = new Vector3(hit.point.x - 0.8f * counter, hit.point.y, hit.point.z + row);
+                }
+            }
+        } 
+        if(formationList.Count > 4 && formationList.Count <= 16) {
+            for(int iteration = 0; iteration < formationList.Count; iteration++) {
+                
+                if(iteration % 4 == 0) {
+                    row += 1.5f;
+                    counter = 0;
+                } else {
+                    counter += 1;
+                }
+
+                if(iteration % 2 == 0) {
+                    formationList[iteration].GetComponent<NavMeshAgent>().destination = new Vector3(hit.point.x + 0.8f * counter, hit.point.y, hit.point.z + row);
+                } else {
+                    formationList[iteration].GetComponent<NavMeshAgent>().destination = new Vector3(hit.point.x - 0.8f * counter, hit.point.y, hit.point.z + row);
+                }
+            }
+        } 
+        else if(formationList.Count >= 16) {
+            for(int iteration = 0; iteration < formationList.Count; iteration++) {
+                
+                if(iteration % 8 == 0) {
+                    row += 1.5f;
+                    counter = 0;
+                } else {
+                    counter += 1;
+                }
+
+                if(iteration % 2 == 0) {
+                    formationList[iteration].GetComponent<NavMeshAgent>().destination = new Vector3(hit.point.x + 0.8f * counter, hit.point.y, hit.point.z + row);
+                } else {
+                    formationList[iteration].GetComponent<NavMeshAgent>().destination = new Vector3(hit.point.x - 0.8f * counter, hit.point.y, hit.point.z + row);
+                }
+            }
+        } 
     }
 
     public void OnTriggerStay(Collider other)
