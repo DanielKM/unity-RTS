@@ -799,8 +799,8 @@ public class InputManager : MonoBehaviour
             // Grabs all objects in selected array and deselects them
             selectedInfo = selectedObjects[i].GetComponent<UnitSelection>();
             selectedInfo.selected = false;
-            selectedObjects.RemoveAt(i);
         }
+        selectedObjects.Clear();
         GameObject[] selectedIndicators = GameObject.FindGameObjectsWithTag("SelectedIndicator");
 
         // UnitSelection indicators
