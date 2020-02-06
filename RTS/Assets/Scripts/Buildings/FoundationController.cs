@@ -45,7 +45,7 @@ public class FoundationController : MonoBehaviour
             }
             else if (buildingScript.unitType == "Farm")
             {
-                location = new Vector3(gameObject.transform.position.x, gameObject.transform.position.y, gameObject.transform.position.z);
+                location = new Vector3(gameObject.transform.position.x -4.0f, gameObject.transform.position.y, gameObject.transform.position.z);
             } else
             {
                 location = new Vector3(gameObject.transform.position.x, gameObject.transform.position.y, gameObject.transform.position.z);

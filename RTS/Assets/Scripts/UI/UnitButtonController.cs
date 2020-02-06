@@ -488,7 +488,8 @@ public class UnitButtonController : MonoBehaviour
             currentPlaceableObject.layer = 11;
             Destroy(currentPlaceableObject);
             currentPlaceableObject = Instantiate(building.foundation);
-            currentPlaceableObject.transform.position = currentLocation;
+            Vector3 newLocation = new Vector3(currentLocation.x + 5.0f, currentLocation.y, currentLocation.z);
+            currentPlaceableObject.transform.position = newLocation;
             currentPlaceableObject = null;
             PlayBuildingSound();
         }
