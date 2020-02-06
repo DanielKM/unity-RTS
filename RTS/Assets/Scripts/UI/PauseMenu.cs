@@ -45,5 +45,12 @@ public class PauseMenu : MonoBehaviour
     {
         Debug.Log("Quit!");
         Application.Quit();
+        Steamworks.SteamClient.Shutdown();
+    }
+
+    void OnDisable()
+    {
+        Debug.Log("PrintOnDisable: script was disabled");
+        Steamworks.SteamClient.Shutdown();
     }
 }
