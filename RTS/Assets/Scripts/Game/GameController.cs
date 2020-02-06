@@ -30,16 +30,11 @@ public class GameController : MonoBehaviour
 
         Steamworks.SteamUserStats.SetStat( "deaths", value );
 
-        // foreach ( var item in Steamworks.SteamInventory.Items )
-        // {
-        //     Debug.Log( $"{item.Def.Name} x {item.Quantity}" );
-        // }
-
         foreach ( var player in SteamFriends.GetFriends() )
         {
             Debug.Log( $"{player.Name}" );
         }
-        DontDestroyOnLoad(this.gameObject);
+        // DontDestroyOnLoad(this.gameObject);
     }
     void Update()
     {

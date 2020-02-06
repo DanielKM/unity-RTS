@@ -679,87 +679,87 @@ public class InputManager : MonoBehaviour
                     }
                 }
             }
-        }
-        else if (hit.collider.tag == "Enemy Unit" || hit.collider.tag == "Player 1" || hit.collider.tag == "Foundation" || hit.collider.tag == "Barracks" || hit.collider.tag == "House" || hit.collider.tag == "Resource" || hit.collider.tag == "Fort" || hit.collider.tag == "Blacksmith" || hit.transform.tag == "Lumber Yard" || hit.transform.tag == "Stables" )
-        {
-            UI.CloseAllPanels();
-            if (selectedObjects.Count >= 0)
+            else if (hit.collider.tag == "Enemy Unit" || hit.collider.tag == "Player 1" || hit.collider.tag == "Foundation" || hit.collider.tag == "Barracks" || hit.collider.tag == "House" || hit.collider.tag == "Resource" || hit.collider.tag == "Fort" || hit.collider.tag == "Blacksmith" || hit.transform.tag == "Lumber Yard" || hit.transform.tag == "Stables" )
+            {
+                UI.CloseAllPanels();
+                if (selectedObjects.Count >= 0)
+                {
+                    DeselectUnits();
+                }
+                selectedObj = hit.collider.gameObject;
+
+                if(selectedObj.tag == "Player 1")
+                {
+                    townHallScript = selectedObj.GetComponent<TownHallController>();
+                    isTraining = townHallScript.isTraining;
+                    SwapProgressIcon();
+                    if (isTraining)
+                    {
+                        UI.TownHallTraining();
+                    }
+                    else
+                    {
+                        UI.TownHallSelect();
+                    }
+                } else if (selectedObj.tag == "House")
+                {
+                    UI.HouseSelect();
+                } else if (selectedObj.tag == "Resource")
+                {
+                    UI.ResourceSelect();
+                }
+                else if (selectedObj.tag == "Foundation")
+                {
+                    foundationScript = selectedObj.GetComponent<FoundationController>();
+                    isBuilding = foundationScript.isBuilding;
+                    if (isBuilding)
+                    {
+                        SwapProgressIcon();
+                        UI.FoundationBuilding();
+                    }
+                    else
+                    {
+                        UI.FoundationSelect();
+                    }
+                } 
+                else if (selectedObj.tag == "Blacksmith") {
+                    blacksmithScript = selectedObj.GetComponent<BlacksmithController>();
+                    isTraining = blacksmithScript.isTraining;
+                    SwapProgressIcon();
+                    if (isTraining)
+                    {
+                        UI.BlacksmithTraining();
+                    }
+                    else
+                    {
+                        UI.BlacksmithSelect();
+                    }
+                }
+                else if (selectedObj.tag == "Lumber Yard") {
+                    UI.LumberYardSelect();
+                }
+                else if (selectedObj.tag == "Barracks") {
+                    barracksScript = selectedObj.GetComponent<BarracksController>();
+                    isTraining = barracksScript.isTraining;
+                    SwapProgressIcon();
+                    if (isTraining)
+                    {
+                        UI.BarracksTraining();
+                    }
+                    else
+                    {
+                        UI.BarracksSelect();
+                    }
+                }
+                else if (selectedObj.tag == "Stables") {
+                    UI.StablesSelect();
+                }
+            }
+            else if (hit.collider.tag != "Selectable" && (!Input.GetKey(KeyCode.LeftShift)))
             {
                 DeselectUnits();
+                UI.CloseAllPanels();
             }
-            selectedObj = hit.collider.gameObject;
-
-            if(selectedObj.tag == "Player 1")
-            {
-                townHallScript = selectedObj.GetComponent<TownHallController>();
-                isTraining = townHallScript.isTraining;
-                SwapProgressIcon();
-                if (isTraining)
-                {
-                    UI.TownHallTraining();
-                }
-                else
-                {
-                    UI.TownHallSelect();
-                }
-            } else if (selectedObj.tag == "House")
-            {
-                UI.HouseSelect();
-            } else if (selectedObj.tag == "Resource")
-            {
-                UI.ResourceSelect();
-            }
-            else if (selectedObj.tag == "Foundation")
-            {
-                foundationScript = selectedObj.GetComponent<FoundationController>();
-                isBuilding = foundationScript.isBuilding;
-                if (isBuilding)
-                {
-                    SwapProgressIcon();
-                    UI.FoundationBuilding();
-                }
-                else
-                {
-                    UI.FoundationSelect();
-                }
-            } 
-            else if (selectedObj.tag == "Blacksmith") {
-                blacksmithScript = selectedObj.GetComponent<BlacksmithController>();
-                isTraining = blacksmithScript.isTraining;
-                SwapProgressIcon();
-                if (isTraining)
-                {
-                    UI.BlacksmithTraining();
-                }
-                else
-                {
-                    UI.BlacksmithSelect();
-                }
-            }
-            else if (selectedObj.tag == "Lumber Yard") {
-                UI.LumberYardSelect();
-            }
-            else if (selectedObj.tag == "Barracks") {
-                barracksScript = selectedObj.GetComponent<BarracksController>();
-                isTraining = barracksScript.isTraining;
-                SwapProgressIcon();
-                if (isTraining)
-                {
-                    UI.BarracksTraining();
-                }
-                else
-                {
-                    UI.BarracksSelect();
-                }
-            }
-            else if (selectedObj.tag == "Stables") {
-                UI.StablesSelect();
-            }
-        }
-        else if (hit.collider.tag != "Selectable" && (!Input.GetKey(KeyCode.LeftShift)))
-        {
-            DeselectUnits();
-            UI.CloseAllPanels();
         }
     }
 
