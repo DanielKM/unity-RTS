@@ -266,7 +266,7 @@ public class BlacksmithController : MonoBehaviour
             RC.artisanBlacksmithingButton.interactable = true;
             RC.basicBlacksmithing = true;
             var colors = RC.basicBlacksmithingButton.colors; 
-            colors.disabledColor = Color.green;
+            colors.disabledColor = new Color(0, 0.4f, 0, 1);
             RC.basicBlacksmithingButton.colors = colors; 
 
         } else if (research == "basicToolSmithing") {

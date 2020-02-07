@@ -114,6 +114,7 @@ public class UnitController : MonoBehaviour
     void Update()
     {
         if(health <= 0) { 
+            health = 0;
             gameObject.GetComponent<NavMeshAgent>().enabled = false;
             if(unitType == "Worker" || unitType == "Footman" || unitType == "Swordsman" || unitType == "Archer" || unitType == "Wizard")  { 
                 anim.SetInteger("condition", 10);
