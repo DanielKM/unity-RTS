@@ -20,7 +20,7 @@ GameObject:
   - component: {fileID: 6846251606739868176}
   - component: {fileID: 6846251606739868183}
   m_Layer: 12
-  m_Name: PineTree_1
+  m_Name: PineTree
   m_TagString: Resource
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -213,7 +213,7 @@ MonoBehaviour:
   maxHealth: 1000
   energy: 100
   maxEnergy: 100
-  icon: {fileID: 21300000, guid: 3782fee7e5e71844d98b87df2c637068, type: 3}
+  icon: {fileID: 21300000, guid: 581c857d31079eb4fbe724e01a00efdd, type: 3}
   foundation: {fileID: 0}
   inCollider: 0
   placeable: 1

@@ -7,6 +7,9 @@ using Steamworks;
 
 public class GameController : MonoBehaviour
 {    
+    static bool ListenForFriendsMessages { get; set; }
+    static bool IsOverlayEnabled { get; }
+
     void Awake()
     {
         try
@@ -27,24 +30,32 @@ public class GameController : MonoBehaviour
         int value = 0;
         Debug.Log(SteamClient.Name);
         SteamScreenshots.TriggerScreenshot();
-
         Steamworks.SteamUserStats.SetStat( "deaths", value );
-
+        foreach ( var a in SteamUserStats.Achievements )
+        {
+            Debug.Log( $"{a.Name} ({a.State})" );
+        }	
         foreach ( var player in SteamFriends.GetFriends() )
         {
             Debug.Log( $"{player.Name}" );
         }
-        // DontDestroyOnLoad(this.gameObject);
+
     }
+
     void Update()
     {
         Steamworks.SteamClient.RunCallbacks();
     }
 
+
     void OnDisable()
     {
         Debug.Log("PrintOnDisable: script was disabled");
         Steamworks.SteamClient.Shutdown();
+    }
+
+    public void TriggerAchievement(string achievementId)
+    {
     }
     
 }

@@ -202,7 +202,7 @@ MonoBehaviour:
   maxHealth: 5000
   energy: 100
   maxEnergy: 100
-  icon: {fileID: 21300000, guid: 5034ea04a1668394b9bf7e7b58eab8b7, type: 3}
+  icon: {fileID: 21300000, guid: db15e60717d6b354482d11a134f7a55f, type: 3}
   foundation: {fileID: 871514539, guid: 5afd6824e8816a54da98276a53a4810e, type: 3}
   inCollider: 0
   placeable: 1
