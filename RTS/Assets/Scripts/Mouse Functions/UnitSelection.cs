@@ -101,7 +101,6 @@ public class UnitSelection : MonoBehaviour
                         } else {
                             task = ActionList.Idle;
                         }
-
                     }
                 } else
                 {
@@ -132,6 +131,14 @@ public class UnitSelection : MonoBehaviour
                 {   
                     RightClick();
                 }
+            }
+            if (Input.GetMouseButtonUp(1) && selected == true) {
+                Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+                RaycastHit hit;
+                if(Physics.Raycast(ray, out hit, 350))
+                {
+                    StartCoroutine(ClickCursorHit(hit));
+                }    
             }
         }
     }
@@ -187,7 +194,6 @@ public class UnitSelection : MonoBehaviour
 
         if (Physics.Raycast(ray, out hit, 350))
         {
-            StartCoroutine(RightIndicator(hit));
             targetNode = hit.collider.gameObject;
             targetScript = targetNode.GetComponent<UnitSelection>();
             if(owner == player && !UC.isDead) {     
@@ -768,8 +774,13 @@ public class UnitSelection : MonoBehaviour
         }
     }
 
-    IEnumerator RightIndicator (RaycastHit hit) {
-        yield return new WaitForSeconds(2);
+    IEnumerator ClickCursorHit(RaycastHit hit) {
+        GameObject currentCursorHit = Instantiate(IM.cursorHit);
+        currentCursorHit.transform.position = new Vector3 (hit.point.x, hit.point.y + 2.0f, hit.point.z);
+
+
+        yield return new WaitForSeconds(0.1f);
+        Destroy(currentCursorHit);
     }
 
 }

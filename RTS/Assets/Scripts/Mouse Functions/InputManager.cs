@@ -103,6 +103,8 @@ public class InputManager : MonoBehaviour
     public Texture2D doorway;
     public Texture2D combat;
     public Texture2D sword;
+    public GameObject cursorHit;
+    private GameObject currentCursorHit;
 
     // New
     public EventVector3 OnClickEnvironment;
@@ -110,6 +112,7 @@ public class InputManager : MonoBehaviour
     
     // Multiselect variables
     bool isSelecting = false;
+    bool selectionBoxOpen = false;
     public bool isUnit;
 
     Vector3 mousePosition1;
@@ -118,7 +121,7 @@ public class InputManager : MonoBehaviour
 
     // All units in the game that are selectable
     private GameObject[] units;
-    
+
     // Coordinates of all units
     private Vector3 unitPos;
     private float unitPosX;
@@ -349,9 +352,17 @@ public class InputManager : MonoBehaviour
         }
         // If we let go of the left mouse button, end UnitSelection
         if (Input.GetMouseButtonUp(0))
-        {
-            isSelecting = false;
-        }    
+        { 
+            isSelecting = false;       
+            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+            RaycastHit hit;
+            if(Physics.Raycast(ray, out hit, 350))
+            {
+                if(!selectionBoxOpen) {
+                    StartCoroutine(ClickCursorHit(hit));
+                }
+            }    
+        }
     }
 
     void OnGUI()
@@ -378,6 +389,7 @@ public class InputManager : MonoBehaviour
 
             var selectRect = Utils.GetScreenRect(mouse1, mouse2);
             if(selectRect.size.x * selectRect.size.y > 150) {  
+                selectionBoxOpen = true;
                 inUnitSelectionBox = false;
                 for (int i = 0; i < units.Length; i++)
                 {
@@ -437,7 +449,9 @@ public class InputManager : MonoBehaviour
                 if(!inUnitSelectionBox) {
                     UI.CloseAllPanels();
                 }
-            } 
+            } else {
+                selectionBoxOpen = false;
+            }
         }
     }
       
@@ -571,7 +585,6 @@ public class InputManager : MonoBehaviour
         RaycastHit hit;
         if(Physics.Raycast(ray, out hit, 350))
         {
-            
             if (hit.collider.tag == "Ground" && (!Input.GetKey(KeyCode.LeftShift)))
             {
                 DeselectUnits();
@@ -814,6 +827,17 @@ public class InputManager : MonoBehaviour
         }
 
         isSelected = false;
+    }
+
+    IEnumerator ClickCursorHit(RaycastHit hit) {
+        currentCursorHit = Instantiate(cursorHit);
+        currentCursorHit.transform.position = new Vector3 (hit.point.x, hit.point.y + 2.0f, hit.point.z);
+        // for(int i = 0; i<10; i++) {
+
+        // }
+
+        yield return new WaitForSeconds(0.1f);
+        Destroy(currentCursorHit);
     }
 
     IEnumerator UpdatePanels()
