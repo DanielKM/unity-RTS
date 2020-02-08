@@ -83,7 +83,7 @@ public class UnitSelection : MonoBehaviour
                         isBuilding = false;
                         isGathering = false;
                         drops = GameObject.FindGameObjectsWithTag("Player 1");
-                        if(drops.Length > 0)
+                        if(drops.Length > 0 && task != ActionList.Idle && task != ActionList.Moving )
                         {
                             task = ActionList.Delivering;
                             agent.destination = GetClosestDropOff(drops).transform.position;
@@ -113,7 +113,7 @@ public class UnitSelection : MonoBehaviour
                     {
                         isGathering = false;
                         drops = GameObject.FindGameObjectsWithTag("Player 1");
-                        if (drops.Length > 0)
+                        if (drops.Length > 0 && task != ActionList.Idle && task != ActionList.Moving ) 
                         {
                             task = ActionList.Delivering;
                             agent.destination = GetClosestDropOff(drops).transform.position;
@@ -329,8 +329,10 @@ public class UnitSelection : MonoBehaviour
     {
         GameObject hitObject = other.gameObject;
 
-        if (hitObject.tag == "Player 1" && task == ActionList.Delivering && heldResource != 0) 
+        if (hitObject.tag == "Player 1" && task == ActionList.Idle && heldResource != 0) 
         {
+            // task = ActionList.Idle;
+            // agent.isStopped = true;
         }
     }
 
@@ -625,7 +627,7 @@ public class UnitSelection : MonoBehaviour
             hitObject.GetComponent<FoundationController>().builders--;
         } 
     }
-
+    
     IEnumerator Follow() {
         int counter = 0;
         if(targetScript.owner != player) {

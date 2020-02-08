@@ -160,7 +160,7 @@ public class UnitController : MonoBehaviour
                     }
                 }
             } else if (unitType == "Footman" || unitType == "Swordsman" || unitType == "Archer" || unitType == "Wizard") {
-                if(UnitSelection.isMeleeing && !UnitSelection.isFollowing) {
+                if(UnitSelection.isMeleeing) {
                     anim.SetInteger("condition", 1);
                 } else if (!UnitSelection.isMeleeing) {
                     anim.SetInteger("condition", 0);
