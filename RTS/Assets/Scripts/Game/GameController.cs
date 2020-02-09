@@ -28,16 +28,16 @@ public class GameController : MonoBehaviour
         var playername = SteamClient.Name;
         var playersteamid = SteamClient.SteamId;
         int value = 0;
-        Debug.Log(SteamClient.Name);
+        // Debug.Log(SteamClient.Name);
         SteamScreenshots.TriggerScreenshot();
         Steamworks.SteamUserStats.SetStat( "deaths", value );
         foreach ( var a in SteamUserStats.Achievements )
         {
-            Debug.Log( $"{a.Name} ({a.State})" );
+            // Debug.Log( $"{a.Name} ({a.State})" );
         }	
         foreach ( var player in SteamFriends.GetFriends() )
         {
-            Debug.Log( $"{player.Name}" );
+            // Debug.Log( $"{player.Name}" );
         }
 
     }

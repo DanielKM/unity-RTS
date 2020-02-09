@@ -275,7 +275,7 @@ public class BlacksmithController : MonoBehaviour
                 RC.artisanToolSmithingButton.interactable = true;
             }
             var colors = RC.basicToolSmithingButton.colors; 
-            colors.disabledColor = Color.green;
+            colors.disabledColor = new Color(0, 0.4f, 0, 1);
             RC.basicToolSmithingButton.colors = colors; 
         } else if(research == "basicArmourSmithing") {
             RC.basicArmourSmithing = true;
@@ -283,7 +283,7 @@ public class BlacksmithController : MonoBehaviour
                 RC.artisanArmourSmithingButton.interactable = true;
             }
             var colors = RC.basicArmourSmithingButton.colors; 
-            colors.disabledColor = Color.green;
+            colors.disabledColor = new Color(0, 0.4f, 0, 1);
             RC.basicArmourSmithingButton.colors = colors; 
         } else if (research == "basicWeaponSmithing") {
             RC.basicWeaponSmithing = true;
@@ -291,7 +291,7 @@ public class BlacksmithController : MonoBehaviour
                 RC.artisanWeaponSmithingButton.interactable = true;
             }
             var colors = RC.basicWeaponSmithingButton.colors; 
-            colors.disabledColor = Color.green;
+            colors.disabledColor = new Color(0, 0.4f, 0, 1);
             RC.basicWeaponSmithingButton.colors = colors; 
         } else if (research == "artisanBlacksmithing") {
             RC.artisanBlacksmithing = true;
@@ -305,42 +305,42 @@ public class BlacksmithController : MonoBehaviour
                 RC.artisanWeaponSmithingButton.interactable = true;
             } 
             var colors = RC.artisanBlacksmithingButton.colors; 
-            colors.disabledColor = Color.green;
+            colors.disabledColor = new Color(0, 0.4f, 0, 1);
             RC.artisanBlacksmithingButton.colors = colors; 
         } else if (research == "artisanToolSmithing") {
             RC.artisanToolSmithing = true;
             var colors = RC.artisanBlacksmithingButton.colors; 
-            colors.disabledColor = Color.green;
+            colors.disabledColor = new Color(0, 0.4f, 0, 1);
             RC.artisanBlacksmithingButton.colors = colors; 
         } else if (research == "artisanArmourSmithing") {
             RC.artisanArmourSmithing = true;
             var colors = RC.artisanBlacksmithingButton.colors; 
-            colors.disabledColor = Color.green;
+            colors.disabledColor = new Color(0, 0.4f, 0, 1);
             RC.artisanBlacksmithingButton.colors = colors; 
         } else if (research == "artisanWeaponSmithing") {
             RC.artisanWeaponSmithing = true;
             var colors = RC.artisanWeaponSmithingButton.colors; 
-            colors.disabledColor = Color.green;
+            colors.disabledColor = new Color(0, 0.4f, 0, 1);
             RC.artisanWeaponSmithingButton.colors = colors; 
         } else if (research == "horseshoes") {
             RC.horseshoes = true;
             var colors = RC.horseshoesButton.colors; 
-            colors.disabledColor = Color.green;
+            colors.disabledColor = new Color(0, 0.4f, 0, 1);
             RC.horseshoesButton.colors = colors; 
         } else if (research == "minecarts") {
             RC.minecarts = true;
             var colors = RC.minecartsButton.colors; 
-            colors.disabledColor = Color.green;
+            colors.disabledColor = new Color(0, 0.4f, 0, 1);
             RC.minecartsButton.colors = colors; 
         } else if (research == "caltrops") {
             RC.caltrops = true;
             var colors = RC.caltropsButton.colors; 
-            colors.disabledColor = Color.green;
+            colors.disabledColor = new Color(0, 0.4f, 0, 1);
             RC.caltropsButton.colors = colors; 
         } else if (research == "reinforcedBuildings") {
             RC.reinforcedBuildings = true;
             var colors = RC.reinforcedBuildingsButton.colors; 
-            colors.disabledColor = Color.green;
+            colors.disabledColor = new Color(0, 0.4f, 0, 1);
             RC.reinforcedBuildingsButton.colors = colors; 
         }
             
