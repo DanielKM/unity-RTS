@@ -4,8 +4,9 @@
 Material:
   serializedVersion: 6
   m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
   m_Name: Windows_glass_3
   m_Shader: {fileID: 4800000, guid: ca8c7b0a6e455b34a956d170adcc5914, type: 3}
   m_ShaderKeywords: 
@@ -165,7 +166,7 @@ Material:
     - _ZWrite: 1
     - __dirty: 0
     m_Colors:
-    - _Base_color: {r: 0.97794116, g: 0.9817444, b: 1, a: 0}
+    - _Base_color: {r: 0.745283, g: 0.53313655, b: 0, a: 0}
     - _Color: {r: 1, g: 1, b: 1, a: 1}
     - _Detail_2_color: {r: 0, g: 0.9779412, b: 0.7756083, a: 0}
     - _Detail_color: {r: 0, g: 0, b: 0, a: 0}
