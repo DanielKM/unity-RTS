@@ -28,6 +28,7 @@ public class UnitSelection : MonoBehaviour
     UnitController UC;
     ResearchController RC;
     UnitSelection targetScript;
+    BuildingController buildingScript;
     float harvestSpeed;
 
     // villager target node
@@ -53,6 +54,7 @@ public class UnitSelection : MonoBehaviour
     public GameObject[] resources;
 
     public List<GameObject> formationList;
+    public List<GameObject> dropList;
 
     // Start is called before the first frame update
     void Start()
@@ -83,11 +85,11 @@ public class UnitSelection : MonoBehaviour
                         isBuilding = false;
                         isGathering = false;
                         drops = GameObject.FindGameObjectsWithTag("Player 1");
+                        drops = AdjustDrops(drops);
                         if(drops.Length > 0 && task != ActionList.Idle && task != ActionList.Moving )
                         {
                             task = ActionList.Delivering;
                             agent.destination = GetClosestDropOff(drops).transform.position;
-                            drops = null;
                         } else
                         {
                             task = ActionList.Idle;
@@ -112,6 +114,7 @@ public class UnitSelection : MonoBehaviour
                     {
                         isGathering = false;
                         drops = GameObject.FindGameObjectsWithTag("Player 1");
+                        drops = AdjustDrops(drops);
                         if (drops.Length > 0 && task != ActionList.Idle && task != ActionList.Moving ) 
                         {
                             task = ActionList.Delivering;
@@ -141,6 +144,27 @@ public class UnitSelection : MonoBehaviour
                 }    
             }
         }
+    }
+
+    GameObject[] AdjustDrops(GameObject[] newDrops) {
+        dropList.Clear();
+        if(heldResourceType == NodeManager.ResourceTypes.Wood) {
+            foreach(GameObject drop in newDrops) {
+                buildingScript = drop.GetComponent<BuildingController>();
+                if(buildingScript.unitType  == "Town Hall" || buildingScript.unitType == "Lumber Yard") {
+                    dropList.Add(drop);
+                }
+            }
+        } else {
+            foreach(GameObject drop in newDrops) {
+                buildingScript = drop.GetComponent<BuildingController>();
+                if(buildingScript.unitType  == "Town Hall") {
+                    dropList.Add(drop);
+                }
+            }
+        }
+        newDrops = dropList.ToArray();
+        return newDrops;
     }
 
     GameObject GetClosestDropOff(GameObject[] dropOffs)
@@ -358,6 +382,7 @@ public class UnitSelection : MonoBehaviour
                 if (heldResource != 0)
                 {
                     drops = GameObject.FindGameObjectsWithTag("Player 1");
+                    drops = AdjustDrops(drops);
                     agent.destination = GetClosestDropOff(drops).transform.position;
 
                     RM.skymetal += heldResource;
@@ -396,6 +421,7 @@ public class UnitSelection : MonoBehaviour
                 if (heldResource != 0)
                 {
                     drops = GameObject.FindGameObjectsWithTag("Player 1");
+                    drops = AdjustDrops(drops);
                     agent.destination = GetClosestDropOff(drops).transform.position;
 
                     RM.wood += heldResource;
@@ -433,6 +459,7 @@ public class UnitSelection : MonoBehaviour
                 if (heldResource != 0)
                 {
                     drops = GameObject.FindGameObjectsWithTag("Player 1");
+                    drops = AdjustDrops(drops);
                     agent.destination = GetClosestDropOff(drops).transform.position;
 
                     RM.iron += heldResource;
@@ -471,6 +498,7 @@ public class UnitSelection : MonoBehaviour
                 if (heldResource != 0)
                 {
                     drops = GameObject.FindGameObjectsWithTag("Player 1");
+                    drops = AdjustDrops(drops);
                     agent.destination = GetClosestDropOff(drops).transform.position;
 
                     RM.stone += heldResource;
@@ -509,6 +537,7 @@ public class UnitSelection : MonoBehaviour
                 if (heldResource != 0)
                 {
                     drops = GameObject.FindGameObjectsWithTag("Player 1");
+                    drops = AdjustDrops(drops);
                     agent.destination = GetClosestDropOff(drops).transform.position;
                     RM.gold += heldResource;
                     task = ActionList.Delivering;
@@ -546,6 +575,7 @@ public class UnitSelection : MonoBehaviour
                 if (heldResource != 0)
                 {
                     drops = GameObject.FindGameObjectsWithTag("Player 1");
+                    drops = AdjustDrops(drops);
                     agent.destination = GetClosestDropOff(drops).transform.position;
 
                     RM.food += heldResource;

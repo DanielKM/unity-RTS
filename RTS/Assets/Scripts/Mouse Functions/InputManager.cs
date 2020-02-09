@@ -183,7 +183,7 @@ public class InputManager : MonoBehaviour
 
                     if (Physics.Raycast(raycast, out hit1, 350))
                     {
-                        if (hit1.transform.tag == "Enemy Unit" || hit1.transform.tag == "Selectable" || hit1.transform.tag == "Player 1" ||  hit1.transform.tag == "Foundation" || hit1.transform.tag == "Ground" || hit1.transform.tag == "Yard" || hit1.transform.tag == "Barracks" || hit1.transform.tag == "House" || hit1.transform.tag == "Resource" || hit1.transform.tag == "Fort" || hit1.transform.tag == "Blacksmith" || hit1.transform.tag == "Lumber Yard" || hit1.transform.tag == "Stables")
+                        if (hit1.transform.tag == "Enemy Unit" || hit1.transform.tag == "Selectable" || hit1.transform.tag == "Player 1" ||  hit1.transform.tag == "Foundation" || hit1.transform.tag == "Ground" || hit1.transform.tag == "Yard" || hit1.transform.tag == "Barracks" || hit1.transform.tag == "House" || hit1.transform.tag == "Resource" || hit1.transform.tag == "Fort" || hit1.transform.tag == "Blacksmith" || hit1.transform.tag == "Stables")
                         {
                             LeftClick();
                         }
@@ -692,8 +692,9 @@ public class InputManager : MonoBehaviour
                     }
                 }
             }
-            else if (hit.collider.tag == "Enemy Unit" || hit.collider.tag == "Player 1" || hit.collider.tag == "Foundation" || hit.collider.tag == "Barracks" || hit.collider.tag == "House" || hit.collider.tag == "Resource" || hit.collider.tag == "Fort" || hit.collider.tag == "Blacksmith" || hit.transform.tag == "Lumber Yard" || hit.transform.tag == "Stables" )
+            else if (hit.collider.tag == "Enemy Unit" || hit.collider.tag == "Player 1" || hit.collider.tag == "Foundation" || hit.collider.tag == "Barracks" || hit.collider.tag == "House" || hit.collider.tag == "Resource" || hit.collider.tag == "Fort" || hit.collider.tag == "Blacksmith" || hit.transform.tag == "Stables" )
             {
+                
                 UI.CloseAllPanels();
                 if (selectedObjects.Count >= 0)
                 {
@@ -703,16 +704,22 @@ public class InputManager : MonoBehaviour
 
                 if(selectedObj.tag == "Player 1")
                 {
-                    townHallScript = selectedObj.GetComponent<TownHallController>();
-                    isTraining = townHallScript.isTraining;
-                    SwapProgressIcon();
-                    if (isTraining)
-                    {
-                        UI.TownHallTraining();
-                    }
-                    else
-                    {
-                        UI.TownHallSelect();
+                    buildingScript = selectedObj.GetComponent<BuildingController>();
+
+                    if(buildingScript.unitType == "Lumber Yard") {
+                        UI.LumberYardSelect();
+                    } else if (buildingScript.unitType == "Town Hall") {
+                        townHallScript = selectedObj.GetComponent<TownHallController>();
+                        isTraining = townHallScript.isTraining;
+                        SwapProgressIcon();
+                        if (isTraining)
+                        {
+                            UI.TownHallTraining();
+                        }
+                        else
+                        {
+                            UI.TownHallSelect();
+                        }
                     }
                 } else if (selectedObj.tag == "House")
                 {
@@ -747,9 +754,6 @@ public class InputManager : MonoBehaviour
                     {
                         UI.BlacksmithSelect();
                     }
-                }
-                else if (selectedObj.tag == "Lumber Yard") {
-                    UI.LumberYardSelect();
                 }
                 else if (selectedObj.tag == "Barracks") {
                     barracksScript = selectedObj.GetComponent<BarracksController>();
