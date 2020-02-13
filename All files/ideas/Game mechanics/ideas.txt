@@ -8,6 +8,16 @@ Building take over mechanics
 - Procedural 
 -
 
+processes: 
+baking
+wheat
+farming
+ironworking
+steel
+construction
+lumber
+hunting
+
 Dark mists gathered
 
 questing

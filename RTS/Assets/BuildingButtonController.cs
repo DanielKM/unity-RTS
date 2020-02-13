@@ -90,9 +90,6 @@ public class BuildingButtonController : MonoBehaviour
             barracksButtonOne.onClick.AddListener(HireSwordsman);
             barracksButtonTwo.onClick.AddListener(HireFootman);
             barracksButtonFour.onClick.AddListener(HireArcher);
-            // blacksmithText = barracksButtonOne.GetComponentsInChildren<Text>();
-            // blacksmithText[0].text = "Train Footman \r\n" + "\r\n" + "\r\n" + footmanUC.gold + "\r\n" + footmanUC.food + "\r\n" + footmanUC.iron + "\r\n";
-
         }
     }
 
