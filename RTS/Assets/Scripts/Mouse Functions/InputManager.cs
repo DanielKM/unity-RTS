@@ -15,7 +15,6 @@ public class InputManager : MonoBehaviour
    public float xMin, xMax, yMin, yMax, zMin, zMax;
 
     // Reference Scripts
-    UIController UI;
 
     UnitController unitScript;
     UnitSelection selectScript;
@@ -26,7 +25,10 @@ public class InputManager : MonoBehaviour
     BarracksController barracksScript;
     BlacksmithController blacksmithScript;
     FoundationController foundationScript;
+
     ResearchController RC;
+    UIController UI;
+    PauseMenu PM;
 
     // UI FOR UNITS
     private AudioSource unitAudio;
@@ -145,6 +147,8 @@ public class InputManager : MonoBehaviour
             playerAudio = GameObject.FindGameObjectWithTag("Main Audio").GetComponent<AudioSource>();
             UI = player.GetComponent<UIController>();
             RC = player.GetComponent<ResearchController>();
+            PM = GameObject.Find("GameMenu").GetComponent<PauseMenu>();
+            
         // progressIcon = GameObject.Find("ProgressIcon").GetComponent<Image>();
         // foundationScript = selectedObj.GetComponent<FoundationController>();
             // progressIcon.sprite = foundationScript.buildingPrefab.GetComponent<BuildingController>().icon;
@@ -833,15 +837,14 @@ public class InputManager : MonoBehaviour
         isSelected = false;
     }
 
-    IEnumerator ClickCursorHit(RaycastHit hit) {
-        currentCursorHit = Instantiate(cursorHit);
-        currentCursorHit.transform.position = new Vector3 (hit.point.x, hit.point.y + 2.0f, hit.point.z);
-        // for(int i = 0; i<10; i++) {
+    public IEnumerator ClickCursorHit(RaycastHit hit) {
+        if(!PM.gamePaused) {
+            currentCursorHit = Instantiate(cursorHit);
+            currentCursorHit.transform.position = new Vector3 (hit.point.x, hit.point.y + 2.0f, hit.point.z);
 
-        // }
-
-        yield return new WaitForSeconds(0.1f);
-        Destroy(currentCursorHit);
+            yield return new WaitForSeconds(0.1f);
+            Destroy(currentCursorHit);
+        }
     }
 
     IEnumerator UpdatePanels()

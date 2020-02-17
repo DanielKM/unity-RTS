@@ -140,7 +140,7 @@ public class UnitSelection : MonoBehaviour
                 RaycastHit hit;
                 if(Physics.Raycast(ray, out hit, 350))
                 {
-                    StartCoroutine(ClickCursorHit(hit));
+                    StartCoroutine(IM.ClickCursorHit(hit));
                 }    
             }
         }
@@ -803,14 +803,4 @@ public class UnitSelection : MonoBehaviour
             }
         }
     }
-
-    IEnumerator ClickCursorHit(RaycastHit hit) {
-        GameObject currentCursorHit = Instantiate(IM.cursorHit);
-        currentCursorHit.transform.position = new Vector3 (hit.point.x, hit.point.y + 2.0f, hit.point.z);
-
-
-        yield return new WaitForSeconds(0.1f);
-        Destroy(currentCursorHit);
-    }
-
 }
