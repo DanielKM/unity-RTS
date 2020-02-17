@@ -83,6 +83,11 @@ PrefabInstance:
       propertyPath: unitName
       value: Town Hall Foundation
       objectReference: {fileID: 0}
+    - target: {fileID: 3194244927984959840, guid: 5afd6824e8816a54da98276a53a4810e,
+        type: 3}
+      propertyPath: m_OrthographicSize
+      value: 8
+      objectReference: {fileID: 0}
     - target: {fileID: 8901928165844825646, guid: 5afd6824e8816a54da98276a53a4810e,
         type: 3}
       propertyPath: buildingPrefab

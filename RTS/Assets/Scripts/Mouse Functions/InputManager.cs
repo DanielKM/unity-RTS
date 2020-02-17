@@ -148,7 +148,7 @@ public class InputManager : MonoBehaviour
             UI = player.GetComponent<UIController>();
             RC = player.GetComponent<ResearchController>();
             PM = GameObject.Find("GameMenu").GetComponent<PauseMenu>();
-            
+
         // progressIcon = GameObject.Find("ProgressIcon").GetComponent<Image>();
         // foundationScript = selectedObj.GetComponent<FoundationController>();
             // progressIcon.sprite = foundationScript.buildingPrefab.GetComponent<BuildingController>().icon;
@@ -711,8 +711,10 @@ public class InputManager : MonoBehaviour
                     buildingScript = selectedObj.GetComponent<BuildingController>();
 
                     if(buildingScript.unitType == "Lumber Yard") {
+                        selectedObj.transform.GetChild(0).gameObject.SetActive(true);
                         UI.LumberYardSelect();
                     } else if (buildingScript.unitType == "Town Hall") {
+                        selectedObj.transform.GetChild(0).gameObject.SetActive(true);
                         townHallScript = selectedObj.GetComponent<TownHallController>();
                         isTraining = townHallScript.isTraining;
                         SwapProgressIcon();
@@ -727,13 +729,17 @@ public class InputManager : MonoBehaviour
                     }
                 } else if (selectedObj.tag == "House")
                 {
+                    selectedObj.transform.GetChild(0).gameObject.SetActive(true);
                     UI.HouseSelect();
                 } else if (selectedObj.tag == "Resource")
                 {
+                    selectedObj.transform.GetChild(0).gameObject.SetActive(true);
                     UI.ResourceSelect();
                 }
                 else if (selectedObj.tag == "Foundation")
                 {
+                    
+                    selectedObj.transform.GetChild(0).gameObject.SetActive(true);
                     foundationScript = selectedObj.GetComponent<FoundationController>();
                     isBuilding = foundationScript.isBuilding;
                     if (isBuilding)
@@ -748,6 +754,7 @@ public class InputManager : MonoBehaviour
                 } 
                 else if (selectedObj.tag == "Blacksmith") {
                     blacksmithScript = selectedObj.GetComponent<BlacksmithController>();
+                    selectedObj.transform.GetChild(0).gameObject.SetActive(true);
                     isTraining = blacksmithScript.isTraining;
                     SwapProgressIcon();
                     if (isTraining)
@@ -760,6 +767,7 @@ public class InputManager : MonoBehaviour
                     }
                 }
                 else if (selectedObj.tag == "Barracks") {
+                    selectedObj.transform.GetChild(0).gameObject.SetActive(true);
                     barracksScript = selectedObj.GetComponent<BarracksController>();
                     isTraining = barracksScript.isTraining;
                     SwapProgressIcon();
@@ -773,6 +781,7 @@ public class InputManager : MonoBehaviour
                     }
                 }
                 else if (selectedObj.tag == "Stables") {
+                    selectedObj.transform.GetChild(0).gameObject.SetActive(true);
                     UI.StablesSelect();
                 }
             }
@@ -823,25 +832,28 @@ public class InputManager : MonoBehaviour
         }
         selectedObjects.Clear();
         GameObject[] selectedIndicators = GameObject.FindGameObjectsWithTag("SelectedIndicator");
+        if(selectedIndicators.Length > 0) {
+            // UnitSelection indicators
+            for (int j = 0; j < selectedIndicators.Length; j++)
+            {
+                // Turns the unit UnitSelection indicator off
+                selectedIndicators[j].transform.gameObject.SetActive(false);
 
-        // UnitSelection indicators
-        for (int j = 0; j < selectedIndicators.Length; j++)
-        {
-            // Turns the unit UnitSelection indicator off
-            selectedIndicators[j].transform.gameObject.SetActive(false);
-
-            // Deselects the unit
-            selectedIndicators[j].transform.parent.GetComponent<UnitSelection>().selected = false;
+                // Deselects the unit
+                if(selectedIndicators[j].transform.parent.GetComponent<UnitSelection>()) {
+                    selectedIndicators[j].transform.parent.GetComponent<UnitSelection>().selected = false;
+                }
+            }
         }
 
         isSelected = false;
     }
 
     public IEnumerator ClickCursorHit(RaycastHit hit) {
+            Destroy(currentCursorHit);
         if(!PM.gamePaused) {
             currentCursorHit = Instantiate(cursorHit);
             currentCursorHit.transform.position = new Vector3 (hit.point.x, hit.point.y + 2.0f, hit.point.z);
-
             yield return new WaitForSeconds(0.1f);
             Destroy(currentCursorHit);
         }

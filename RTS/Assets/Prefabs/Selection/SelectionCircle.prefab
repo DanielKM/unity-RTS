@@ -1,0 +1,107 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1001 &4059263249639900367
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 166266, guid: b6028e6fd8276704a952b9aef0250deb, type: 3}
+      propertyPath: m_Name
+      value: SelectionCircle
+      objectReference: {fileID: 0}
+    - target: {fileID: 166266, guid: b6028e6fd8276704a952b9aef0250deb, type: 3}
+      propertyPath: m_TagString
+      value: SelectedIndicator
+      objectReference: {fileID: 0}
+    - target: {fileID: 166266, guid: b6028e6fd8276704a952b9aef0250deb, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 422170, guid: b6028e6fd8276704a952b9aef0250deb, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 3.94
+      objectReference: {fileID: 0}
+    - target: {fileID: 422170, guid: b6028e6fd8276704a952b9aef0250deb, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 422170, guid: b6028e6fd8276704a952b9aef0250deb, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 1.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 422170, guid: b6028e6fd8276704a952b9aef0250deb, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0.7071068
+      objectReference: {fileID: 0}
+    - target: {fileID: 422170, guid: b6028e6fd8276704a952b9aef0250deb, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 422170, guid: b6028e6fd8276704a952b9aef0250deb, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 422170, guid: b6028e6fd8276704a952b9aef0250deb, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.7071068
+      objectReference: {fileID: 0}
+    - target: {fileID: 422170, guid: b6028e6fd8276704a952b9aef0250deb, type: 3}
+      propertyPath: m_RootOrder
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 422170, guid: b6028e6fd8276704a952b9aef0250deb, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 90
+      objectReference: {fileID: 0}
+    - target: {fileID: 422170, guid: b6028e6fd8276704a952b9aef0250deb, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 422170, guid: b6028e6fd8276704a952b9aef0250deb, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 422170, guid: b6028e6fd8276704a952b9aef0250deb, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 1.428572
+      objectReference: {fileID: 0}
+    - target: {fileID: 422170, guid: b6028e6fd8276704a952b9aef0250deb, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 1.428572
+      objectReference: {fileID: 0}
+    - target: {fileID: 422170, guid: b6028e6fd8276704a952b9aef0250deb, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 1.4285719
+      objectReference: {fileID: 0}
+    - target: {fileID: 11939280, guid: b6028e6fd8276704a952b9aef0250deb, type: 3}
+      propertyPath: m_AspectRatio
+      value: 0.8
+      objectReference: {fileID: 0}
+    - target: {fileID: 11939280, guid: b6028e6fd8276704a952b9aef0250deb, type: 3}
+      propertyPath: m_OrthographicSize
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 11939280, guid: b6028e6fd8276704a952b9aef0250deb, type: 3}
+      propertyPath: m_FieldOfView
+      value: 60
+      objectReference: {fileID: 0}
+    - target: {fileID: 11939280, guid: b6028e6fd8276704a952b9aef0250deb, type: 3}
+      propertyPath: m_Orthographic
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 11939280, guid: b6028e6fd8276704a952b9aef0250deb, type: 3}
+      propertyPath: m_FarClipPlane
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 11939280, guid: b6028e6fd8276704a952b9aef0250deb, type: 3}
+      propertyPath: m_IgnoreLayers.m_Bits
+      value: 3383
+      objectReference: {fileID: 0}
+    - target: {fileID: 11939280, guid: b6028e6fd8276704a952b9aef0250deb, type: 3}
+      propertyPath: m_NearClipPlane
+      value: 0.1
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: b6028e6fd8276704a952b9aef0250deb, type: 3}

@@ -83,6 +83,16 @@ PrefabInstance:
       propertyPath: buildPercent
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5109851025199957465, guid: 031a711fcf81e9641a1528cea09899d1,
+        type: 3}
+      propertyPath: m_OrthographicSize
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 6693040780674988223, guid: 031a711fcf81e9641a1528cea09899d1,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 7
+      objectReference: {fileID: 0}
     - target: {fileID: 7691561821289104658, guid: 031a711fcf81e9641a1528cea09899d1,
         type: 3}
       propertyPath: m_Name
