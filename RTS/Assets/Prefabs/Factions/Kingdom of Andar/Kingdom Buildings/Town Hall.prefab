@@ -5021,6 +5021,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: SelectionCircle
       objectReference: {fileID: 0}
+    - target: {fileID: 4059263249640000949, guid: 6685c3e8bc42ace45b5b4a3587b635af,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6685c3e8bc42ace45b5b4a3587b635af, type: 3}
 --- !u!4 &6411498521129076001 stripped
