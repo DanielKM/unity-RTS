@@ -6,14 +6,11 @@ using UnityEngine.AI;
 public class NPCController : MonoBehaviour
 {
     public float patrolTime = 15; // time in seconds to wait before going to next patrol destination
-    public float aggroRange = 10; // distance in scene units below which the NPC will increase speed and seek the player
+    public float aggroRange = 15; // distance in scene units below which the NPC will increase speed and seek the player
     public Transform[] waypoints; // collection of waypoints which define a patrol area
 
     int index; // the current waypoint index in the waypoints array
     float speed, agentSpeed; // current agent speed and NavMeshAgent component speed
-    //Transform player; // reference to the player object transform
-
-    //private List<GameObject> player = new List<GameObject>();
 
     private GameObject[] playerunits;
 
@@ -22,6 +19,7 @@ public class NPCController : MonoBehaviour
     UnitController UC; //reference to the navmeshagent
     UnitSelection UnitSelection; //reference to the navmeshagent
     private GameObject player;
+    private GameObject team;
     private ResearchController RC;
 
     // Enemy variables
@@ -34,7 +32,8 @@ public class NPCController : MonoBehaviour
     void Start()
     {
         player = GameObject.FindGameObjectWithTag("Player");
-        RC = player.GetComponent<ResearchController>();
+        team = GameObject.Find("Faction");
+        RC = team.GetComponent<ResearchController>();
         playerunits = GameObject.FindGameObjectsWithTag("Selectable");
     }
 
@@ -50,9 +49,7 @@ public class NPCController : MonoBehaviour
             agentSpeed = agent.speed;
         }
 
-        //player = List.FindGameObjectsWithTag("Selectable");
         index = Random.Range(0, waypoints.Length);
-
         InvokeRepeating("Tick", 0, 1.0f);
 
         if (waypoints.Length > 0)
@@ -89,10 +86,9 @@ public class NPCController : MonoBehaviour
             GameObject currentTarget = GetClosestEnemy(playerunits);
 
             if(currentTarget && !currentTarget.GetComponent<UnitController>().isDead) {
-                if (currentTarget != null && Vector3.Distance(transform.position, currentTarget.transform.position) < aggroRange)
+                if (currentTarget != null && Vector3.Distance(transform.position, currentTarget.transform.position) <= aggroRange)
                 {
                     UnitSelection.targetNode = currentTarget;
-                    // Debug.Log("Enemy " + currentTarget.GetComponent<UnitController>().unitType + " spotted!");
                     float dist = Vector3.Distance(agent.transform.position, currentTarget.transform.position);
                     agent.destination = currentTarget.transform.position;
                     agent.speed = agentSpeed;
@@ -192,7 +188,6 @@ public class NPCController : MonoBehaviour
                     armourModifier = 1.0f;
                 }
                 enemyUC.armour -= 1.0f * armourModifier;
-                Debug.Log(1.0f * armourModifier);
             } else {
                 enemyUC.health -= UC.attackDamage;
                 enemyHealth = enemyUC.health;

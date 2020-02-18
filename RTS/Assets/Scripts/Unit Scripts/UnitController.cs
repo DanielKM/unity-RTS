@@ -29,7 +29,7 @@ public class UnitController : MonoBehaviour
     public int maxEnergy;
     public float attackDamage;
     public int attackRange;
-    public int attackSpeed;
+    public float attackSpeed;
     public float aggroRange;
 
     // Cost
@@ -43,9 +43,13 @@ public class UnitController : MonoBehaviour
 
     // Enemy variables
     private UnitController enemyUC;
-    private GameObject enemy;
     private GameObject[] enemyUnits;
+    private GameObject currentTarget; 
     private float enemyHealth;
+
+    // Projectiles
+    private GameObject arrowPrefab;
+    private GameObject fireballPrefab;
 
     // Audio
     public AudioSource unitAudio;
@@ -55,15 +59,21 @@ public class UnitController : MonoBehaviour
     public AudioClip metalChop4;
     public AudioClip woodChop;
 
+    public AudioClip shootArrow;
+    public AudioClip shootFireball;
+
     // Player scripts
     private GameObject player;
+    private GameObject team;
     private ResourceManager RM;
 
     // Unit scripts
     private Animator anim;
     private NavMeshAgent agent;
     private UnitSelection UnitSelection;
-    private Tasklist newTask;
+    private ActionList newTask;
+    private ArcherController archer;
+    private WizardController wizard;
 
     ResearchController RC;
     UIController UI;
@@ -80,13 +90,22 @@ public class UnitController : MonoBehaviour
     void Start()
     {
         player = GameObject.FindGameObjectWithTag("Player");
+        team = GameObject.Find("Faction");
         UI = player.GetComponent<UIController>();
-        RM = player.GetComponent<ResourceManager>();
-        RC = player.GetComponent<ResearchController>();
+        RM = team.GetComponent<ResourceManager>();
+        RC = team.GetComponent<ResearchController>();
 
         anim = GetComponent<Animator>();
         agent = GetComponent<NavMeshAgent>();
         UnitSelection = GetComponent<UnitSelection>();
+        archer = GetComponent<ArcherController>();
+        wizard = GetComponent<WizardController>();
+        if(archer) {
+            arrowPrefab = archer.arrow;
+        }        
+        if(wizard) {
+            fireballPrefab = wizard.fireball;
+        }
     }
 
     private void Awake()
@@ -97,16 +116,9 @@ public class UnitController : MonoBehaviour
     void Update()
     {
         if(health <= 0) { 
+            health = 0;
             gameObject.GetComponent<NavMeshAgent>().enabled = false;
-            if(unitType == "Worker") { 
-                anim.SetInteger("condition", 10);
-                isDead = true;
-                UnitSelection.isBuilding = false;
-                UnitSelection.isGathering = false;
-                UnitSelection.isFollowing = false;
-                UnitSelection.isAttacking = false;
-                UnitSelection.isMeleeing = false;
-            } else if(unitType == "Footman" || unitType == "Swordsman") {
+            if(unitType == "Worker" || unitType == "Footman" || unitType == "Swordsman" || unitType == "Archer" || unitType == "Wizard")  { 
                 anim.SetInteger("condition", 10);
                 isDead = true;
                 UnitSelection.isBuilding = false;
@@ -130,121 +142,61 @@ public class UnitController : MonoBehaviour
             if(unitType == "Worker") {
                 if(heldResource > 0) {
                     if(resourceType == NodeManager.ResourceTypes.Wood) {
-                        if(UnitSelection.isBuilding && newTask == Tasklist.Building || UnitSelection.isGathering && newTask == Tasklist.Gathering || UnitSelection.isMeleeing) {
+                        if(UnitSelection.isBuilding && newTask == ActionList.Building || UnitSelection.isGathering && newTask == ActionList.Gathering || UnitSelection.isMeleeing) {
                             anim.SetInteger("condition", 5);
-                        } else if (!UnitSelection.isBuilding && !UnitSelection.isGathering || newTask != Tasklist.Building && newTask != Tasklist.Gathering) {
+                        } else if (!UnitSelection.isBuilding && !UnitSelection.isGathering || newTask != ActionList.Building && newTask != ActionList.Gathering) {
                             anim.SetInteger("condition", 4);
                         }
                     } else {
-                        if(UnitSelection.isBuilding && newTask == Tasklist.Building || UnitSelection.isGathering && newTask == Tasklist.Gathering || UnitSelection.isMeleeing) {
+                        if(UnitSelection.isBuilding && newTask == ActionList.Building || UnitSelection.isGathering && newTask == ActionList.Gathering || UnitSelection.isMeleeing) {
                             anim.SetInteger("condition", 3);
-                        } else if (!UnitSelection.isBuilding && !UnitSelection.isGathering || newTask != Tasklist.Building && newTask != Tasklist.Gathering) {
+                        } else if (!UnitSelection.isBuilding && !UnitSelection.isGathering || newTask != ActionList.Building && newTask != ActionList.Gathering) {
                             anim.SetInteger("condition", 2);
                         }
                     }
                 } else {
-                    if(UnitSelection.isBuilding && newTask == Tasklist.Building || UnitSelection.isGathering && newTask == Tasklist.Gathering || UnitSelection.isMeleeing) {
+                    if(UnitSelection.isBuilding && newTask == ActionList.Building || UnitSelection.isGathering && newTask == ActionList.Gathering || UnitSelection.isMeleeing) {
                         anim.SetInteger("condition", 1);
-                    } else if (!UnitSelection.isBuilding && !UnitSelection.isGathering || newTask != Tasklist.Building && newTask != Tasklist.Gathering) {
+                    } else if (!UnitSelection.isBuilding && !UnitSelection.isGathering || newTask != ActionList.Building && newTask != ActionList.Gathering) {
                         anim.SetInteger("condition", 0);
                     }
                 }
-            } else if (unitType == "Footman" || unitType == "Swordsman") {
+            } else if (unitType == "Footman" || unitType == "Swordsman" || unitType == "Archer" || unitType == "Wizard") {
                 if(UnitSelection.isMeleeing) {
                     anim.SetInteger("condition", 1);
-                } else if (!UnitSelection.isMeleeing ) {
+                } else if (!UnitSelection.isMeleeing) {
                     anim.SetInteger("condition", 0);
                 }
             }
         }
-       
-//         if (Input.GetKeyDown(KeyCode.Mouse1))
-//         {
-//             anim.SetLayerWeight(1, 1f);
-//             anim.SetTrigger("IsAttacking");
-// //print("Attacking!");
-//         }
-//         else
-//         {
-//             anim.SetLayerWeight(0, 0f);
-//         }
     }
 
     void Tick()
     {
         if(!isDead) {
-            if(UnitSelection.owner == UnitSelection.player) {
+            if(UnitSelection.owner == UnitSelection.team) {
                 enemyUnits = GameObject.FindGameObjectsWithTag("Enemy Unit");
-                GameObject currentTarget = GetClosestEnemy(enemyUnits);
+                currentTarget = GetClosestEnemy(enemyUnits);
                 if(currentTarget && !currentTarget.GetComponent<UnitController>().isDead) {
-                    if (currentTarget != null && Vector3.Distance(transform.position, currentTarget.transform.position) < aggroRange)
-                    {
-                        UnitSelection.targetNode = currentTarget;
-                        // Debug.Log("Enemy " + currentTarget.GetComponent<UnitController>().unitType + " spotted!");
-                        float dist = Vector3.Distance(agent.transform.position, currentTarget.transform.position);
-                        agent.destination = currentTarget.transform.position;
-                        UnitSelection.isFollowing = true;
-
-                        if(dist < attackRange && currentTarget != null && !currentTarget.GetComponent<UnitController>().isDead) {
-                            UnitSelection.isMeleeing = true;
-                            enemy = currentTarget;
-                            if(!currentlyMeleeing && enemy != null) {
-                                agent.destination = agent.transform.position;
-                                StartCoroutine(Attack());
-                            }
-                        } else {
-                            currentlyMeleeing = false;
-                            UnitSelection.isAttacking = false;
-                            UnitSelection.isMeleeing = false;
-                            UnitSelection.isFollowing = false;
+                    float dist = Vector3.Distance(agent.transform.position, currentTarget.transform.position);
+                    if(dist <= aggroRange && dist <= attackRange) {
+                        UnitSelection.isMeleeing = true;
+                        UnitSelection.isFollowing = false;
+                        agent.destination = agent.transform.position;
+                        agent.transform.LookAt(currentTarget.transform.position);
+                        if(!currentlyMeleeing) {
+                            StartCoroutine(Attack(currentTarget, agent.transform.rotation));
                         }
-                    } else if (currentTarget == null) {
-                        currentlyMeleeing = false;
-                        UnitSelection.isAttacking = false;
+                    } else if (dist <= aggroRange && dist > attackRange) {
+                        UnitSelection.isMeleeing = false;
+                        UnitSelection.isFollowing = true;
+                        agent.destination = currentTarget.transform.position;
+                    } else {
                         UnitSelection.isMeleeing = false;
                         UnitSelection.isFollowing = false;
                     }
-                } else {
-                    currentlyMeleeing = false;
-                    UnitSelection.isAttacking = false;
-                    UnitSelection.isMeleeing = false;
-                    UnitSelection.isFollowing = false;
                 }
             } 
-            // else {
-            //     enemyUnits = GameObject.FindGameObjectsWithTag("Selectable");
-            //     GameObject currentTarget = GetClosestEnemy(enemyUnits);
-            //     if(currentTarget && !currentTarget.GetComponent<UnitController>().isDead) {
-            //         if (currentTarget != null && Vector3.Distance(transform.position, currentTarget.transform.position) < aggroRange)
-            //         {
-            //             UnitSelection.targetNode = currentTarget;
-            //             // Debug.Log("Enemy " + currentTarget.GetComponent<UnitController>().unitType + " spotted!");
-            //             float dist = Vector3.Distance(agent.transform.position, currentTarget.transform.position);
-            //             agent.destination = currentTarget.transform.position;
-            //             UnitSelection.isFollowing = true;
-
-            //             if(dist < attackRange && currentTarget != null) {
-            //                 UnitSelection.isMeleeing = true;
-            //                 enemy = currentTarget;
-            //                 if(!currentlyMeleeing && enemy != null) {
-            //                     // StartCoroutine(Attack());
-            //                 }
-            //             } else {
-            //                 currentlyMeleeing = false;
-            //                 UnitSelection.isMeleeing = false;
-            //                 UnitSelection.isFollowing = false;
-            //             }
-            //         } else if (currentTarget == null) {
-            //             currentlyMeleeing = false;
-            //             UnitSelection.isMeleeing = false;
-            //             UnitSelection.isFollowing = false;
-            //         }
-            //     } else {
-            //         currentlyMeleeing = false;
-            //         UnitSelection.isMeleeing = false;
-            //         UnitSelection.isFollowing = false;
-            //     }
-            // }
         }
     }
 
@@ -270,25 +222,25 @@ public class UnitController : MonoBehaviour
         return closestEnemy;
     }
 
-    public IEnumerator Attack() {
+    public IEnumerator Attack(GameObject target, Quaternion currentRotation) {
         currentlyMeleeing = true;
-
-        while(UnitSelection.isMeleeing) {          
-            enemy = UnitSelection.targetNode;            
-            if(enemy == null) {
+        while(UnitSelection.isMeleeing) {    
+            target = currentTarget;       
+            if(target == null) {
                 currentlyMeleeing = false;
                 UnitSelection.isMeleeing = false;
                 UnitSelection.isFollowing = false;
                 break;
             } else {
-                enemyUC = enemy.GetComponent<UnitController>();    
+                enemyUC = target.GetComponent<UnitController>();    
                 if(enemyUC.isDead) {
                     currentlyMeleeing = false;
                     UnitSelection.isMeleeing = false;
                     UnitSelection.isFollowing = false;
                     break;
                 }   
-            }          
+            }  
+                    
             if(unitType == "Worker") {
                 unitAudio = agent.GetComponent<AudioSource>();
                 unitAudio.clip = woodChop;
@@ -302,8 +254,42 @@ public class UnitController : MonoBehaviour
                 unitAudio.clip = metalAttacks[random];
                 unitAudio.maxDistance = 55;
                 unitAudio.Play();
-            }
+            } else if (unitType == "Archer") {
+                unitAudio = agent.GetComponent<AudioSource>();
+                unitAudio.clip = shootArrow;
 
+                Vector3 arrowPosition = new Vector3(transform.position.x, transform.position.y + 1.0f, transform.position.z);
+                GameObject arrow = Instantiate(arrowPrefab, arrowPosition, Quaternion.identity);
+
+                Vector3 heading = target.transform.position - transform.position;
+                float newAngle = Vector3.Angle(transform.forward, Vector3.right);
+
+                arrow.transform.rotation = Quaternion.Euler(new Vector3(0,180 - newAngle, 0));
+                arrow.GetComponent<Rigidbody>().velocity = new Vector3( heading.x, heading.y + 5.0f, heading.z);
+                
+                yield return new WaitForSeconds(1.02f);
+                Destroy(arrow);
+                unitAudio.maxDistance = 55;
+                unitAudio.Play();
+            } else if (unitType == "Wizard") {
+                unitAudio = agent.GetComponent<AudioSource>();
+                unitAudio.clip = shootFireball;
+
+                Vector3 fireballPosition = new Vector3(transform.position.x, transform.position.y + 1.0f, transform.position.z);
+                GameObject fireball = Instantiate(fireballPrefab, fireballPosition, Quaternion.identity);
+
+                Vector3 heading = target.transform.position - transform.position;
+                float newAngle = Vector3.Angle(transform.forward, Vector3.right);
+
+                fireball.transform.rotation = Quaternion.Euler(new Vector3(0,180 - newAngle, 0));
+                fireball.GetComponent<Rigidbody>().velocity = new Vector3( heading.x, heading.y + 5.0f, heading.z);
+                
+                // yield return new WaitForSeconds(0.3f);
+                // Destroy(fireball);
+                unitAudio.maxDistance = 55;
+                unitAudio.Play();
+            }
+            
             // Research
             float weaponModifier;
             if(RC.artisanWeaponSmithing) {
@@ -314,15 +300,16 @@ public class UnitController : MonoBehaviour
                 weaponModifier = 1.0f;
             }
 
+            // Actual damage
             if(enemyUC.armour > 0.0f) {
                 enemyUC.armour -= weaponModifier;
             } else {
                 enemyUC.health -= attackDamage * weaponModifier;
                 enemyHealth = enemyUC.health;
-            }
+            }   
             yield return new WaitForSeconds(attackSpeed);
         }
+                currentlyMeleeing = false;
+
     }
 }
-
-//https://www.youtube.com/watch?v=sb9jnpN9Chc&index=2&list=PLzDRvYVwl53t1vBNhjHANpXXz5M6EuT1q&t=0s

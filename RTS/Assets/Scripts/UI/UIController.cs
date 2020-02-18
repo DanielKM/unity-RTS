@@ -7,6 +7,7 @@ public class UIController : MonoBehaviour
 {
     // PLAYER
     public GameObject player;
+    public GameObject team;
     ResourceManager RM;
 
     // GAME MENU
@@ -49,12 +50,6 @@ public class UIController : MonoBehaviour
             CloseAllPanels();
         }
     }
-
-    // Update is called once per frame
-    void Update()
-    {
-
-    }
     
     public void FindAllPanels() {
         GameMenuPanel = GameObject.Find("GameMenu").GetComponent<CanvasGroup>();
@@ -78,8 +73,9 @@ public class UIController : MonoBehaviour
         armour3 = GameObject.Find("Armour3").GetComponent<CanvasGroup>();
         armour4 = GameObject.Find("Armour4").GetComponent<CanvasGroup>();
         armour5 = GameObject.Find("Armour5").GetComponent<CanvasGroup>();
+        team = GameObject.Find("Faction");
         player = GameObject.FindGameObjectWithTag("Player");
-        RM = player.GetComponent<ResourceManager>();
+        RM = team.GetComponent<ResourceManager>();
     }
 
     public void OpenGameMenuPanel()
@@ -216,6 +212,32 @@ public class UIController : MonoBehaviour
         FootmanPanel.interactable = true;
     }
     
+    public void ArcherSelect() {
+        CloseAllPanels();
+
+        UnitPanel.alpha = 1;
+        UnitPanel.blocksRaycasts = true;
+        UnitPanel.interactable = true;
+
+        panelOpen = 1;        
+        FootmanPanel.alpha = 1;
+        FootmanPanel.blocksRaycasts = true;
+        FootmanPanel.interactable = true;
+    }
+    
+    public void WizardSelect() {
+        CloseAllPanels();
+
+        UnitPanel.alpha = 1;
+        UnitPanel.blocksRaycasts = true;
+        UnitPanel.interactable = true;
+
+        panelOpen = 1;        
+        FootmanPanel.alpha = 1;
+        FootmanPanel.blocksRaycasts = true;
+        FootmanPanel.interactable = true;
+    }
+
     // Enemy selection
     public void EnemySelect() {
         CloseAllPanels();

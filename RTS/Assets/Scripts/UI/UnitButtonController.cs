@@ -8,6 +8,7 @@ using UnityEngine.SceneManagement;
 public class UnitButtonController : MonoBehaviour
 {
     public GameObject player;
+    public GameObject team;
     ResourceManager RM;
     UIController UI;
     BuildingController BC;
@@ -48,12 +49,10 @@ public class UnitButtonController : MonoBehaviour
     {
         Scene currentScene = SceneManager.GetActiveScene();
         if(currentScene.name != "Main Menu") {
+            team = GameObject.Find("Faction");
             player = GameObject.FindGameObjectWithTag("Player");
-            RM = player.GetComponent<ResourceManager>();
+            RM = team.GetComponent<ResourceManager>();
             UI = player.GetComponent<UIController>();
-
-            //Calls the TaskOnClick/TaskWithParameters/ButtonClicked method when you click the Button
-
             basicBack.onClick.AddListener(UI.WorkerSelect);
             advancedBack.onClick.AddListener(UI.WorkerSelect);
 
@@ -131,7 +130,6 @@ public class UnitButtonController : MonoBehaviour
     void BuildHouse()
     {
         BC = house.GetComponent<BuildingController>();
-        //Output this to console when the Button2 is clicked
         if (currentPlaceableObject == null && RM.gold >= BC.gold && RM.wood >= BC.wood && RM.stone >= BC.stone && RM.iron >= BC.iron && RM.steel >= BC.steel && RM.skymetal >= BC.skymetal && RM.food >= BC.food)
         {
             currentPlaceableObject = Instantiate(house);
@@ -163,7 +161,6 @@ public class UnitButtonController : MonoBehaviour
     void BuildFarm()
     {
         BC = farm.GetComponent<BuildingController>();
-        //Output this to console when the Button2 is clicked
         if (currentPlaceableObject == null && RM.gold >= BC.gold && RM.wood >= BC.wood && RM.stone >= BC.stone && RM.iron >= BC.iron && RM.steel >= BC.steel && RM.skymetal >= BC.skymetal && RM.food >= BC.food)
           {
             currentPlaceableObject = Instantiate(farm);
@@ -430,8 +427,9 @@ public class UnitButtonController : MonoBehaviour
             }
             else if (building.unitType == "Barracks")
             {
-                currentPlaceableObject.transform.position = new Vector3(hitInfo.point.x, hitInfo.point.y, hitInfo.point.z);
-                currentLocation = currentPlaceableObject.transform.position;
+                currentPlaceableObject.transform.position = new Vector3(hitInfo.point.x - 3.0f, hitInfo.point.y, hitInfo.point.z);
+                Vector3 newLocation = new Vector3(currentPlaceableObject.transform.position.x + 3.0f, currentPlaceableObject.transform.position.y, currentPlaceableObject.transform.position.z - 4.0f);
+                currentLocation = newLocation;
             }
             else if (building.unitType == "Fort")
             {
@@ -492,7 +490,8 @@ public class UnitButtonController : MonoBehaviour
             currentPlaceableObject.layer = 11;
             Destroy(currentPlaceableObject);
             currentPlaceableObject = Instantiate(building.foundation);
-            currentPlaceableObject.transform.position = currentLocation;
+            Vector3 newLocation = new Vector3(currentLocation.x + 5.0f, currentLocation.y, currentLocation.z);
+            currentPlaceableObject.transform.position = newLocation;
             currentPlaceableObject = null;
             PlayBuildingSound();
         }

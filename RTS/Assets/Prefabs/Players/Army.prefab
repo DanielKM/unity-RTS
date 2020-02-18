@@ -122,17 +122,13 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 595890288067306298}
-  - component: {fileID: 595890288067306299}
   - component: {fileID: 595890288067306297}
   - component: {fileID: 595890288067306292}
   - component: {fileID: 595890288067306293}
   - component: {fileID: 595890288067306294}
   - component: {fileID: 595890288067306295}
-  - component: {fileID: 595890288067306288}
-  - component: {fileID: 8098380073476524756}
-  - component: {fileID: 2417783222100856238}
   m_Layer: 10
-  m_Name: Player
+  m_Name: Army
   m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -156,52 +152,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &595890288067306299
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 595890288067306296}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: aa6cb78ff53c2b6459d81b2e0026e698, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  skymetal: 0
-  maxSkymetal: 5000
-  iron: 2000
-  maxIron: 5000
-  steel: 0
-  maxSteel: 5000
-  stone: 0
-  maxStone: 5000
-  wood: 2000
-  maxWood: 5000
-  food: 2000
-  maxFood: 5000
-  gold: 2000
-  maxGold: 5000
-  housing: 0
-  maxHousing: 0
-  SkyMetalDisp: {fileID: 0}
-  IronDisp: {fileID: 0}
-  SteelDisp: {fileID: 0}
-  WoodDisp: {fileID: 0}
-  FoodDisp: {fileID: 0}
-  StoneDisp: {fileID: 0}
-  GoldDisp: {fileID: 0}
-  HousingDisp: {fileID: 0}
-  houses: []
-  oneFoodUnit: []
-  barracksCount: 0
-  houseCount: 0
-  fortCount: 0
-  farmCount: 0
-  stablesCount: 0
-  townHallCount: 1
-  lumberYardCount: 0
-  blacksmithCount: 0
 --- !u!114 &595890288067306297
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -234,7 +184,7 @@ MonoBehaviour:
   itemDisp: {fileID: 0}
   resourceHeld: 0
   isSelected: 0
-  VillagerProgressSlider: {fileID: 0}
+  BuildingProgressSlider: {fileID: 0}
   buildingHB: {fileID: 0}
   buildingHealthDisp: {fileID: 0}
   buildingEB: {fileID: 0}
@@ -262,6 +212,7 @@ MonoBehaviour:
   doorway: {fileID: 2800000, guid: c21cc0a3bd09a8d41bef2787ea7fa284, type: 3}
   combat: {fileID: 2800000, guid: c527aacb1e33c3943b77694f59d12c9d, type: 3}
   sword: {fileID: 2800000, guid: c527aacb1e33c3943b77694f59d12c9d, type: 3}
+  cursorHit: {fileID: 0}
   OnClickEnvironment:
     m_PersistentCalls:
       m_Calls: []
@@ -343,10 +294,12 @@ MonoBehaviour:
   buttonOne: {fileID: 0}
   barracksButtonOne: {fileID: 0}
   barracksButtonTwo: {fileID: 0}
+  barracksButtonFour: {fileID: 0}
   playerAudio: {fileID: 595890288742844648}
   trainVillagerAudio: {fileID: 8300000, guid: 9b5f90fda9e2648cfb0c641ed933ce78, type: 3}
   trainFootmanAudio: {fileID: 8300000, guid: 9b5f90fda9e2648cfb0c641ed933ce78, type: 3}
   trainSwordsmanAudio: {fileID: 8300000, guid: 9b5f90fda9e2648cfb0c641ed933ce78, type: 3}
+  trainArcherAudio: {fileID: 0}
   villager: {fileID: 4804534610097456925, guid: c2da89567b823fc44b85b9516a8e8c6a,
     type: 3}
   nextSpawnTime: 0
@@ -359,6 +312,7 @@ MonoBehaviour:
     type: 3}
   villagerPrefab: {fileID: 4804534610097456925, guid: c2da89567b823fc44b85b9516a8e8c6a,
     type: 3}
+  archerPrefab: {fileID: 0}
 --- !u!54 &595890288067306294
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -395,130 +349,18 @@ MonoBehaviour:
   BasicBuildingsPanel: {fileID: 0}
   AdvancedBuildingsPanel: {fileID: 0}
   FootmanPanel: {fileID: 0}
+  armour1: {fileID: 0}
+  armour2: {fileID: 0}
+  armour3: {fileID: 0}
+  armour4: {fileID: 0}
+  armour5: {fileID: 0}
   BuildingPanel: {fileID: 0}
   BuildingActionPanel: {fileID: 0}
   BuildingProgressPanel: {fileID: 0}
   BlacksmithActionPanel: {fileID: 0}
-  BlacksmithProgressPanel: {fileID: 0}
   LumberYardActionPanel: {fileID: 0}
   BarracksActionPanel: {fileID: 0}
   noResourcesText: {fileID: 0}
---- !u!114 &595890288067306288
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 595890288067306296}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a5473c1516d25a94bb1a2ad553411cc9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  player: {fileID: 0}
-  basicBlacksmithing: 0
-  basicBlacksmithingGold: 400
-  basicBlacksmithingIron: 400
-  basicToolSmithing: 0
-  basicToolSmithingGold: 400
-  basicToolSmithingIron: 400
-  basicArmourSmithing: 0
-  basicArmourSmithingGold: 400
-  basicArmourSmithingIron: 400
-  basicWeaponSmithing: 0
-  basicWeaponSmithingGold: 400
-  basicWeaponSmithingIron: 400
-  artisanBlacksmithing: 0
-  artisanBlacksmithingGold: 800
-  artisanBlacksmithingIron: 800
-  artisanToolSmithing: 0
-  artisanToolSmithingGold: 800
-  artisanToolSmithingIron: 800
-  artisanArmourSmithing: 0
-  artisanArmourSmithingGold: 800
-  artisanArmourSmithingIron: 800
-  artisanWeaponSmithing: 0
-  artisanWeaponSmithingGold: 800
-  artisanWeaponSmithingIron: 800
-  horshoes: 0
-  horshoesGold: 500
-  horshoesIron: 500
-  minecarts: 0
-  minecartsGold: 500
-  minecartsIron: 500
-  caltrops: 0
-  caltropsGold: 300
-  caltropsIron: 300
-  reinforcedBuildings: 0
-  reinforcedBuildingsGold: 1000
-  reinforcedBuildingsIron: 1000
-  basicBlacksmithingButton: {fileID: 0}
-  basicToolSmithingButton: {fileID: 0}
-  basicArmourSmithingButton: {fileID: 0}
-  basicWeaponSmithingButton: {fileID: 0}
-  artisanBlacksmithingButton: {fileID: 0}
-  artisanToolSmithingButton: {fileID: 0}
-  artisanArmourSmithingButton: {fileID: 0}
-  artisanWeaponSmithingButton: {fileID: 0}
-  horshoesButton: {fileID: 0}
-  minecartsButton: {fileID: 0}
-  caltropsButton: {fileID: 0}
-  reinforcedBuildingsButton: {fileID: 0}
---- !u!114 &8098380073476524756
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 595890288067306296}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 372142912, guid: dc443db3e92b4983b9738c1131f555cb, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_SceneId:
-    m_Value: 0
-  m_AssetId:
-    i0: 0
-    i1: 0
-    i2: 0
-    i3: 0
-    i4: 0
-    i5: 0
-    i6: 0
-    i7: 0
-    i8: 0
-    i9: 0
-    i10: 0
-    i11: 0
-    i12: 0
-    i13: 0
-    i14: 0
-    i15: 0
-  m_ServerOnly: 0
-  m_LocalPlayerAuthority: 0
---- !u!114 &2417783222100856238
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 595890288067306296}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: -1768714887, guid: dc443db3e92b4983b9738c1131f555cb, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_TransformSyncMode: 3
-  m_SendInterval: 0.1
-  m_SyncRotationAxis: 7
-  m_RotationSyncCompression: 0
-  m_SyncSpin: 0
-  m_MovementTheshold: 0.001
-  m_VelocityThreshold: 0.0001
-  m_SnapThreshold: 5
-  m_InterpolateRotation: 1
-  m_InterpolateMovement: 1
 --- !u!1 &595890288199240974
 GameObject:
   m_ObjectHideFlags: 0

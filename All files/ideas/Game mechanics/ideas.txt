@@ -5,7 +5,20 @@ Building take over mechanics
 - area base
 - individual units having influence
 
+- Procedural 
+-
 
+processes: 
+baking
+wheat
+farming
+ironworking
+steel
+construction
+lumber
+hunting
+
+Dark mists gathered
 
 questing
 strength for payment

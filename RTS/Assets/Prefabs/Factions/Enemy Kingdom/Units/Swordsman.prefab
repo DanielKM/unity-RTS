@@ -3031,7 +3031,7 @@ GameObject:
   - component: {fileID: 2632656671178594094}
   - component: {fileID: 2674157497267957318}
   m_Layer: 9
-  m_Name: Swordsman (33)
+  m_Name: Swordsman
   m_TagString: Enemy Unit
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3233,7 +3233,7 @@ NavMeshAgent:
   m_Radius: 0.5
   m_Speed: 4
   m_Acceleration: 3
-  avoidancePriority: 50
+  avoidancePriority: 30
   m_AngularSpeed: 120
   m_StoppingDistance: 0.25
   m_AutoTraverseOffMeshLink: 1
@@ -3285,6 +3285,8 @@ MonoBehaviour:
   metalChop3: {fileID: 8300000, guid: f3645d7388d9f4efc88a56c59b3a70d4, type: 3}
   metalChop4: {fileID: 8300000, guid: 0ecf18972377e4652ab7377a0993f14a, type: 3}
   woodChop: {fileID: 8300000, guid: 795e0eda1c479474ab93de36a1afe9f4, type: 3}
+  shootArrow: {fileID: 0}
+  shootFireball: {fileID: 0}
   heldResource: 0
   currentlyMeleeing: 0
   isDead: 0
@@ -3317,6 +3319,7 @@ MonoBehaviour:
   maxHeldResource: 0
   drops: []
   resources: []
+  formationList: []
 --- !u!114 &2674157497267957318
 MonoBehaviour:
   m_ObjectHideFlags: 0

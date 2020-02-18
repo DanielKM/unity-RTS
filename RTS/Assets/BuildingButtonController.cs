@@ -8,6 +8,7 @@ using UnityEngine.EventSystems;
 public class BuildingButtonController : MonoBehaviour
 {
     public GameObject player;
+    public GameObject team;
     ResourceManager RM;
     UIController UI;
 
@@ -15,10 +16,13 @@ public class BuildingButtonController : MonoBehaviour
     public Button barracksButtonOne;
     public Button barracksButtonTwo;
 
+    public Button barracksButtonFour;
+
     public AudioSource playerAudio;
     public AudioClip trainVillagerAudio;
     public AudioClip trainFootmanAudio;
     public AudioClip trainSwordsmanAudio;
+    public AudioClip trainArcherAudio;
 
     public GameObject villager;
 
@@ -43,6 +47,7 @@ public class BuildingButtonController : MonoBehaviour
     UnitController footmanUC;
     UnitController swordsmanUC;
     UnitController villagerUC;
+    UnitController archerUC;
 
     public GameObject selectedObj;
     private Vector3 spawnPosition;
@@ -54,6 +59,7 @@ public class BuildingButtonController : MonoBehaviour
     public GameObject swordsmanPrefab;
     public GameObject footmanPrefab;
     public GameObject villagerPrefab;
+    public GameObject archerPrefab;
 
     // Button text
     Text [] blacksmithText;
@@ -74,18 +80,18 @@ public class BuildingButtonController : MonoBehaviour
             swordsmanUC = swordsmanPrefab.GetComponent<UnitController>();
             footmanUC = footmanPrefab.GetComponent<UnitController>();
             villagerUC = villagerPrefab.GetComponent<UnitController>();
+            archerUC = archerPrefab.GetComponent<UnitController>();
 
             player = GameObject.FindGameObjectWithTag("Player");
+            team = GameObject.Find("Faction");
             inputScript = player.GetComponent<InputManager>();
-            RM = player.GetComponent<ResourceManager>();
+            RM = team.GetComponent<ResourceManager>();
             UI = player.GetComponent<UIController>();
 
             buttonOne.onClick.AddListener(HireVillager);
             barracksButtonOne.onClick.AddListener(HireSwordsman);
             barracksButtonTwo.onClick.AddListener(HireFootman);
-            // blacksmithText = barracksButtonOne.GetComponentsInChildren<Text>();
-            // blacksmithText[0].text = "Train Footman \r\n" + "\r\n" + "\r\n" + footmanUC.gold + "\r\n" + footmanUC.food + "\r\n" + footmanUC.iron + "\r\n";
-
+            barracksButtonFour.onClick.AddListener(HireArcher);
         }
     }
 
@@ -141,8 +147,6 @@ public class BuildingButtonController : MonoBehaviour
             selectedObj = inputScript.selectedObj;
             barracksScript = selectedObj.GetComponent<BarracksController>();
             buildingScript = selectedObj.GetComponent<BuildingController>();
-           
-          //  spawnPosition = new Vector3(buildingScript.location.x, buildingScript.location.y, buildingScript.location.z +50f);
             playerAudio.clip = trainSwordsmanAudio;
             playerAudio.Play();
             barracksScript.HireSwordsman();
@@ -170,11 +174,36 @@ public class BuildingButtonController : MonoBehaviour
             selectedObj = inputScript.selectedObj;
             barracksScript = selectedObj.GetComponent<BarracksController>();
             buildingScript = selectedObj.GetComponent<BuildingController>();
-           
-          //  spawnPosition = new Vector3(buildingScript.location.x, buildingScript.location.y, buildingScript.location.z +50f);
             playerAudio.clip = trainFootmanAudio;
             playerAudio.Play();
             barracksScript.HireFootman();
+        } 
+        else   
+        {
+            UI.noResourcesText.SetActive(true);
+            StartCoroutine(Wait());
+        }
+    }
+
+    void HireArcher()
+    {
+         if (RM.gold >= archerUC.gold && RM.wood >= archerUC.wood && RM.food >= archerUC.food && RM.iron >= archerUC.iron && RM.steel >= archerUC.steel && RM.skymetal >= archerUC.skymetal && RM.stone >= archerUC.stone && RM.housing < RM.maxHousing)
+        {
+            UI.BarracksTraining();
+            RM.gold -= archerUC.gold;
+            RM.wood -= archerUC.wood;
+            RM.food -= archerUC.food;
+            RM.iron -= archerUC.iron;
+            RM.steel -= archerUC.steel;
+            RM.skymetal -= archerUC.skymetal;
+            RM.stone -= archerUC.stone;
+            RM.housing += 1;
+            selectedObj = inputScript.selectedObj;
+            barracksScript = selectedObj.GetComponent<BarracksController>();
+            buildingScript = selectedObj.GetComponent<BuildingController>();
+            playerAudio.clip = trainArcherAudio;
+            playerAudio.Play();
+            barracksScript.HireArcher();
         } 
         else   
         {

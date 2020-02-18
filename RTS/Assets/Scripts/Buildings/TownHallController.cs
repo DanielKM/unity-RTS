@@ -27,6 +27,7 @@ public class TownHallController : MonoBehaviour
     public bool selected = false;
 
     GameObject player;
+    GameObject team;
     InputManager inputScript;
     UnitController workerUC;
     UnitSelection workerUnitSelection;
@@ -51,6 +52,7 @@ public class TownHallController : MonoBehaviour
     void Start()
     {
         player = GameObject.FindGameObjectWithTag("Player");
+        team = GameObject.Find("Faction");
         UI = player.GetComponent<UIController>();
 
         inputScript = player.GetComponent<InputManager>();
@@ -60,12 +62,6 @@ public class TownHallController : MonoBehaviour
         // Progress bar
         BuildingProgressBar = GameObject.Find("BuildingProgressBar");
         BuildingProgressSlider = BuildingProgressBar.GetComponent<Slider>();
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-
     }
 
     public void HireVillager()
@@ -98,7 +94,7 @@ public class TownHallController : MonoBehaviour
         workerUnitSelection = villagerPrefab.GetComponent<UnitSelection>();
         progressIcon.sprite = workerUC.unitIcon;
         workerUC.unitName = firstNames[random1] + " " + lastNameFirst[random2] + lastNameSecond[random3];
-        workerUnitSelection.owner = player;
+        workerUnitSelection.owner = team;
 
         Instantiate(villagerPrefab, spawnPosition, Quaternion.identity);
         villagerAudio = selectedObj.GetComponent<AudioSource>();

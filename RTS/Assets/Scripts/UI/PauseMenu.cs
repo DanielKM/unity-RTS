@@ -5,13 +5,13 @@ using UnityEngine.SceneManagement;
 
 public class PauseMenu : MonoBehaviour
 {
-    public static bool gamePaused = false;
+    public bool gamePaused = false;
     public GameObject pauseMenu;
     public GameObject optionsMenu;
 
     private void Update()
     {
-        if(Input.GetKeyDown(KeyCode.F10))
+        if(Input.GetKeyDown(KeyCode.F10) || Input.GetKeyDown(KeyCode.Escape))
         {
             if(gamePaused)
             {
@@ -45,5 +45,12 @@ public class PauseMenu : MonoBehaviour
     {
         Debug.Log("Quit!");
         Application.Quit();
+        Steamworks.SteamClient.Shutdown();
+    }
+
+    void OnDisable()
+    {
+        Debug.Log("PrintOnDisable: script was disabled");
+        Steamworks.SteamClient.Shutdown();
     }
 }

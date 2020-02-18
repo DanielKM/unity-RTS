@@ -25,7 +25,6 @@ public class DropdownSelection : MonoBehaviour {
     {
         int index = GetComponent<Dropdown>().value;
         selection = GetComponent<Dropdown>().captionText.text;
-        Debug.Log("selected something different at index " + index + ": " + selection);
     }
 
     // Update is called once per frame

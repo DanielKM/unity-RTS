@@ -10,12 +10,12 @@ using UnityEngine.SceneManagement;
 public class InputManager : MonoBehaviour
 {
     private GameObject player;
+    private GameObject team;
 
     // World Bounds
    public float xMin, xMax, yMin, yMax, zMin, zMax;
 
     // Reference Scripts
-    UIController UI;
 
     UnitController unitScript;
     UnitSelection selectScript;
@@ -26,7 +26,10 @@ public class InputManager : MonoBehaviour
     BarracksController barracksScript;
     BlacksmithController blacksmithScript;
     FoundationController foundationScript;
+
     ResearchController RC;
+    UIController UI;
+    PauseMenu PM;
 
     // UI FOR UNITS
     private AudioSource unitAudio;
@@ -103,6 +106,8 @@ public class InputManager : MonoBehaviour
     public Texture2D doorway;
     public Texture2D combat;
     public Texture2D sword;
+    public GameObject cursorHit;
+    private GameObject currentCursorHit;
 
     // New
     public EventVector3 OnClickEnvironment;
@@ -110,15 +115,16 @@ public class InputManager : MonoBehaviour
     
     // Multiselect variables
     bool isSelecting = false;
+    bool selectionBoxOpen = false;
     public bool isUnit;
 
     Vector3 mousePosition1;
     // All units which are selected
-    public GameObject[] selectedObjects;
+    public List<GameObject> selectedObjects;
 
     // All units in the game that are selectable
     private GameObject[] units;
-    
+
     // Coordinates of all units
     private Vector3 unitPos;
     private float unitPosX;
@@ -138,10 +144,13 @@ public class InputManager : MonoBehaviour
     {
         Scene currentScene = SceneManager.GetActiveScene();
         if(currentScene.name != "Main Menu") {
+            team = GameObject.Find("Faction");
             player = GameObject.FindGameObjectWithTag("Player");
             playerAudio = GameObject.FindGameObjectWithTag("Main Audio").GetComponent<AudioSource>();
             UI = player.GetComponent<UIController>();
-            RC = player.GetComponent<ResearchController>();
+            RC = team.GetComponent<ResearchController>();
+            PM = GameObject.Find("GameMenu").GetComponent<PauseMenu>();
+
         // progressIcon = GameObject.Find("ProgressIcon").GetComponent<Image>();
         // foundationScript = selectedObj.GetComponent<FoundationController>();
             // progressIcon.sprite = foundationScript.buildingPrefab.GetComponent<BuildingController>().icon;
@@ -180,7 +189,7 @@ public class InputManager : MonoBehaviour
 
                     if (Physics.Raycast(raycast, out hit1, 350))
                     {
-                        if (hit1.transform.tag == "Enemy Unit" || hit1.transform.tag == "Selectable" || hit1.transform.tag == "Player 1" ||  hit1.transform.tag == "Foundation" || hit1.transform.tag == "Ground" || hit1.transform.tag == "Yard" || hit1.transform.tag == "Barracks" || hit1.transform.tag == "House" || hit1.transform.tag == "Resource" || hit1.transform.tag == "Fort" || hit1.transform.tag == "Blacksmith" || hit1.transform.tag == "Lumber Yard" || hit1.transform.tag == "Stables")
+                        if (hit1.transform.tag == "Enemy Unit" || hit1.transform.tag == "Selectable" || hit1.transform.tag == "Player 1" ||  hit1.transform.tag == "Foundation" || hit1.transform.tag == "Ground" || hit1.transform.tag == "Yard" || hit1.transform.tag == "Barracks" || hit1.transform.tag == "House" || hit1.transform.tag == "Resource" || hit1.transform.tag == "Fort" || hit1.transform.tag == "Blacksmith" || hit1.transform.tag == "Stables")
                         {
                             LeftClick();
                         }
@@ -188,7 +197,7 @@ public class InputManager : MonoBehaviour
                 }
             }
 
-            if(Input.GetKeyDown(KeyCode.F10))
+            if(Input.GetKeyDown(KeyCode.F10) || Input.GetKeyDown(KeyCode.Escape))
             {
                 UI.OpenGameMenuPanel();
             }
@@ -349,7 +358,17 @@ public class InputManager : MonoBehaviour
         }
         // If we let go of the left mouse button, end UnitSelection
         if (Input.GetMouseButtonUp(0))
-            isSelecting = false;
+        { 
+            isSelecting = false;       
+            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+            RaycastHit hit;
+            if(Physics.Raycast(ray, out hit, 350))
+            {
+                if(!selectionBoxOpen) {
+                    StartCoroutine(ClickCursorHit(hit));
+                }
+            }    
+        }
     }
 
     void OnGUI()
@@ -375,54 +394,75 @@ public class InputManager : MonoBehaviour
             Vector3 mouse2 = new Vector3(mouse2x, mouse2y, mouse2z);
 
             var selectRect = Utils.GetScreenRect(mouse1, mouse2);
-
-            inUnitSelectionBox = false;
-            for (int i = 0; i < units.Length; i++)
-            {
-                unitPosX = units[i].transform.position.x;
-                unitPosY = units[i].transform.position.y;
-                unitPosZ = units[i].transform.position.z;
-
-                unitPos = new Vector3(unitPosX, unitPosY, unitPosZ);
-                Vector3 screenPos = cam.WorldToScreenPoint(unitPos);
-
-                // Adds all units in UnitSelection box to selected
-                if (selectRect.Contains(screenPos, true))
+            if(selectRect.size.x * selectRect.size.y > 150) {  
+                selectionBoxOpen = true;
+                inUnitSelectionBox = false;
+                for (int i = 0; i < units.Length; i++)
                 {
-                    selectedInfo = units[i].GetComponent<UnitSelection>();
-                    unitScript = units[i].GetComponent<UnitController>();
+                    unitPosX = units[i].transform.position.x;
+                    unitPosY = units[i].transform.position.y;
+                    unitPosZ = units[i].transform.position.z;
 
-                    if(!unitScript.isDead) {
-                        isSelected = true;
+                    unitPos = new Vector3(unitPosX, unitPosY, unitPosZ);
+                    Vector3 screenPos = cam.WorldToScreenPoint(unitPos);
 
-                        selectedInfo.selected = true;
-                        selectedInfo.transform.GetChild(2).gameObject.GetComponent<Projector>().material.SetColor("_Color", Color.green);
-                        selectedInfo.transform.GetChild(2).gameObject.SetActive(true);
+                    // Adds all units in UnitSelection box to selected
+                    if (selectRect.Contains(screenPos, true))
+                    {
+                        selectedInfo = units[i].GetComponent<UnitSelection>();
+                        unitScript = units[i].GetComponent<UnitController>();
 
-                        playerAudio.clip = unitAudioClip;
-                        if(unitScript.unitType == "Worker") {
-                            // unitAudio.volume = 0.5f;
-                            UI.WorkerSelect();
-                        } else if (unitScript.unitType == "Swordsman") {
-                            UI.SwordsmanSelect();
-                        } else if (unitScript.unitType == "Footman") {
-                            UI.FootmanSelect();
+                        if(!unitScript.isDead) {
+                            if(!selectedObjects.Contains(units[i])) {
+                                selectedObjects.Add(units[i]);
+                            }
+                            selectedInfo.selected = true;
+                            selectedInfo.transform.GetChild(2).gameObject.GetComponent<Projector>().material.SetColor("_Color", Color.green);
+                            selectedInfo.transform.GetChild(2).gameObject.SetActive(true);
+
+                            playerAudio.clip = unitAudioClip;
+                            if(unitScript.unitType == "Worker") {
+                                // unitAudio.volume = 0.5f;
+                                UI.WorkerSelect();
+                            } else if (unitScript.unitType == "Swordsman") {
+                                UI.SwordsmanSelect();
+                            } else if (unitScript.unitType == "Archer") {
+                                UI.ArcherSelect();
+                            } else if (unitScript.unitType == "Wizard") {
+                                UI.WizardSelect();
+                            } else if (unitScript.unitType == "Footman") {
+                                UI.FootmanSelect();
+                            }
+                            inUnitSelectionBox = true;
+                            
+                            // playerAudio.Play();
+                        } else {
+                            if(selectedObjects.Contains(units[i])) {
+                                selectedObjects.Remove(units[i]);
+                            }
                         }
-                        inUnitSelectionBox = true;
+                    } else {
+                        if(selectedObjects.Contains(units[i])) {
+                            selectedObjects.Remove(units[i]);
+                            selectedInfo = units[i].GetComponent<UnitSelection>();
+                            unitScript = units[i].GetComponent<UnitController>();
+                            selectedInfo.selected = false;
+                            selectedInfo.transform.GetChild(2).gameObject.GetComponent<Projector>().material.SetColor("_Color", Color.green);
+                            selectedInfo.transform.GetChild(2).gameObject.SetActive(false);
+                        }
                     }
                 }
-            }
-
-            if(inUnitSelectionBox) {
-                playerAudio.Play();
+                if(!inUnitSelectionBox) {
+                    UI.CloseAllPanels();
+                }
+            } else {
+                selectionBoxOpen = false;
             }
         }
     }
       
     public void UpdateUnitPanel()
     { 
-            // FFA500
-        
         if (RC.artisanArmourSmithing) {
             UI.armour1.GetComponent<Image>().color = new Color32(255,165,0,255);
             UI.armour2.GetComponent<Image>().color = new Color32(255,165,0,255);
@@ -549,38 +589,44 @@ public class InputManager : MonoBehaviour
         RaycastHit hit;
         if(Physics.Raycast(ray, out hit, 350))
         {
-            if (hit.collider.tag == "Enemy Unit" && (!Input.GetKey(KeyCode.LeftShift)))
+            if (hit.collider.tag == "Ground" && (!Input.GetKey(KeyCode.LeftShift)))
             {
+                DeselectUnits();
+                UI.CloseAllPanels();
+            } 
+            else if (hit.collider.tag == "Enemy Unit" && (!Input.GetKey(KeyCode.LeftShift)))
+            {
+                DeselectUnits();
                 selectedObj = hit.collider.gameObject;
                 selectedInfo = selectedObj.GetComponent<UnitSelection>();
                 unitScript = selectedObj.GetComponent<UnitController>();
-                if (selectedInfo.selected == true)
-                {
-                    DeselectUnits();
-                }
-                else 
-                {
-                    selectedInfo.selected = true;
-
-                    //  OPEN ENEMY PANELS!!
-
-                    
-                    // UnitSelection indicators
-                    selectedObj.transform.GetChild(2).gameObject.GetComponent<Projector>().material.SetColor("_Color", Color.red);
-                    selectedObj.transform.GetChild(2).gameObject.SetActive(true);
-                    // unitAudio = selectedObj.GetComponent<AudioSource>();
-                    // unitAudio.clip = unitAudioClip;
-                    // unitAudio.Play();
-                    // isSelected = true;
-                    UI.EnemySelect();
-                }
+            
+                selectedInfo.selected = true;
+                //  OPEN ENEMY PANELS!!
+                // UnitSelection indicators
+                selectedObj.transform.GetChild(2).gameObject.GetComponent<Projector>().material.SetColor("_Color", Color.red);
+                selectedObj.transform.GetChild(2).gameObject.SetActive(true);
+                // unitAudio = selectedObj.GetComponent<AudioSource>();
+                // unitAudio.clip = unitAudioClip;
+                // unitAudio.Play();
+                // isSelected = true;
+                UI.EnemySelect();
             }
             else if (hit.collider.tag == "Selectable")
             {
+                
+                DeselectUnits();
                 selectedObj = hit.collider.gameObject;
+                if(!selectedObjects.Contains(selectedObj)) {
+                    selectedObjects.Add(selectedObj);
+                } else {
+                    selectedObjects.Remove(selectedObj);
+                }
+
                 selectedObj.transform.GetChild(2).gameObject.GetComponent<Projector>().material.SetColor("_Color", Color.green);
                 selectedInfo = selectedObj.GetComponent<UnitSelection>();
                 unitScript = selectedObj.GetComponent<UnitController>();
+
                 if (selectedInfo.selected == true)
                 {
                     DeselectUnits();
@@ -602,30 +648,22 @@ public class InputManager : MonoBehaviour
                             UI.WorkerSelect();
                         } else if (unitScript.unitType == "Swordsman") {
                             UI.SwordsmanSelect();
+                        } else if (unitScript.unitType == "Archer") {
+                            UI.ArcherSelect();
+                        } else if (unitScript.unitType == "Wizard") {
+                            UI.WizardSelect();
                         } else if (unitScript.unitType == "Footman") {
                             UI.FootmanSelect();
                         }
                     }
                 }
-                else if (hit.collider.tag == "Ground" && (!Input.GetKey(KeyCode.LeftShift)))
-                {
-                    if(selectedObjects.Length >= 0)
-                    {
-                        DeselectUnits();
-                        UI.CloseAllPanels();
-                    // Debug.Log("Standing down, Sir!");
-                    }
-                } 
                 else
                 {
                     if(!unitScript.isDead) {
                         GameObject[] selectedIndicators = GameObject.FindGameObjectsWithTag("SelectedIndicator");
                         for (int j = 0; j < selectedIndicators.Length; j++)
                         {
-                            // Turns the unit UnitSelection indicator off
                             selectedIndicators[j].transform.gameObject.SetActive(false);
-
-                            // Deselects the unit
                             selectedIndicators[j].transform.parent.GetComponent<UnitSelection>().selected = false;
                         }
 
@@ -643,45 +681,60 @@ public class InputManager : MonoBehaviour
                             UI.WorkerSelect();
                         } else if (unitScript.unitType == "Swordsman") {
                             UI.SwordsmanSelect();
+                        } else if (unitScript.unitType == "Archer") {
+                            UI.ArcherSelect();
+                        } else if (unitScript.unitType == "Wizard") {
+                            UI.WizardSelect();
                         } else if (unitScript.unitType == "Footman") {
                             UI.FootmanSelect();
                         }
                     }
                 }
             }
-            else if (hit.collider.tag == "Enemy Unit" || hit.collider.tag == "Player 1" || hit.collider.tag == "Foundation" || hit.collider.tag == "Barracks" || hit.collider.tag == "House" || hit.collider.tag == "Resource" || hit.collider.tag == "Fort" || hit.collider.tag == "Blacksmith" || hit.transform.tag == "Lumber Yard" || hit.transform.tag == "Stables" )
+            else if (hit.collider.tag == "Enemy Unit" || hit.collider.tag == "Player 1" || hit.collider.tag == "Foundation" || hit.collider.tag == "Barracks" || hit.collider.tag == "House" || hit.collider.tag == "Resource" || hit.collider.tag == "Fort" || hit.collider.tag == "Blacksmith" || hit.transform.tag == "Stables" )
             {
+                
                 UI.CloseAllPanels();
-                if (selectedObjects.Length >= 0)
+                if (selectedObjects.Count >= 0)
                 {
                     DeselectUnits();
-                    Debug.Log("Standing down, Sir!");
                 }
                 selectedObj = hit.collider.gameObject;
 
-                // Handle town hall UnitSelection
                 if(selectedObj.tag == "Player 1")
                 {
-                    townHallScript = selectedObj.GetComponent<TownHallController>();
-                    isTraining = townHallScript.isTraining;
-                    SwapProgressIcon();
-                    if (isTraining)
-                    {
-                        UI.TownHallTraining();
-                    }
-                    else
-                    {
-                        UI.TownHallSelect();
+                    buildingScript = selectedObj.GetComponent<BuildingController>();
+
+                    if(buildingScript.unitType == "Lumber Yard") {
+                        selectedObj.transform.GetChild(0).gameObject.SetActive(true);
+                        UI.LumberYardSelect();
+                    } else if (buildingScript.unitType == "Town Hall") {
+                        selectedObj.transform.GetChild(0).gameObject.SetActive(true);
+                        townHallScript = selectedObj.GetComponent<TownHallController>();
+                        isTraining = townHallScript.isTraining;
+                        SwapProgressIcon();
+                        if (isTraining)
+                        {
+                            UI.TownHallTraining();
+                        }
+                        else
+                        {
+                            UI.TownHallSelect();
+                        }
                     }
                 } else if (selectedObj.tag == "House")
                 {
+                    selectedObj.transform.GetChild(0).gameObject.SetActive(true);
                     UI.HouseSelect();
                 } else if (selectedObj.tag == "Resource")
                 {
+                    selectedObj.transform.GetChild(0).gameObject.SetActive(true);
                     UI.ResourceSelect();
                 }
                 else if (selectedObj.tag == "Foundation")
                 {
+                    
+                    selectedObj.transform.GetChild(0).gameObject.SetActive(true);
                     foundationScript = selectedObj.GetComponent<FoundationController>();
                     isBuilding = foundationScript.isBuilding;
                     if (isBuilding)
@@ -696,6 +749,7 @@ public class InputManager : MonoBehaviour
                 } 
                 else if (selectedObj.tag == "Blacksmith") {
                     blacksmithScript = selectedObj.GetComponent<BlacksmithController>();
+                    selectedObj.transform.GetChild(0).gameObject.SetActive(true);
                     isTraining = blacksmithScript.isTraining;
                     SwapProgressIcon();
                     if (isTraining)
@@ -707,10 +761,8 @@ public class InputManager : MonoBehaviour
                         UI.BlacksmithSelect();
                     }
                 }
-                else if (selectedObj.tag == "Lumber Yard") {
-                    UI.LumberYardSelect();
-                }
                 else if (selectedObj.tag == "Barracks") {
+                    selectedObj.transform.GetChild(0).gameObject.SetActive(true);
                     barracksScript = selectedObj.GetComponent<BarracksController>();
                     isTraining = barracksScript.isTraining;
                     SwapProgressIcon();
@@ -724,9 +776,9 @@ public class InputManager : MonoBehaviour
                     }
                 }
                 else if (selectedObj.tag == "Stables") {
+                    selectedObj.transform.GetChild(0).gameObject.SetActive(true);
                     UI.StablesSelect();
                 }
-                // UpdateBuildingPanel();
             }
             else if (hit.collider.tag != "Selectable" && (!Input.GetKey(KeyCode.LeftShift)))
             {
@@ -767,25 +819,39 @@ public class InputManager : MonoBehaviour
     {
         selectedObj = null;
         UI.CloseAllPanels();
-        for (int i = 0; i < selectedObjects.Length; i++)
+        for (int i = 0; i < selectedObjects.Count; i++)
         {
             // Grabs all objects in selected array and deselects them
             selectedInfo = selectedObjects[i].GetComponent<UnitSelection>();
             selectedInfo.selected = false;
         }
+        selectedObjects.Clear();
         GameObject[] selectedIndicators = GameObject.FindGameObjectsWithTag("SelectedIndicator");
+        if(selectedIndicators.Length > 0) {
+            // UnitSelection indicators
+            for (int j = 0; j < selectedIndicators.Length; j++)
+            {
+                // Turns the unit UnitSelection indicator off
+                selectedIndicators[j].transform.gameObject.SetActive(false);
 
-        // UnitSelection indicators
-        for (int j = 0; j < selectedIndicators.Length; j++)
-        {
-            // Turns the unit UnitSelection indicator off
-            selectedIndicators[j].transform.gameObject.SetActive(false);
-
-            // Deselects the unit
-            selectedIndicators[j].transform.parent.GetComponent<UnitSelection>().selected = false;
+                // Deselects the unit
+                if(selectedIndicators[j].transform.parent.GetComponent<UnitSelection>()) {
+                    selectedIndicators[j].transform.parent.GetComponent<UnitSelection>().selected = false;
+                }
+            }
         }
 
         isSelected = false;
+    }
+
+    public IEnumerator ClickCursorHit(RaycastHit hit) {
+            Destroy(currentCursorHit);
+        if(!PM.gamePaused) {
+            currentCursorHit = Instantiate(cursorHit);
+            currentCursorHit.transform.position = new Vector3 (hit.point.x, hit.point.y + 2.0f, hit.point.z);
+            yield return new WaitForSeconds(0.1f);
+            Destroy(currentCursorHit);
+        }
     }
 
     IEnumerator UpdatePanels()

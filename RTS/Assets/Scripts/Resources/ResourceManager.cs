@@ -93,7 +93,7 @@ public class ResourceManager : MonoBehaviour
             HousingDisp.text = "" + housing + "/" + maxHousing;
 
             if(gold >= 5000) {
-                Debug.Log("You win: Economic victory!");
+                // Debug.Log("You win: Economic victory!");
             }
         }
     }

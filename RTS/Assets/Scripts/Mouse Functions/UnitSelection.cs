@@ -10,12 +10,13 @@ public class UnitSelection : MonoBehaviour
      // Set Resource
     public NodeManager.ResourceTypes heldResourceType;
         
-    public Tasklist task;
+    public ActionList task;
     private ResourceManager RM;
     private AudioSource unitAudio;
     public AudioClip unitMoveClip;
 
     // Player 
+    public GameObject team;
     public GameObject player;
     public GameObject owner;
     private AudioSource playerAudio;
@@ -28,6 +29,7 @@ public class UnitSelection : MonoBehaviour
     UnitController UC;
     ResearchController RC;
     UnitSelection targetScript;
+    BuildingController buildingScript;
     float harvestSpeed;
 
     // villager target node
@@ -52,17 +54,19 @@ public class UnitSelection : MonoBehaviour
     public GameObject[] drops;
     public GameObject[] resources;
 
-
+    public List<GameObject> formationList;
+    public List<GameObject> dropList;
 
     // Start is called before the first frame update
     void Start()
     {
         Scene currentScene = SceneManager.GetActiveScene();
         if(currentScene.name != "Main Menu") {
+            team = GameObject.Find("Faction");
             player = GameObject.FindGameObjectWithTag("Player");
             playerAudio = GameObject.FindGameObjectWithTag("Main Audio").GetComponent<AudioSource>();
-            RM = player.GetComponent<ResourceManager>();
-            RC = player.GetComponent<ResearchController>();
+            RM = team.GetComponent<ResourceManager>();
+            RC = team.GetComponent<ResearchController>();
             IM = player.GetComponent<InputManager>();
             UC = GetComponent<UnitController>();
             agent = GetComponent<NavMeshAgent>();
@@ -76,51 +80,52 @@ public class UnitSelection : MonoBehaviour
         if(currentScene.name != "Main Menu") {
             if(UC.unitType == "Worker" && !UC.isDead) {
                 // if target node is destroyed
-                if (targetNode == null && task == Tasklist.Gathering)
+                if (targetNode == null && task == ActionList.Gathering)
                 {
                     if (heldResource >= maxHeldResource)
                     {
                         isBuilding = false;
                         isGathering = false;
-                        //stop gathering immediately
-                        //Drop off point here for resource yards
                         drops = GameObject.FindGameObjectsWithTag("Player 1");
-                        if(drops.Length > 0)
+                        drops = AdjustDrops(drops);
+                        if(drops.Length > 0 && task != ActionList.Idle && task != ActionList.Moving )
                         {
+                            task = ActionList.Delivering;
                             agent.destination = GetClosestDropOff(drops).transform.position;
-                            drops = null;
-                            task = Tasklist.Delivering;
                         } else
                         {
-                            task = Tasklist.Idle;
+                            task = ActionList.Idle;
                         }
                     } else
                     {
                         resources = GameObject.FindGameObjectsWithTag("Resource");
                         targetNode = GetClosestResource(resources);
-                        agent.destination = targetNode.transform.position;
+                        if(targetNode) {
+                            agent.destination = targetNode.transform.position;
+                        } else {
+                            task = ActionList.Idle;
+                        }
                     }
                 } else
                 {
                     if(targetNode == null && isBuilding) {
-                        task = Tasklist.Idle;
+                        task = ActionList.Idle;
                         isBuilding = false;
                     }
                     if (heldResource >= maxHeldResource)
                     {
-                        //stop gathering immediately
                         isGathering = false;
-                        //Drop off point here for resource yards
                         drops = GameObject.FindGameObjectsWithTag("Player 1");
-                        if (drops.Length > 0)
+                        drops = AdjustDrops(drops);
+                        if (drops.Length > 0 && task != ActionList.Idle && task != ActionList.Moving ) 
                         {
+                            task = ActionList.Delivering;
                             agent.destination = GetClosestDropOff(drops).transform.position;
                             drops = null;
-                            task = Tasklist.Delivering;
                         }
                         else
                         {
-                            task = Tasklist.Idle;
+                            task = ActionList.Idle;
                         }
                     }
                 }
@@ -132,45 +137,72 @@ public class UnitSelection : MonoBehaviour
                     RightClick();
                 }
             }
+            if (Input.GetMouseButtonUp(1) && selected == true) {
+                Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+                RaycastHit hit;
+                if(Physics.Raycast(ray, out hit, 350))
+                {
+                    StartCoroutine(IM.ClickCursorHit(hit));
+                }    
+            }
         }
     }
 
-    // Find the closest dropoff after gathering and go there
+    GameObject[] AdjustDrops(GameObject[] newDrops) {
+        dropList.Clear();
+        if(heldResourceType == NodeManager.ResourceTypes.Wood) {
+            foreach(GameObject drop in newDrops) {
+                buildingScript = drop.GetComponent<BuildingController>();
+                if(buildingScript.unitType  == "Town Hall" || buildingScript.unitType == "Lumber Yard") {
+                    dropList.Add(drop);
+                }
+            }
+        } else {
+            foreach(GameObject drop in newDrops) {
+                buildingScript = drop.GetComponent<BuildingController>();
+                if(buildingScript.unitType  == "Town Hall") {
+                    dropList.Add(drop);
+                }
+            }
+        }
+        newDrops = dropList.ToArray();
+        return newDrops;
+    }
+
     GameObject GetClosestDropOff(GameObject[] dropOffs)
     {
         GameObject closestDrop = null;
-        float closestDistance = Mathf.Infinity;
-        Vector3 position = transform.position;
+        float closestDropDistance = Mathf.Infinity;
+        Vector3 dropoffPosition = transform.position;
 
         foreach(GameObject targetDrop in dropOffs)
         {
-            Vector3 direction = targetDrop.transform.position - position;
-            float distance = direction.sqrMagnitude;
-            if(distance < closestDistance)
+            Vector3 direction = targetDrop.transform.position - dropoffPosition;
+            float dropDistance = direction.sqrMagnitude;
+            if(dropDistance < closestDropDistance)
             {
-                closestDistance = distance;
+                closestDropDistance = dropDistance;
                 closestDrop = targetDrop;
             }
         }
         return closestDrop;
     }
 
-    // Find the closest dropoff after gathering and go there
     GameObject GetClosestResource(GameObject[] resources)
     {
         GameObject closestResource = null;
-        float closestDistance = Mathf.Infinity;
-        Vector3 position = transform.position;
+        float closestResourceDistance = Mathf.Infinity;
+        Vector3 resourcePosition = transform.position;
 
         foreach(GameObject targetResource in resources)
         {
             NodeManager currentNode = targetResource.GetComponent<NodeManager>();
             if(currentNode.resourceType == heldResourceType) {
-                Vector3 direction = targetResource.transform.position - position;
-                float distance = direction.sqrMagnitude;
-                if(distance < closestDistance)
+                Vector3 direction = targetResource.transform.position - resourcePosition;
+                float resourceDistance = direction.sqrMagnitude;
+                if(resourceDistance < closestResourceDistance)
                 {
-                    closestDistance = distance;
+                    closestResourceDistance = resourceDistance;
                     closestResource = targetResource;
                 }
             }
@@ -190,11 +222,10 @@ public class UnitSelection : MonoBehaviour
         {
             targetNode = hit.collider.gameObject;
             targetScript = targetNode.GetComponent<UnitSelection>();
-            if(owner == player && !UC.isDead) {     
+            if(owner == team && !UC.isDead) {     
                 if(UC.unitType == "Worker") {
                     if (hit.collider.tag != "Player 1")
                     {
-                        // For following friends and enemies
                         if(targetScript != null) {
                             agent.destination = hit.collider.gameObject.transform.position;
                             isFollowing = true;
@@ -204,14 +235,14 @@ public class UnitSelection : MonoBehaviour
                             isBuilding = false;
                             isGathering = false;
                             isMeleeing = false;
-                            task = Tasklist.Moving;
-                            agent.destination = hit.point;
+                            task = ActionList.Moving;
+                            createBoxFormation(hit);
                         }
                         else if (hit.collider.tag == "Resource")
                         {
                             isBuilding = false;
                             isMeleeing = false;
-                            task = Tasklist.Gathering;
+                            task = ActionList.Gathering;
                             agent.destination = hit.collider.gameObject.transform.position;
                             targetNode = hit.collider.gameObject;
                         }
@@ -219,13 +250,12 @@ public class UnitSelection : MonoBehaviour
                         {
                             isGathering = false;
                             isMeleeing = false;
-                            task = Tasklist.Building;
+                            task = ActionList.Building;
                             agent.destination = hit.collider.gameObject.transform.position;
                             targetNode = hit.collider.gameObject;
                         }
                         else if (hit.collider.tag == "Doorway")
                         {
-                            Debug.Log("Smashing down that door, Sir!");
                         } 
                     }
                     else if (hit.collider.tag == "Player 1")
@@ -234,15 +264,15 @@ public class UnitSelection : MonoBehaviour
                         isGathering = false;
                         agent.destination = hit.collider.gameObject.transform.position;
                         targetNode = hit.collider.gameObject;
-                        task = Tasklist.Delivering;
+                        task = ActionList.Delivering;
                     } 
                     else 
                     {
-                        task = Tasklist.Idle;
+                        task = ActionList.Idle;
                     }
                     playerAudio.clip = unitMoveClip;
                     playerAudio.Play();
-                } else if (UC.unitType == "Footman" || UC.unitType == "Swordsman") {
+                } else if (UC.unitType == "Footman" || UC.unitType == "Swordsman" || UC.unitType == "Archer" || UC.unitType == "Wizard") {
                     isBuilding = false;
                     isGathering = false;
                     if(targetScript != null) {
@@ -253,12 +283,12 @@ public class UnitSelection : MonoBehaviour
                     else if (hit.collider.tag == "Ground")
                     {
                         isMeleeing = false;
-                        task = Tasklist.Moving;
-                        agent.destination = hit.point;
+                        task = ActionList.Moving;
+                        createBoxFormation(hit);
                     }
                     else if (hit.collider.tag == "Doorway")
                     {
-                        Debug.Log("Smashing down that door, Sir!");
+
                     } 
                     else {
                         agent.destination = hit.collider.gameObject.transform.position;
@@ -270,21 +300,71 @@ public class UnitSelection : MonoBehaviour
         }
     }
 
+    public void createBoxFormation(RaycastHit hit) {
+        formationList = IM.selectedObjects;
+        float row = 0.0f;
+        int counter = 0;
+        if(formationList.Count <= 4) {
+            for(int iteration = 0; iteration < formationList.Count; iteration++) {
+                
+                if(iteration % 2 == 0) {
+                    row += 1.5f;
+                    counter = 0;
+                } else {
+                    counter += 1;
+                }
+
+                if(iteration % 2 == 0) {
+                    formationList[iteration].GetComponent<NavMeshAgent>().destination = new Vector3(hit.point.x + 0.8f * counter, hit.point.y, hit.point.z + row);
+                } else {
+                    formationList[iteration].GetComponent<NavMeshAgent>().destination = new Vector3(hit.point.x - 0.8f * counter, hit.point.y, hit.point.z + row);
+                }
+            }
+        } 
+        if(formationList.Count > 4 && formationList.Count <= 16) {
+            for(int iteration = 0; iteration < formationList.Count; iteration++) {
+                
+                if(iteration % 4 == 0) {
+                    row += 1.5f;
+                    counter = 0;
+                } else {
+                    counter += 1;
+                }
+
+                if(iteration % 2 == 0) {
+                    formationList[iteration].GetComponent<NavMeshAgent>().destination = new Vector3(hit.point.x + 0.8f * counter, hit.point.y, hit.point.z + row);
+                } else {
+                    formationList[iteration].GetComponent<NavMeshAgent>().destination = new Vector3(hit.point.x - 0.8f * counter, hit.point.y, hit.point.z + row);
+                }
+            }
+        } 
+        else if(formationList.Count >= 16) {
+            for(int iteration = 0; iteration < formationList.Count; iteration++) {
+                
+                if(iteration % 8 == 0) {
+                    row += 1.5f;
+                    counter = 0;
+                } else {
+                    counter += 1;
+                }
+
+                if(iteration % 2 == 0) {
+                    formationList[iteration].GetComponent<NavMeshAgent>().destination = new Vector3(hit.point.x + 0.8f * counter, hit.point.y, hit.point.z + row);
+                } else {
+                    formationList[iteration].GetComponent<NavMeshAgent>().destination = new Vector3(hit.point.x - 0.8f * counter, hit.point.y, hit.point.z + row);
+                }
+            }
+        } 
+    }
+
     public void OnTriggerStay(Collider other)
     {
         GameObject hitObject = other.gameObject;
 
-        if (hitObject.tag == "Player 1" && task == Tasklist.Delivering && heldResource != 0) 
+        if (hitObject.tag == "Player 1" && task == ActionList.Idle && heldResource != 0) 
         {
-            //if (heldResourceType == Skymetal)
-            //{
-            //    DropSkyMetal();
-            //}
-
-            //if (heldResourceType == NodeManager.ResourceTypes.Wood)
-            //{
-            //    DropWood();
-            //}
+            // task = ActionList.Idle;
+            // agent.isStopped = true;
         }
     }
 
@@ -293,7 +373,7 @@ public class UnitSelection : MonoBehaviour
         //Handle drop off!
         if (RM.skymetal >= RM.maxSkymetal)
         {
-            task = Tasklist.Idle;
+            task = ActionList.Idle;
         }
         else
         {
@@ -303,27 +383,25 @@ public class UnitSelection : MonoBehaviour
                 isGathering = false;
                 if (heldResource != 0)
                 {
-                    //stop gathering immediately
-                    //Drop off point here for resource yards
-                   
                     drops = GameObject.FindGameObjectsWithTag("Player 1");
+                    drops = AdjustDrops(drops);
                     agent.destination = GetClosestDropOff(drops).transform.position;
 
                     RM.skymetal += heldResource;
-                    task = Tasklist.Delivering;
+                    task = ActionList.Delivering;
                     heldResource = 0;
                     drops = null;
                 }
                 else
                 {
-                    task = Tasklist.Idle;
+                    task = ActionList.Idle;
                 }
             }
             else
             {
                 RM.skymetal += heldResource;
                 heldResource = 0;
-                task = Tasklist.Gathering;
+                task = ActionList.Gathering;
                 agent.destination = targetNode.transform.position;
             }
         }
@@ -334,7 +412,7 @@ public class UnitSelection : MonoBehaviour
         //Handle drop off!
         if (RM.wood >= RM.maxWood)
         {
-            task = Tasklist.Idle;
+            task = ActionList.Idle;
         }
         else
         {
@@ -344,26 +422,25 @@ public class UnitSelection : MonoBehaviour
                 isGathering = false;
                 if (heldResource != 0)
                 {
-                    //stop gathering immediately
-                    //Drop off point here for resource yards
                     drops = GameObject.FindGameObjectsWithTag("Player 1");
+                    drops = AdjustDrops(drops);
                     agent.destination = GetClosestDropOff(drops).transform.position;
 
                     RM.wood += heldResource;
                     heldResource = 0;
-                    task = Tasklist.Delivering;
+                    task = ActionList.Delivering;
                     drops = null;
                 }
                 else
                 {
-                    task = Tasklist.Idle;
+                    task = ActionList.Idle;
                 }
             }
             else
             {
                 RM.wood += heldResource;
                 heldResource = 0;
-                task = Tasklist.Gathering;
+                task = ActionList.Gathering;
                 agent.destination = targetNode.transform.position;
             }
         }
@@ -374,36 +451,34 @@ public class UnitSelection : MonoBehaviour
         //Handle drop off!
         if (RM.iron >= RM.maxIron)
         {
-            task = Tasklist.Idle;
+            task = ActionList.Idle;
         }
         else
         {
-            // if target node is destroyed
             if (targetNode == null)
             {
                 isGathering = false;
                 if (heldResource != 0)
                 {
-                    //stop gathering immediately
-                    //Drop off point here for resource yards
                     drops = GameObject.FindGameObjectsWithTag("Player 1");
+                    drops = AdjustDrops(drops);
                     agent.destination = GetClosestDropOff(drops).transform.position;
 
                     RM.iron += heldResource;
-                    task = Tasklist.Delivering;
+                    task = ActionList.Delivering;
                     heldResource = 0;
                     drops = null;
                 }
                 else
                 {
-                    task = Tasklist.Idle;
+                    task = ActionList.Idle;
                 }
             }
             else
             {
                 RM.iron += heldResource;
                 heldResource = 0;
-                task = Tasklist.Gathering;
+                task = ActionList.Gathering;
                 agent.destination = targetNode.transform.position;
             }
         }
@@ -414,7 +489,7 @@ public class UnitSelection : MonoBehaviour
         //Handle drop off!
         if (RM.stone >= RM.maxStone)
         {
-            task = Tasklist.Idle;
+            task = ActionList.Idle;
         }
         else
         {
@@ -424,26 +499,25 @@ public class UnitSelection : MonoBehaviour
                 isGathering = false;
                 if (heldResource != 0)
                 {
-                    //stop gathering immediately
-                    //Drop off point here for resource yards
                     drops = GameObject.FindGameObjectsWithTag("Player 1");
+                    drops = AdjustDrops(drops);
                     agent.destination = GetClosestDropOff(drops).transform.position;
 
                     RM.stone += heldResource;
-                    task = Tasklist.Delivering;
+                    task = ActionList.Delivering;
                     heldResource = 0;
                     drops = null;
                 }
                 else
                 {
-                    task = Tasklist.Idle;
+                    task = ActionList.Idle;
                 }
             }
             else
             {
                 RM.stone += heldResource;
                 heldResource = 0;
-                task = Tasklist.Gathering;
+                task = ActionList.Gathering;
                 agent.destination = targetNode.transform.position;
             }
         }
@@ -454,7 +528,7 @@ public class UnitSelection : MonoBehaviour
         //Handle drop off!
         if (RM.gold >= RM.maxGold)
         {
-            task = Tasklist.Idle;
+            task = ActionList.Idle;
         }
         else
         {
@@ -464,26 +538,24 @@ public class UnitSelection : MonoBehaviour
                 isGathering = false;
                 if (heldResource != 0)
                 {
-                    //stop gathering immediately
-                    //Drop off point here for resource yards
                     drops = GameObject.FindGameObjectsWithTag("Player 1");
+                    drops = AdjustDrops(drops);
                     agent.destination = GetClosestDropOff(drops).transform.position;
-
                     RM.gold += heldResource;
-                    task = Tasklist.Delivering;
+                    task = ActionList.Delivering;
                     heldResource = 0;
                     drops = null;
                 }
                 else
                 {
-                    task = Tasklist.Idle;
+                    task = ActionList.Idle;
                 }
             }
             else
             {
                 RM.gold += heldResource;
                 heldResource = 0;
-                task = Tasklist.Gathering;
+                task = ActionList.Gathering;
                 agent.destination = targetNode.transform.position;
             }
         }
@@ -494,7 +566,7 @@ public class UnitSelection : MonoBehaviour
         //Handle drop off!
         if (RM.food >= RM.maxFood)
         {
-            task = Tasklist.Idle;
+            task = ActionList.Idle;
         }
         else
         {
@@ -504,26 +576,25 @@ public class UnitSelection : MonoBehaviour
                 isGathering = false;
                 if (heldResource != 0)
                 {
-                    //stop gathering immediately
-                    //Drop off point here for resource yards
                     drops = GameObject.FindGameObjectsWithTag("Player 1");
+                    drops = AdjustDrops(drops);
                     agent.destination = GetClosestDropOff(drops).transform.position;
 
                     RM.food += heldResource;
-                    task = Tasklist.Delivering;
+                    task = ActionList.Delivering;
                     heldResource = 0;
                     drops = null;
                 }
                 else
                 {
-                    task = Tasklist.Idle;
+                    task = ActionList.Idle;
                 }
             }
             else
             {
                 RM.food += heldResource;
                 heldResource = 0;
-                task = Tasklist.Gathering;
+                task = ActionList.Gathering;
                 agent.destination = targetNode.transform.position;
             }
         }
@@ -533,11 +604,9 @@ public class UnitSelection : MonoBehaviour
     public void OnTriggerEnter(Collider other)
     {
         GameObject hitObject = other.gameObject;
-        // add  (&& task == Tasklist.Gathering) once u know whats up
         if (hitObject.tag == "Resource" && hitObject.gameObject == targetNode && gameObject.GetComponent<UnitController>().unitType == "Worker")
         {
             isGathering = true;
-           // hitObject.GetComponent<NodeManager>().gatherers++;
             harvestScript = targetNode.GetComponent<NodeManager>();
             harvestSpeed = harvestScript.harvestTime;
             heldResourceType = hitObject.GetComponent<NodeManager>().resourceType;
@@ -550,7 +619,7 @@ public class UnitSelection : MonoBehaviour
             buildSpeed = buildScript.buildTime;
             StartCoroutine(Tick());
         }
-        else if(hitObject.tag == "Player 1" && task == Tasklist.Delivering && gameObject.GetComponent<UnitController>().unitType == "Worker")
+        else if(hitObject.tag == "Player 1" && task == ActionList.Delivering && gameObject.GetComponent<UnitController>().unitType == "Worker")
         {
             if (heldResourceType == NodeManager.ResourceTypes.Skymetal)
             {
@@ -596,19 +665,17 @@ public class UnitSelection : MonoBehaviour
             hitObject.GetComponent<FoundationController>().builders--;
         } 
     }
-
+    
     IEnumerator Follow() {
         int counter = 0;
-        if(targetScript.owner != player) {
+        if(targetScript.owner != team) {
             isAttacking = true;
-            Debug.Log("Attack!");
-        } else if(targetScript.owner == player) {
+        } else if(targetScript.owner == team) {
             isAttacking = false;
-            Debug.Log("Follow!");
         } 
+        Debug.Log("Follow");
 
         while(isFollowing) {
-            // Debug.Log(targetNode.GetComponent<UnitController>().isDead);
             if(targetNode == null || targetNode.GetComponent<UnitController>().isDead) {
                 isMeleeing = false;
                 isAttacking = false;
@@ -618,7 +685,7 @@ public class UnitSelection : MonoBehaviour
             float dist = Vector3.Distance(targetNode.transform.position, agent.transform.position);
             if(!isMeleeing && isAttacking && dist < UC.attackRange) {
                 isMeleeing = true;
-                StartCoroutine(UC.Attack());
+                StartCoroutine(UC.Attack(targetNode, agent.transform.rotation));
             } else {
                 // isMeleeing = false;
             }
@@ -648,6 +715,8 @@ public class UnitSelection : MonoBehaviour
             }
 
             if(isBuilding) {
+                agent.destination = agent.transform.position;
+                
                 harvestSpeed = UC.attackSpeed;
             }
             yield return new WaitForSeconds(harvestSpeed);
@@ -737,5 +806,4 @@ public class UnitSelection : MonoBehaviour
             }
         }
     }
-
 }

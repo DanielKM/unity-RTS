@@ -32,6 +32,7 @@ public class LumberYardController : MonoBehaviour
     public bool selected = false;
 
     GameObject player;
+    GameObject team;
     UIController UI;
     InputManager inputScript;
     UnitSelection swordsmanUnitSelection;
@@ -59,9 +60,10 @@ public class LumberYardController : MonoBehaviour
     void Start()
     {
         player = GameObject.FindGameObjectWithTag("Player");
+        team = GameObject.Find("Faction");
         UI = player.GetComponent<UIController>();
-        RM = player.GetComponent<ResourceManager>();
-        RC = player.GetComponent<ResearchController>();
+        RM = team.GetComponent<ResourceManager>();
+        RC = team.GetComponent<ResearchController>();
         inputScript = player.GetComponent<InputManager>();
         BuildingProgressPanel = GameObject.Find("BuildingProgressPanel").GetComponent<CanvasGroup>();
         BuildingActionPanel = GameObject.Find("BuildingActions").GetComponent<CanvasGroup>();
@@ -69,15 +71,6 @@ public class LumberYardController : MonoBehaviour
         // Progress bar
         BuildingProgressBar = GameObject.Find("BuildingProgressBar");
         BuildingProgressSlider = BuildingProgressBar.GetComponent<Slider>();
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        //if (ShouldSpawn())
-        //{
-        //    Spawn();
-        //}
     }
 
     public void ResearchBuildingScience () 
@@ -264,34 +257,6 @@ public class LumberYardController : MonoBehaviour
         selectedObj = inputScript.selectedObj;
         buildingScript = selectedObj.GetComponent<BuildingController>();
 
-        // if(unit == "Footman") {
-        //     // var iteration1 = Random.Range(0, firstNames.Length);
-        //     // var iteration2 = Random.Range(0, lastNameFirst.Length);
-        //     // var iteration3 = Random.Range(0, lastNameSecond.Length);
-        //     // progressIcon = GameObject.Find("ProgressIcon").GetComponent<Image>();
-        //     // progressIcon.sprite = footmanPrefab.GetComponent<UnitController>().unitIcon;
-        //     // footmanPrefab.GetComponent<UnitController>().unitName = firstNames[iteration1] + " " + lastNameFirst[iteration2] + lastNameSecond[iteration3];
-        //     // footmanUnitSelection = footmanPrefab.GetComponent<UnitSelection>();
-        //     // footmanUnitSelection.owner = player;
-
-        //     // footmanAudio = selectedObj.GetComponent<AudioSource>();
-        //     // footmanAudio.clip = footmanReporting;
-        //     // prefab = footmanPrefab;
-        // } else if (unit == "Swordsman") {
-        //     // var iteration1 = Random.Range(0, SMFirstNames.Length);
-        //     // var iteration2 = Random.Range(0, SMLastNameFirst.Length);
-        //     // var iteration3 = Random.Range(0, SMLastNameSecond.Length);
-        //     // progressIcon = GameObject.Find("ProgressIcon").GetComponent<Image>();
-        //     // progressIcon.sprite = swordsmanPrefab.GetComponent<UnitController>().unitIcon;
-        //     // swordsmanPrefab.GetComponent<UnitController>().unitName = SMFirstNames[iteration1] + " " + SMLastNameFirst[iteration2] + SMLastNameSecond[iteration3];
-        //     // swordsmanUnitSelection = swordsmanPrefab.GetComponent<UnitSelection>();
-        //     // swordsmanUnitSelection.owner = player;
-
-        //     // swordsmanAudio = selectedObj.GetComponent<AudioSource>();
-        //     // swordsmanAudio.clip = swordsmanReporting;
-        //     // prefab = swordsmanPrefab;
-        // }
-
         for (i = 1; i < 11; i++)
         {
             yield return new WaitForSeconds(1);
@@ -306,7 +271,6 @@ public class LumberYardController : MonoBehaviour
             var colors = RC.basicBlacksmithingButton.colors; 
             colors.disabledColor = Color.green;
             RC.basicBlacksmithingButton.colors = colors; 
-            // newColorBlock.disabledColor = new Color(34,139,60,255); // 50% red.
 
         } else if (research == "basicToolSmithing") {
             RC.basicToolSmithing = true;
@@ -384,6 +348,5 @@ public class LumberYardController : MonoBehaviour
         }
             
         isTraining = false;
-        // UI.BarracksSelect();
     }
 }

@@ -791,6 +791,8 @@ MonoBehaviour:
   heldResource: 0
   maxHeldResource: 100
   drops: []
+  resources: []
+  formationList: []
 --- !u!114 &8993743644541059977
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -805,7 +807,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   unitType: Worker
   unitRank: Recruit
-  unitName: Abram Dawnhealer
+  unitName: Dominik Stonearm
   unitKills: 0
   weapon: Pickaxe
   armourType: None
@@ -813,6 +815,7 @@ MonoBehaviour:
   health: 100
   maxHealth: 100
   armour: 0
+  maxArmour: 0
   energy: 100
   maxEnergy: 100
   attackDamage: 25
@@ -832,6 +835,8 @@ MonoBehaviour:
   metalChop3: {fileID: 0}
   metalChop4: {fileID: 0}
   woodChop: {fileID: 8300000, guid: 795e0eda1c479474ab93de36a1afe9f4, type: 3}
+  shootArrow: {fileID: 0}
+  shootFireball: {fileID: 0}
   heldResource: 0
   currentlyMeleeing: 0
   isDead: 0
@@ -848,7 +853,7 @@ NavMeshAgent:
   m_Radius: 0.6
   m_Speed: 4
   m_Acceleration: 4
-  avoidancePriority: 80
+  avoidancePriority: 30
   m_AngularSpeed: 800
   m_StoppingDistance: 0.25
   m_AutoTraverseOffMeshLink: 1

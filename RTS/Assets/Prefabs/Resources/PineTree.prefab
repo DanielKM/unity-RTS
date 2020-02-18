@@ -1,5 +1,55 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &2215775845845688498
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1004588269997268494}
+  - component: {fileID: 2038944364763621971}
+  m_Layer: 0
+  m_Name: SelectionCircle
+  m_TagString: SelectedIndicator
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
+--- !u!4 &1004588269997268494
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2215775845845688498}
+  m_LocalRotation: {x: 0.7071068, y: 0, z: 0, w: 0.70710677}
+  m_LocalPosition: {x: 0, y: 1, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 6848908928821191431}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 90.00001, y: 0, z: 0}
+--- !u!119 &2038944364763621971
+Projector:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2215775845845688498}
+  m_Enabled: 1
+  serializedVersion: 2
+  m_NearClipPlane: 0.1
+  m_FarClipPlane: 2
+  m_FieldOfView: 60
+  m_AspectRatio: 1
+  m_Orthographic: 1
+  m_OrthographicSize: 3.7
+  m_Material: {fileID: 2100000, guid: 68a9895f75761b5488d26dee81d94a1f, type: 2}
+  m_IgnoreLayers:
+    serializedVersion: 2
+    m_Bits: 3383
 --- !u!1 &6846658738078682921
 GameObject:
   m_ObjectHideFlags: 0
@@ -20,7 +70,7 @@ GameObject:
   - component: {fileID: 6846251606739868176}
   - component: {fileID: 6846251606739868183}
   m_Layer: 12
-  m_Name: PineTree_1
+  m_Name: PineTree
   m_TagString: Resource
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -37,6 +87,7 @@ Transform:
   m_LocalPosition: {x: 1, y: 0.6265172, z: -56.3}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
+  - {fileID: 1004588269997268494}
   - {fileID: 6849379168514680747}
   - {fileID: 6849222785792861391}
   m_Father: {fileID: 0}
@@ -213,7 +264,7 @@ MonoBehaviour:
   maxHealth: 1000
   energy: 100
   maxEnergy: 100
-  icon: {fileID: 21300000, guid: 3782fee7e5e71844d98b87df2c637068, type: 3}
+  icon: {fileID: 21300000, guid: 581c857d31079eb4fbe724e01a00efdd, type: 3}
   foundation: {fileID: 0}
   inCollider: 0
   placeable: 1
@@ -273,7 +324,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 6848908928821191431}
-  m_RootOrder: 1
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &6879927796707380323
 MeshFilter:
@@ -351,7 +402,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 6848908928821191431}
-  m_RootOrder: 0
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &6879814245057893957
 MeshFilter:

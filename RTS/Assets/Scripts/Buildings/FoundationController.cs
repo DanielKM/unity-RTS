@@ -24,8 +24,9 @@ public class FoundationController : MonoBehaviour
     void Start()
     {
         GameObject player = GameObject.FindGameObjectWithTag("Player");
-        RM = player.GetComponent<ResourceManager>();
-        RC = player.GetComponent<ResearchController>();
+        GameObject team = GameObject.Find("Faction");
+        RM = team.GetComponent<ResourceManager>();
+        RC = team.GetComponent<ResearchController>();
 
         // Starts the resource tick (means its true)
         BuildingProgressPanel = GameObject.Find("BuildingProgressPanel").GetComponent<CanvasGroup>();
@@ -45,7 +46,7 @@ public class FoundationController : MonoBehaviour
             }
             else if (buildingScript.unitType == "Farm")
             {
-                location = new Vector3(gameObject.transform.position.x, gameObject.transform.position.y, gameObject.transform.position.z);
+                location = new Vector3(gameObject.transform.position.x -4.0f, gameObject.transform.position.y, gameObject.transform.position.z);
             } else
             {
                 location = new Vector3(gameObject.transform.position.x, gameObject.transform.position.y, gameObject.transform.position.z);
@@ -58,7 +59,13 @@ public class FoundationController : MonoBehaviour
             {
                 currentBuilding.transform.Rotate(0, 270, 0);
             }
+
             //adjusted placement location
+            if (buildingScript.unitType == "Barracks")
+            {
+                Vector3 newLocation = new Vector3(currentBuilding.transform.position.x - 4.0f, currentBuilding.transform.position.y, currentBuilding.transform.position.z + 4.0f);
+                currentBuilding.transform.position = newLocation;
+            }
             if (buildingScript.unitType == "Stables")
             {
                 Vector3 newLocation = new Vector3(currentBuilding.transform.position.x, currentBuilding.transform.position.y, currentBuilding.transform.position.z - 2.5f);

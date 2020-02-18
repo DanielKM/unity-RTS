@@ -91,7 +91,6 @@ public class Patroller : MonoBehaviour
         }
         else
         {
-            //anim.SetBool("Attack", false);
             if(!patrolling)
             {
                 agent.SetDestination(lastKnownPosition);
@@ -102,7 +101,6 @@ public class Patroller : MonoBehaviour
                 }
             }
         }
-        //anim.SetFloat("Forward", agent.velocity.sqrMagnitude);
     }
 
     IEnumerator GoToNextPoint()

@@ -33,6 +33,7 @@ public class BlacksmithController : MonoBehaviour
     public bool selected = false;
 
     GameObject player;
+    GameObject team;
     InputManager inputScript;
     UnitSelection swordsmanUnitSelection;
     UnitSelection footmanUnitSelection;
@@ -59,9 +60,10 @@ public class BlacksmithController : MonoBehaviour
     void Start()
     {
         player = GameObject.FindGameObjectWithTag("Player");
+        team = GameObject.Find("Faction");
         UI = player.GetComponent<UIController>();
-        RM = player.GetComponent<ResourceManager>();
-        RC = player.GetComponent<ResearchController>();
+        RM = team.GetComponent<ResourceManager>();
+        RC = team.GetComponent<ResearchController>();
         inputScript = player.GetComponent<InputManager>();
         BuildingProgressPanel = GameObject.Find("BuildingProgressPanel").GetComponent<CanvasGroup>();
         BuildingActionPanel = GameObject.Find("BuildingActions").GetComponent<CanvasGroup>();
@@ -69,15 +71,6 @@ public class BlacksmithController : MonoBehaviour
         // Progress bar
         BuildingProgressBar = GameObject.Find("BuildingProgressBar");
         BuildingProgressSlider = BuildingProgressBar.GetComponent<Slider>();
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        //if (ShouldSpawn())
-        //{
-        //    Spawn();
-        //}
     }
 
     public void ResearchBlacksmithing () 
@@ -253,7 +246,6 @@ public class BlacksmithController : MonoBehaviour
     IEnumerator CloseResourcesText()
     {
         yield return new WaitForSeconds(3);
-        //my code here after 3 seconds
         UI.noResourcesText.SetActive(false);
     }
 
@@ -263,34 +255,6 @@ public class BlacksmithController : MonoBehaviour
         isTraining = true;
         selectedObj = inputScript.selectedObj;
         buildingScript = selectedObj.GetComponent<BuildingController>();
-
-        // if(unit == "Footman") {
-        //     // var iteration1 = Random.Range(0, firstNames.Length);
-        //     // var iteration2 = Random.Range(0, lastNameFirst.Length);
-        //     // var iteration3 = Random.Range(0, lastNameSecond.Length);
-        //     // progressIcon = GameObject.Find("ProgressIcon").GetComponent<Image>();
-        //     // progressIcon.sprite = footmanPrefab.GetComponent<UnitController>().unitIcon;
-        //     // footmanPrefab.GetComponent<UnitController>().unitName = firstNames[iteration1] + " " + lastNameFirst[iteration2] + lastNameSecond[iteration3];
-        //     // footmanUnitSelection = footmanPrefab.GetComponent<UnitSelection>();
-        //     // footmanUnitSelection.owner = player;
-
-        //     // footmanAudio = selectedObj.GetComponent<AudioSource>();
-        //     // footmanAudio.clip = footmanReporting;
-        //     // prefab = footmanPrefab;
-        // } else if (unit == "Swordsman") {
-        //     // var iteration1 = Random.Range(0, SMFirstNames.Length);
-        //     // var iteration2 = Random.Range(0, SMLastNameFirst.Length);
-        //     // var iteration3 = Random.Range(0, SMLastNameSecond.Length);
-        //     // progressIcon = GameObject.Find("ProgressIcon").GetComponent<Image>();
-        //     // progressIcon.sprite = swordsmanPrefab.GetComponent<UnitController>().unitIcon;
-        //     // swordsmanPrefab.GetComponent<UnitController>().unitName = SMFirstNames[iteration1] + " " + SMLastNameFirst[iteration2] + SMLastNameSecond[iteration3];
-        //     // swordsmanUnitSelection = swordsmanPrefab.GetComponent<UnitSelection>();
-        //     // swordsmanUnitSelection.owner = player;
-
-        //     // swordsmanAudio = selectedObj.GetComponent<AudioSource>();
-        //     // swordsmanAudio.clip = swordsmanReporting;
-        //     // prefab = swordsmanPrefab;
-        // }
 
         for (i = 1; i < 11; i++)
         {
@@ -304,9 +268,8 @@ public class BlacksmithController : MonoBehaviour
             RC.artisanBlacksmithingButton.interactable = true;
             RC.basicBlacksmithing = true;
             var colors = RC.basicBlacksmithingButton.colors; 
-            colors.disabledColor = Color.green;
+            colors.disabledColor = new Color(0, 0.4f, 0, 1);
             RC.basicBlacksmithingButton.colors = colors; 
-            // newColorBlock.disabledColor = new Color(34,139,60,255); // 50% red.
 
         } else if (research == "basicToolSmithing") {
             RC.basicToolSmithing = true;
@@ -314,7 +277,7 @@ public class BlacksmithController : MonoBehaviour
                 RC.artisanToolSmithingButton.interactable = true;
             }
             var colors = RC.basicToolSmithingButton.colors; 
-            colors.disabledColor = Color.green;
+            colors.disabledColor = new Color(0, 0.4f, 0, 1);
             RC.basicToolSmithingButton.colors = colors; 
         } else if(research == "basicArmourSmithing") {
             RC.basicArmourSmithing = true;
@@ -322,7 +285,7 @@ public class BlacksmithController : MonoBehaviour
                 RC.artisanArmourSmithingButton.interactable = true;
             }
             var colors = RC.basicArmourSmithingButton.colors; 
-            colors.disabledColor = Color.green;
+            colors.disabledColor = new Color(0, 0.4f, 0, 1);
             RC.basicArmourSmithingButton.colors = colors; 
         } else if (research == "basicWeaponSmithing") {
             RC.basicWeaponSmithing = true;
@@ -330,7 +293,7 @@ public class BlacksmithController : MonoBehaviour
                 RC.artisanWeaponSmithingButton.interactable = true;
             }
             var colors = RC.basicWeaponSmithingButton.colors; 
-            colors.disabledColor = Color.green;
+            colors.disabledColor = new Color(0, 0.4f, 0, 1);
             RC.basicWeaponSmithingButton.colors = colors; 
         } else if (research == "artisanBlacksmithing") {
             RC.artisanBlacksmithing = true;
@@ -344,46 +307,45 @@ public class BlacksmithController : MonoBehaviour
                 RC.artisanWeaponSmithingButton.interactable = true;
             } 
             var colors = RC.artisanBlacksmithingButton.colors; 
-            colors.disabledColor = Color.green;
+            colors.disabledColor = new Color(0, 0.4f, 0, 1);
             RC.artisanBlacksmithingButton.colors = colors; 
         } else if (research == "artisanToolSmithing") {
             RC.artisanToolSmithing = true;
             var colors = RC.artisanBlacksmithingButton.colors; 
-            colors.disabledColor = Color.green;
+            colors.disabledColor = new Color(0, 0.4f, 0, 1);
             RC.artisanBlacksmithingButton.colors = colors; 
         } else if (research == "artisanArmourSmithing") {
             RC.artisanArmourSmithing = true;
             var colors = RC.artisanBlacksmithingButton.colors; 
-            colors.disabledColor = Color.green;
+            colors.disabledColor = new Color(0, 0.4f, 0, 1);
             RC.artisanBlacksmithingButton.colors = colors; 
         } else if (research == "artisanWeaponSmithing") {
             RC.artisanWeaponSmithing = true;
             var colors = RC.artisanWeaponSmithingButton.colors; 
-            colors.disabledColor = Color.green;
+            colors.disabledColor = new Color(0, 0.4f, 0, 1);
             RC.artisanWeaponSmithingButton.colors = colors; 
         } else if (research == "horseshoes") {
             RC.horseshoes = true;
             var colors = RC.horseshoesButton.colors; 
-            colors.disabledColor = Color.green;
+            colors.disabledColor = new Color(0, 0.4f, 0, 1);
             RC.horseshoesButton.colors = colors; 
         } else if (research == "minecarts") {
             RC.minecarts = true;
             var colors = RC.minecartsButton.colors; 
-            colors.disabledColor = Color.green;
+            colors.disabledColor = new Color(0, 0.4f, 0, 1);
             RC.minecartsButton.colors = colors; 
         } else if (research == "caltrops") {
             RC.caltrops = true;
             var colors = RC.caltropsButton.colors; 
-            colors.disabledColor = Color.green;
+            colors.disabledColor = new Color(0, 0.4f, 0, 1);
             RC.caltropsButton.colors = colors; 
         } else if (research == "reinforcedBuildings") {
             RC.reinforcedBuildings = true;
             var colors = RC.reinforcedBuildingsButton.colors; 
-            colors.disabledColor = Color.green;
+            colors.disabledColor = new Color(0, 0.4f, 0, 1);
             RC.reinforcedBuildingsButton.colors = colors; 
         }
             
         isTraining = false;
-        // UI.BarracksSelect();
     }
 }

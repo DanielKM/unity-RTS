@@ -55,7 +55,7 @@ public class BuildingController : MonoBehaviour
         location = gameObject.transform.position;
         if(isPlaced == true)
         {
-         //   gameObject.layer = 11;
+            
         }
     }
 
@@ -88,7 +88,5 @@ public class BuildingController : MonoBehaviour
     void OnCollisionExit(Collision other)
     {
         inCollider = false;
-        // placeable = true;
     }
 }
-//COPY UNITCONTROLLEr
