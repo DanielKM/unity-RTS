@@ -16,6 +16,7 @@ public class UnitSelection : MonoBehaviour
     public AudioClip unitMoveClip;
 
     // Player 
+    public GameObject team;
     public GameObject player;
     public GameObject owner;
     private AudioSource playerAudio;
@@ -61,10 +62,11 @@ public class UnitSelection : MonoBehaviour
     {
         Scene currentScene = SceneManager.GetActiveScene();
         if(currentScene.name != "Main Menu") {
+            team = GameObject.Find("Faction");
             player = GameObject.FindGameObjectWithTag("Player");
             playerAudio = GameObject.FindGameObjectWithTag("Main Audio").GetComponent<AudioSource>();
-            RM = player.GetComponent<ResourceManager>();
-            RC = player.GetComponent<ResearchController>();
+            RM = team.GetComponent<ResourceManager>();
+            RC = team.GetComponent<ResearchController>();
             IM = player.GetComponent<InputManager>();
             UC = GetComponent<UnitController>();
             agent = GetComponent<NavMeshAgent>();
@@ -220,7 +222,7 @@ public class UnitSelection : MonoBehaviour
         {
             targetNode = hit.collider.gameObject;
             targetScript = targetNode.GetComponent<UnitSelection>();
-            if(owner == player && !UC.isDead) {     
+            if(owner == team && !UC.isDead) {     
                 if(UC.unitType == "Worker") {
                     if (hit.collider.tag != "Player 1")
                     {
@@ -666,11 +668,12 @@ public class UnitSelection : MonoBehaviour
     
     IEnumerator Follow() {
         int counter = 0;
-        if(targetScript.owner != player) {
+        if(targetScript.owner != team) {
             isAttacking = true;
-        } else if(targetScript.owner == player) {
+        } else if(targetScript.owner == team) {
             isAttacking = false;
         } 
+        Debug.Log("Follow");
 
         while(isFollowing) {
             if(targetNode == null || targetNode.GetComponent<UnitController>().isDead) {

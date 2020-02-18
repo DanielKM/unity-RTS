@@ -10,6 +10,7 @@ using UnityEngine.SceneManagement;
 public class InputManager : MonoBehaviour
 {
     private GameObject player;
+    private GameObject team;
 
     // World Bounds
    public float xMin, xMax, yMin, yMax, zMin, zMax;
@@ -143,10 +144,11 @@ public class InputManager : MonoBehaviour
     {
         Scene currentScene = SceneManager.GetActiveScene();
         if(currentScene.name != "Main Menu") {
+            team = GameObject.Find("Faction");
             player = GameObject.FindGameObjectWithTag("Player");
             playerAudio = GameObject.FindGameObjectWithTag("Main Audio").GetComponent<AudioSource>();
             UI = player.GetComponent<UIController>();
-            RC = player.GetComponent<ResearchController>();
+            RC = team.GetComponent<ResearchController>();
             PM = GameObject.Find("GameMenu").GetComponent<PauseMenu>();
 
         // progressIcon = GameObject.Find("ProgressIcon").GetComponent<Image>();
@@ -461,8 +463,6 @@ public class InputManager : MonoBehaviour
       
     public void UpdateUnitPanel()
     { 
-            // FFA500
-        
         if (RC.artisanArmourSmithing) {
             UI.armour1.GetComponent<Image>().color = new Color32(255,165,0,255);
             UI.armour2.GetComponent<Image>().color = new Color32(255,165,0,255);
@@ -596,28 +596,21 @@ public class InputManager : MonoBehaviour
             } 
             else if (hit.collider.tag == "Enemy Unit" && (!Input.GetKey(KeyCode.LeftShift)))
             {
+                DeselectUnits();
                 selectedObj = hit.collider.gameObject;
                 selectedInfo = selectedObj.GetComponent<UnitSelection>();
                 unitScript = selectedObj.GetComponent<UnitController>();
-                if (selectedInfo.selected == true)
-                {
-                    DeselectUnits();
-                }
-                else 
-                {
-                    selectedInfo.selected = true;
-
-                    //  OPEN ENEMY PANELS!!
-                    
-                    // UnitSelection indicators
-                    selectedObj.transform.GetChild(2).gameObject.GetComponent<Projector>().material.SetColor("_Color", Color.red);
-                    selectedObj.transform.GetChild(2).gameObject.SetActive(true);
-                    // unitAudio = selectedObj.GetComponent<AudioSource>();
-                    // unitAudio.clip = unitAudioClip;
-                    // unitAudio.Play();
-                    // isSelected = true;
-                    UI.EnemySelect();
-                }
+            
+                selectedInfo.selected = true;
+                //  OPEN ENEMY PANELS!!
+                // UnitSelection indicators
+                selectedObj.transform.GetChild(2).gameObject.GetComponent<Projector>().material.SetColor("_Color", Color.red);
+                selectedObj.transform.GetChild(2).gameObject.SetActive(true);
+                // unitAudio = selectedObj.GetComponent<AudioSource>();
+                // unitAudio.clip = unitAudioClip;
+                // unitAudio.Play();
+                // isSelected = true;
+                UI.EnemySelect();
             }
             else if (hit.collider.tag == "Selectable")
             {
@@ -629,9 +622,11 @@ public class InputManager : MonoBehaviour
                 } else {
                     selectedObjects.Remove(selectedObj);
                 }
+
                 selectedObj.transform.GetChild(2).gameObject.GetComponent<Projector>().material.SetColor("_Color", Color.green);
                 selectedInfo = selectedObj.GetComponent<UnitSelection>();
                 unitScript = selectedObj.GetComponent<UnitController>();
+
                 if (selectedInfo.selected == true)
                 {
                     DeselectUnits();

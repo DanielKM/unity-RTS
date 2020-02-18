@@ -33,6 +33,7 @@ public class BlacksmithController : MonoBehaviour
     public bool selected = false;
 
     GameObject player;
+    GameObject team;
     InputManager inputScript;
     UnitSelection swordsmanUnitSelection;
     UnitSelection footmanUnitSelection;
@@ -59,9 +60,10 @@ public class BlacksmithController : MonoBehaviour
     void Start()
     {
         player = GameObject.FindGameObjectWithTag("Player");
+        team = GameObject.Find("Faction");
         UI = player.GetComponent<UIController>();
-        RM = player.GetComponent<ResourceManager>();
-        RC = player.GetComponent<ResearchController>();
+        RM = team.GetComponent<ResourceManager>();
+        RC = team.GetComponent<ResearchController>();
         inputScript = player.GetComponent<InputManager>();
         BuildingProgressPanel = GameObject.Find("BuildingProgressPanel").GetComponent<CanvasGroup>();
         BuildingActionPanel = GameObject.Find("BuildingActions").GetComponent<CanvasGroup>();

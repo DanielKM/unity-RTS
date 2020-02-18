@@ -8,6 +8,7 @@ using UnityEngine.EventSystems;
 public class BuildingButtonController : MonoBehaviour
 {
     public GameObject player;
+    public GameObject team;
     ResourceManager RM;
     UIController UI;
 
@@ -82,8 +83,9 @@ public class BuildingButtonController : MonoBehaviour
             archerUC = archerPrefab.GetComponent<UnitController>();
 
             player = GameObject.FindGameObjectWithTag("Player");
+            team = GameObject.Find("Faction");
             inputScript = player.GetComponent<InputManager>();
-            RM = player.GetComponent<ResourceManager>();
+            RM = team.GetComponent<ResourceManager>();
             UI = player.GetComponent<UIController>();
 
             buttonOne.onClick.AddListener(HireVillager);

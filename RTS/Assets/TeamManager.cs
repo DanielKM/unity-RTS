@@ -2,11 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Player : MonoBehaviour
+public class TeamManager : MonoBehaviour
 {
-    public Stats myStats;
     public string teamName;
-    
     // Start is called before the first frame update
     void Start()
     {
@@ -14,7 +12,7 @@ public class Player : MonoBehaviour
     }
 
     // Update is called once per frame
-    public void Update()
+    void Update()
     {
         
     }

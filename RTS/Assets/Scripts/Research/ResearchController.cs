@@ -8,6 +8,7 @@ using UnityEngine.SceneManagement;
 public class ResearchController : MonoBehaviour
 {
     public GameObject player;
+    public GameObject team;
     UIController UI;
     ResourceManager RM;
     InputManager inputScript;
@@ -160,8 +161,9 @@ public class ResearchController : MonoBehaviour
     {
         Scene currentScene = SceneManager.GetActiveScene();
         if(currentScene.name != "Main Menu") {
+            team = GameObject.Find("Faction");
             player = GameObject.FindGameObjectWithTag("Player");
-            RM = player.GetComponent<ResourceManager>();
+            RM = team.GetComponent<ResourceManager>();
             UI = player.GetComponent<UIController>();
             inputScript = player.GetComponent<InputManager>();
 

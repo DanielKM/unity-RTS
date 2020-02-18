@@ -8,6 +8,7 @@ using UnityEngine.SceneManagement;
 public class UnitButtonController : MonoBehaviour
 {
     public GameObject player;
+    public GameObject team;
     ResourceManager RM;
     UIController UI;
     BuildingController BC;
@@ -48,8 +49,9 @@ public class UnitButtonController : MonoBehaviour
     {
         Scene currentScene = SceneManager.GetActiveScene();
         if(currentScene.name != "Main Menu") {
+            team = GameObject.Find("Faction");
             player = GameObject.FindGameObjectWithTag("Player");
-            RM = player.GetComponent<ResourceManager>();
+            RM = team.GetComponent<ResourceManager>();
             UI = player.GetComponent<UIController>();
             basicBack.onClick.AddListener(UI.WorkerSelect);
             advancedBack.onClick.AddListener(UI.WorkerSelect);
