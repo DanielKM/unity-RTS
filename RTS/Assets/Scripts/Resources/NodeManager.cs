@@ -23,8 +23,8 @@ public class NodeManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        GameObject player = GameObject.FindGameObjectWithTag("Player");
-        RC = player.GetComponent<ResearchController>();
+        GameObject team = GameObject.Find("Faction");
+        RC = team.GetComponent<ResearchController>();
         StartCoroutine(ResourceTick());   
     }
 

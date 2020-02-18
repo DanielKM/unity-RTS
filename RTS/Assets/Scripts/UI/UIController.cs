@@ -7,6 +7,7 @@ public class UIController : MonoBehaviour
 {
     // PLAYER
     public GameObject player;
+    public GameObject team;
     ResourceManager RM;
 
     // GAME MENU
@@ -72,8 +73,9 @@ public class UIController : MonoBehaviour
         armour3 = GameObject.Find("Armour3").GetComponent<CanvasGroup>();
         armour4 = GameObject.Find("Armour4").GetComponent<CanvasGroup>();
         armour5 = GameObject.Find("Armour5").GetComponent<CanvasGroup>();
+        team = GameObject.Find("Faction");
         player = GameObject.FindGameObjectWithTag("Player");
-        RM = player.GetComponent<ResourceManager>();
+        RM = team.GetComponent<ResourceManager>();
     }
 
     public void OpenGameMenuPanel()

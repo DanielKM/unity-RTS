@@ -40,6 +40,7 @@ public class BarracksController : MonoBehaviour
     public bool selected = false;
 
     GameObject player;
+    GameObject team;
     InputManager inputScript;
     UnitSelection swordsmanUnitSelection;
     UnitSelection footmanUnitSelection;
@@ -66,6 +67,7 @@ public class BarracksController : MonoBehaviour
     void Start()
     {
         player = GameObject.FindGameObjectWithTag("Player");
+        team = GameObject.Find("Faction");
         UI = player.GetComponent<UIController>();
         inputScript = player.GetComponent<InputManager>();
         BuildingProgressPanel = GameObject.Find("BuildingProgressPanel").GetComponent<CanvasGroup>();
@@ -117,7 +119,7 @@ public class BarracksController : MonoBehaviour
             progressIcon.sprite = footmanPrefab.GetComponent<UnitController>().unitIcon;
             footmanPrefab.GetComponent<UnitController>().unitName = firstNames[iteration1] + " " + lastNameFirst[iteration2] + lastNameSecond[iteration3];
             footmanUnitSelection = footmanPrefab.GetComponent<UnitSelection>();
-            footmanUnitSelection.owner = player;
+            footmanUnitSelection.owner = team;
 
             footmanAudio = selectedObj.GetComponent<AudioSource>();
             footmanAudio.clip = footmanReporting;
@@ -130,7 +132,7 @@ public class BarracksController : MonoBehaviour
             progressIcon.sprite = swordsmanPrefab.GetComponent<UnitController>().unitIcon;
             swordsmanPrefab.GetComponent<UnitController>().unitName = SMFirstNames[iteration1] + " " + SMLastNameFirst[iteration2] + SMLastNameSecond[iteration3];
             swordsmanUnitSelection = swordsmanPrefab.GetComponent<UnitSelection>();
-            swordsmanUnitSelection.owner = player;
+            swordsmanUnitSelection.owner = team;
 
             swordsmanAudio = selectedObj.GetComponent<AudioSource>();
             swordsmanAudio.clip = swordsmanReporting;
@@ -143,7 +145,7 @@ public class BarracksController : MonoBehaviour
             progressIcon.sprite = archerPrefab.GetComponent<UnitController>().unitIcon;
             archerPrefab.GetComponent<UnitController>().unitName = SMFirstNames[iteration1] + " " + SMLastNameFirst[iteration2] + SMLastNameSecond[iteration3];
             archerUnitSelection = archerPrefab.GetComponent<UnitSelection>();
-            archerUnitSelection.owner = player;
+            archerUnitSelection.owner = team;
 
             archerAudio = selectedObj.GetComponent<AudioSource>();
             archerAudio.clip = archerReporting;

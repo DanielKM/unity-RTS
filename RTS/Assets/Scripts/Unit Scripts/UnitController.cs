@@ -64,6 +64,7 @@ public class UnitController : MonoBehaviour
 
     // Player scripts
     private GameObject player;
+    private GameObject team;
     private ResourceManager RM;
 
     // Unit scripts
@@ -89,9 +90,10 @@ public class UnitController : MonoBehaviour
     void Start()
     {
         player = GameObject.FindGameObjectWithTag("Player");
+        team = GameObject.Find("Faction");
         UI = player.GetComponent<UIController>();
-        RM = player.GetComponent<ResourceManager>();
-        RC = player.GetComponent<ResearchController>();
+        RM = team.GetComponent<ResourceManager>();
+        RC = team.GetComponent<ResearchController>();
 
         anim = GetComponent<Animator>();
         agent = GetComponent<NavMeshAgent>();
@@ -172,7 +174,7 @@ public class UnitController : MonoBehaviour
     void Tick()
     {
         if(!isDead) {
-            if(UnitSelection.owner == UnitSelection.player) {
+            if(UnitSelection.owner == UnitSelection.team) {
                 enemyUnits = GameObject.FindGameObjectsWithTag("Enemy Unit");
                 currentTarget = GetClosestEnemy(enemyUnits);
                 if(currentTarget && !currentTarget.GetComponent<UnitController>().isDead) {

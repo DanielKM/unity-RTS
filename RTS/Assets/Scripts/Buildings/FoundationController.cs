@@ -24,8 +24,9 @@ public class FoundationController : MonoBehaviour
     void Start()
     {
         GameObject player = GameObject.FindGameObjectWithTag("Player");
-        RM = player.GetComponent<ResourceManager>();
-        RC = player.GetComponent<ResearchController>();
+        GameObject team = GameObject.Find("Faction");
+        RM = team.GetComponent<ResourceManager>();
+        RC = team.GetComponent<ResearchController>();
 
         // Starts the resource tick (means its true)
         BuildingProgressPanel = GameObject.Find("BuildingProgressPanel").GetComponent<CanvasGroup>();

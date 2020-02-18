@@ -11,9 +11,6 @@ public class NPCController : MonoBehaviour
 
     int index; // the current waypoint index in the waypoints array
     float speed, agentSpeed; // current agent speed and NavMeshAgent component speed
-    //Transform player; // reference to the player object transform
-
-    //private List<GameObject> player = new List<GameObject>();
 
     private GameObject[] playerunits;
 
@@ -22,6 +19,7 @@ public class NPCController : MonoBehaviour
     UnitController UC; //reference to the navmeshagent
     UnitSelection UnitSelection; //reference to the navmeshagent
     private GameObject player;
+    private GameObject team;
     private ResearchController RC;
 
     // Enemy variables
@@ -34,7 +32,8 @@ public class NPCController : MonoBehaviour
     void Start()
     {
         player = GameObject.FindGameObjectWithTag("Player");
-        RC = player.GetComponent<ResearchController>();
+        team = GameObject.Find("Faction");
+        RC = team.GetComponent<ResearchController>();
         playerunits = GameObject.FindGameObjectsWithTag("Selectable");
     }
 
@@ -50,9 +49,7 @@ public class NPCController : MonoBehaviour
             agentSpeed = agent.speed;
         }
 
-        //player = List.FindGameObjectsWithTag("Selectable");
         index = Random.Range(0, waypoints.Length);
-
         InvokeRepeating("Tick", 0, 1.0f);
 
         if (waypoints.Length > 0)
