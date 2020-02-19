@@ -27,6 +27,8 @@ public class InputManager : MonoBehaviour
     BlacksmithController blacksmithScript;
     FoundationController foundationScript;
 
+    UnitButtonController unitButtonController;
+
     ResearchController RC;
     UIController UI;
     PauseMenu PM;
@@ -146,6 +148,8 @@ public class InputManager : MonoBehaviour
         if(currentScene.name != "Main Menu") {
             team = GameObject.Find("Faction");
             player = GameObject.FindGameObjectWithTag("Player");
+
+            unitButtonController = player.GetComponent<UnitButtonController>();
             playerAudio = GameObject.FindGameObjectWithTag("Main Audio").GetComponent<AudioSource>();
             UI = player.GetComponent<UIController>();
             RC = team.GetComponent<ResearchController>();
@@ -197,11 +201,18 @@ public class InputManager : MonoBehaviour
                 }
             }
 
-            if(Input.GetKeyDown(KeyCode.F10) || Input.GetKeyDown(KeyCode.Escape))
+            if(Input.GetKeyDown(KeyCode.F10))
             {
                 UI.OpenGameMenuPanel();
             }
-            
+            if(unitButtonController.currentPlaceableObject) {
+      
+            } else {
+                if(Input.GetKeyDown(KeyCode.Escape))
+                    {
+                        UI.OpenGameMenuPanel();
+                    } 
+            }
 
             if(selectedObj != null)
             {

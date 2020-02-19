@@ -35,7 +35,7 @@ public class UnitButtonController : MonoBehaviour
 
     private Vector3 mousePosition;
 
-    private GameObject currentPlaceableObject;
+    public GameObject currentPlaceableObject;
     public Material placing;
     public Renderer[] childColors;
 
