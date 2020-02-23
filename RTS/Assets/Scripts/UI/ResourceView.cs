@@ -5,11 +5,11 @@ public class ResourceView : MonoBehaviour {
   public Text CurrentLabel;
   public Text MaxLabel;
 
-  void setCurrent(int value) {
+  public void setCurrent(int value) {
     CurrentLabel.text = value.ToString();
   }
 
-  void setMax(int value) {
+  public void setMax(int value) {
     MaxLabel.text = value.ToString();
   }
 }
