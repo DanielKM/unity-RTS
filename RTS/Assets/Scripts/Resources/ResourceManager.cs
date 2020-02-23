@@ -33,13 +33,7 @@ public class ResourceManager : MonoBehaviour
     public float housing;
     public float maxHousing;
 
-    public Text SkyMetalDisp;
-    public Text IronDisp;
-    public Text SteelDisp;
-    public Text WoodDisp;
     public Text FoodDisp;
-    public Text StoneDisp;
-    public Text GoldDisp;
     public Text HousingDisp;
 
     public GameObject[] houses;
@@ -56,6 +50,8 @@ public class ResourceManager : MonoBehaviour
     public float lumberYardCount;
     public float blacksmithCount;
 
+    public ResourcePanelController resourcePanelController;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -68,13 +64,11 @@ public class ResourceManager : MonoBehaviour
     {
         Scene currentScene = SceneManager.GetActiveScene();
         if(currentScene.name != "Main Menu") {
-            SkyMetalDisp.text = "" + skymetal + "/" + maxSkymetal;
-            IronDisp.text = "" + iron + "/" + maxIron;
-            SteelDisp.text = "" + steel + "/" + maxSteel;
-            WoodDisp.text = "" + wood + "/" + maxWood;
+            // Enemy faction does not have a UI, so we need the conditional; this should be fixed
+            if (resourcePanelController != null) {
+                resourcePanelController.UpdateCurrentValues();
+            }
             FoodDisp.text = "" + food + "/" + maxFood;
-            StoneDisp.text = "" + stone + "/" + maxStone;
-            GoldDisp.text = "" + gold + "/" + maxGold;
 
             oneFoodUnit = GameObject.FindGameObjectsWithTag("Selectable");
             housingTotal = oneFoodUnit.Length;
