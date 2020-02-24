@@ -13,6 +13,8 @@ public class ResourcePanelController : MonoBehaviour
     public ResourceView GoldView;
     public ResourceView WoodView;
     public ResourceView StoneView;
+    public ResourceView FoodView;
+    public ResourceView HousingView;
 
     void Start() {
         IronView.setMax((int)RM.maxIron);
@@ -21,6 +23,8 @@ public class ResourcePanelController : MonoBehaviour
         GoldView.setMax((int)RM.maxGold);
         WoodView.setMax((int)RM.maxWood);
         StoneView.setMax((int)RM.maxStone);
+        FoodView.setMax((int)RM.maxFood);
+        HousingView.setMax((int)RM.maxHousing);
     }
 
     public void UpdateCurrentValues() {
@@ -30,5 +34,7 @@ public class ResourcePanelController : MonoBehaviour
         GoldView.setCurrent((int)RM.gold);
         WoodView.setCurrent((int)RM.wood);
         StoneView.setCurrent((int)RM.stone);
+        FoodView.setCurrent((int)RM.food);
+        HousingView.setCurrent((int)RM.housing);
     }
 }

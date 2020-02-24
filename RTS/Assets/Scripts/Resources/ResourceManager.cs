@@ -33,9 +33,6 @@ public class ResourceManager : MonoBehaviour
     public float housing;
     public float maxHousing;
 
-    public Text FoodDisp;
-    public Text HousingDisp;
-
     public GameObject[] houses;
     public GameObject[] oneFoodUnit;
     private int housingTotal;
@@ -64,12 +61,6 @@ public class ResourceManager : MonoBehaviour
     {
         Scene currentScene = SceneManager.GetActiveScene();
         if(currentScene.name != "Main Menu") {
-            // Enemy faction does not have a UI, so we need the conditional; this should be fixed
-            if (resourcePanelController != null) {
-                resourcePanelController.UpdateCurrentValues();
-            }
-            FoodDisp.text = "" + food + "/" + maxFood;
-
             oneFoodUnit = GameObject.FindGameObjectsWithTag("Selectable");
             housingTotal = oneFoodUnit.Length;
 
@@ -84,7 +75,11 @@ public class ResourceManager : MonoBehaviour
 
             housing = requiredfood;
             maxHousing = houses.Length * 5;
-            HousingDisp.text = "" + housing + "/" + maxHousing;
+
+            // Enemy faction does not have a UI, so we need the conditional; this should be fixed
+            if (resourcePanelController != null) {
+                resourcePanelController.UpdateCurrentValues();
+            }
 
             if(gold >= 5000) {
                 // Debug.Log("You win: Economic victory!");
