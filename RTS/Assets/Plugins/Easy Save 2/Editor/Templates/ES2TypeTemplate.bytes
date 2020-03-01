@@ -1,0 +1,31 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+{5}
+
+public class {0}{1} : ES2Type
+{{
+	public override void Write(object obj, ES2Writer writer)
+	{{
+		{2} data = ({2})obj;
+		// Add your writer.Write calls here.
+{3}
+	}}
+	
+	public override object Read(ES2Reader reader)
+	{{
+		{2} data = {6};
+		Read(reader, data);
+		return data;
+	}}
+
+	public override void Read(ES2Reader reader, object c)
+	{{
+		{2} data = ({2})c;
+		// Add your reader.Read calls here to read the data into the object.
+{4}
+	}}
+	
+	/* ! Don't modify anything below this line ! */
+	public {0}{1}():base(typeof({2})){{}}
+}}

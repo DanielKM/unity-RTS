@@ -244,9 +244,9 @@ public class UnitButtonController : MonoBehaviour
 
             foreach (MeshRenderer mesh in meshes)
             {
-                color = mesh.material.GetColor("_Color");
-                colors[iter] = color;
-                iter += 1;
+                // color = mesh.material.GetColor("_Color");
+                // colors[iter] = color;
+                // iter += 1;
             }
             iter = 0;
         }
