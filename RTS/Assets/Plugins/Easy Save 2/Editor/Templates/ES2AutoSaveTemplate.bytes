@@ -1,0 +1,40 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class ES2AutoSave_{0} : ES2AutoSave
+{{
+	public override void Save(ES2Writer writer)
+	{{
+		// Components
+		{1}
+		
+		// Write calls.
+		{2}
+		// Terminate with -1
+		writer.Write(-1);
+	}}
+	
+	public override void Load(ES2Reader reader)
+	{{
+		// Components.
+		{1}
+		
+		while(true)
+		{{
+			switch(reader.Read_int())
+			{{
+				// Cases with read calls.
+				{3}
+				// If -1, no more properties to load.
+				case -1:
+					return;
+				default:
+					reader.SkipProperty();
+					break;
+			}}
+		}}
+	}}
+	
+	
+}}

@@ -1,0 +1,28 @@
+using System; 
+using UnityEngine; 
+using System.Collections; 
+using System.Collections.Generic;
+
+[ExecuteInEditMode]				
+public class ES2Init : MonoBehaviour
+{{
+	public void Awake()
+	{{
+		Init();
+	}}
+	
+	public void Start()
+	{{
+		if(Application.isEditor)
+			GameObject.DestroyImmediate(gameObject);
+		else
+			GameObject.Destroy(gameObject);
+	}}
+
+	public static void Init()
+	{{
+		ES2TypeManager.types = new Dictionary<Type, ES2Type>();
+		{0}
+		ES2.initialised = true;
+	}}
+}}
