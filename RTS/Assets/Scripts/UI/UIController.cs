@@ -8,6 +8,8 @@ public class UIController : MonoBehaviour
     // PLAYER
     public GameObject player;
     public GameObject team;
+    public GameObject saveMenu;
+    public GameObject loadMenu;
     ResourceManager RM;
 
     // GAME MENU
@@ -54,6 +56,8 @@ public class UIController : MonoBehaviour
     public void FindAllPanels() {
         GameMenuPanel = GameObject.Find("GameMenu").GetComponent<CanvasGroup>();
 
+        saveMenu = GameObject.Find("SaveMenu");
+        loadMenu = GameObject.Find("loadMenu");
         UnitPanel = GameObject.Find("UnitPanel").GetComponent<CanvasGroup>();
         VillagerPanel = GameObject.Find("VillagerPanel").GetComponent<CanvasGroup>();
         BasicBuildingsPanel = GameObject.Find("BasicBuildingsPanel").GetComponent<CanvasGroup>();

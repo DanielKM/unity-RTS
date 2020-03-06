@@ -406,6 +406,8 @@ public class InputManager : MonoBehaviour
 
             var selectRect = Utils.GetScreenRect(mouse1, mouse2);
             if(selectRect.size.x * selectRect.size.y > 150) {  
+                
+                DeselectUnits();
                 selectionBoxOpen = true;
                 inUnitSelectionBox = false;
                 for (int i = 0; i < units.Length; i++)

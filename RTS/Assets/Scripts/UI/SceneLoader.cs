@@ -30,6 +30,7 @@ public class SceneLoader : MonoBehaviour {
 
     public void PlayGame()
     {
+        SaveLoad.load = false;
         instructions.SetActive(true);
         hindegardeMap.alpha = 1;
         loadingText.text = "Approaching Hindegarde Village...";
@@ -53,7 +54,6 @@ public class SceneLoader : MonoBehaviour {
             yield return null;
         }
         Debug.Log(loadScene);
-
     }
 
 }

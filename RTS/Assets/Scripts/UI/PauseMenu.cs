@@ -8,6 +8,19 @@ public class PauseMenu : MonoBehaviour
     public bool gamePaused = false;
     public GameObject pauseMenu;
     public GameObject optionsMenu;
+    public GameObject loadMenu;
+    public GameObject saveMenu;
+
+    public GameObject player;
+    BuildingButtonController BBC;
+
+    void Start() 
+    {
+        loadMenu = GameObject.Find("LoadMenu");
+        saveMenu = GameObject.Find("SaveMenu");
+        player = GameObject.FindGameObjectWithTag("Player");
+        BBC = player.GetComponent<BuildingButtonController>();
+    }
 
     private void Update()
     {
@@ -29,6 +42,8 @@ public class PauseMenu : MonoBehaviour
         gamePaused = true;
         pauseMenu.SetActive(true);
         optionsMenu.SetActive(false);
+        loadMenu.SetActive(false);
+        saveMenu.SetActive(false);
         // Slow MO?
     }
 
@@ -38,13 +53,16 @@ public class PauseMenu : MonoBehaviour
         Time.timeScale = 1f;
         pauseMenu.SetActive(false);
         optionsMenu.SetActive(false);
+        loadMenu.SetActive(false);
+        saveMenu.SetActive(false);
         // Slow MO?
     }
 
     public void QuitGame()
     {
         Debug.Log("Quit!");
-        Application.Quit();
+        ResumeGame();
+        SceneManager.LoadScene("Main Menu");
         Steamworks.SteamClient.Shutdown();
     }
 

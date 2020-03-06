@@ -69,6 +69,7 @@ GameObject:
   - component: {fileID: 6846251606739868187}
   - component: {fileID: 6846251606739868176}
   - component: {fileID: 6846251606739868183}
+  - component: {fileID: 114055182514284726}
   m_Layer: 12
   m_Name: PineTree
   m_TagString: Resource
@@ -294,6 +295,74 @@ MonoBehaviour:
   harvestTime: 1
   availableResource: 1000
   gatherers: 0
+--- !u!114 &114055182514284726
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6846658738078682921}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: baff8732cd3074ef88b34f9cc487846d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  prefabId: 1152901834274151702
+  localRefs:
+    _Keys:
+    - {fileID: 6879927796707380323}
+    - {fileID: 6878672384020753403}
+    - {fileID: 6879814245057893957}
+    - {fileID: 6, guid: 0000000000000000f000000000000000, type: 0}
+    - {fileID: 7, guid: 0000000000000000f000000000000000, type: 0}
+    - {fileID: 11500000, guid: 0b58a6417dd991148988052a4da8f4ad, type: 3}
+    - {fileID: 11500000, guid: baff8732cd3074ef88b34f9cc487846d, type: 3}
+    - {fileID: 11500000, guid: a3c16653e262e274ab751c9e3ebae51d, type: 3}
+    - {fileID: 6762341035013431987}
+    - {fileID: 114055182514284726}
+    - {fileID: 6846251606739868183}
+    - {fileID: 6869773068865562465}
+    - {fileID: 6846251606739868176}
+    - {fileID: 6837807317703957013}
+    - {fileID: 6849222785792861391}
+    - {fileID: 6847336711526197419}
+    - {fileID: 1004588269997268494}
+    - {fileID: 2215775845845688498}
+    - {fileID: 2038944364763621971}
+    - {fileID: 6847560408785257297}
+    - {fileID: 6846251606739868180}
+    - {fileID: 6846251606739868187}
+    - {fileID: 6849379168514680747}
+    - {fileID: 6848908928821191431}
+    - {fileID: 6846251606739868182}
+    - {fileID: 6869805212478708195}
+    - {fileID: 6846251606739868181}
+    - {fileID: 6846658738078682921}
+    - {fileID: 6868056469047074289}
+    - {fileID: 2800000, guid: 581c857d31079eb4fbe724e01a00efdd, type: 3}
+    - {fileID: 2100000, guid: 95478b0864ed03143b6c50dab682cfaa, type: 2}
+    - {fileID: 2800000, guid: d0a0673206b1a47498939ad15da6b905, type: 3}
+    - {fileID: 2100000, guid: df4752450dee06b42b10f620959ba4bc, type: 2}
+    - {fileID: 2800000, guid: 8ff852c45d722a54b9a1ba8258ae1e1f, type: 3}
+    - {fileID: 2800000, guid: 0ed41aea5521a154f92af84971dda480, type: 3}
+    - {fileID: 2800000, guid: 12e37bc4f2bc0184485af6955dc0b8d6, type: 3}
+    - {fileID: 2800000, guid: 97542a7228ac63944a142ec253cdef59, type: 3}
+    - {fileID: 4300002, guid: b9d26df9cb6aa1c4493e59dfb6e5d141, type: 3}
+    - {fileID: 21300000, guid: 581c857d31079eb4fbe724e01a00efdd, type: 3}
+    - {fileID: 4300004, guid: b9d26df9cb6aa1c4493e59dfb6e5d141, type: 3}
+    - {fileID: 4300006, guid: b9d26df9cb6aa1c4493e59dfb6e5d141, type: 3}
+    - {fileID: 2800000, guid: ddf6344e26e0f7e44a9a606e40d2f832, type: 3}
+    - {fileID: 2800000, guid: 195183a9d2c0b924396a84f7b5e89b19, type: 3}
+    - {fileID: 4800000, guid: 0f7c21dda7fbbfc49b71ea6f47716bfc, type: 3}
+    - {fileID: 2800000, guid: 22565e66c7cabf04da326a2911e95c34, type: 3}
+    - {fileID: 4800000, guid: daf8b486a4f149e44b8e875a47f314f5, type: 3}
+    - {fileID: 2100000, guid: 68a9895f75761b5488d26dee81d94a1f, type: 2}
+    - {fileID: 2800000, guid: 8d345481a087f3441a26780f5c809728, type: 3}
+    - {fileID: 2800000, guid: a10e98907b5cb784aa93e62c73c60b1a, type: 3}
+    - {fileID: 2800000, guid: 5858fbf2accf1b545930f48f1db9709c, type: 3}
+    - {fileID: 2800000, guid: 4753042191854ec4a879e40717c9db7c, type: 3}
+    - {fileID: 4800000, guid: 53db23e245600294b8245008e74fbb63, type: 3}
+    _Values: 0a913686a6a50e47b3ed8e63a9c5b7689b8d64ec3fec4a2ebe347c602a344c3b193860037db8ab2ecb52c37f1c8dff2dc392c94dbe6c8a09249abb25dd908e7e5fadb68f9b4b151ce23520ed28cb1230cbb1626794018353ae56dee2fd86513ac344ddc9438fc80ea7e56a894b9de05978750f700c0aec5dd59dc20dd508e65c1c19d61c12b61359868ef08594f361108a7aa58d693eb832cfc40c593345c761ff0ea56573fc6b3e62b6f79bfa72f11d3bb19750ae73c62261a34d4da9b92633565285854efc9d79e7e42bb3461d375bd4ee95e4dc170f744882c5174ab9e857703c0db20789943fede2c96d60859743930d8545dbbea96d61fa3dcb36862f60cd8324822bea625c84d4f8fa4da21331e6f67cc2cc5c834e6d5faef2b436f672eed55f239eebe77d70e2c8b0b7a3bb04f3904fd2fd0dd36f01d516cb3b70a84c217a17dcfec82f2edffa33ae253305101cb20023e72475035730dc8bfe4c461f8a148e3d8cdf05453f820cfc25dbb5332ffa5077907b9b46ef1b332ea4bb2d6d4cebc7c63dbd6304b945636a307229321af044076242500e87b7b28f53285f7c
 --- !u!1 &6847336711526197419
 GameObject:
   m_ObjectHideFlags: 0
