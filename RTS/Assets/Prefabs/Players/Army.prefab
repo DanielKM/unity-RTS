@@ -247,6 +247,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 595890288067306296}
+  team: {fileID: 0}
   building: {fileID: 0}
   isPlaceable: 0
   buttonOne: {fileID: 0}
@@ -264,18 +265,19 @@ MonoBehaviour:
   playerAudio: {fileID: 595890288742844648}
   constructingBuilding: {fileID: 8300000, guid: 9b5f90fda9e2648cfb0c641ed933ce78,
     type: 3}
-  house: {fileID: 7585515422463932971, guid: 3546ea250a49cff499cb04b3efbbfec6, type: 3}
-  townHall: {fileID: 4247186984801027523, guid: 32859feca3fc475458797204fa38b271,
+  house: {fileID: 3852338444680637304, guid: 6c58fb69ad71551479527ca949a683db, type: 3}
+  townHall: {fileID: 3399450528866985751, guid: 161077ecb8e598849be261e191c7f828,
     type: 3}
-  barracks: {fileID: 4152907234997512173, guid: 3ba4ae6e49434894c99ab25d78d75c6a,
+  barracks: {fileID: 5068174577448363612, guid: acdbb27ba875b5542910d0a33175a74f,
     type: 3}
   fort: {fileID: 4985030895107554410, guid: 905463bcd98e94e42b796f4c8cf85e07, type: 3}
-  farm: {fileID: 4523337476430360875, guid: 1b70250a827fe7745858b234cb795ad3, type: 3}
-  blacksmith: {fileID: 13005670944554208, guid: 4d37433635805124c880e603f6ce6e21,
+  farm: {fileID: 8763373178185352066, guid: bb1e011753b64044ea9e1501e6307118, type: 3}
+  blacksmith: {fileID: 2452542087011110359, guid: 247e9fdc4ccb59d4abe697442053bc5b,
     type: 3}
-  lumberMill: {fileID: 3319812515624710287, guid: ded039f5c2495b2428d71bc0f083aa97,
+  lumberMill: {fileID: 70138970605207024, guid: 441dad21bcea610479803a4d5f435645,
     type: 3}
-  stables: {fileID: 3904504068563203642, guid: 4712f6d29236dd94a867c843fcaf0182, type: 3}
+  stables: {fileID: 4593375991603204861, guid: ae3b7ee99c7e81b49b9652fa1d374d99, type: 3}
+  currentPlaceableObject: {fileID: 0}
   placing: {fileID: 2100000, guid: b80600cf60ea5f447ae5cc8acb8697cd, type: 2}
   childColors: []
 --- !u!114 &595890288067306293
@@ -291,6 +293,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 595890288067306296}
+  team: {fileID: 0}
   buttonOne: {fileID: 0}
   barracksButtonOne: {fileID: 0}
   barracksButtonTwo: {fileID: 0}
@@ -300,7 +303,7 @@ MonoBehaviour:
   trainFootmanAudio: {fileID: 8300000, guid: 9b5f90fda9e2648cfb0c641ed933ce78, type: 3}
   trainSwordsmanAudio: {fileID: 8300000, guid: 9b5f90fda9e2648cfb0c641ed933ce78, type: 3}
   trainArcherAudio: {fileID: 0}
-  villager: {fileID: 4804534610097456925, guid: c2da89567b823fc44b85b9516a8e8c6a,
+  villager: {fileID: 3389560421852583913, guid: b53a6d07210063e4cbb21c14f1e3863d,
     type: 3}
   nextSpawnTime: 0
   isTraining: 0
@@ -310,9 +313,10 @@ MonoBehaviour:
     type: 3}
   footmanPrefab: {fileID: 57994888639720294, guid: 1003ba60e89eda545b2a676cc324163f,
     type: 3}
-  villagerPrefab: {fileID: 4804534610097456925, guid: c2da89567b823fc44b85b9516a8e8c6a,
+  villagerPrefab: {fileID: 3389560421852583913, guid: b53a6d07210063e4cbb21c14f1e3863d,
     type: 3}
-  archerPrefab: {fileID: 0}
+  archerPrefab: {fileID: 1971897941503588938, guid: f33325accbafcc34a93926457ef55ae8,
+    type: 3}
 --- !u!54 &595890288067306294
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -342,6 +346,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 0}
+  team: {fileID: 0}
   GameMenuPanel: {fileID: 0}
   panelOpen: 0
   UnitPanel: {fileID: 0}

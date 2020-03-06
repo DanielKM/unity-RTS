@@ -114,7 +114,7 @@ MonoBehaviour:
   itemDisp: {fileID: 0}
   resourceHeld: 0
   isSelected: 0
-  VillagerProgressSlider: {fileID: 0}
+  BuildingProgressSlider: {fileID: 0}
   buildingHB: {fileID: 0}
   buildingHealthDisp: {fileID: 0}
   buildingEB: {fileID: 0}
@@ -142,6 +142,7 @@ MonoBehaviour:
   doorway: {fileID: 2800000, guid: c21cc0a3bd09a8d41bef2787ea7fa284, type: 3}
   combat: {fileID: 2800000, guid: c527aacb1e33c3943b77694f59d12c9d, type: 3}
   sword: {fileID: 2800000, guid: c527aacb1e33c3943b77694f59d12c9d, type: 3}
+  cursorHit: {fileID: 0}
   OnClickEnvironment:
     m_PersistentCalls:
       m_Calls: []
@@ -176,6 +177,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 6687884576793589997}
+  team: {fileID: 0}
   building: {fileID: 0}
   isPlaceable: 0
   buttonOne: {fileID: 0}
@@ -205,6 +207,7 @@ MonoBehaviour:
   lumberMill: {fileID: 3319812515624710287, guid: ded039f5c2495b2428d71bc0f083aa97,
     type: 3}
   stables: {fileID: 3904504068563203642, guid: 4712f6d29236dd94a867c843fcaf0182, type: 3}
+  currentPlaceableObject: {fileID: 0}
   placing: {fileID: 2100000, guid: b80600cf60ea5f447ae5cc8acb8697cd, type: 2}
   childColors: []
 --- !u!114 &6687884576793589992
@@ -220,23 +223,29 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 6687884576793589997}
+  team: {fileID: 0}
   buttonOne: {fileID: 0}
   barracksButtonOne: {fileID: 0}
   barracksButtonTwo: {fileID: 0}
+  barracksButtonFour: {fileID: 0}
   playerAudio: {fileID: 0}
   trainVillagerAudio: {fileID: 8300000, guid: 9b5f90fda9e2648cfb0c641ed933ce78, type: 3}
   trainFootmanAudio: {fileID: 8300000, guid: 9b5f90fda9e2648cfb0c641ed933ce78, type: 3}
   trainSwordsmanAudio: {fileID: 0}
-  villager: {fileID: 4804534610097456925, guid: c2da89567b823fc44b85b9516a8e8c6a,
+  trainArcherAudio: {fileID: 0}
+  villager: {fileID: 3389560421852583913, guid: b53a6d07210063e4cbb21c14f1e3863d,
     type: 3}
   nextSpawnTime: 0
   isTraining: 0
   selectedObj: {fileID: 0}
   spawnDelay: 0
-  swordsmanPrefab: {fileID: 0}
+  swordsmanPrefab: {fileID: 8485371735523753441, guid: 9d7a132ca0ec3e540b5aca47e5135d79,
+    type: 3}
   footmanPrefab: {fileID: 57994888639720294, guid: 1003ba60e89eda545b2a676cc324163f,
     type: 3}
-  villagerPrefab: {fileID: 4804534610097456925, guid: c2da89567b823fc44b85b9516a8e8c6a,
+  villagerPrefab: {fileID: 3389560421852583913, guid: b53a6d07210063e4cbb21c14f1e3863d,
+    type: 3}
+  archerPrefab: {fileID: 1971897941503588938, guid: f33325accbafcc34a93926457ef55ae8,
     type: 3}
 --- !u!54 &6687884576793589999
 Rigidbody:
@@ -267,6 +276,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 0}
+  team: {fileID: 0}
   basicBlacksmithing: 0
   basicBlacksmithingGold: 400
   basicBlacksmithingIron: 400
@@ -291,9 +301,9 @@ MonoBehaviour:
   artisanWeaponSmithing: 0
   artisanWeaponSmithingGold: 800
   artisanWeaponSmithingIron: 800
-  horshoes: 0
-  horshoesGold: 500
-  horshoesIron: 500
+  horseshoes: 0
+  horseshoesGold: 0
+  horseshoesIron: 0
   minecarts: 0
   minecartsGold: 500
   minecartsIron: 500
@@ -303,6 +313,42 @@ MonoBehaviour:
   reinforcedBuildings: 0
   reinforcedBuildingsGold: 1000
   reinforcedBuildingsIron: 1000
+  buildingScience: 0
+  buildingScienceGold: 0
+  buildingScienceWood: 0
+  efficientBuildings: 0
+  efficientBuildingsGold: 0
+  efficientBuildingsWood: 0
+  sturdyConstruction: 0
+  sturdyConstructionGold: 0
+  sturdyConstructionWood: 0
+  betterGear: 0
+  betterGearGold: 0
+  betterGearWood: 0
+  basicWoodworking: 0
+  basicWoodworkingGold: 0
+  basicWoodworkingWood: 0
+  improvedHandles: 0
+  improvedHandlesGold: 0
+  improvedHandlesWood: 0
+  wheelbarrows: 0
+  wheelbarrowsGold: 0
+  wheelbarrowsWood: 0
+  carts: 0
+  cartsGold: 0
+  cartsWood: 0
+  artisanWoodworking: 0
+  artisanWoodworkingGold: 0
+  artisanWoodworkingWood: 0
+  bridges: 0
+  bridgesGold: 0
+  bridgesWood: 0
+  walls: 0
+  wallsGold: 0
+  wallsWood: 0
+  watchTowers: 0
+  watchTowersGold: 0
+  watchTowersWood: 0
   basicBlacksmithingButton: {fileID: 0}
   basicToolSmithingButton: {fileID: 0}
   basicArmourSmithingButton: {fileID: 0}
@@ -311,7 +357,23 @@ MonoBehaviour:
   artisanToolSmithingButton: {fileID: 0}
   artisanArmourSmithingButton: {fileID: 0}
   artisanWeaponSmithingButton: {fileID: 0}
-  horshoesButton: {fileID: 0}
+  horseshoesButton: {fileID: 0}
   minecartsButton: {fileID: 0}
   caltropsButton: {fileID: 0}
   reinforcedBuildingsButton: {fileID: 0}
+  buildingScienceButton: {fileID: 0}
+  efficientBuildingsButton: {fileID: 0}
+  sturdyConstructionButton: {fileID: 0}
+  betterGearButton: {fileID: 0}
+  basicWoodworkingButton: {fileID: 0}
+  improvedHandlesButton: {fileID: 0}
+  wheelbarrowsButton: {fileID: 0}
+  cartsButton: {fileID: 0}
+  artisanWoodworkingButton: {fileID: 0}
+  bridgesButton: {fileID: 0}
+  wallsButton: {fileID: 0}
+  watchTowersButton: {fileID: 0}
+  selectedObj: {fileID: 0}
+  research: 
+  isTraining: 0
+  i: 0
