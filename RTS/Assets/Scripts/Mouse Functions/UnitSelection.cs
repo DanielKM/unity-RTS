@@ -236,7 +236,7 @@ public class UnitSelection : MonoBehaviour
                             isGathering = false;
                             isMeleeing = false;
                             task = ActionList.Moving;
-                            createBoxFormation(hit);
+                            CreateBoxFormation(hit);
                         }
                         else if (hit.collider.tag == "Resource")
                         {
@@ -284,7 +284,7 @@ public class UnitSelection : MonoBehaviour
                     {
                         isMeleeing = false;
                         task = ActionList.Moving;
-                        createBoxFormation(hit);
+                        CreateBoxFormation(hit);
                     }
                     else if (hit.collider.tag == "Doorway")
                     {
@@ -300,18 +300,29 @@ public class UnitSelection : MonoBehaviour
         }
     }
 
-    public void createBoxFormation(RaycastHit hit) {
+    public void CreateBoxFormation(RaycastHit hit) {
         formationList = IM.selectedObjects;
         float row = 0.0f;
         int counter = 0;
-        if(formationList.Count <= 4) {
+        if(formationList.Count == 1) { 
             for(int iteration = 0; iteration < formationList.Count; iteration++) {
-                
-                if(iteration % 2 == 0) {
-                    row += 1.5f;
-                    counter = 0;
+                formationList[iteration].GetComponent<NavMeshAgent>().destination = new Vector3(hit.point.x, hit.point.y, hit.point.z);
+            }
+        } else if(formationList.Count <= 4) {
+            for(int iteration = 0; iteration < formationList.Count; iteration++) {
+                if(iteration <= 1) {
+                    if(iteration % 2 == 0) {
+                        counter = 0;
+                    } else {
+                        counter += 1;
+                    }
                 } else {
-                    counter += 1;
+                    if(iteration % 2 == 0) {
+                        row += 1.5f;
+                        counter = 0;
+                    } else {
+                        counter += 1;
+                    }
                 }
 
                 if(iteration % 2 == 0) {
@@ -320,15 +331,21 @@ public class UnitSelection : MonoBehaviour
                     formationList[iteration].GetComponent<NavMeshAgent>().destination = new Vector3(hit.point.x - 0.8f * counter, hit.point.y, hit.point.z + row);
                 }
             }
-        } 
-        if(formationList.Count > 4 && formationList.Count <= 16) {
+        } else if(formationList.Count > 4 && formationList.Count <= 16) {
             for(int iteration = 0; iteration < formationList.Count; iteration++) {
-                
-                if(iteration % 4 == 0) {
-                    row += 1.5f;
-                    counter = 0;
+                if(iteration <= 1) {
+                    if(iteration % 4 == 0) {
+                        counter = 0;
+                    } else {
+                        counter += 1;
+                    }
                 } else {
-                    counter += 1;
+                    if(iteration % 4 == 0) {
+                        row += 1.5f;
+                        counter = 0;
+                    } else {
+                        counter += 1;
+                    }
                 }
 
                 if(iteration % 2 == 0) {
@@ -337,15 +354,21 @@ public class UnitSelection : MonoBehaviour
                     formationList[iteration].GetComponent<NavMeshAgent>().destination = new Vector3(hit.point.x - 0.8f * counter, hit.point.y, hit.point.z + row);
                 }
             }
-        } 
-        else if(formationList.Count >= 16) {
+        } else if(formationList.Count >= 16) {
             for(int iteration = 0; iteration < formationList.Count; iteration++) {
-                
-                if(iteration % 8 == 0) {
-                    row += 1.5f;
-                    counter = 0;
+                if(iteration <= 1) {
+                    if(iteration % 8 == 0) {
+                        counter = 0;
+                    } else {
+                        counter += 1;
+                    }
                 } else {
-                    counter += 1;
+                    if(iteration % 8 == 0) {
+                        row += 1.5f;
+                        counter = 0;
+                    } else {
+                        counter += 1;
+                    }
                 }
 
                 if(iteration % 2 == 0) {

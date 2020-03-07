@@ -1,3 +1,5 @@
+clearing debris
+
 Building take over mechanics
 - territories/influence
 - watch post
@@ -9,6 +11,7 @@ Building take over mechanics
 -
 
 processes: 
+ramshackle knight
 baking
 wheat
 farming
