@@ -1536,7 +1536,7 @@ MonoBehaviour:
   attackDamage: 40
   attackRange: 2
   attackSpeed: 1
-  aggroRange: 10
+  aggroRange: 5
   gold: 500
   wood: 0
   food: 200
@@ -1556,6 +1556,7 @@ MonoBehaviour:
   currentlyMeleeing: 0
   isDead: 0
   unitIcon: {fileID: 21300000, guid: fa5d9d26a887fce44ac88d80d1487715, type: 3}
+  unitID: 
 --- !u!114 &114163771618793356
 MonoBehaviour:
   m_ObjectHideFlags: 0

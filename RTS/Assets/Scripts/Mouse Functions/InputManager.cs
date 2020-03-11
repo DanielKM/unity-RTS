@@ -141,6 +141,19 @@ public class InputManager : MonoBehaviour
     public UnitSelection selectedInfo;
     public GameObject selectedObj;
 
+    void Awake() {
+        Scene currentScene = SceneManager.GetActiveScene();
+        if(currentScene.name != "Main Menu") {
+            team = GameObject.Find("Faction");
+            player = GameObject.FindGameObjectWithTag("Player");
+
+            unitButtonController = player.GetComponent<UnitButtonController>();
+            playerAudio = GameObject.FindGameObjectWithTag("Main Audio").GetComponent<AudioSource>();
+            UI = player.GetComponent<UIController>();
+            RC = team.GetComponent<ResearchController>();
+            PM = GameObject.Find("GameMenu").GetComponent<PauseMenu>();
+        }
+    }
     // Start is called before the first frame update
     void Start()
     {

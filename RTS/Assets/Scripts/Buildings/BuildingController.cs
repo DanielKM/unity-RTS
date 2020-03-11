@@ -42,11 +42,14 @@ public class BuildingController : MonoBehaviour
     public int skymetal;
 
     private MeshRenderer[] meshes;
+    public string buildingID;
 
     // Start is called before the first frame update
     void Start()
     {
-        
+        if(buildingID == null || buildingID == "") {
+            buildingID = System.Guid.NewGuid().ToString();
+        }
     }
 
     // Update is called once per frame

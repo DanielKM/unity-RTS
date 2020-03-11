@@ -1,3 +1,5 @@
+Add Bandit types to rest of code
+
 clearing debris
 
 Building take over mechanics

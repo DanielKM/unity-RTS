@@ -58,7 +58,7 @@ public class UnitSelection : MonoBehaviour
     public List<GameObject> dropList;
 
     // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
         Scene currentScene = SceneManager.GetActiveScene();
         if(currentScene.name != "Main Menu") {

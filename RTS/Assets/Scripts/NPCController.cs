@@ -31,14 +31,23 @@ public class NPCController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        player = GameObject.FindGameObjectWithTag("Player");
-        team = GameObject.Find("Faction");
-        RC = team.GetComponent<ResearchController>();
-        playerunits = GameObject.FindGameObjectsWithTag("Selectable");
+        agent = GetComponent<NavMeshAgent>();
+        index = Random.Range(0, waypoints.Length);
+        InvokeRepeating("Tick", 0, 1.0f);
+
+        if (waypoints.Length > 0)
+        {
+            InvokeRepeating("Patrol", Random.Range(0, patrolTime), patrolTime);
+        }
     }
 
     private void Awake()
     {
+        player = GameObject.FindGameObjectWithTag("Player");
+        team = GameObject.Find("Faction");
+        RC = team.GetComponent<ResearchController>();
+        playerunits = GameObject.FindGameObjectsWithTag("Selectable");
+        
         animator = GetComponent<Animator>();
         agent = GetComponent<NavMeshAgent>();
         UC = GetComponent<UnitController>();
@@ -49,13 +58,6 @@ public class NPCController : MonoBehaviour
             agentSpeed = agent.speed;
         }
 
-        index = Random.Range(0, waypoints.Length);
-        InvokeRepeating("Tick", 0, 1.0f);
-
-        if (waypoints.Length > 0)
-        {
-            InvokeRepeating("Patrol", Random.Range(0, patrolTime), patrolTime);
-        }
     }
 
     void Patrol()
@@ -78,9 +80,12 @@ public class NPCController : MonoBehaviour
     void Tick()
     {
         if(!UC.isDead) {
-            if(waypoints.Length != 0) {
-                agent.destination = waypoints[index].position;
-                agent.speed = agentSpeed / 2;
+            agent = GetComponent<NavMeshAgent>();
+            if(waypoints != null) {
+                if(waypoints.Length != 0) {
+                    agent.destination = waypoints[index].position;
+                    agent.speed = agentSpeed / 2;
+                }
             }
             playerunits = GameObject.FindGameObjectsWithTag("Selectable");
             GameObject currentTarget = GetClosestEnemy(playerunits);
@@ -168,7 +173,7 @@ public class NPCController : MonoBehaviour
                 UC.unitAudio.clip = UC.woodChop;
                 UC.unitAudio.maxDistance = 55;
                 UC.unitAudio.Play();
-            } else if (UC.unitType == "Footman" || UC.unitType == "Swordsman") {
+            } else if (UC.unitType == "Footman" || UC.unitType == "Swordsman" || UC.unitType == "Bandit Swordsman" || UC.unitType == "Bandit Footman") {
                 AudioClip[] metalAttacks = new AudioClip[4]{ UC.metalChop, UC.metalChop2, UC.metalChop3, UC.metalChop4};
                 UC.unitAudio = agent.GetComponent<AudioSource>();
                     
