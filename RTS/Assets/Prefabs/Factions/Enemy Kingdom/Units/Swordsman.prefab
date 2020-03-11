@@ -3256,7 +3256,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 07b3cc11225f13e4d85c1b5ecd816095, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  unitType: Swordsman
+  unitType: Bandit Swordsman
   unitRank: Recruit
   unitName: Kevan Tallstone
   unitKills: 0
@@ -3292,6 +3292,7 @@ MonoBehaviour:
   currentlyMeleeing: 0
   isDead: 0
   unitIcon: {fileID: 21300000, guid: fa5d9d26a887fce44ac88d80d1487715, type: 3}
+  unitID: 
 --- !u!114 &2632656671178594094
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3336,11 +3337,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   patrolTime: 15
-  aggroRange: 10
-  waypoints:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
+  aggroRange: 15
+  waypoints: []
   currentlyMeleeing: 0
 --- !u!114 &114940758433175532
 MonoBehaviour:

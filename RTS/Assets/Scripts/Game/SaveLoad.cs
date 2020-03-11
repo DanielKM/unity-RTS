@@ -16,12 +16,15 @@ public class SaveLoad : MonoBehaviour
     List<GameObject> transferList = new List<GameObject>();
     GameObject[] savedGameObjects;
     GameObject[] loadedGameObjects;
+
+    ES3WorkerPrefab ES3WorkerPrefab;
     
     // Start is called before the first frame update
     void Start()
     {
         Scene currentScene = SceneManager.GetActiveScene();
         if(currentScene.name != "Main Menu") {
+            ES3WorkerPrefab = GameObject.Find("ES3PrefabSaves").GetComponent<ES3WorkerPrefab>();
             GM = GameObject.Find("GameMenu");
             faction = GameObject.Find("Faction");
             RM = faction.GetComponent<ResourceManager>();
@@ -42,19 +45,7 @@ public class SaveLoad : MonoBehaviour
     public void SaveGame(string saveLocation) 
     {
         string path = Application.persistentDataPath + "/" + saveLocation + ".es3";
-        Debug.Log(path);
-        allGameObjects = GameObject.FindObjectsOfType<GameObject>();
-        foreach(GameObject go in allGameObjects) 
-        {
-            if(go.GetComponent<UnitController>()) 
-            {
-                transferList.Add(go);
-            } else if (go.GetComponent<BuildingController>())
-            {
-                transferList.Add(go);
-            }
-        }
-        savedGameObjects = transferList.ToArray();
+        ES3WorkerPrefab.SaveWorkers(path);
 
         ES3.Save<float>("skymetal", RM.skymetal, path);
         ES3.Save<float>("iron", RM.iron, path);
@@ -65,14 +56,17 @@ public class SaveLoad : MonoBehaviour
         ES3.Save<float>("gold", RM.gold, path);
 
         ES3.Save<string>("savedScene", SceneManager.GetActiveScene().name, path);
-        ES3.Save<GameObject[]>("savedGameObjects", savedGameObjects, path);
 
         Debug.Log("Saved from in-game");
+        GM.GetComponent<PauseMenu>().ResumeGame();
     }
     
     public void LoadGame(string saveLocation) 
     {   
         string path = Application.persistentDataPath + "/" + saveLocation + ".es3";
+        string scene = ES3.Load<string>("savedScene", path);
+        ES3WorkerPrefab.LoadWorkers(path);
+
         RM.skymetal = ES3.Load<float>("skymetal", path);
         RM.iron = ES3.Load<float>("iron", path);
         RM.steel = ES3.Load<float>("steel", path);
@@ -81,24 +75,6 @@ public class SaveLoad : MonoBehaviour
         RM.food = ES3.Load<float>("food", path);
         RM.gold = ES3.Load<float>("gold", path);
 
-        loadedGameObjects = ES3.Load<GameObject[]>("savedGameObjects", path);
-        foreach(GameObject go in loadedGameObjects) 
-        {
-            if(go.GetComponent<UnitController>()) 
-            {
-                if(go.GetComponent<UnitController>().unitType == "Worker") 
-                {
-                    // Debug.Log(go.GetComponent<UnitSelection>().resources);
-                    // Debug.Log(go.GetComponent<UnitSelection>().heldResource);
-                    // Debug.Log(go.GetComponent<UnitSelection>().heldResourceType);
-                    // Debug.Log(go.GetComponent<UnitSelection>().task);
-                    // Debug.Log(go.GetComponent<UnitSelection>().targetNode);
-                    // Debug.Log(go.GetComponent<NavMeshAgent>().destination);
-                }
-            }
-        }
-        // Time.timeScale = 1f;
-        // GM.GetComponent<PauseMenu>().ResumeGame();
         Debug.Log("Loaded from in-game");
     }
 }

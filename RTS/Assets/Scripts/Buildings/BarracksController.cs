@@ -163,7 +163,7 @@ public class BarracksController : MonoBehaviour
             footmanAudio.Play();
         } else if (unit == "Swordsman") {
             swordsmanAudio.Play();
-        } else if (unit == "Swordsman") {
+        } else if (unit == "Archer") {
             archerAudio.Play();
         }
         isTraining = false;

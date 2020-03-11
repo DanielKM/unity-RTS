@@ -52,6 +52,35 @@ public class UIController : MonoBehaviour
             CloseAllPanels();
         }
     }
+
+    void Awake() {
+        GameMenuPanel = GameObject.Find("GameMenu").GetComponent<CanvasGroup>();
+
+        saveMenu = GameObject.Find("SaveMenu");
+        loadMenu = GameObject.Find("loadMenu");
+        UnitPanel = GameObject.Find("UnitPanel").GetComponent<CanvasGroup>();
+        VillagerPanel = GameObject.Find("VillagerPanel").GetComponent<CanvasGroup>();
+        BasicBuildingsPanel = GameObject.Find("BasicBuildingsPanel").GetComponent<CanvasGroup>();
+        AdvancedBuildingsPanel = GameObject.Find("AdvancedBuildingsPanel").GetComponent<CanvasGroup>();
+        FootmanPanel = GameObject.Find("FootmanPanel").GetComponent<CanvasGroup>();
+                
+        BuildingPanel = GameObject.Find("BuildingPanel").GetComponent<CanvasGroup>();
+        BlacksmithActionPanel = GameObject.Find("BlacksmithActionPanel").GetComponent<CanvasGroup>();
+        LumberYardActionPanel = GameObject.Find("LumberYardActionPanel").GetComponent<CanvasGroup>();
+        BarracksActionPanel = GameObject.Find("BarracksActionPanel").GetComponent<CanvasGroup>();
+
+        BuildingProgressPanel = GameObject.Find("BuildingProgressPanel").GetComponent<CanvasGroup>();
+        BuildingActionPanel = GameObject.Find("BuildingActions").GetComponent<CanvasGroup>();
+
+        armour1 = GameObject.Find("Armour1").GetComponent<CanvasGroup>();
+        armour2 = GameObject.Find("Armour2").GetComponent<CanvasGroup>();
+        armour3 = GameObject.Find("Armour3").GetComponent<CanvasGroup>();
+        armour4 = GameObject.Find("Armour4").GetComponent<CanvasGroup>();
+        armour5 = GameObject.Find("Armour5").GetComponent<CanvasGroup>();
+        team = GameObject.Find("Faction");
+        player = GameObject.FindGameObjectWithTag("Player");
+        RM = team.GetComponent<ResourceManager>();
+    }
     
     public void FindAllPanels() {
         GameMenuPanel = GameObject.Find("GameMenu").GetComponent<CanvasGroup>();

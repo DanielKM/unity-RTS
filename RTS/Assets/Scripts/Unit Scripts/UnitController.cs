@@ -1,8 +1,6 @@
 ﻿using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
-using UnityEngine.UI;
 
 public class UnitController : MonoBehaviour
 {
@@ -85,7 +83,7 @@ public class UnitController : MonoBehaviour
     public Sprite unitIcon;
     private bool armourUpgrade;
 
-
+    public string unitID;
     // Start is called before the first frame update
     void Start()
     {
@@ -94,7 +92,6 @@ public class UnitController : MonoBehaviour
         UI = player.GetComponent<UIController>();
         RM = team.GetComponent<ResourceManager>();
         RC = team.GetComponent<ResearchController>();
-
         anim = GetComponent<Animator>();
         agent = GetComponent<NavMeshAgent>();
         UnitSelection = GetComponent<UnitSelection>();
@@ -105,6 +102,9 @@ public class UnitController : MonoBehaviour
         }        
         if(wizard) {
             fireballPrefab = wizard.fireball;
+        }
+        if(unitID == null || unitID == "") {
+            unitID = System.Guid.NewGuid().ToString();
         }
     }
 
@@ -118,7 +118,7 @@ public class UnitController : MonoBehaviour
         if(health <= 0) { 
             health = 0;
             gameObject.GetComponent<NavMeshAgent>().enabled = false;
-            if(unitType == "Worker" || unitType == "Footman" || unitType == "Swordsman" || unitType == "Archer" || unitType == "Wizard")  { 
+            if(unitType == "Worker" || unitType == "Footman" || unitType == "Swordsman" || unitType == "Archer" || unitType == "Wizard" || unitType == "Bandit Swordsman"  || unitType == "Bandit Footman")  { 
                 anim.SetInteger("condition", 10);
                 isDead = true;
                 UnitSelection.isBuilding = false;
@@ -161,7 +161,7 @@ public class UnitController : MonoBehaviour
                         anim.SetInteger("condition", 0);
                     }
                 }
-            } else if (unitType == "Footman" || unitType == "Swordsman" || unitType == "Archer" || unitType == "Wizard") {
+            } else if (unitType == "Footman" || unitType == "Swordsman" || unitType == "Archer" || unitType == "Wizard" || unitType == "Bandit Swordsman" || unitType == "Bandit Footman" ) {
                 if(UnitSelection.isMeleeing) {
                     anim.SetInteger("condition", 1);
                 } else if (!UnitSelection.isMeleeing) {
@@ -174,6 +174,7 @@ public class UnitController : MonoBehaviour
     void Tick()
     {
         if(!isDead) {
+            UnitSelection = GetComponent<UnitSelection>();
             if(UnitSelection.owner == UnitSelection.team) {
                 enemyUnits = GameObject.FindGameObjectsWithTag("Enemy Unit");
                 currentTarget = GetClosestEnemy(enemyUnits);
@@ -246,7 +247,7 @@ public class UnitController : MonoBehaviour
                 unitAudio.clip = woodChop;
                 unitAudio.maxDistance = 55;
                 unitAudio.Play();
-            } else if (unitType == "Footman" || unitType == "Swordsman") {
+            } else if (unitType == "Footman" || unitType == "Swordsman" || unitType == "Bandit Swordsman" || unitType == "Bandit Footman") {
                 AudioClip[] metalAttacks = new AudioClip[4]{ metalChop, metalChop2, metalChop3, metalChop4};
                 unitAudio = agent.GetComponent<AudioSource>();
                     
