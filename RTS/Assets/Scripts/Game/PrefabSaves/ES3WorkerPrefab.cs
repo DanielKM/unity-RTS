@@ -48,9 +48,14 @@ public class ES3WorkerPrefab : MonoBehaviour
     public Dictionary<string, float> SavedHealth = new Dictionary<string, float>();
     public Dictionary<string, float> SavedArmour = new Dictionary<string, float>();
     public Dictionary<string, int> SavedHeldResource = new Dictionary<string, int>();
+    public Dictionary<string, int> SavedKills = new Dictionary<string, int>();
+
     public Dictionary<string, string> SavedHeldResourceType = new Dictionary<string, string>();
+
     public Dictionary<string, string> SavedTask = new Dictionary<string, string>();
     public Dictionary<string, string> SavedName = new Dictionary<string, string>();
+    public Dictionary<string, string> SavedRank = new Dictionary<string, string>();
+
     public Dictionary<string, Vector3> SavedPosition = new Dictionary<string, Vector3>();
     public Dictionary<string, Vector3> SavedDestination = new Dictionary<string, Vector3>();
     public Dictionary<string, Quaternion> SavedRotation = new Dictionary<string, Quaternion>();
@@ -69,6 +74,8 @@ public class ES3WorkerPrefab : MonoBehaviour
 
     public void SaveWorkers(string saveLocation)
     {       
+        SavedKills.Clear();
+        SavedRank.Clear();
         SavedDead.Clear();
         SavedHealth.Clear();
         SavedArmour.Clear();
@@ -140,9 +147,11 @@ public class ES3WorkerPrefab : MonoBehaviour
         ES3.Save<Dictionary<string, float>>("HealthDictionary", SavedHealth, saveLocation);
         ES3.Save<Dictionary<string, float>>("ArmourDictionary", SavedArmour, saveLocation);
         ES3.Save<Dictionary<string, int>>("HeldResourceDictionary", SavedHeldResource, saveLocation); 
+        ES3.Save<Dictionary<string, int>>("KillsDictionary", SavedKills, saveLocation); 
         ES3.Save<Dictionary<string, string>>("HeldResourceTypeDictionary", SavedHeldResourceType, saveLocation); 
         ES3.Save<Dictionary<string, string>>("TaskDictionary", SavedTask, saveLocation);
         ES3.Save<Dictionary<string, string>>("NameDictionary", SavedName, saveLocation);
+        ES3.Save<Dictionary<string, string>>("RankDictionary", SavedRank, saveLocation);
         ES3.Save<Dictionary<string, Vector3>>("PositionDictionary", SavedPosition, saveLocation);
         ES3.Save<Dictionary<string, Vector3>>("DestinationDictionary", SavedDestination, saveLocation);
         ES3.Save<Dictionary<string, Quaternion>>("RotationDictionary", SavedRotation, saveLocation);
@@ -171,6 +180,8 @@ public class ES3WorkerPrefab : MonoBehaviour
     }
 
     public void SaveInformation(string unitID, GameObject go) {
+        SavedRank.Add(unitID, go.GetComponent<UnitController>().unitRank);
+        SavedKills.Add(unitID, go.GetComponent<UnitController>().unitKills);
         SavedDead.Add(unitID, go.GetComponent<UnitController>().isDead);
         SavedHealth.Add(unitID, go.GetComponent<UnitController>().health);
         SavedArmour.Add(unitID, go.GetComponent<UnitController>().armour);
@@ -197,7 +208,6 @@ public class ES3WorkerPrefab : MonoBehaviour
         if(count > 0)
         {
             LoadInformation(saveLocation);
-
             allGameObjects = GameObject.FindObjectsOfType<GameObject>();
             for(int i = 0; i<allGameObjects.Length; i++) {
                 if(allGameObjects[i].GetComponent<UnitController>()) {
@@ -262,6 +272,8 @@ public class ES3WorkerPrefab : MonoBehaviour
         banditFootmanIDs.Clear();
 
         //Clear Dictionaries
+        SavedRank.Clear();
+        SavedKills.Clear();
         SavedDead.Clear();
         SavedHealth.Clear();
         SavedArmour.Clear();
@@ -281,6 +293,8 @@ public class ES3WorkerPrefab : MonoBehaviour
         SavedGameObject.Clear();
 
         //LOAD DICTIONARIES
+        SavedRank = ES3.Load<Dictionary<string, string>>("RankDictionary", saveLocation);
+        SavedKills = ES3.Load<Dictionary<string, int>>("KillsDictionary", saveLocation);
         SavedDead = ES3.Load<Dictionary<string, bool>>("DeathDictionary", saveLocation);
         SavedHealth = ES3.Load<Dictionary<string, float>>("HealthDictionary", saveLocation);
         SavedArmour = ES3.Load<Dictionary<string, float>>("ArmourDictionary", saveLocation);
@@ -310,7 +324,9 @@ public class ES3WorkerPrefab : MonoBehaviour
         GameObject go = workerPrefab;
         if(type == "Worker") {
             go = Instantiate(workerPrefab, goPosition, goRotation);
-
+    
+            go.GetComponent<UnitController>().unitKills = SavedKills[id];
+            go.GetComponent<UnitController>().unitRank = SavedRank[id];
             go.GetComponent<UnitController>().unitID = id;
             go.GetComponent<UnitController>().isDead = SavedDead[id];
             go.GetComponent<NavMeshAgent>().destination = SavedDestination[id];
@@ -330,6 +346,8 @@ public class ES3WorkerPrefab : MonoBehaviour
         } else if(type == "Swordsman") {
             go = Instantiate(swordsmanPrefab, goPosition, goRotation);
 
+            go.GetComponent<UnitController>().unitKills = SavedKills[id];
+            go.GetComponent<UnitController>().unitRank = SavedRank[id];
             go.GetComponent<UnitController>().unitID = id;
             go.GetComponent<UnitController>().isDead = SavedDead[id];
             go.GetComponent<NavMeshAgent>().destination = SavedDestination[id];
@@ -348,6 +366,8 @@ public class ES3WorkerPrefab : MonoBehaviour
         } else if(type == "Footman") {
             go = Instantiate(footmanPrefab, goPosition, goRotation);
 
+            go.GetComponent<UnitController>().unitKills = SavedKills[id];
+            go.GetComponent<UnitController>().unitRank = SavedRank[id];
             go.GetComponent<UnitController>().unitID = id;
             go.GetComponent<UnitController>().isDead = SavedDead[id];
             go.GetComponent<NavMeshAgent>().destination = SavedDestination[id];
@@ -367,6 +387,8 @@ public class ES3WorkerPrefab : MonoBehaviour
         } else if(type == "Archer") {
             go = Instantiate(archerPrefab, goPosition, goRotation);
 
+            go.GetComponent<UnitController>().unitKills = SavedKills[id];
+            go.GetComponent<UnitController>().unitRank = SavedRank[id];
             go.GetComponent<UnitController>().unitID = id;
             go.GetComponent<UnitController>().isDead = SavedDead[id];
             go.GetComponent<NavMeshAgent>().destination = SavedDestination[id];
@@ -386,6 +408,8 @@ public class ES3WorkerPrefab : MonoBehaviour
         } else if(type == "Wizard") {
             go = Instantiate(wizardPrefab, goPosition, goRotation);
 
+            go.GetComponent<UnitController>().unitKills = SavedKills[id];
+            go.GetComponent<UnitController>().unitRank = SavedRank[id];
             go.GetComponent<UnitController>().unitID = id;
             go.GetComponent<UnitController>().isDead = SavedDead[id];
             go.GetComponent<NavMeshAgent>().destination = SavedDestination[id];
@@ -405,6 +429,8 @@ public class ES3WorkerPrefab : MonoBehaviour
         } else if(type == "Bandit Swordsman") {
             go = Instantiate(banditSwordsmanPrefab, goPosition, goRotation);
 
+            go.GetComponent<UnitController>().unitKills = SavedKills[id];
+            go.GetComponent<UnitController>().unitRank = SavedRank[id];
             go.GetComponent<UnitController>().unitID = id;
             go.GetComponent<UnitController>().isDead = SavedDead[id];
             go.GetComponent<NavMeshAgent>().destination = SavedDestination[id];
@@ -424,6 +450,8 @@ public class ES3WorkerPrefab : MonoBehaviour
         } else if(type == "Bandit Footman") {
             go = Instantiate(banditFootmanPrefab, goPosition, goRotation);
 
+            go.GetComponent<UnitController>().unitKills = SavedKills[id];
+            go.GetComponent<UnitController>().unitRank = SavedRank[id];
             go.GetComponent<UnitController>().unitID = id;
             go.GetComponent<UnitController>().isDead = SavedDead[id];
             go.GetComponent<NavMeshAgent>().destination = SavedDestination[id];

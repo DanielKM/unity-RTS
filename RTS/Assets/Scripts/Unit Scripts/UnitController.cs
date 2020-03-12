@@ -11,7 +11,7 @@ public class UnitController : MonoBehaviour
     public string unitType;
     public string unitRank;
     public string unitName;
-    public string unitKills;
+    public int unitKills;
 
     // Equipment
     public string weapon;

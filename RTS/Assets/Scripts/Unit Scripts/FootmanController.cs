@@ -21,7 +21,7 @@ public class FootmanController : MonoBehaviour
     public string unitName;
 
     public Text killsDisp;
-    public string unitKills;
+    public int unitKills;
 
     public string weapon;
     public string armour;

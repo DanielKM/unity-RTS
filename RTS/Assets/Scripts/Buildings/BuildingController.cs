@@ -11,7 +11,7 @@ public class BuildingController : MonoBehaviour
 
     public string unitName;
 
-    public string unitKills;
+    public int unitKills;
 
     public string weapon;
     public string armour;
