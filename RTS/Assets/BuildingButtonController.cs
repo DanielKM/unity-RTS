@@ -17,11 +17,15 @@ public class BuildingButtonController : MonoBehaviour
     public Button barracksButtonTwo;
 
     public Button barracksButtonFour;
+    public Button barracksButtonNine;
+    public Button barracksButtonTen;
 
     public AudioSource playerAudio;
     public AudioClip trainVillagerAudio;
     public AudioClip trainFootmanAudio;
     public AudioClip trainSwordsmanAudio;
+    public AudioClip trainOutriderAudio;
+    public AudioClip trainKnightAudio;
     public AudioClip trainArcherAudio;
 
     public GameObject villager;
@@ -47,6 +51,8 @@ public class BuildingButtonController : MonoBehaviour
     UnitController footmanUC;
     UnitController swordsmanUC;
     UnitController villagerUC;
+    UnitController outriderUC;
+    UnitController knightUC;
     UnitController archerUC;
 
     public GameObject selectedObj;
@@ -59,6 +65,8 @@ public class BuildingButtonController : MonoBehaviour
     public GameObject swordsmanPrefab;
     public GameObject footmanPrefab;
     public GameObject villagerPrefab;
+    public GameObject outriderPrefab;
+    public GameObject knightPrefab;
     public GameObject archerPrefab;
 
     // Button text
@@ -81,6 +89,8 @@ public class BuildingButtonController : MonoBehaviour
             footmanUC = footmanPrefab.GetComponent<UnitController>();
             villagerUC = villagerPrefab.GetComponent<UnitController>();
             archerUC = archerPrefab.GetComponent<UnitController>();
+            outriderUC = outriderPrefab.GetComponent<UnitController>();
+            knightUC = knightPrefab.GetComponent<UnitController>();
 
             player = GameObject.FindGameObjectWithTag("Player");
             team = GameObject.Find("Faction");
@@ -92,6 +102,8 @@ public class BuildingButtonController : MonoBehaviour
             barracksButtonOne.onClick.AddListener(HireSwordsman);
             barracksButtonTwo.onClick.AddListener(HireFootman);
             barracksButtonFour.onClick.AddListener(HireArcher);
+            barracksButtonNine.onClick.AddListener(HireOutrider);
+            barracksButtonTen.onClick.AddListener(HireKnight);
         }
     }
 
@@ -212,6 +224,59 @@ public class BuildingButtonController : MonoBehaviour
         }
     }
 
+    void HireOutrider()
+    {
+         if (RM.gold >= outriderUC.gold && RM.wood >= outriderUC.wood && RM.food >= outriderUC.food && RM.iron >= outriderUC.iron && RM.steel >= outriderUC.steel && RM.skymetal >= outriderUC.skymetal && RM.stone >= outriderUC.stone && RM.housing < RM.maxHousing)
+        {
+            UI.BarracksTraining();
+            RM.gold -= outriderUC.gold;
+            RM.wood -= outriderUC.wood;
+            RM.food -= outriderUC.food;
+            RM.iron -= outriderUC.iron;
+            RM.steel -= outriderUC.steel;
+            RM.skymetal -= outriderUC.skymetal;
+            RM.stone -= outriderUC.stone;
+            RM.housing += 1;
+            selectedObj = inputScript.selectedObj;
+            barracksScript = selectedObj.GetComponent<BarracksController>();
+            buildingScript = selectedObj.GetComponent<BuildingController>();
+            playerAudio.clip = trainOutriderAudio;
+            playerAudio.Play();
+            barracksScript.HireOutrider();
+        } 
+        else   
+        {
+            UI.noResourcesText.SetActive(true);
+            StartCoroutine(Wait());
+        }
+    }
+
+    void HireKnight()
+    {
+         if (RM.gold >= knightUC.gold && RM.wood >= knightUC.wood && RM.food >= knightUC.food && RM.iron >= knightUC.iron && RM.steel >= knightUC.steel && RM.skymetal >= knightUC.skymetal && RM.stone >= knightUC.stone && RM.housing < RM.maxHousing)
+        {
+            UI.BarracksTraining();
+            RM.gold -= knightUC.gold;
+            RM.wood -= knightUC.wood;
+            RM.food -= knightUC.food;
+            RM.iron -= knightUC.iron;
+            RM.steel -= knightUC.steel;
+            RM.skymetal -= knightUC.skymetal;
+            RM.stone -= knightUC.stone;
+            RM.housing += 1;
+            selectedObj = inputScript.selectedObj;
+            barracksScript = selectedObj.GetComponent<BarracksController>();
+            buildingScript = selectedObj.GetComponent<BuildingController>();
+            playerAudio.clip = trainKnightAudio;
+            playerAudio.Play();
+            barracksScript.HireKnight();
+        } 
+        else   
+        {
+            UI.noResourcesText.SetActive(true);
+            StartCoroutine(Wait());
+        }
+    }
     IEnumerator Wait()
     {
         yield return new WaitForSeconds(3);

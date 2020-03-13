@@ -26,14 +26,20 @@ public class BarracksController : MonoBehaviour
     public GameObject swordsmanPrefab;
     public GameObject footmanPrefab;
     public GameObject archerPrefab;
+    public GameObject outriderPrefab;
+    public GameObject knightPrefab;
 
     private AudioSource swordsmanAudio;
     private AudioSource footmanAudio;
     private AudioSource archerAudio;
+    private AudioSource outriderAudio;
+    private AudioSource knightAudio;
 
     public AudioClip swordsmanReporting;
     public AudioClip footmanReporting;
     public AudioClip archerReporting;
+    public AudioClip outriderReporting;
+    public AudioClip knightReporting;
 
     [SerializeField]
     public float spawnDelay;
@@ -42,9 +48,12 @@ public class BarracksController : MonoBehaviour
     GameObject player;
     GameObject team;
     InputManager inputScript;
+
     UnitSelection swordsmanUnitSelection;
     UnitSelection footmanUnitSelection;
     UnitSelection archerUnitSelection;
+    UnitSelection outriderUnitSelection;
+    UnitSelection knightUnitSelection;
 
     BuildingController buildingScript;
 
@@ -102,6 +111,22 @@ public class BarracksController : MonoBehaviour
         StartCoroutine(Train());
     }
 
+    public void HireOutrider()
+    {
+        selectedObj = inputScript.selectedObj;
+        buildingScript = selectedObj.GetComponent<BuildingController>();
+        unit = "Outrider";
+        StartCoroutine(Train());
+    }
+
+    public void HireKnight()
+    {
+        selectedObj = inputScript.selectedObj;
+        buildingScript = selectedObj.GetComponent<BuildingController>();
+        unit = "Knight";
+        StartCoroutine(Train());
+    }
+
     IEnumerator Train() 
     {
         isTraining = true;
@@ -150,6 +175,32 @@ public class BarracksController : MonoBehaviour
             archerAudio = selectedObj.GetComponent<AudioSource>();
             archerAudio.clip = archerReporting;
             prefab = archerPrefab;
+        } else if (unit == "Outrider") {
+            var iteration1 = Random.Range(0, SMFirstNames.Length);
+            var iteration2 = Random.Range(0, SMLastNameFirst.Length);
+            var iteration3 = Random.Range(0, SMLastNameSecond.Length);
+            progressIcon = GameObject.Find("ProgressIcon").GetComponent<Image>();
+            progressIcon.sprite = outriderPrefab.GetComponent<UnitController>().unitIcon;
+            outriderPrefab.GetComponent<UnitController>().unitName = SMFirstNames[iteration1] + " " + SMLastNameFirst[iteration2] + SMLastNameSecond[iteration3];
+            outriderUnitSelection = outriderPrefab.GetComponent<UnitSelection>();
+            outriderUnitSelection.owner = team;
+
+            outriderAudio = selectedObj.GetComponent<AudioSource>();
+            outriderAudio.clip = outriderReporting;
+            prefab = outriderPrefab;
+        } else if (unit == "Knight") {
+            var iteration1 = Random.Range(0, SMFirstNames.Length);
+            var iteration2 = Random.Range(0, SMLastNameFirst.Length);
+            var iteration3 = Random.Range(0, SMLastNameSecond.Length);
+            progressIcon = GameObject.Find("ProgressIcon").GetComponent<Image>();
+            progressIcon.sprite = knightPrefab.GetComponent<UnitController>().unitIcon;
+            knightPrefab.GetComponent<UnitController>().unitName = SMFirstNames[iteration1] + " " + SMLastNameFirst[iteration2] + SMLastNameSecond[iteration3];
+            knightUnitSelection = knightPrefab.GetComponent<UnitSelection>();
+            knightUnitSelection.owner = team;
+
+            knightAudio = selectedObj.GetComponent<AudioSource>();
+            knightAudio.clip = knightReporting;
+            prefab = knightPrefab;
         }
 
         for (i = 1; i < 11; i++)
@@ -165,6 +216,10 @@ public class BarracksController : MonoBehaviour
             swordsmanAudio.Play();
         } else if (unit == "Archer") {
             archerAudio.Play();
+        } else if (unit == "Outrider") {
+            outriderAudio.Play();
+        } else if (unit == "Knight") {
+            knightAudio.Play();
         }
         isTraining = false;
     }

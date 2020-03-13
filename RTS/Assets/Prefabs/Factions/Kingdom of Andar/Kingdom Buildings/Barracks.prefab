@@ -358,13 +358,19 @@ MonoBehaviour:
   i: 0
   swordsmanPrefab: {fileID: 8485371735523753441, guid: 9d7a132ca0ec3e540b5aca47e5135d79,
     type: 3}
-  footmanPrefab: {fileID: 57994888639720294, guid: 1003ba60e89eda545b2a676cc324163f,
+  footmanPrefab: {fileID: 57994888639720294, guid: e3d827adce02bee47b04b79539570874,
     type: 3}
   archerPrefab: {fileID: 1971897941503588938, guid: f33325accbafcc34a93926457ef55ae8,
+    type: 3}
+  outriderPrefab: {fileID: 8942319433617625784, guid: f2f7704a3ea319a408fcd7384e18eb7e,
+    type: 3}
+  knightPrefab: {fileID: 4561785880511178916, guid: 85a8685a64589a74ba2bcb0f56e9c433,
     type: 3}
   swordsmanReporting: {fileID: 8300000, guid: b2a15ec8752ac4f4bb8dcd694ed6089c, type: 3}
   footmanReporting: {fileID: 8300000, guid: b2a15ec8752ac4f4bb8dcd694ed6089c, type: 3}
   archerReporting: {fileID: 8300000, guid: b2a15ec8752ac4f4bb8dcd694ed6089c, type: 3}
+  outriderReporting: {fileID: 8300000, guid: b2a15ec8752ac4f4bb8dcd694ed6089c, type: 3}
+  knightReporting: {fileID: 8300000, guid: b2a15ec8752ac4f4bb8dcd694ed6089c, type: 3}
   spawnDelay: 1000
   selected: 0
   selectedObj: {fileID: 0}

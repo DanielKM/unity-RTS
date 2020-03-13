@@ -173,7 +173,7 @@ public class NPCController : MonoBehaviour
                 UC.unitAudio.clip = UC.woodChop;
                 UC.unitAudio.maxDistance = 55;
                 UC.unitAudio.Play();
-            } else if (UC.unitType == "Footman" || UC.unitType == "Swordsman" || UC.unitType == "Bandit Swordsman" || UC.unitType == "Bandit Footman") {
+            } else if (UC.unitType == "Footman" || UC.unitType == "Swordsman" || UC.unitType == "Outrider" || UC.unitType == "Knight" || UC.unitType == "Bandit Swordsman" || UC.unitType == "Bandit Footman") {
                 AudioClip[] metalAttacks = new AudioClip[4]{ UC.metalChop, UC.metalChop2, UC.metalChop3, UC.metalChop4};
                 UC.unitAudio = agent.GetComponent<AudioSource>();
                     

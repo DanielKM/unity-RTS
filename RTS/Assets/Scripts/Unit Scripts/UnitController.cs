@@ -118,7 +118,7 @@ public class UnitController : MonoBehaviour
         if(health <= 0) { 
             health = 0;
             gameObject.GetComponent<NavMeshAgent>().enabled = false;
-            if(unitType == "Worker" || unitType == "Footman" || unitType == "Swordsman" || unitType == "Archer" || unitType == "Wizard" || unitType == "Bandit Swordsman"  || unitType == "Bandit Footman")  { 
+            if(unitType == "Worker" || unitType == "Footman" || unitType == "Swordsman" || unitType == "Archer" || unitType == "Wizard" ||  unitType == "Outrider" || unitType == "Knight" || unitType == "Bandit Swordsman"  || unitType == "Bandit Footman")  { 
                 anim.SetInteger("condition", 10);
                 isDead = true;
                 UnitSelection.isBuilding = false;
@@ -161,7 +161,7 @@ public class UnitController : MonoBehaviour
                         anim.SetInteger("condition", 0);
                     }
                 }
-            } else if (unitType == "Footman" || unitType == "Swordsman" || unitType == "Archer" || unitType == "Wizard" || unitType == "Bandit Swordsman" || unitType == "Bandit Footman" ) {
+            } else if (unitType == "Footman" || unitType == "Swordsman" || unitType == "Archer" || unitType == "Wizard" ||  unitType == "Outrider" || unitType == "Knight" || unitType == "Bandit Swordsman" || unitType == "Bandit Footman" ) {
                 if(UnitSelection.isMeleeing) {
                     anim.SetInteger("condition", 1);
                 } else if (!UnitSelection.isMeleeing) {
@@ -247,7 +247,7 @@ public class UnitController : MonoBehaviour
                 unitAudio.clip = woodChop;
                 unitAudio.maxDistance = 55;
                 unitAudio.Play();
-            } else if (unitType == "Footman" || unitType == "Swordsman" || unitType == "Bandit Swordsman" || unitType == "Bandit Footman") {
+            } else if (unitType == "Footman" || unitType == "Swordsman" || unitType == "Outrider" || unitType == "Knight" || unitType == "Bandit Swordsman" || unitType == "Bandit Footman") {
                 AudioClip[] metalAttacks = new AudioClip[4]{ metalChop, metalChop2, metalChop3, metalChop4};
                 unitAudio = agent.GetComponent<AudioSource>();
                     

@@ -448,16 +448,19 @@ public class InputManager : MonoBehaviour
 
                             playerAudio.clip = unitAudioClip;
                             if(unitScript.unitType == "Worker") {
-                                // unitAudio.volume = 0.5f;
                                 UI.WorkerSelect();
                             } else if (unitScript.unitType == "Swordsman") {
                                 UI.SwordsmanSelect();
-                            } else if (unitScript.unitType == "Archer") {
-                                UI.ArcherSelect();
-                            } else if (unitScript.unitType == "Wizard") {
-                                UI.WizardSelect();
                             } else if (unitScript.unitType == "Footman") {
                                 UI.FootmanSelect();
+                            } else if (unitScript.unitType == "Archer") {
+                                UI.ArcherSelect();
+                            } else if (unitScript.unitType == "Outrider") {
+                                UI.OutriderSelect();
+                            } else if (unitScript.unitType == "Knight") {
+                                UI.KnightSelect();
+                            } else if (unitScript.unitType == "Wizard") {
+                                UI.WizardSelect();
                             }
                             inUnitSelectionBox = true;
                             
@@ -674,12 +677,16 @@ public class InputManager : MonoBehaviour
                             UI.WorkerSelect();
                         } else if (unitScript.unitType == "Swordsman") {
                             UI.SwordsmanSelect();
-                        } else if (unitScript.unitType == "Archer") {
-                            UI.ArcherSelect();
-                        } else if (unitScript.unitType == "Wizard") {
-                            UI.WizardSelect();
                         } else if (unitScript.unitType == "Footman") {
                             UI.FootmanSelect();
+                        } else if (unitScript.unitType == "Archer") {
+                            UI.ArcherSelect();
+                        } else if (unitScript.unitType == "Outrider") {
+                            UI.OutriderSelect();
+                        } else if (unitScript.unitType == "Knight") {
+                            UI.KnightSelect();
+                        } else if (unitScript.unitType == "Wizard") {
+                            UI.WizardSelect();
                         }
                     }
                 }
@@ -707,12 +714,16 @@ public class InputManager : MonoBehaviour
                             UI.WorkerSelect();
                         } else if (unitScript.unitType == "Swordsman") {
                             UI.SwordsmanSelect();
-                        } else if (unitScript.unitType == "Archer") {
-                            UI.ArcherSelect();
-                        } else if (unitScript.unitType == "Wizard") {
-                            UI.WizardSelect();
                         } else if (unitScript.unitType == "Footman") {
                             UI.FootmanSelect();
+                        } else if (unitScript.unitType == "Archer") {
+                            UI.ArcherSelect();
+                        } else if (unitScript.unitType == "Outrider") {
+                            UI.OutriderSelect();
+                        } else if (unitScript.unitType == "Knight") {
+                            UI.KnightSelect();
+                        } else if (unitScript.unitType == "Wizard") {
+                            UI.WizardSelect();
                         }
                     }
                 }
@@ -829,6 +840,12 @@ public class InputManager : MonoBehaviour
                 progressIcon.sprite = barracksScript.footmanPrefab.GetComponent<UnitController>().unitIcon;
             } else if (buildingScript.GetComponent<BarracksController>().unit == "Swordsman") {
                 progressIcon.sprite = barracksScript.swordsmanPrefab.GetComponent<UnitController>().unitIcon;
+            } else if (buildingScript.GetComponent<BarracksController>().unit == "Archer") {
+                progressIcon.sprite = barracksScript.archerPrefab.GetComponent<UnitController>().unitIcon;
+            } else if (buildingScript.GetComponent<BarracksController>().unit == "Outrider") {
+                progressIcon.sprite = barracksScript.outriderPrefab.GetComponent<UnitController>().unitIcon;
+            } else if (buildingScript.GetComponent<BarracksController>().unit == "Knight") {
+                progressIcon.sprite = barracksScript.knightPrefab.GetComponent<UnitController>().unitIcon;
             }
         } else if (buildingScript.tag == "Foundation")
         {
