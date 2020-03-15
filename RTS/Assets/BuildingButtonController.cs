@@ -110,6 +110,27 @@ public class BuildingButtonController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+            if(RM.lumberYardCount > 0) {
+                barracksButtonFour.interactable = true;
+            } else {
+                barracksButtonFour.interactable = false;
+            }
+            if(RM.blacksmithCount > 0) {
+                barracksButtonTwo.interactable = true;
+            } else {
+                barracksButtonTwo.interactable = false;
+            }
+            if(RM.stablesCount > 0) {
+                barracksButtonNine.interactable = true;
+            } else {
+                barracksButtonNine.interactable = false;
+            }
+            if(RM.stablesCount > 0 && RM.blacksmithCount > 0) {
+                barracksButtonTen.interactable = true;
+            } else {
+                barracksButtonTen.interactable = false;
+            }
+
 
     }
 

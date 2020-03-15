@@ -56,6 +56,8 @@ public class BarracksController : MonoBehaviour
     UnitSelection knightUnitSelection;
 
     BuildingController buildingScript;
+    ResourceManager RM;
+    ResearchController RC;
 
     public GameObject selectedObj;
     private Vector3 spawnPosition;
@@ -78,6 +80,8 @@ public class BarracksController : MonoBehaviour
         player = GameObject.FindGameObjectWithTag("Player");
         team = GameObject.Find("Faction");
         UI = player.GetComponent<UIController>();
+        RM = team.GetComponent<ResourceManager>();
+        RC = team.GetComponent<ResearchController>();
         inputScript = player.GetComponent<InputManager>();
         BuildingProgressPanel = GameObject.Find("BuildingProgressPanel").GetComponent<CanvasGroup>();
         BuildingActionPanel = GameObject.Find("BuildingActions").GetComponent<CanvasGroup>();

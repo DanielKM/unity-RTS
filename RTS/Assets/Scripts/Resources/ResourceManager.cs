@@ -56,11 +56,14 @@ public class ResourceManager : MonoBehaviour
     public float lumberYardCount;
     public float blacksmithCount;
 
+    private CanvasGroup BarracksActionPanel;
+
     // Start is called before the first frame update
     void Start()
     {
         houses = GameObject.FindGameObjectsWithTag("House");
         oneFoodUnit = GameObject.FindGameObjectsWithTag("Selectable");
+        BarracksActionPanel = GameObject.Find("BuildingActions").GetComponent<CanvasGroup>();
     }
 
     // Update is called once per frame
