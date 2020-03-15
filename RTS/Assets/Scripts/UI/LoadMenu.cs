@@ -62,7 +62,7 @@ public class LoadMenu : MonoBehaviour
                     string str = info[i].ToString();
                     string cutStr = str.Replace(newestPath + "\\", "");
                     string finalStr = cutStr.Replace(".es3", "");
-                    string number = finalStr.Replace("SaveData", "");
+                    string number = finalStr.Replace("SaveGame", "");
                     int childNumber = int.Parse(number);
 
                     Transform child = loadPanel.GetComponent<Transform>().GetChild(childNumber - 1);
@@ -75,38 +75,33 @@ public class LoadMenu : MonoBehaviour
 	void Loadbutton1(){
         Resume();
         SaveLoad.load = true;
-        SaveLoad.saveLocation = "SaveData1";
+        SaveLoad.saveLocation = "SaveGame1";
         SceneManager.LoadScene("Level 1");
-		Debug.Log ("You have clicked the SaveData1!");
 	}
 
 	void Loadbutton2(){
         Resume();
         SaveLoad.load = true;
-        SaveLoad.saveLocation = "SaveData2";
+        SaveLoad.saveLocation = "SaveGame2";
         SceneManager.LoadScene("Level 1");
-		Debug.Log ("You have clicked the SaveData2!");
 	}
 	void Loadbutton3(){
         Resume();
         SaveLoad.load = true;
-        SaveLoad.saveLocation = "SaveData3";
+        SaveLoad.saveLocation = "SaveGame3";
         SceneManager.LoadScene("Level 1");
-		Debug.Log ("You have clicked the SaveData3!");
 	}
 	void Loadbutton4(){
         Resume();
         SaveLoad.load = true;
-        SaveLoad.saveLocation = "SaveData4";
+        SaveLoad.saveLocation = "SaveGame4";
         SceneManager.LoadScene("Level 1");
-		Debug.Log ("You have clicked the SaveData4!");
 	}
 	void Loadbutton5(){
         Resume();
         SaveLoad.load = true;
-        SaveLoad.saveLocation = "SaveData5";
+        SaveLoad.saveLocation = "SaveGame5";
         SceneManager.LoadScene("Level 1");
-		Debug.Log ("You have clicked the SaveData5!");
 	}
 
     void Resume() {

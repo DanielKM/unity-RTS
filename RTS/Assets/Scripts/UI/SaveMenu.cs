@@ -52,7 +52,6 @@ public class SaveMenu : MonoBehaviour
         string path = Application.persistentDataPath.ToString();
         string newPath = path.Replace("/", "\\");
         string newestPath = newPath.Replace("/", @"\");
-
         if(info.Length > 0) {
             for (int i = 0; i < info.Length; i++)
             {
@@ -60,48 +59,50 @@ public class SaveMenu : MonoBehaviour
                     string str = info[i].ToString();
                     string cutStr = str.Replace(newestPath + "\\", "");
                     string finalStr = cutStr.Replace(".es3", "");
-                    string number = finalStr.Replace("SaveData", "");
-                    int childNumber = int.Parse(number);
+                    string txt = finalStr.Replace("SaveGame", "");
 
-                    Transform child = savePanel.GetComponent<Transform>().GetChild(childNumber - 1);
-                    child.GetChild(0).GetComponent<TextMeshProUGUI>().text = finalStr;
+					bool result;
+					int number;
+					int childNumber;
+
+					result = int.TryParse(txt, out number);
+					if(result){
+                    	childNumber = int.Parse(txt);
+						Transform child = savePanel.GetComponent<Transform>().GetChild(childNumber - 1);
+						child.GetChild(0).GetComponent<TextMeshProUGUI>().text = finalStr;
+					}
                 }
             }
         }
 	}
 
 	void SaveButton1(){
-		Debug.Log ("You have clicked the SaveData1!");
-        saveLocation = "SaveData1";
+        saveLocation = "SaveGame1";
         SaveLoad.SaveGame(saveLocation);
 		LM.RefreshSaves();
 		RefreshSaves();
 	}
 
 	void SaveButton2(){
-		Debug.Log ("You have clicked the SaveData2!");
-        saveLocation = "SaveData2";
+        saveLocation = "SaveGame2";
         SaveLoad.SaveGame(saveLocation);
 		LM.RefreshSaves();
 		RefreshSaves();
 	}
 	void SaveButton3(){
-		Debug.Log ("You have clicked the SaveData3!");
-        saveLocation = "SaveData3";
+        saveLocation = "SaveGame3";
         SaveLoad.SaveGame(saveLocation);
 		LM.RefreshSaves();
 		RefreshSaves();
 	}
 	void SaveButton4(){
-		Debug.Log ("You have clicked the SaveData4!");
-        saveLocation = "SaveData4";
+        saveLocation = "SaveGame4";
         SaveLoad.SaveGame(saveLocation);
 		LM.RefreshSaves();
 		RefreshSaves();
 	}
 	void SaveButton5(){
-		Debug.Log ("You have clicked the SaveData5!");
-        saveLocation = "SaveData5";
+        saveLocation = "SaveGame5";
         SaveLoad.SaveGame(saveLocation);
 		LM.RefreshSaves();
 		RefreshSaves();
