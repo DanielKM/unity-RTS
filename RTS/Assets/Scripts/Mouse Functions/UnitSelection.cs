@@ -261,11 +261,6 @@ public class UnitSelection : MonoBehaviour
 
                                 heldResourceType = NodeManager.ResourceTypes.Iron;
                                 drops = null;
-                                // isBuilding = false;
-                                // isGathering = false;
-                                // agent.destination = hit.collider.gameObject.transform.position;
-                                // targetNode = hit.collider.gameObject;
-                                // task = ActionList.Delivering;
                             }
                         } 
                         else if (hit.collider.tag == "Foundation")
@@ -527,6 +522,24 @@ public class UnitSelection : MonoBehaviour
                 agent.destination = targetNode.transform.position;
             }
         }
+    }
+
+    public void DropSteel()
+    {
+        //Handle drop off!
+       
+        task = ActionList.Gathering;
+        RM.steel += heldResource;
+        heldResource = 0;
+        if(RM.iron < 100) {
+            RM.iron -= RM.iron;
+            heldResource = (int)RM.iron;
+        } else {
+            RM.iron -= 100;
+            heldResource = 100;
+        }
+        heldResourceType = NodeManager.ResourceTypes.Iron;
+        agent.destination = targetNode.transform.position;
     }
 
     public void DropStone()
