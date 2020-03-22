@@ -3,10 +3,12 @@ using System.Collections.Generic;
 using UnityEngine.SceneManagement;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.AI;
 
 public class TownHallController : MonoBehaviour
 {
-    // Villager names
+    // worker names
+    ResourceManager RM;
     UIController UI;
     string[] villagers = new string[14]{ "Farah", "Dan", "Dave", "Steve", "Katie", "Sam", "Ryan", "Sid", "Bill", "Will", "Sarah", "Arj", "Izzy", "Aron"};
 
@@ -33,6 +35,8 @@ public class TownHallController : MonoBehaviour
     UnitSelection workerUnitSelection;
     BuildingController buildingScript;
 
+    private UnitSelection selectscript;
+
     public GameObject selectedObj;
     private Vector3 spawnPosition;
     public bool isTraining;
@@ -46,6 +50,7 @@ public class TownHallController : MonoBehaviour
     private CanvasGroup BuildingProgressPanel;
     private CanvasGroup BuildingActionPanel;
 
+    public List<Collider> collidedObjects = new List<Collider>();
 
 
     // Start is called before the first frame update
@@ -53,6 +58,8 @@ public class TownHallController : MonoBehaviour
     {
         player = GameObject.FindGameObjectWithTag("Player");
         team = GameObject.Find("Faction");
+        
+        RM = team.GetComponent<ResourceManager>();
         UI = player.GetComponent<UIController>();
 
         inputScript = player.GetComponent<InputManager>();
@@ -62,6 +69,12 @@ public class TownHallController : MonoBehaviour
         // Progress bar
         BuildingProgressBar = GameObject.Find("BuildingProgressBar");
         BuildingProgressSlider = BuildingProgressBar.GetComponent<Slider>();
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+
     }
 
     public void HireVillager()
@@ -101,5 +114,32 @@ public class TownHallController : MonoBehaviour
         villagerAudio.clip = villagerReporting;
         villagerAudio.Play();
         UI.TownHallSelect();
+    }
+
+    public void OnCollisionEnter(Collision col) {
+        selectscript = col.gameObject.GetComponent<UnitSelection>();
+        NavMeshAgent agent = col.gameObject.GetComponent<NavMeshAgent>();
+        if (col.collider.tag == "Selectable" && selectscript.task == ActionList.Gathering)
+        {
+            if (RM.iron >= 0)
+            {
+                UnitController unit = col.gameObject.GetComponent<UnitController>();
+                UnitSelection unitUnitSelection = selectscript;
+                if(unit) {
+                    if(unit.unitType == "Worker") {
+                        if(RM.iron >= 100) {
+                            RM.iron -= 100;
+                            unitUnitSelection.heldResource = 100;
+                        } else {
+                            RM.iron -= RM.iron;
+                            unitUnitSelection.heldResource = (int)RM.iron;
+                        }
+                        unitUnitSelection.heldResourceType = NodeManager.ResourceTypes.Iron;
+                        // unitUnitSelection.isGathering = false;
+                        agent.destination = selectscript.targetNode.transform.position;
+                    }
+                }
+            }
+        }
     }
 }

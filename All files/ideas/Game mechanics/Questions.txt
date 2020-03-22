@@ -5,8 +5,8 @@ Civilians allowed to attack? 		Faction specific, Yes, No, Infantry are Builders,
 What art style?				Not amazing graphics, dark & detailed, lighting 
 Neat movement mechanics? 		3d, leading while following, sneak, sprint, portals, grappling hooks, 
 How many resources are too many?	Entire chains of resources that may not overlap with your oponent
-What Are Cool Resources in RTS? 	Gas, Wood, Stone, Skystone, Points, Gold, Happiness, 
-What are cool RTS resources?		Population, Food, Water, Iron, Housing, Souls, Bodies, Slaves
+What Are Cool Resources in RTS? 	Wood, Stone, Skystone, Iron, Steel, Water, Food
+What are cool RTS resources?		Population, Housing, Souls, Bodies, Slaves, Bones
 
 Animation Quirks Buildings 
 - Blacksmith Giant Lars - Sharpen

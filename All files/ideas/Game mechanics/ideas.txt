@@ -8,7 +8,9 @@ Building take over mechanics
 - time
 - area base
 - individual units having influence
-
+all will fall, some will rise again
+death and taxes
+ritual
 - Procedural 
 -
 

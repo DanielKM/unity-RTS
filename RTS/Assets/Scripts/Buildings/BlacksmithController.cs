@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine.SceneManagement;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.AI;
 
 public class BlacksmithController : MonoBehaviour
 {
@@ -27,6 +28,8 @@ public class BlacksmithController : MonoBehaviour
     private AudioSource footmanAudio;
     public AudioClip swordsmanReporting;
     public AudioClip footmanReporting;
+
+    private NavMeshAgent agent;
 
     [SerializeField]
     public float spawnDelay;
@@ -55,6 +58,7 @@ public class BlacksmithController : MonoBehaviour
     private CanvasGroup BuildingProgressPanel;
     private CanvasGroup BuildingActionPanel;
 
+    private UnitSelection selectscript;
 
     // Start is called before the first frame update
     void Start()
@@ -131,17 +135,17 @@ public class BlacksmithController : MonoBehaviour
         }
     }
 
-    public void ResearchArtisanBlacksmithing () 
+    public void ResearchSteelSmithing () 
     { 
-        if(RM.gold < RC.artisanBlacksmithingGold || RM.iron < RC.artisanBlacksmithingIron) {
+        if(RM.gold < RC.steelSmithingGold || RM.iron < RC.steelSmithingIron) {
             UI.noResourcesText.SetActive(true);
             StartCoroutine(CloseResourcesText());
         } else {
-            RM.gold -= RC.artisanBlacksmithingGold;
-            RM.iron -= RC.artisanBlacksmithingIron;
-            research = "artisanBlacksmithing";
+            RM.gold -= RC.steelSmithingGold;
+            RM.iron -= RC.steelSmithingIron;
+            research = "steelSmithing";
             StartCoroutine(Research());
-            RC.artisanBlacksmithingButton.interactable = false;
+            RC.steelSmithingButton.interactable = false;
         }
     }
 
@@ -265,7 +269,7 @@ public class BlacksmithController : MonoBehaviour
             RC.basicToolSmithingButton.interactable = true;
             RC.basicArmourSmithingButton.interactable = true;
             RC.basicWeaponSmithingButton.interactable = true;
-            RC.artisanBlacksmithingButton.interactable = true;
+            RC.steelSmithingButton.interactable = true;
             RC.basicBlacksmithing = true;
             var colors = RC.basicBlacksmithingButton.colors; 
             colors.disabledColor = new Color(0, 0.4f, 0, 1);
@@ -273,7 +277,7 @@ public class BlacksmithController : MonoBehaviour
 
         } else if (research == "basicToolSmithing") {
             RC.basicToolSmithing = true;
-            if(RC.artisanBlacksmithing) {
+            if(RC.steelSmithing) {
                 RC.artisanToolSmithingButton.interactable = true;
             }
             var colors = RC.basicToolSmithingButton.colors; 
@@ -281,7 +285,7 @@ public class BlacksmithController : MonoBehaviour
             RC.basicToolSmithingButton.colors = colors; 
         } else if(research == "basicArmourSmithing") {
             RC.basicArmourSmithing = true;
-            if(RC.artisanBlacksmithing) {
+            if(RC.steelSmithing) {
                 RC.artisanArmourSmithingButton.interactable = true;
             }
             var colors = RC.basicArmourSmithingButton.colors; 
@@ -289,14 +293,14 @@ public class BlacksmithController : MonoBehaviour
             RC.basicArmourSmithingButton.colors = colors; 
         } else if (research == "basicWeaponSmithing") {
             RC.basicWeaponSmithing = true;
-            if(RC.artisanBlacksmithing) {
+            if(RC.steelSmithing) {
                 RC.artisanWeaponSmithingButton.interactable = true;
             }
             var colors = RC.basicWeaponSmithingButton.colors; 
             colors.disabledColor = new Color(0, 0.4f, 0, 1);
             RC.basicWeaponSmithingButton.colors = colors; 
-        } else if (research == "artisanBlacksmithing") {
-            RC.artisanBlacksmithing = true;
+        } else if (research == "steelSmithing") {
+            RC.steelSmithing = true;
             if(RC.basicToolSmithing) {
                 RC.artisanToolSmithingButton.interactable = true;
             } 
@@ -306,19 +310,19 @@ public class BlacksmithController : MonoBehaviour
             if(RC.basicWeaponSmithing) {
                 RC.artisanWeaponSmithingButton.interactable = true;
             } 
-            var colors = RC.artisanBlacksmithingButton.colors; 
+            var colors = RC.steelSmithingButton.colors; 
             colors.disabledColor = new Color(0, 0.4f, 0, 1);
-            RC.artisanBlacksmithingButton.colors = colors; 
+            RC.steelSmithingButton.colors = colors; 
         } else if (research == "artisanToolSmithing") {
             RC.artisanToolSmithing = true;
-            var colors = RC.artisanBlacksmithingButton.colors; 
+            var colors = RC.artisanToolSmithingButton.colors; 
             colors.disabledColor = new Color(0, 0.4f, 0, 1);
-            RC.artisanBlacksmithingButton.colors = colors; 
+            RC.artisanToolSmithingButton.colors = colors; 
         } else if (research == "artisanArmourSmithing") {
             RC.artisanArmourSmithing = true;
-            var colors = RC.artisanBlacksmithingButton.colors; 
+            var colors = RC.artisanArmourSmithingButton.colors; 
             colors.disabledColor = new Color(0, 0.4f, 0, 1);
-            RC.artisanBlacksmithingButton.colors = colors; 
+            RC.artisanArmourSmithingButton.colors = colors; 
         } else if (research == "artisanWeaponSmithing") {
             RC.artisanWeaponSmithing = true;
             var colors = RC.artisanWeaponSmithingButton.colors; 
@@ -347,5 +351,58 @@ public class BlacksmithController : MonoBehaviour
         }
             
         isTraining = false;
+    }
+
+    public void OnCollisionEnter(Collision col) {
+        selectscript = col.gameObject.GetComponent<UnitSelection>();
+        if (col.collider.tag == "Selectable" && selectscript.task == ActionList.Gathering)
+        {
+            if (selectscript.heldResource > 0 && selectscript.heldResourceType == NodeManager.ResourceTypes.Iron)
+            {
+                UnitController unit = col.gameObject.GetComponent<UnitController>();
+                UnitSelection unitUnitSelection = selectscript;
+                if(unit) {
+                    if(unit.unitType == "Worker") {
+                        StartCoroutine(SmeltIron(unitUnitSelection, col));
+                        unitUnitSelection.isGathering = false;
+                    }
+                }
+            }
+        }
+    }
+
+    public void ResourceGather(UnitSelection unitSelection)
+    {
+        int toolModifier;
+        if(RC.artisanToolSmithing) {
+            toolModifier = 3;
+        } else if (RC.basicToolSmithing) {
+            toolModifier = 2;
+        } else {
+            toolModifier = 1;
+        }
+    }
+
+    public IEnumerator SmeltIron(UnitSelection unitSelection, Collision col) {
+        while (true)
+        {
+            unitSelection.isGathering = true;
+            yield return new WaitForSeconds(10);
+            unitSelection.heldResourceType = NodeManager.ResourceTypes.Steel;
+            unitSelection.isGathering = false;
+            unitSelection.drops = GameObject.FindGameObjectsWithTag("Player 1");
+            unitSelection.drops = unitSelection.AdjustDrops(unitSelection.drops);
+            if(unitSelection.drops.Length > 0 && unitSelection.task != ActionList.Idle && unitSelection.task != ActionList.Moving ) 
+            {
+                unitSelection.task = ActionList.Delivering;
+                agent = col.gameObject.GetComponent<NavMeshAgent>();
+                agent.destination = unitSelection.GetClosestDropOff(unitSelection.drops).transform.position;
+                unitSelection.drops = null;
+            }
+            else
+            {
+                unitSelection.task = ActionList.Idle;
+            }
+        }
     }
 }
