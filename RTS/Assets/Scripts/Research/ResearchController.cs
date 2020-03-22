@@ -35,9 +35,9 @@ public class ResearchController : MonoBehaviour
     public float basicWeaponSmithingIron;
 
     //Artisan blacksmithing
-    public bool artisanBlacksmithing;
-    public float artisanBlacksmithingGold;
-    public float artisanBlacksmithingIron;
+    public bool steelSmithing;
+    public float steelSmithingGold;
+    public float steelSmithingIron;
 
     public bool artisanToolSmithing;
     public float artisanToolSmithingGold;
@@ -126,7 +126,7 @@ public class ResearchController : MonoBehaviour
     public Button basicArmourSmithingButton;
     public Button basicWeaponSmithingButton;
  
-    public Button artisanBlacksmithingButton;
+    public Button steelSmithingButton;
     public Button artisanToolSmithingButton;
     public Button artisanArmourSmithingButton;
     public Button artisanWeaponSmithingButton;
@@ -173,7 +173,7 @@ public class ResearchController : MonoBehaviour
             basicArmourSmithingButton.onClick.AddListener(ResearchBasicArmourSmithing);
             basicWeaponSmithingButton.onClick.AddListener(ResearchBasicWeaponSmithing);
             
-            artisanBlacksmithingButton.onClick.AddListener(ResearchArtisanBlacksmithing);
+            steelSmithingButton.onClick.AddListener(ResearchSteelSmithing);
             artisanToolSmithingButton.onClick.AddListener(ResearchArtisanToolSmithing);
             artisanArmourSmithingButton.onClick.AddListener(ResearchArtisanArmourSmithing);
             artisanWeaponSmithingButton.onClick.AddListener(ResearchArtisanWeaponSmithingButton);
@@ -235,12 +235,12 @@ public class ResearchController : MonoBehaviour
     }
 
     // ARTISAN BLACKSMITHING
-    void ResearchArtisanBlacksmithing () 
+    void ResearchSteelSmithing () 
     { 
         selectedObj = inputScript.selectedObj;
         buildingScript = selectedObj.GetComponent<BuildingController>();
         blacksmithScript = selectedObj.GetComponent<BlacksmithController>();
-        blacksmithScript.ResearchArtisanBlacksmithing();
+        blacksmithScript.ResearchSteelSmithing();
     }
 
     void ResearchArtisanToolSmithing () 
@@ -339,7 +339,7 @@ public class ResearchController : MonoBehaviour
         selectedObj = inputScript.selectedObj;
         buildingScript = selectedObj.GetComponent<BuildingController>();
         lumberYardScript = selectedObj.GetComponent<LumberYardController>();
-        lumberYardScript.ResearchBasicWoodworking();
+        // lumberYardScript.ResearchBasicWoodworking();
     }
 
     void ResearchImprovedHandles () 

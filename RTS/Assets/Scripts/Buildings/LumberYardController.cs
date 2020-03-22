@@ -131,19 +131,19 @@ public class LumberYardController : MonoBehaviour
         }
     }
 
-    public void ResearchBasicWoodworking () 
-    { 
-        if(RM.gold < RC.artisanBlacksmithingGold || RM.iron < RC.artisanBlacksmithingIron) {
-            UI.noResourcesText.SetActive(true);
-            StartCoroutine(CloseResourcesText());
-        } else {
-            RM.gold -= RC.artisanBlacksmithingGold;
-            RM.iron -= RC.artisanBlacksmithingIron;
-            research = "artisanBlacksmithing";
-            StartCoroutine(Research());
-            RC.artisanBlacksmithingButton.interactable = false;
-        }
-    }
+    // public void ResearchBasicWoodworking () 
+    // { 
+    //     if(RM.gold < RC.steelSmithingGold || RM.iron < RC.artisanBlacksmithingIron) {
+    //         UI.noResourcesText.SetActive(true);
+    //         StartCoroutine(CloseResourcesText());
+    //     } else {
+    //         RM.gold -= RC.artisanBlacksmithingGold;
+    //         RM.iron -= RC.artisanBlacksmithingIron;
+    //         research = "artisanBlacksmithing";
+    //         StartCoroutine(Research());
+    //         RC.artisanBlacksmithingButton.interactable = false;
+    //     }
+    // }
 
     public void ResearchImprovedHandles () 
     { 
@@ -266,7 +266,7 @@ public class LumberYardController : MonoBehaviour
             RC.basicToolSmithingButton.interactable = true;
             RC.basicArmourSmithingButton.interactable = true;
             RC.basicWeaponSmithingButton.interactable = true;
-            RC.artisanBlacksmithingButton.interactable = true;
+            RC.steelSmithingButton.interactable = true;
             RC.basicBlacksmithing = true;
             var colors = RC.basicBlacksmithingButton.colors; 
             colors.disabledColor = Color.green;
@@ -274,7 +274,7 @@ public class LumberYardController : MonoBehaviour
 
         } else if (research == "basicToolSmithing") {
             RC.basicToolSmithing = true;
-            if(RC.artisanBlacksmithing) {
+            if(RC.steelSmithing) {
                 RC.artisanToolSmithingButton.interactable = true;
             }
             var colors = RC.basicToolSmithingButton.colors; 
@@ -282,7 +282,7 @@ public class LumberYardController : MonoBehaviour
             RC.basicToolSmithingButton.colors = colors; 
         } else if(research == "basicArmourSmithing") {
             RC.basicArmourSmithing = true;
-            if(RC.artisanBlacksmithing) {
+            if(RC.steelSmithing) {
                 RC.artisanArmourSmithingButton.interactable = true;
             }
             var colors = RC.basicArmourSmithingButton.colors; 
@@ -290,14 +290,14 @@ public class LumberYardController : MonoBehaviour
             RC.basicArmourSmithingButton.colors = colors; 
         } else if (research == "basicWeaponSmithing") {
             RC.basicWeaponSmithing = true;
-            if(RC.artisanBlacksmithing) {
+            if(RC.steelSmithing) {
                 RC.artisanWeaponSmithingButton.interactable = true;
             }
             var colors = RC.basicWeaponSmithingButton.colors; 
             colors.disabledColor = Color.green;
             RC.basicWeaponSmithingButton.colors = colors; 
-        } else if (research == "artisanBlacksmithing") {
-            RC.artisanBlacksmithing = true;
+        } else if (research == "steelSmithing") {
+            RC.steelSmithing = true;
             if(RC.basicToolSmithing) {
                 RC.artisanToolSmithingButton.interactable = true;
             } 
@@ -307,19 +307,19 @@ public class LumberYardController : MonoBehaviour
             if(RC.basicWeaponSmithing) {
                 RC.artisanWeaponSmithingButton.interactable = true;
             } 
-            var colors = RC.artisanBlacksmithingButton.colors; 
+            var colors = RC.steelSmithingButton.colors; 
             colors.disabledColor = Color.green;
-            RC.artisanBlacksmithingButton.colors = colors; 
+            RC.steelSmithingButton.colors = colors; 
         } else if (research == "artisanToolSmithing") {
             RC.artisanToolSmithing = true;
-            var colors = RC.artisanBlacksmithingButton.colors; 
+            var colors = RC.steelSmithingButton.colors; 
             colors.disabledColor = Color.green;
-            RC.artisanBlacksmithingButton.colors = colors; 
+            RC.steelSmithingButton.colors = colors; 
         } else if (research == "artisanArmourSmithing") {
             RC.artisanArmourSmithing = true;
-            var colors = RC.artisanBlacksmithingButton.colors; 
+            var colors = RC.steelSmithingButton.colors; 
             colors.disabledColor = Color.green;
-            RC.artisanBlacksmithingButton.colors = colors; 
+            RC.steelSmithingButton.colors = colors; 
         } else if (research == "artisanWeaponSmithing") {
             RC.artisanWeaponSmithing = true;
             var colors = RC.artisanWeaponSmithingButton.colors; 

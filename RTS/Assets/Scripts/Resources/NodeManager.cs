@@ -44,12 +44,14 @@ public class NodeManager : MonoBehaviour
                 UnitController unit = collidedObject.gameObject.GetComponent<UnitController>();
                 UnitSelection unitUnitSelection = collidedObject.gameObject.GetComponent<UnitSelection>();
                 if(unit) {
-                    if(unit.unitType == "Worker") {
+                    if(unit.unitType == "Worker" && gameObject.tag != "Blacksmith") {
                         unitUnitSelection.isGathering = false;
                     }
                 }
             }
-            Destroy(gameObject);
+            if(gameObject.GetComponent<BuildingController>().unitType != "Blacksmith") {
+                Destroy(gameObject);
+            }
         }
     }
 
