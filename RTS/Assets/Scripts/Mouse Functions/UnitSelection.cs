@@ -112,6 +112,7 @@ public class UnitSelection : MonoBehaviour
                         task = ActionList.Idle;
                         isBuilding = false;
                     }
+                    
                     if (heldResource >= maxHeldResource)
                     {
                         if(targetNode.GetComponent<BuildingController>()) {
@@ -527,7 +528,6 @@ public class UnitSelection : MonoBehaviour
     public void DropSteel()
     {
         //Handle drop off!
-       
         task = ActionList.Gathering;
         RM.steel += heldResource;
         heldResource = 0;
@@ -672,6 +672,8 @@ public class UnitSelection : MonoBehaviour
         } else if (hitObject.tag == "Blacksmith" && hitObject.gameObject == targetNode && gameObject.GetComponent<UnitController>().unitType == "Worker")
         {
             isGathering = true;
+            harvestScript = targetNode.GetComponent<NodeManager>();
+            harvestSpeed = harvestScript.harvestTime;
             StartCoroutine(Tick());
         } else if (hitObject.tag == "Foundation" && hitObject.gameObject == targetNode && gameObject.GetComponent<UnitController>().unitType == "Worker")
         {
@@ -698,6 +700,11 @@ public class UnitSelection : MonoBehaviour
                 DropIron();
             }
 
+            if (heldResourceType == NodeManager.ResourceTypes.Steel)
+            {
+                DropSteel();
+            }
+
             if (heldResourceType == NodeManager.ResourceTypes.Stone)
             {
                 DropStone();
@@ -718,7 +725,7 @@ public class UnitSelection : MonoBehaviour
     public void OnTriggerExit(Collider other)
     {
         GameObject hitObject = other.gameObject;
-        if (hitObject.tag == "Resource" && hitObject.gameObject == targetNode)
+        if (hitObject.tag == "Resource" && hitObject.gameObject == targetNode || hitObject.tag == "Blacksmith" && hitObject.gameObject == targetNode)
         {
             isGathering = false;
         }  else if (hitObject.tag == "Foundation" && hitObject.gameObject == targetNode)
@@ -777,17 +784,19 @@ public class UnitSelection : MonoBehaviour
 
             if(isBuilding) {
                 agent.destination = agent.transform.position;
-                
                 harvestSpeed = UC.attackSpeed;
             }
+
             yield return new WaitForSeconds(harvestSpeed);
-            if(isBuilding)
+
+            if(isBuilding || isGathering && heldResourceType == NodeManager.ResourceTypes.Wood || isGathering && heldResourceType == NodeManager.ResourceTypes.Food)
             {
                 UC.unitAudio = agent.GetComponent<AudioSource>();
                 UC.unitAudio.clip = UC.woodChop;
                 UC.unitAudio.maxDistance = 55;
                 UC.unitAudio.Play();
             } 
+            
             if(isGathering && heldResourceType != NodeManager.ResourceTypes.Wood && heldResourceType != NodeManager.ResourceTypes.Food)
             {
                 UC.unitAudio = agent.GetComponent<AudioSource>();
@@ -795,7 +804,8 @@ public class UnitSelection : MonoBehaviour
                 UC.unitAudio.maxDistance = 55;
                 UC.unitAudio.Play();
             } 
-            else if(isGathering && heldResourceType == NodeManager.ResourceTypes.Skymetal)
+            
+            if(isGathering && heldResourceType == NodeManager.ResourceTypes.Skymetal)
             {
                 heldResource += 5 * toolModifier;
                 if(heldResource > maxHeldResource) {
@@ -808,10 +818,6 @@ public class UnitSelection : MonoBehaviour
                 if(heldResource > maxHeldResource) {
                     heldResource = maxHeldResource;
                 }
-                UC.unitAudio = agent.GetComponent<AudioSource>();
-                UC.unitAudio.clip = UC.woodChop;
-                UC.unitAudio.maxDistance = 55;
-                UC.unitAudio.Play();
             }
             else if (isGathering && heldResourceType == NodeManager.ResourceTypes.Iron)
             {
@@ -840,10 +846,6 @@ public class UnitSelection : MonoBehaviour
                 if(heldResource > maxHeldResource) {
                     heldResource = maxHeldResource;
                 }
-                UC.unitAudio = agent.GetComponent<AudioSource>();
-                UC.unitAudio.clip = UC.woodChop;
-                UC.unitAudio.maxDistance = 55;
-                UC.unitAudio.Play();
             }
             else if (isGathering)
             {
@@ -851,10 +853,6 @@ public class UnitSelection : MonoBehaviour
                 if(heldResource > maxHeldResource) {
                     heldResource = maxHeldResource;
                 }           
-                UC.unitAudio = agent.GetComponent<AudioSource>();
-                UC.unitAudio.clip = UC.metalChop;
-                UC.unitAudio.maxDistance = 55;
-                UC.unitAudio.Play();
             }
         }
     }
