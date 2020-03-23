@@ -10,16 +10,16 @@ Light:
   m_Enabled: 1
   serializedVersion: 8
   m_Type: 2
-  m_Color: {r: 0.9150943, g: 0.64592224, b: 0, a: 1}
-  m_Intensity: 3
-  m_Range: 3
+  m_Color: {r: 1, g: 0.7714965, b: 0.21226418, a: 1}
+  m_Intensity: 2
+  m_Range: 15
   m_SpotAngle: 30
   m_CookieSize: 10
   m_Shadows:
-    m_Type: 2
+    m_Type: 1
     m_Resolution: 0
     m_CustomResolution: -1
-    m_Strength: 1
+    m_Strength: 0.694
     m_Bias: 0.05
     m_NormalBias: 0.4
     m_NearPlane: 0.2
@@ -262,6 +262,7 @@ MonoBehaviour:
   iron: 0
   steel: 0
   skymetal: 0
+  buildingID: 
 --- !u!54 &290780306865561268
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -1006,16 +1007,16 @@ Light:
   m_Enabled: 1
   serializedVersion: 8
   m_Type: 2
-  m_Color: {r: 0.9150943, g: 0.64592224, b: 0, a: 1}
-  m_Intensity: 3
-  m_Range: 3
+  m_Color: {r: 1, g: 0.7714965, b: 0.21226418, a: 1}
+  m_Intensity: 2
+  m_Range: 15
   m_SpotAngle: 30
   m_CookieSize: 10
   m_Shadows:
-    m_Type: 2
+    m_Type: 1
     m_Resolution: 0
     m_CustomResolution: -1
-    m_Strength: 1
+    m_Strength: 0.694
     m_Bias: 0.05
     m_NormalBias: 0.4
     m_NearPlane: 0.2
