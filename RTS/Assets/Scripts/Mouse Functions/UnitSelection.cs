@@ -14,12 +14,12 @@ public class UnitSelection : MonoBehaviour
     private ResourceManager RM;
     private AudioSource unitAudio;
     public AudioClip unitMoveClip;
-
     // Player 
     public GameObject team;
     public GameObject player;
     public GameObject owner;
     private AudioSource playerAudio;
+    public int mask;
 
     // Grab nodemanager script and harvest speed on gameobject
     FoundationController buildScript;
@@ -62,6 +62,7 @@ public class UnitSelection : MonoBehaviour
     {
         Scene currentScene = SceneManager.GetActiveScene();
         if(currentScene.name != "Main Menu") {
+            mask =~ LayerMask.GetMask("FogOfWar");
             team = GameObject.Find("Faction");
             player = GameObject.FindGameObjectWithTag("Player");
             playerAudio = GameObject.FindGameObjectWithTag("Main Audio").GetComponent<AudioSource>();
@@ -145,7 +146,7 @@ public class UnitSelection : MonoBehaviour
             if (Input.GetMouseButtonUp(1) && selected == true) {
                 Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
                 RaycastHit hit;
-                if(Physics.Raycast(ray, out hit, 350))
+                if(Physics.Raycast(ray, out hit, 350, mask))
                 {
                     StartCoroutine(IM.ClickCursorHit(hit));
                 }    
@@ -223,7 +224,7 @@ public class UnitSelection : MonoBehaviour
         RaycastHit hit;
         isFollowing = false;
 
-        if (Physics.Raycast(ray, out hit, 350))
+        if (Physics.Raycast(ray, out hit, 350, mask))
         {   
             targetNode = hit.collider.gameObject;
             targetScript = targetNode.GetComponent<UnitSelection>();

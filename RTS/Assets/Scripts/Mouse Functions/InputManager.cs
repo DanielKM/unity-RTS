@@ -102,6 +102,7 @@ public class InputManager : MonoBehaviour
 
     // Cursor variables
     public LayerMask clickableLayer;
+    public int mask;
 
     public Texture2D pointer;
     public Texture2D target;
@@ -133,7 +134,6 @@ public class InputManager : MonoBehaviour
     private float unitPosY;
     private float unitPosZ;
 
-
     // Grab the main camera
     Camera cam;
     Camera minimap;
@@ -159,6 +159,7 @@ public class InputManager : MonoBehaviour
     {
         Scene currentScene = SceneManager.GetActiveScene();
         if(currentScene.name != "Main Menu") {
+            mask =~ LayerMask.GetMask("FogOfWar");
             team = GameObject.Find("Faction");
             player = GameObject.FindGameObjectWithTag("Player");
 
@@ -203,8 +204,7 @@ public class InputManager : MonoBehaviour
                 {
                     Ray raycast = Camera.main.ScreenPointToRay(Input.mousePosition);
                     RaycastHit hit1;
-
-                    if (Physics.Raycast(raycast, out hit1, 350))
+                    if (Physics.Raycast(raycast, out hit1, 350, mask))
                     {
                         if (hit1.transform.tag == "Enemy Unit" || hit1.transform.tag == "Selectable" || hit1.transform.tag == "Player 1" ||  hit1.transform.tag == "Foundation" || hit1.transform.tag == "Ground" || hit1.transform.tag == "Yard" || hit1.transform.tag == "Barracks" || hit1.transform.tag == "House" || hit1.transform.tag == "Resource" || hit1.transform.tag == "Fort" || hit1.transform.tag == "Blacksmith" || hit1.transform.tag == "Stables")
                         {
@@ -386,7 +386,7 @@ public class InputManager : MonoBehaviour
             isSelecting = false;       
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             RaycastHit hit;
-            if(Physics.Raycast(ray, out hit, 350))
+            if(Physics.Raycast(ray, out hit, 350, mask))
             {
                 if(!selectionBoxOpen) {
                     StartCoroutine(ClickCursorHit(hit));
@@ -614,7 +614,7 @@ public class InputManager : MonoBehaviour
         // Check for all selectable units in the game
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
         RaycastHit hit;
-        if(Physics.Raycast(ray, out hit, 350))
+        if(Physics.Raycast(ray, out hit, 350, mask))
         {
             if (hit.collider.tag == "Ground" && (!Input.GetKey(KeyCode.LeftShift)))
             {
