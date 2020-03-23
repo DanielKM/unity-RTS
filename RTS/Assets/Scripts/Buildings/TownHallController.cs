@@ -126,8 +126,7 @@ public class TownHallController : MonoBehaviour
                 UnitController unit = col.gameObject.GetComponent<UnitController>();
                 UnitSelection unitUnitSelection = selectscript;
                 if(unit) {
-                    if(unit.unitType == "Worker" && unitUnitSelection.heldResourceType != NodeManager.ResourceTypes.Steel) {
-
+                    if(unit.unitType == "Worker" && selectscript.targetNode.GetComponent<BuildingController>().unitType == "Blacksmith") {
                         if(RM.iron >= 100) {
                             RM.iron -= 100;
                             unitUnitSelection.heldResource = 100;
@@ -140,13 +139,6 @@ public class TownHallController : MonoBehaviour
 
                     }
                 }
-            }
-        } else if (col.collider.tag == "Selectable" && selectscript.task == ActionList.Delivering) {
-            Debug.Log("Dropped");
-            UnitController unit = col.gameObject.GetComponent<UnitController>();
-            UnitSelection unitUnitSelection = selectscript;
-            if (unitUnitSelection.heldResourceType == NodeManager.ResourceTypes.Steel) {
-                unitUnitSelection.DropSteel();
             }
         }
     }

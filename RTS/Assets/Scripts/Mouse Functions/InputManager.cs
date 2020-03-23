@@ -463,8 +463,6 @@ public class InputManager : MonoBehaviour
                                 UI.WizardSelect();
                             }
                             inUnitSelectionBox = true;
-                            
-                            // playerAudio.Play();
                         } else {
                             if(selectedObjects.Contains(units[i])) {
                                 selectedObjects.Remove(units[i]);
@@ -632,13 +630,8 @@ public class InputManager : MonoBehaviour
             
                 selectedInfo.selected = true;
                 //  OPEN ENEMY PANELS!!
-                // UnitSelection indicators
                 selectedObj.transform.GetChild(2).gameObject.GetComponent<Projector>().material.SetColor("_Color", Color.red);
                 selectedObj.transform.GetChild(2).gameObject.SetActive(true);
-                // unitAudio = selectedObj.GetComponent<AudioSource>();
-                // unitAudio.clip = unitAudioClip;
-                // unitAudio.Play();
-                // isSelected = true;
                 UI.EnemySelect();
             }
             else if (hit.collider.tag == "Selectable")

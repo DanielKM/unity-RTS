@@ -361,48 +361,34 @@ public class BlacksmithController : MonoBehaviour
             {
                 UnitController unit = col.gameObject.GetComponent<UnitController>();
                 NavMeshAgent agent = col.gameObject.GetComponent<NavMeshAgent>();
-                UnitSelection unitUnitSelection = selectscript;
                 if(unit) {
-                    if(unit.unitType == "Worker") {
-                        StartCoroutine(SmeltIron(unitUnitSelection, agent));
-                            unitUnitSelection.isGathering = false;
-                            unitUnitSelection.task = ActionList.Delivering;
-
-                            unitUnitSelection.drops = GameObject.FindGameObjectsWithTag("Player 1");
-                            unitUnitSelection.drops = unitUnitSelection.AdjustDrops(unitUnitSelection.drops);
-                            if(unitUnitSelection.drops.Length > 0 && unitUnitSelection.task != ActionList.Idle && unitUnitSelection.task != ActionList.Moving ) 
-                            {
-                                agent.destination = unitUnitSelection.GetClosestDropOff(unitUnitSelection.drops).transform.position;
-                                unitUnitSelection.heldResourceType = NodeManager.ResourceTypes.Steel;
-                                unitUnitSelection.drops = null;
-                            }
-                            else
-                            {
-                                unitUnitSelection.task = ActionList.Idle;
-                            }
+                    if(unit.unitType == "Worker" && selectscript.heldResource > 0 && selectscript.heldResourceType == NodeManager.ResourceTypes.Iron) {
+                        StartCoroutine(SmeltIron(selectscript, agent));
                     }
                 }
             }
         }
     }
 
-    public void ResourceGather(UnitSelection unitSelection)
-    {
-        int toolModifier;
-        if(RC.artisanToolSmithing) {
-            toolModifier = 3;
-        } else if (RC.basicToolSmithing) {
-            toolModifier = 2;
-        } else {
-            toolModifier = 1;
-        }
-    }
-
     public IEnumerator SmeltIron(UnitSelection unitSelection, NavMeshAgent currentAgent) {
         while (true)
         {
-            unitSelection.isGathering = true;
             yield return new WaitForSeconds(10);
+            unitSelection.task = ActionList.Delivering;
+            unitSelection.drops = GameObject.FindGameObjectsWithTag("Player 1");
+            unitSelection.drops = unitSelection.AdjustDrops(unitSelection.drops);
+
+            if(unitSelection.drops.Length > 0 && unitSelection.task != ActionList.Idle && unitSelection.task != ActionList.Moving ) 
+            {
+                currentAgent.destination = unitSelection.GetClosestDropOff(unitSelection.drops).transform.position;
+                unitSelection.heldResourceType = NodeManager.ResourceTypes.Steel;
+                unitSelection.drops = null;
+            }
+            else
+            {
+                unitSelection.task = ActionList.Idle;
+            }
+            yield break;
         }
     }
 }

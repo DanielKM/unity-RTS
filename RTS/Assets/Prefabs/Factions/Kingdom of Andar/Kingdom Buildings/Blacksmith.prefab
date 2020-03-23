@@ -5874,7 +5874,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   resourceType: 2
   collidedObjects: []
-  harvestTime: 0
+  harvestTime: 1
   availableResource: 0
   gatherers: 0
 --- !u!1 &2452957189408886845
