@@ -7,7 +7,7 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Fog of War
+  m_Name: fogplane
   m_Shader: {fileID: 4800000, guid: cc4347574b823934ba11785e25895920, type: 3}
   m_ShaderKeywords: 
   m_LightmapFlags: 4
