@@ -5,8 +5,8 @@ using UnityEngine.AI;
 
 public class NPCController : MonoBehaviour
 {
-    public float patrolTime = 15; // time in seconds to wait before going to next patrol destination
-    public float aggroRange = 15; // distance in scene units below which the NPC will increase speed and seek the player
+    public float patrolTime = 5; // time in seconds to wait before going to next patrol destination
+    public float aggroRange = 5; // distance in scene units below which the NPC will increase speed and seek the player
     public Transform[] waypoints; // collection of waypoints which define a patrol area
 
     int index; // the current waypoint index in the waypoints array
