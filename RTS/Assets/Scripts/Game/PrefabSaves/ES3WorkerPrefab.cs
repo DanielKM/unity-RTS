@@ -63,9 +63,10 @@ public class ES3WorkerPrefab : MonoBehaviour
     public Dictionary<string, Vector3> SavedPosition = new Dictionary<string, Vector3>();
     public Dictionary<string, Vector3> SavedDestination = new Dictionary<string, Vector3>();
     public Dictionary<string, Quaternion> SavedRotation = new Dictionary<string, Quaternion>();
+    public Dictionary<string, Transform> SavedWaypoints = new Dictionary<string, Transform>();
+    public Dictionary<string, int> SavedWaypointSize = new Dictionary<string, int>();
 
     public Dictionary<string, GameObject> SavedTarget = new Dictionary<string, GameObject>();
-
     public Dictionary<string, GameObject> SavedFaction = new Dictionary<string, GameObject>();
     public Dictionary<string, GameObject> SavedPlayer = new Dictionary<string, GameObject>();
     public Dictionary<string, GameObject> SavedOwner = new Dictionary<string, GameObject>();
@@ -89,6 +90,9 @@ public class ES3WorkerPrefab : MonoBehaviour
         SavedPosition.Clear();
         SavedDestination.Clear();
         SavedRotation.Clear();
+        SavedWaypoints.Clear();
+        SavedWaypointSize.Clear();
+
         SavedTarget.Clear();
         SavedName.Clear();
 
@@ -145,10 +149,12 @@ public class ES3WorkerPrefab : MonoBehaviour
                 } else if (go.GetComponent<UnitController>().unitType == "Bandit Swordsman"){
                     string unitID = go.GetComponent<UnitController>().unitID;
                     SaveInformation(unitID, go);
+                    SaveWaypoints(unitID, go);
                     banditSwordsmanIDs.Add(go.GetComponent<UnitController>().unitID);
                 } else if (go.GetComponent<UnitController>().unitType == "Bandit Footman"){
                     string unitID = go.GetComponent<UnitController>().unitID;
                     SaveInformation(unitID, go);
+                    SaveWaypoints(unitID, go);
                     banditFootmanIDs.Add(go.GetComponent<UnitController>().unitID);
                 }
             } else if (go.GetComponent<BuildingController>()) {
@@ -169,9 +175,10 @@ public class ES3WorkerPrefab : MonoBehaviour
         ES3.Save<Dictionary<string, Vector3>>("PositionDictionary", SavedPosition, saveLocation);
         ES3.Save<Dictionary<string, Vector3>>("DestinationDictionary", SavedDestination, saveLocation);
         ES3.Save<Dictionary<string, Quaternion>>("RotationDictionary", SavedRotation, saveLocation);
+        ES3.Save<Dictionary<string, Transform>>("WaypointDictionary", SavedWaypoints, saveLocation);
+        ES3.Save<Dictionary<string, int>>("WaypointSizeDictionary", SavedWaypointSize, saveLocation);
 
         ES3.Save<Dictionary<string, GameObject>>("TargetDictionary", SavedTarget, saveLocation);
-
         ES3.Save<Dictionary<string, GameObject>>("FactionDictionary", SavedFaction, saveLocation);
         ES3.Save<Dictionary<string, GameObject>>("PlayerDictionary", SavedPlayer, saveLocation);
         ES3.Save<Dictionary<string, GameObject>>("OwnerDictionary", SavedOwner, saveLocation);
@@ -209,12 +216,19 @@ public class ES3WorkerPrefab : MonoBehaviour
         SavedDestination.Add(unitID, go.GetComponent<NavMeshAgent>().destination);
         SavedRotation.Add(unitID, go.transform.rotation);
         SavedTarget.Add(unitID, go.GetComponent<UnitSelection>().targetNode);
-
         SavedFaction.Add(unitID, go.GetComponent<UnitSelection>().team);
         SavedPlayer.Add(unitID, go.GetComponent<UnitSelection>().player);
         SavedOwner.Add(unitID, go.GetComponent<UnitSelection>().owner);
 
         SavedGameObject.Add(unitID, go);
+    }
+
+    public void SaveWaypoints(string unitID, GameObject go) {
+        int waypointLength = go.GetComponent<NPCController>().waypoints.Length;
+        SavedWaypointSize.Add(unitID, waypointLength);
+        for(int i = 0; i< waypointLength; i++) {
+            SavedWaypoints.Add(unitID + i, go.GetComponent<NPCController>().waypoints[i]);
+        }
     }
 
     public void LoadWorkers(string saveLocation) 
@@ -234,7 +248,7 @@ public class ES3WorkerPrefab : MonoBehaviour
                         Destroy(allGameObjects[i]);
                     }
                 } else if (allGameObjects[i].GetComponent<BuildingController>()) {
-
+                        // Destroy(allGameObjects[i]);
                 }
             }
 
@@ -310,8 +324,10 @@ public class ES3WorkerPrefab : MonoBehaviour
         SavedPosition.Clear();
         SavedDestination.Clear();
         SavedRotation.Clear();
-        SavedTarget.Clear();
+        SavedWaypoints.Clear();
+        SavedWaypointSize.Clear();
 
+        SavedTarget.Clear();
         SavedFaction.Clear();
         SavedPlayer.Clear();
         SavedOwner.Clear();
@@ -331,9 +347,10 @@ public class ES3WorkerPrefab : MonoBehaviour
         SavedPosition = ES3.Load<Dictionary<string, Vector3>>("PositionDictionary", saveLocation);
         SavedDestination = ES3.Load<Dictionary<string, Vector3>>("DestinationDictionary", saveLocation);
         SavedRotation = ES3.Load<Dictionary<string, Quaternion>>("RotationDictionary", saveLocation);
+        SavedWaypoints = ES3.Load<Dictionary<string, Transform>>("WaypointDictionary", saveLocation);
+        SavedWaypointSize = ES3.Load<Dictionary<string, int>>("WaypointSizeDictionary", saveLocation);
 
         SavedTarget = ES3.Load<Dictionary<string, GameObject>>("TargetDictionary", saveLocation);
-
         SavedFaction = ES3.Load<Dictionary<string, GameObject>>("FactionDictionary", saveLocation);
         SavedPlayer = ES3.Load<Dictionary<string, GameObject>>("PlayerDictionary", saveLocation);
         SavedOwner = ES3.Load<Dictionary<string, GameObject>>("OwnerDictionary", saveLocation);
@@ -508,12 +525,20 @@ public class ES3WorkerPrefab : MonoBehaviour
             go.GetComponent<UnitSelection>().heldResourceType = (NodeManager.ResourceTypes) System.Enum.Parse (typeof(NodeManager.ResourceTypes), SavedHeldResourceType[id]);
             go.GetComponent<UnitSelection>().task = (ActionList) System.Enum.Parse (typeof(ActionList), SavedTask[id]);
             go.GetComponent<UnitController>().unitName =  SavedName[id];
-            go.GetComponent<UnitSelection>().targetNode = SavedTarget[id];
 
+            go.GetComponent<UnitSelection>().targetNode = SavedTarget[id];
             go.GetComponent<UnitSelection>().team = SavedFaction[id];
             go.GetComponent<UnitSelection>().player = SavedPlayer[id];
             go.GetComponent<UnitSelection>().owner = SavedOwner[id];
 
+            int waypointLength = SavedWaypointSize[id];
+            Transform[] loadedTransforms = new Transform[waypointLength];
+
+            for(int i = 0; i<waypointLength; i++) {
+                string waypointID = id + i;
+                loadedTransforms[i] = SavedWaypoints[waypointID];
+            }
+            go.GetComponent<NPCController>().waypoints = loadedTransforms;
         return go;
         } else if(type == "Bandit Footman") {
             go = Instantiate(banditFootmanPrefab, goPosition, goRotation);
@@ -534,6 +559,11 @@ public class ES3WorkerPrefab : MonoBehaviour
             go.GetComponent<UnitSelection>().player = SavedPlayer[id];
             go.GetComponent<UnitSelection>().owner = SavedOwner[id];
 
+            int waypointLength = SavedWaypointSize[id];
+            Transform[] loadedTransforms = new Transform[waypointLength];
+           for(int i = 0; i<waypointLength; i++) {
+                go.GetComponent<NPCController>().waypoints[i] = SavedWaypoints[id + i];
+           }
         return go;
         }
         return go;
