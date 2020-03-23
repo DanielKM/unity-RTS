@@ -783,7 +783,7 @@ public class UnitSelection : MonoBehaviour
             }
 
             if(isBuilding) {
-                agent.destination = agent.transform.position;
+                // agent.destination = agent.transform.position;
                 harvestSpeed = UC.attackSpeed;
             }
 
