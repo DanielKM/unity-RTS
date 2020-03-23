@@ -568,7 +568,7 @@ Rigidbody:
   m_Drag: 0
   m_AngularDrag: 0.05
   m_UseGravity: 0
-  m_IsKinematic: 0
+  m_IsKinematic: 1
   m_Interpolate: 0
   m_Constraints: 126
   m_CollisionDetection: 0
@@ -622,6 +622,7 @@ MonoBehaviour:
   iron: 0
   steel: 0
   skymetal: 0
+  buildingID: 
 --- !u!114 &114520481934250364
 MonoBehaviour:
   m_ObjectHideFlags: 0
