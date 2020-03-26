@@ -34,6 +34,7 @@ public class UnitButtonController : MonoBehaviour
     public GameObject stables;
 
     private Vector3 mousePosition;
+    public int mask;
 
     public GameObject currentPlaceableObject;
     public Material placing;
@@ -49,6 +50,8 @@ public class UnitButtonController : MonoBehaviour
     {
         Scene currentScene = SceneManager.GetActiveScene();
         if(currentScene.name != "Main Menu") {
+            
+            mask =~ LayerMask.GetMask("FogOfWar");
             team = GameObject.Find("Faction");
             player = GameObject.FindGameObjectWithTag("Player");
             RM = team.GetComponent<ResourceManager>();
@@ -397,7 +400,7 @@ public class UnitButtonController : MonoBehaviour
 
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
         RaycastHit hitInfo;
-        if (Physics.Raycast(ray, out hitInfo))
+        if (Physics.Raycast(ray, out hitInfo, 1000, mask))
         {
             if (building.unitType == "House")
             {

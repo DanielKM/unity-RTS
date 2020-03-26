@@ -1,6 +1,7 @@
 Add Bandit types to rest of code
 
 clearing debris
+fog of war grey - not translucent
 
 Building take over mechanics
 - territories/influence
@@ -14,6 +15,9 @@ ritual
 - Procedural 
 Gremmels
 -
+
+- holds daemon/berserker in chains then releases
+Daemon keeper
 
 processes: 
 ramshackle knight
