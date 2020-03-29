@@ -36,6 +36,7 @@ public class SoundManager : MonoBehaviour
             if(scream == false) {
                 SoundAudio.clip = nightScream;
                 SoundAudio.Play();
+                day = false;
                 scream = true;
             }
             allGameObjects = GameObject.FindObjectsOfType<GameObject>();
@@ -54,14 +55,16 @@ public class SoundManager : MonoBehaviour
             if(night == false) {
                 SoundAudio.clip = nightAudioClip;
                 SoundAudio.Play();
+                scream = false;
                 night = true;
             }
         }
 
         if(DayNight.time >= 25000 && DayNight.time <=  25500 ) {
             if(day == false) {
-                SoundAudio.clip = nightAudioClip;
+                SoundAudio.clip = dayAudioClip;
                 SoundAudio.Play();
+                night = false;
                 day = true;
             }
         }
