@@ -48,6 +48,7 @@ public class UnitController : MonoBehaviour
     // Projectiles
     private GameObject arrowPrefab;
     private GameObject fireballPrefab;
+    private GameObject boneshardsPrefab;
 
     // Audio
     public AudioSource unitAudio;
@@ -72,6 +73,7 @@ public class UnitController : MonoBehaviour
     private ActionList newTask;
     private ArcherController archer;
     private WizardController wizard;
+    private NecromancerController necromancer;
 
     ResearchController RC;
     UIController UI;
@@ -97,11 +99,15 @@ public class UnitController : MonoBehaviour
         UnitSelection = GetComponent<UnitSelection>();
         archer = GetComponent<ArcherController>();
         wizard = GetComponent<WizardController>();
+        necromancer = GetComponent<NecromancerController>();
         if(archer) {
             arrowPrefab = archer.arrow;
         }        
         if(wizard) {
             fireballPrefab = wizard.fireball;
+        }      
+        if(necromancer) {
+            boneshardsPrefab = necromancer.boneshards;
         }
         if(unitID == null || unitID == "") {
             unitID = System.Guid.NewGuid().ToString();
@@ -118,7 +124,7 @@ public class UnitController : MonoBehaviour
         if(health <= 0) { 
             health = 0;
             gameObject.GetComponent<NavMeshAgent>().enabled = false;
-            if(unitType == "Worker" || unitType == "Footman" || unitType == "Swordsman" || unitType == "Archer" || unitType == "Wizard" ||  unitType == "Outrider" || unitType == "Knight" || unitType == "Bandit Swordsman"  || unitType == "Bandit Footman" || unitType == "Skeleton")  { 
+            if(unitType == "Worker" || unitType == "Footman" || unitType == "Swordsman" || unitType == "Archer" || unitType == "Wizard" ||  unitType == "Outrider" || unitType == "Knight" || unitType == "Bandit Swordsman"  || unitType == "Bandit Footman" || unitType == "Skeleton" || unitType == "Necromancer")  { 
                 anim.SetInteger("condition", 10);
                 isDead = true;
                 UnitSelection.isBuilding = false;
@@ -132,7 +138,7 @@ public class UnitController : MonoBehaviour
             }
             RM.housing -= 1.0f;
         } else if (health > 0) {
-            if(unitType == "Worker" || unitType == "Footman" || unitType == "Swordsman" || unitType == "Archer" || unitType == "Wizard" ||  unitType == "Outrider" || unitType == "Knight" || unitType == "Bandit Swordsman"  || unitType == "Bandit Footman" || unitType == "Skeleton")  { 
+            if(unitType == "Worker" || unitType == "Footman" || unitType == "Swordsman" || unitType == "Archer" || unitType == "Wizard" ||  unitType == "Outrider" || unitType == "Knight" || unitType == "Bandit Swordsman"  || unitType == "Bandit Footman" || unitType == "Skeleton" || unitType == "Necromancer")  { 
                 anim.SetInteger("condition", 0);
                 isDead = false;
                 gameObject.GetComponent<NavMeshAgent>().enabled = true;
@@ -170,10 +176,17 @@ public class UnitController : MonoBehaviour
                         anim.SetInteger("condition", 0);
                     }
                 }
-            } else if (unitType == "Footman" || unitType == "Swordsman" || unitType == "Archer" || unitType == "Wizard" ||  unitType == "Outrider" || unitType == "Knight" || unitType == "Bandit Swordsman" || unitType == "Bandit Footman" || unitType == "Skeleton" ) {
+            } else if (unitType == "Footman" || unitType == "Swordsman" || unitType == "Archer" || unitType == "Wizard" ||  unitType == "Outrider" || unitType == "Knight" || unitType == "Bandit Swordsman" || unitType == "Bandit Footman" || unitType == "Skeleton" || unitType == "Necromancer" ) {
                 if(UnitSelection.isMeleeing) {
                     anim.SetInteger("condition", 1);
                 } else if (!UnitSelection.isMeleeing) {
+                    anim.SetInteger("condition", 0);
+                }
+            }
+            if(unitType == "Necromancer") {
+                if(necromancer.raisingDead) {
+                    anim.SetInteger("condition", 5);
+                } else {
                     anim.SetInteger("condition", 0);
                 }
             }
@@ -287,6 +300,23 @@ public class UnitController : MonoBehaviour
 
                 Vector3 fireballPosition = new Vector3(transform.position.x, transform.position.y + 1.0f, transform.position.z);
                 GameObject fireball = Instantiate(fireballPrefab, fireballPosition, Quaternion.identity);
+
+                Vector3 heading = target.transform.position - transform.position;
+                float newAngle = Vector3.Angle(transform.forward, Vector3.right);
+
+                fireball.transform.rotation = Quaternion.Euler(new Vector3(0,180 - newAngle, 0));
+                fireball.GetComponent<Rigidbody>().velocity = new Vector3( heading.x, heading.y + 5.0f, heading.z);
+                
+                // yield return new WaitForSeconds(0.3f);
+                // Destroy(fireball);
+                unitAudio.maxDistance = 55;
+                unitAudio.Play();
+            } else if (unitType == "Necromancer") {
+                unitAudio = agent.GetComponent<AudioSource>();
+                unitAudio.clip = shootFireball;
+
+                Vector3 boneshardsPosition = new Vector3(transform.position.x, transform.position.y + 1.0f, transform.position.z);
+                GameObject fireball = Instantiate(boneshardsPrefab, boneshardsPosition, Quaternion.identity);
 
                 Vector3 heading = target.transform.position - transform.position;
                 float newAngle = Vector3.Angle(transform.forward, Vector3.right);

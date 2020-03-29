@@ -79,8 +79,6 @@ public class NPCController : MonoBehaviour
 
     void Tick()
     {
-        
-                            Debug.Log("Dead? " + UC.isDead);
         if(!UC.isDead) {
             agent = GetComponent<NavMeshAgent>();
             if(waypoints != null) {
@@ -93,10 +91,8 @@ public class NPCController : MonoBehaviour
             GameObject currentTarget = GetClosestEnemy(playerunits);
 
             if(currentTarget && !currentTarget.GetComponent<UnitController>().isDead) {
-                Debug.Log("Target? " + currentTarget);
                 if (currentTarget != null && Vector3.Distance(transform.position, currentTarget.transform.position) <= aggroRange)
                 {
-                Debug.Log("Follow? " + currentTarget);
                     UnitSelection.targetNode = currentTarget;
                     float dist = Vector3.Distance(agent.transform.position, currentTarget.transform.position);
                     agent.destination = currentTarget.transform.position;
@@ -104,13 +100,10 @@ public class NPCController : MonoBehaviour
                     UnitSelection.isFollowing = true;
 
                     if(dist < UC.attackRange && currentTarget != null && !currentTarget.GetComponent<UnitController>().isDead) {
-                Debug.Log("Attack? " + currentTarget);
                         UnitSelection.isMeleeing = true;
                         enemy = currentTarget;
-                Debug.Log("Currently meleeing? " + currentlyMeleeing);
                         if(!currentlyMeleeing && !enemy.GetComponent<UnitController>().isDead) {
                             agent.destination = agent.transform.position;
-                            Debug.Log("Start Attack Coroutine");
                             StartCoroutine(NPCAttack());
                         }
                     } else if (dist < UC.attackRange && currentTarget == null) {
@@ -158,7 +151,6 @@ public class NPCController : MonoBehaviour
 
     public IEnumerator NPCAttack() {
         currentlyMeleeing = true;
-        Debug.Log(UnitSelection.isMeleeing);
         while(UnitSelection.isMeleeing) {      
             enemy = UnitSelection.targetNode;
             if(enemy == null) {
@@ -175,7 +167,7 @@ public class NPCController : MonoBehaviour
                     break;
                 }   
             } 
-            if(UC.unitType == "Skeleton" ||UC.unitType == "Worker") {
+            if(UC.unitType == "Skeleton" || UC.unitType == "Worker") {
                 UC.unitAudio = agent.GetComponent<AudioSource>();
                 UC.unitAudio.clip = UC.woodChop;
                 UC.unitAudio.maxDistance = 55;
@@ -201,11 +193,8 @@ public class NPCController : MonoBehaviour
                 }
                 enemyUC.armour -= 1.0f * armourModifier;
             } else {
-                Debug.Log(enemyUC.health);
-                Debug.Log(UC.attackDamage);
                 enemyUC.health -= UC.attackDamage;
                 enemyHealth = enemyUC.health;
-                Debug.Log(enemyHealth);
             }
             
             yield return new WaitForSeconds(UC.attackSpeed);
