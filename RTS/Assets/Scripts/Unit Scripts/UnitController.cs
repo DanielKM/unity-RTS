@@ -126,6 +126,9 @@ public class UnitController : MonoBehaviour
                 UnitSelection.isFollowing = false;
                 UnitSelection.isAttacking = false;
                 UnitSelection.isMeleeing = false;
+                if(gameObject.GetComponent<NPCController>()) {
+                    gameObject.GetComponent<NPCController>().currentlyMeleeing = false;
+                }
             }
             RM.housing -= 1.0f;
         } else if (health > 0) {
