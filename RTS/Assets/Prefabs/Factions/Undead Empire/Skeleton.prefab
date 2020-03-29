@@ -3862,7 +3862,7 @@ MonoBehaviour:
   heldResource: 0
   currentlyMeleeing: 0
   isDead: 0
-  unitIcon: {fileID: 21300000, guid: 1f0fa3795ead58949beec803ce5dd640, type: 3}
+  unitIcon: {fileID: 21300000, guid: 72ab77f73c7204045ba5f85f86ec4e59, type: 3}
   unitID: 
 --- !u!54 &54543617370587768
 Rigidbody:
