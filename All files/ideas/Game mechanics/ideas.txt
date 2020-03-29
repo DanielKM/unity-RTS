@@ -1,5 +1,10 @@
 Add Bandit types to rest of code
 
+Necromancer ability 
+- draws power from night
+- spells by time of day
+- burn clothes, fake death
+
 clearing debris
 fog of war grey - not translucent
 

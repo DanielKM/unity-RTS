@@ -1,0 +1,16 @@
+fileFormatVersion: 2
+guid: a81a3d9302e16aa469ce209ba7ba2ca6
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences:
+  - boneshards: {instanceID: 0}
+  - faction: {instanceID: 0}
+  - MainCamera: {instanceID: 0}
+  - skeleton: {fileID: 4140876056770145199, guid: 12468c7096dee00489a63f5abc0b3ab0,
+      type: 3}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
