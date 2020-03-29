@@ -168,7 +168,7 @@ public class NPCController : MonoBehaviour
                     break;
                 }   
             } 
-            if(UC.unitType == "Worker") {
+            if(UC.unitType == "Skeleton" ||UC.unitType == "Worker") {
                 UC.unitAudio = agent.GetComponent<AudioSource>();
                 UC.unitAudio.clip = UC.woodChop;
                 UC.unitAudio.maxDistance = 55;
