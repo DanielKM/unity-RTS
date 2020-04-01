@@ -230,6 +230,7 @@ public class UnitSelection : MonoBehaviour
             targetScript = targetNode.GetComponent<UnitSelection>();
             if(owner == team && !UC.isDead) {     
                 if(UC.unitType == "Worker") {
+
                     if (hit.collider.tag != "Player 1")
                     {
                         if(targetScript != null) {
@@ -275,6 +276,12 @@ public class UnitSelection : MonoBehaviour
                         }
                         else if (hit.collider.tag == "Doorway")
                         {
+                        } 
+                        else if (hit.collider.tag == "Enemy Unit")
+                        {
+                            if(hit.collider.gameObject.GetComponent<UnitController>().isDead) {
+                                agent.destination = hit.collider.gameObject.transform.position;
+                            }
                         } 
                     }
                     else if (hit.collider.tag == "Player 1")

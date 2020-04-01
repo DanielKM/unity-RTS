@@ -704,6 +704,7 @@ GameObject:
   - component: {fileID: 8980884462265878731}
   - component: {fileID: 8994767175509079983}
   - component: {fileID: 8993743644541059977}
+  - component: {fileID: 4393083340589361832}
   - component: {fileID: 9219922493757422231}
   - component: {fileID: 9077297497487741801}
   - component: {fileID: 8962392545301798713}
@@ -783,6 +784,7 @@ MonoBehaviour:
   team: {fileID: 0}
   player: {fileID: 0}
   owner: {fileID: 0}
+  mask: 0
   targetNode: {fileID: 0}
   selected: 0
   isGathering: 0
@@ -844,6 +846,19 @@ MonoBehaviour:
   currentlyMeleeing: 0
   isDead: 0
   unitIcon: {fileID: 21300000, guid: 1f0fa3795ead58949beec803ce5dd640, type: 3}
+  unitID: 
+--- !u!114 &4393083340589361832
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3389560421852583913}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dda2c36d040a6114082c65a2f4943b28, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!195 &9219922493757422231
 NavMeshAgent:
   m_ObjectHideFlags: 0
