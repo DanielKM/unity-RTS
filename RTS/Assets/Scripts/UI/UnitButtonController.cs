@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.AI;
 using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
 
@@ -17,7 +18,7 @@ public class UnitButtonController : MonoBehaviour
     public bool isPlaceable;
 
     //Buttons
-    public Button buttonOne, buttonTwo, buttonThree, buttonFour, buttonFive, buttonSix, buttonSeven, buttonEight, basicBuildings, advancedBuildings, basicBack, advancedBack;
+    public Button buttonOne, buttonTwo, buttonThree, buttonFour, buttonFive, buttonSix, buttonSeven, buttonEight, basicBuildings, advancedBuildings, basicBack, advancedBack, clearDead;
 
     //Audio
     public AudioSource playerAudio;
@@ -32,6 +33,8 @@ public class UnitButtonController : MonoBehaviour
     public GameObject blacksmith;
     public GameObject lumberMill;
     public GameObject stables;
+
+    public List<GameObject> selectedGOs;
 
     private Vector3 mousePosition;
     public int mask;
@@ -50,7 +53,6 @@ public class UnitButtonController : MonoBehaviour
     {
         Scene currentScene = SceneManager.GetActiveScene();
         if(currentScene.name != "Main Menu") {
-            
             mask =~ LayerMask.GetMask("FogOfWar");
             team = GameObject.Find("Faction");
             player = GameObject.FindGameObjectWithTag("Player");
@@ -61,6 +63,7 @@ public class UnitButtonController : MonoBehaviour
 
             basicBuildings.onClick.AddListener(UI.VillagerBasicBuildings);
             advancedBuildings.onClick.AddListener(UI.VillagerAdvancedBuildings);
+            clearDead.onClick.AddListener(ClearDead);
 
             buttonTwo.onClick.AddListener(BuildHouse);
             buttonThree.onClick.AddListener(BuildFarm);
@@ -129,6 +132,49 @@ public class UnitButtonController : MonoBehaviour
             }
         }
     }
+
+    void ClearDead() {
+        InputManager IM = player.GetComponent<InputManager>();
+        selectedGOs = IM.selectedObjects;
+        GameObject[] allEnemies = GameObject.FindGameObjectsWithTag("Enemy Unit");
+        List<GameObject> dead = new List<GameObject>();
+ 
+        int deadCount = 0;
+        foreach(GameObject enemy in allEnemies) {
+            if(enemy.GetComponent<UnitController>().isDead) {
+                dead.Add(enemy);
+                deadCount += 1;
+            }
+        }
+
+        foreach(GameObject go in selectedGOs) {
+            NavMeshAgent agent = go.GetComponent<NavMeshAgent>();
+            go.GetComponent<UnitSelection>().targetNode = GetClosestBody(dead);
+            if(go.GetComponent<UnitSelection>().targetNode) {
+                agent.destination = go.GetComponent<UnitSelection>().targetNode.transform.position;
+            }
+        }
+    }
+
+    public GameObject GetClosestBody(List<GameObject> dead)
+    {
+        GameObject closestBody = null;
+        float closestBodyDistance = Mathf.Infinity;
+        Vector3 bodyPosition = transform.position;
+
+        foreach(GameObject targetBody in dead)
+        {
+            Vector3 direction = targetBody.transform.position - bodyPosition;
+            float dropDistance = direction.sqrMagnitude;
+            if(dropDistance < closestBodyDistance)
+            {
+                closestBodyDistance = dropDistance;
+                closestBody = targetBody;
+            }
+        }
+        return closestBody;
+    }
+
 
     void BuildHouse()
     {
