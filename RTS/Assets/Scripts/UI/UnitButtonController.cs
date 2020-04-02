@@ -446,7 +446,7 @@ public class UnitButtonController : MonoBehaviour
 
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
         RaycastHit hitInfo;
-        if (Physics.Raycast(ray, out hitInfo, 1000, mask))
+        if (Physics.Raycast(ray, out hitInfo, 1000))
         {
             if (building.unitType == "House")
             {
