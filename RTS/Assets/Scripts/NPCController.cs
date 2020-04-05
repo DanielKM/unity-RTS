@@ -104,7 +104,7 @@ public class NPCController : MonoBehaviour
                         enemy = currentTarget;
                         if(!currentlyMeleeing && !enemy.GetComponent<UnitController>().isDead) {
                             agent.destination = agent.transform.position;
-                            StartCoroutine(NPCAttack());
+                            StartCoroutine(NPCAttack(enemy));
                         }
                     } else if (dist < UC.attackRange && currentTarget == null) {
                         currentlyMeleeing = false;
@@ -149,7 +149,7 @@ public class NPCController : MonoBehaviour
         return closestEnemy;
     }
 
-    public IEnumerator NPCAttack() {
+    public IEnumerator NPCAttack(GameObject target) {
         currentlyMeleeing = true;
         while(UnitSelection.isMeleeing) {      
             enemy = UnitSelection.targetNode;
@@ -167,7 +167,29 @@ public class NPCController : MonoBehaviour
                     break;
                 }   
             } 
-            if(UC.unitType == "Skeleton" || UC.unitType == "Worker") {
+            if(UC.unitType == "Necromancer") {
+                UC.unitAudio = agent.GetComponent<AudioSource>();
+                UC.unitAudio.clip = UC.shootFireball;
+
+                Vector3 boneshardsPosition = new Vector3(transform.position.x, transform.position.y + 1.0f, transform.position.z);
+                GameObject fireball = Instantiate(UC.boneshardsPrefab, boneshardsPosition, Quaternion.identity);
+
+                Vector3 heading = enemy.transform.position - transform.position;
+                float newAngle = Vector3.Angle(transform.forward, Vector3.right);
+
+                fireball.transform.rotation = Quaternion.Euler(new Vector3(0,180 - newAngle, 0));
+                fireball.GetComponent<Rigidbody>().velocity = new Vector3( heading.x, heading.y + 5.0f, heading.z);
+                
+                // yield return new WaitForSeconds(0.3f);
+                // Destroy(fireball);
+                UC.unitAudio.maxDistance = 55;
+                UC.unitAudio.Play();
+
+                UC.unitAudio = agent.GetComponent<AudioSource>();
+                UC.unitAudio.clip = UC.woodChop;
+                UC.unitAudio.maxDistance = 55;
+                UC.unitAudio.Play();
+            } else if(UC.unitType == "Skeleton" || UC.unitType == "Worker") {
                 UC.unitAudio = agent.GetComponent<AudioSource>();
                 UC.unitAudio.clip = UC.woodChop;
                 UC.unitAudio.maxDistance = 55;

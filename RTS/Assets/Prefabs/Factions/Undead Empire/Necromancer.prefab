@@ -4957,11 +4957,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   patrolTime: 15
   aggroRange: 15
-  waypoints:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
+  waypoints: []
   currentlyMeleeing: 0
 --- !u!195 &7996418914483865231
 NavMeshAgent:
@@ -5050,6 +5046,7 @@ MonoBehaviour:
     type: 3}
   faction: {fileID: 0}
   MainCamera: {fileID: 0}
+  TownCenter: {fileID: 0}
   skeleton: {fileID: 4140876056770145199, guid: 12468c7096dee00489a63f5abc0b3ab0,
     type: 3}
   raisingDead: 0

@@ -19,6 +19,8 @@ public class ES3WorkerPrefab : MonoBehaviour
     public GameObject knightPrefab; 
     public GameObject wizardPrefab; 
 
+    public GameObject skeletonPrefab; 
+    public GameObject necromancerPrefab; 
     // ENEMY PREFABS
     public GameObject banditSwordsmanPrefab; 
     public GameObject banditFootmanPrefab; 
@@ -39,6 +41,9 @@ public class ES3WorkerPrefab : MonoBehaviour
     private List<string> outriderIDs = new List<string>();
     private List<string> knightIDs = new List<string>();
     private List<string> wizardIDs = new List<string>();
+
+    private List<string> skeletonIDs = new List<string>();
+    private List<string> necromancerIDs = new List<string>();
     
     private List<string> banditSwordsmanIDs = new List<string>();
     private List<string> banditFootmanIDs = new List<string>();
@@ -110,6 +115,9 @@ public class ES3WorkerPrefab : MonoBehaviour
         knightIDs.Clear();
         wizardIDs.Clear();
 
+        skeletonIDs.Clear();
+        necromancerIDs.Clear();
+
         banditSwordsmanIDs.Clear();
         banditFootmanIDs.Clear();
 
@@ -146,6 +154,16 @@ public class ES3WorkerPrefab : MonoBehaviour
                     string unitID = go.GetComponent<UnitController>().unitID;
                     SaveInformation(unitID, go);
                     wizardIDs.Add(go.GetComponent<UnitController>().unitID);
+                } else if (go.GetComponent<UnitController>().unitType == "Skeleton"){
+                    string unitID = go.GetComponent<UnitController>().unitID;
+                    SaveInformation(unitID, go);
+                    SaveWaypoints(unitID, go);
+                    skeletonIDs.Add(go.GetComponent<UnitController>().unitID);
+                } else if (go.GetComponent<UnitController>().unitType == "Necromancer"){
+                    string unitID = go.GetComponent<UnitController>().unitID;
+                    SaveInformation(unitID, go);
+                    SaveWaypoints(unitID, go);
+                    necromancerIDs.Add(go.GetComponent<UnitController>().unitID);
                 } else if (go.GetComponent<UnitController>().unitType == "Bandit Swordsman"){
                     string unitID = go.GetComponent<UnitController>().unitID;
                     SaveInformation(unitID, go);
@@ -198,6 +216,9 @@ public class ES3WorkerPrefab : MonoBehaviour
         ES3.Save<List<string>>("wizards", wizardIDs, saveLocation);
 
         // Save enemy references
+        ES3.Save<List<string>>("skeletons", skeletonIDs, saveLocation);
+        ES3.Save<List<string>>("necromancers", necromancerIDs, saveLocation);
+
         ES3.Save<List<string>>("banditswordsmen", banditSwordsmanIDs, saveLocation);
         ES3.Save<List<string>>("banditfootmen", banditFootmanIDs, saveLocation);
     }
@@ -241,7 +262,7 @@ public class ES3WorkerPrefab : MonoBehaviour
             allGameObjects = GameObject.FindObjectsOfType<GameObject>();
             for(int i = 0; i<allGameObjects.Length; i++) {
                 if(allGameObjects[i].GetComponent<UnitController>()) {
-                    if(allGameObjects[i].GetComponent<UnitController>().unitType == "Worker" || allGameObjects[i].GetComponent<UnitController>().unitType == "Bandit Swordsman" || allGameObjects[i].GetComponent<UnitController>().unitType == "Bandit Footman") 
+                    if(allGameObjects[i].GetComponent<UnitController>().unitType == "Worker" || allGameObjects[i].GetComponent<UnitController>().unitType == "Skeleton" || allGameObjects[i].GetComponent<UnitController>().unitType == "Necromancer" || allGameObjects[i].GetComponent<UnitController>().unitType == "Bandit Swordsman" || allGameObjects[i].GetComponent<UnitController>().unitType == "Bandit Footman") 
                     {
                         Destroy(allGameObjects[i]);
                     } else if(allGameObjects[i].GetComponent<UnitController>().unitType == "Swordsman" || allGameObjects[i].GetComponent<UnitController>().unitType == "Footman" || allGameObjects[i].GetComponent<UnitController>().unitType == "Archer" || allGameObjects[i].GetComponent<UnitController>().unitType == "Outrider" || allGameObjects[i].GetComponent<UnitController>().unitType == "Knight" || allGameObjects[i].GetComponent<UnitController>().unitType == "Wizard"){
@@ -261,6 +282,9 @@ public class ES3WorkerPrefab : MonoBehaviour
             knightIDs = ES3.Load<List<string>>("knights", saveLocation);
             wizardIDs = ES3.Load<List<string>>("wizards", saveLocation);
             
+            skeletonIDs = ES3.Load<List<string>>("skeletons", saveLocation);
+            necromancerIDs = ES3.Load<List<string>>("necromancers", saveLocation);
+
             banditSwordsmanIDs = ES3.Load<List<string>>("banditswordsmen", saveLocation);
             banditFootmanIDs = ES3.Load<List<string>>("banditfootmen", saveLocation);
 
@@ -288,6 +312,12 @@ public class ES3WorkerPrefab : MonoBehaviour
             }
 
             // ENEMIES
+            foreach(string id in skeletonIDs) {
+                InstantiatePrefab(id, saveLocation, "Skeleton");
+            }
+            foreach(string id in necromancerIDs) {
+                InstantiatePrefab(id, saveLocation, "Necromancer");
+            }
             foreach(string id in banditSwordsmanIDs) {
                 InstantiatePrefab(id, saveLocation, "Bandit Swordsman");
             }
@@ -307,6 +337,9 @@ public class ES3WorkerPrefab : MonoBehaviour
         outriderIDs.Clear();
         knightIDs.Clear();
         wizardIDs.Clear();
+
+        skeletonIDs.Clear();
+        necromancerIDs.Clear();
 
         banditSwordsmanIDs.Clear();
         banditFootmanIDs.Clear();
@@ -510,6 +543,61 @@ public class ES3WorkerPrefab : MonoBehaviour
             go.GetComponent<UnitSelection>().player = SavedPlayer[id];
             go.GetComponent<UnitSelection>().owner = SavedOwner[id];
 
+        return go;
+          } else if(type == "Skeleton") {
+            go = Instantiate(skeletonPrefab, goPosition, goRotation);
+
+            go.GetComponent<UnitController>().unitKills = SavedKills[id];
+            go.GetComponent<UnitController>().unitRank = SavedRank[id];
+            go.GetComponent<UnitController>().unitID = id;
+            go.GetComponent<UnitController>().isDead = SavedDead[id];
+            go.GetComponent<NavMeshAgent>().destination = SavedDestination[id];
+            go.GetComponent<UnitController>().health = SavedHealth[id];
+            go.GetComponent<UnitController>().armour = SavedArmour[id];
+            go.GetComponent<UnitSelection>().heldResource = SavedHeldResource[id];
+            go.GetComponent<UnitSelection>().heldResourceType = (NodeManager.ResourceTypes) System.Enum.Parse (typeof(NodeManager.ResourceTypes), SavedHeldResourceType[id]);
+            go.GetComponent<UnitSelection>().task = (ActionList) System.Enum.Parse (typeof(ActionList), SavedTask[id]);
+            go.GetComponent<UnitController>().unitName =  SavedName[id];
+
+            go.GetComponent<UnitSelection>().targetNode = SavedTarget[id];
+            go.GetComponent<UnitSelection>().team = SavedFaction[id];
+            go.GetComponent<UnitSelection>().player = SavedPlayer[id];
+            go.GetComponent<UnitSelection>().owner = SavedOwner[id];
+
+            int waypointLength = SavedWaypointSize[id];
+            Transform[] loadedTransforms = new Transform[waypointLength];
+
+            for(int i = 0; i<waypointLength; i++) {
+                string waypointID = id + i;
+                loadedTransforms[i] = SavedWaypoints[waypointID];
+            }
+            go.GetComponent<NPCController>().waypoints = loadedTransforms;
+        return go;
+        } else if(type == "Necromancer") {
+            go = Instantiate(necromancerPrefab, goPosition, goRotation);
+
+            go.GetComponent<UnitController>().unitKills = SavedKills[id];
+            go.GetComponent<UnitController>().unitRank = SavedRank[id];
+            go.GetComponent<UnitController>().unitID = id;
+            go.GetComponent<UnitController>().isDead = SavedDead[id];
+            go.GetComponent<NavMeshAgent>().destination = SavedDestination[id];
+            go.GetComponent<UnitController>().health = SavedHealth[id];
+            go.GetComponent<UnitController>().armour = SavedArmour[id];
+            go.GetComponent<UnitSelection>().heldResource = SavedHeldResource[id];
+            go.GetComponent<UnitSelection>().heldResourceType = (NodeManager.ResourceTypes) System.Enum.Parse (typeof(NodeManager.ResourceTypes), SavedHeldResourceType[id]);
+            go.GetComponent<UnitSelection>().task = (ActionList) System.Enum.Parse (typeof(ActionList), SavedTask[id]);
+            go.GetComponent<UnitController>().unitName =  SavedName[id];
+            go.GetComponent<UnitSelection>().targetNode = SavedTarget[id];
+            go.GetComponent<UnitSelection>().team = SavedFaction[id];
+            go.GetComponent<UnitSelection>().player = SavedPlayer[id];
+            go.GetComponent<UnitSelection>().owner = SavedOwner[id];
+
+            int waypointLength = SavedWaypointSize[id];
+            Debug.Log(waypointLength);
+            Transform[] loadedTransforms = new Transform[waypointLength];
+           for(int i = 0; i<waypointLength; i++) {
+                go.GetComponent<NPCController>().waypoints[i] = SavedWaypoints[id + i];
+           }
         return go;
         } else if(type == "Bandit Swordsman") {
             go = Instantiate(banditSwordsmanPrefab, goPosition, goRotation);
