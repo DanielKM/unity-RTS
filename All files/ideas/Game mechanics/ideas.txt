@@ -5,6 +5,13 @@ Necromancer ability
 - spells by time of day
 - burn clothes, fake death
 
+Kasser
+Kasir
+iskar
+Akaros
+Acheris
+Lycaron
+
 clearing debris
 fog of war grey - not translucent
 

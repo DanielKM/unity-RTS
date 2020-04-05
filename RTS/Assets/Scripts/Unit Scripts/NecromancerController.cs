@@ -30,9 +30,22 @@ public class NecromancerController : MonoBehaviour
     void Update()
     {
         if(!gameObject.GetComponent<UnitController>().isDead) {
+            if(DayNight.time >= 14400 && DayNight.time <= 16000 ) {
+                if(!raisingDead) {
+                    StartCoroutine(RaiseDead(DayNight.days));
+                }          
+            }
+        }
+        if(!gameObject.GetComponent<UnitController>().isDead) {
             if(DayNight.time >= 68000 && DayNight.time <= 68500 ) {
                 if(!raisingDead) {
-                    Debug.Log(DayNight.days);
+                    StartCoroutine(RaiseDead(DayNight.days));
+                }          
+            }
+        }
+        if(!gameObject.GetComponent<UnitController>().isDead) {
+            if(DayNight.time >= 86000 && DayNight.time <= 86300 ) {
+                if(!raisingDead) {
                     StartCoroutine(RaiseDead(DayNight.days));
                 }          
             }

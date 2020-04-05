@@ -48,7 +48,7 @@ public class UnitController : MonoBehaviour
     // Projectiles
     private GameObject arrowPrefab;
     private GameObject fireballPrefab;
-    private GameObject boneshardsPrefab;
+    public GameObject boneshardsPrefab;
 
     // Audio
     public AudioSource unitAudio;
