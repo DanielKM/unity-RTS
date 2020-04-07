@@ -340,9 +340,7 @@ public class InputManager : MonoBehaviour
         RaycastHit hit;
 
         if (Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out hit, 500, clickableLayer.value))
-        {
-            bool isAttackable = hit.collider.GetComponent(typeof(IAttackable)) != null;
-                       
+        {      
             if (hit.collider.tag == "Doorway")
             {
                 Cursor.SetCursor(doorway, new Vector2(0, 0), CursorMode.Auto);
