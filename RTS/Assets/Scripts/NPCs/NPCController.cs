@@ -65,17 +65,10 @@ public class NPCController : MonoBehaviour
         index = index == waypoints.Length - 1 ? 0 : index + 1; // check through waypoints/cycle thru at patroltime
     }
 
-    // Update is called once per frame
     void Update()
     {
         animator.SetFloat("Speed", agent.velocity.magnitude);
     }
-
-    // private void OnDrawGizmos()
-    // {
-    //     Gizmos.color = Color.red;
-    //     Gizmos.DrawWireSphere(transform.position, aggroRange);
-    // }
 
     void Tick()
     {
@@ -180,8 +173,6 @@ public class NPCController : MonoBehaviour
                 fireball.transform.rotation = Quaternion.Euler(new Vector3(0,180 - newAngle, 0));
                 fireball.GetComponent<Rigidbody>().velocity = new Vector3( heading.x, heading.y + 5.0f, heading.z);
                 
-                // yield return new WaitForSeconds(0.3f);
-                // Destroy(fireball);
                 UC.unitAudio.maxDistance = 55;
                 UC.unitAudio.Play();
 

@@ -7,7 +7,6 @@ using UnityEngine.AI;
 
 public class TownHallController : MonoBehaviour
 {
-    // worker names
     ResourceManager RM;
     UIController UI;
     string[] villagers = new string[14]{ "Farah", "Dan", "Dave", "Steve", "Katie", "Sam", "Ryan", "Sid", "Bill", "Will", "Sarah", "Arj", "Izzy", "Aron"};
@@ -69,12 +68,6 @@ public class TownHallController : MonoBehaviour
         // Progress bar
         BuildingProgressBar = GameObject.Find("BuildingProgressBar");
         BuildingProgressSlider = BuildingProgressBar.GetComponent<Slider>();
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-
     }
 
     public void HireVillager()

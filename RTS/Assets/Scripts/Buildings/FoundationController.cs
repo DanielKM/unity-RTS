@@ -20,7 +20,6 @@ public class FoundationController : MonoBehaviour
     public ResourceManager RM;
     ResearchController RC;
     
-    // Start is called before the first frame update
     void Start()
     {
         GameObject player = GameObject.FindGameObjectWithTag("Player");
@@ -28,18 +27,15 @@ public class FoundationController : MonoBehaviour
         RM = team.GetComponent<ResourceManager>();
         RC = team.GetComponent<ResearchController>();
 
-        // Starts the resource tick (means its true)
         BuildingProgressPanel = GameObject.Find("BuildingProgressPanel").GetComponent<CanvasGroup>();
         StartCoroutine(BuildTick());
     }
 
-    // Update is called once per frame
     void Update()
     {
         if (buildPercent >= 100)
         {
             buildingScript = buildingPrefab.GetComponent<BuildingController>();
-            // Need to add isGathering = false
             if(buildingScript.unitType == "House")
             {
                 location = new Vector3(gameObject.transform.position.x, gameObject.transform.position.y - 1.0f, gameObject.transform.position.z);
@@ -101,13 +97,9 @@ public class FoundationController : MonoBehaviour
     }
     private void OnCollisionExit(Collision collision)
     {
-        if(collision.gameObject.tag == "Player 1" && collision.gameObject)
-        {
 
-        }
     }
 
-    // Ticks down while villager is gathering resource - Adjust with heldResource in GatherTick in Selection Script
     public void BuildStructure()
     {       
         int toolModifier;

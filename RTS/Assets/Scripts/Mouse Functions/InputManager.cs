@@ -325,7 +325,6 @@ public class InputManager : MonoBehaviour
             destination.x -= Input.GetAxis("Mouse Y") * rotateAmount;
             destination.x = Mathf.Clamp(destination.x, 20f, 90f);
             destination.y += Input.GetAxis("Mouse X") * rotateAmount;
-            //requires clamping -55 to 55 or so
         }
 
         if (destination != origin)
@@ -369,16 +368,13 @@ public class InputManager : MonoBehaviour
 
     }
 
-    // Multiselect box functions
     void Multiselect()
     {
-        // If we press the left mouse button, save mouse location and begin UnitSelection
         if (Input.GetMouseButtonDown(0))
         {
             isSelecting = true;
             mousePosition1 = Input.mousePosition;
         }
-        // If we let go of the left mouse button, end UnitSelection
         if (Input.GetMouseButtonUp(0))
         { 
             isSelecting = false;       
@@ -398,9 +394,6 @@ public class InputManager : MonoBehaviour
         if (isSelecting)
         {
             GameObject[] units = GameObject.FindGameObjectsWithTag("Selectable");
-
-            // Create a rect from both mouse positions
-
             var rect = Utils.GetScreenRect(mousePosition1, Input.mousePosition);
             Utils.DrawScreenRect(rect, new Color(0.8f, 0.8f, 0.95f, 0.25f));
             Utils.DrawScreenRectBorder(rect, 2, new Color(0.8f, 0.8f, 0.95f));
@@ -572,9 +565,6 @@ public class InputManager : MonoBehaviour
 
     public void UpdateBuildingPanel()
     {
-        // UI Functions
-        //ERROR - Object reference not set to an instance of an object - when you select a tree that is being harvested then switch to a villager
-   
         if(selectedObj != null ) {
             buildingScript = selectedObj.GetComponent<BuildingController>();
             Image icon = buildingIcon.GetComponent<Image>();
@@ -606,10 +596,8 @@ public class InputManager : MonoBehaviour
         }
     }
 
-    // Left click controller
     public void LeftClick()
     {
-        // Check for all selectable units in the game
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
         RaycastHit hit;
         if(Physics.Raycast(ray, out hit, 350, mask))
