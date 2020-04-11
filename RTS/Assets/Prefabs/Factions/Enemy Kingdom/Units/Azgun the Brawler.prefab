@@ -393,8 +393,8 @@ GameObject:
   - component: {fileID: 292919762675228545}
   - component: {fileID: 292919762675228546}
   - component: {fileID: 292919762675228547}
-  - component: {fileID: 8931257041648950335}
   - component: {fileID: 114528554636317294}
+  - component: {fileID: 6478417027896398531}
   m_Layer: 9
   m_Name: Azgun the Brawler
   m_TagString: Enemy Unit
@@ -622,6 +622,7 @@ MonoBehaviour:
   iron: 200
   steel: 0
   skymetal: 0
+  boneshardsPrefab: {fileID: 0}
   unitAudio: {fileID: 0}
   metalChop: {fileID: 8300000, guid: 0ecf18972377e4652ab7377a0993f14a, type: 3}
   metalChop2: {fileID: 8300000, guid: 07c38e0499aea4acd81b44991c0e4d07, type: 3}
@@ -653,6 +654,7 @@ MonoBehaviour:
   team: {fileID: 0}
   player: {fileID: 0}
   owner: {fileID: 0}
+  mask: 0
   targetNode: {fileID: 0}
   selected: 0
   isGathering: 0
@@ -666,22 +668,6 @@ MonoBehaviour:
   resources: []
   formationList: []
   dropList: []
---- !u!114 &8931257041648950335
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 292919761558913591}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3a26af9afe1a4004daddaaf0a7a5d470, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  patrolTime: 15
-  aggroRange: 15
-  waypoints: []
-  currentlyMeleeing: 0
 --- !u!114 &114528554636317294
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -706,7 +692,7 @@ MonoBehaviour:
     - {fileID: 292919762675228545}
     - {fileID: 292919762675228546}
     - {fileID: 292919762675228547}
-    - {fileID: 8931257041648950335}
+    - {fileID: 0}
     - {fileID: 114528554636317294}
     - {fileID: 292919761559281277}
     - {fileID: 292919761558913629}
@@ -799,6 +785,22 @@ MonoBehaviour:
     - {fileID: 2100000, guid: b3ae2273451ef0143a935a5ad49faf7a, type: 2}
     - {fileID: 2800000, guid: 870006c3db9219d4ba3eccf5b8cb27d6, type: 3}
     _Values: 3747349392e7e039d560b56ad771ce09bc4dd9cfd2784d7d01f10724d422b51cf891644e19e2462b0a42fa34e3355228f9a2efef06ec8b4206486d5e1f439b4e54668db9f2800f27f952396f81e666346121e288ed5bdd1b1ea6546150a54b4d22b776b53cf4e57892c8f6b3b21cc01f1fc702019eed9e06778e28672a8f88619e864dca6fb1f86dc49609db9bd59739988bbd775db5510f567d2bcb1d4ca3225157142bcef6af2f4090c2f71c3c945ef8efffb64c00be17cbc28b0d7ad2af103a2b2df3eac3085ddc8d37ccf359f319e8cdc20c4c596e51162cf69182bca912c02dceb79678b634e7a292d9378b0b24495a0ab86a43a36c6580f6e94666201fe3248c2028abb0607d090d1113b8765dc9e4b8d84d0e5703d13b1d176ea07a4cc3b2bc5c172c4d61aaa9347451b5801d09ab4ed4e007920d7c8ff164c9c7ce24713fb09e04e6ba6368a87d08bc33ab7a43c4f13dae59944520afd8a71db12a1ddb10031104e119119a4ec3767b643548e4772004d6917517ab6bbeb3be62811ad39a2dab30997562abe0a35f961dca7b1bde736a2dd00c499aec669922655238cca8a2e0378a184bfe41a60a12ea7f72a14398e0ee17ec038ee3104433db3f4573946c118416bc6f3ad7979089e9a47b95270720338db64abb9f52547ad4172682ec977d7d6ded4800081ac6af7d8c77878bd85ae360781bde21cd236910ea0ef0be0f9d5126fd26c640dfc45883063d12dbcceffbbd421e9b4c60a45f3521100ed74a9272d6365278016c5d7e4b3c61d8f4c9bb2326f553022d389d86a1856fe1312dd032664f16efe19902d65f6319783e3495939a123432616eba6167342a840383b2e294d13f43dfa904c0f82a5eca1f26476df0dc451ff90293d509785517c386d9e316fb0bf08c268dbbe80a3a370f84808d7c9774dfc9d1db9764144d58fe1a847f04424c241b38fa17690107fbc2351b72061d6d5cfbb9ace7d6a27478d934bdcd86ba32cc38a4a9b4928b48cbd8dfd42ff8db511f521f854211cc4d873c8c0f61412a7508024e396274b81178fe883f4a895b7f021c24e059c08b21fc0dde87fa831975ad69cc2daaa1ef6d0b31fd40990b970220f2ef819af43137738fca90adc0f304
+--- !u!114 &6478417027896398531
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 292919761558913591}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 053e19a36db38234fa729dec0618282f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  patrolTime: 5
+  aggroRange: 5
+  waypoints: []
+  currentlyMeleeing: 0
 --- !u!1 &292919761558913601
 GameObject:
   m_ObjectHideFlags: 0
