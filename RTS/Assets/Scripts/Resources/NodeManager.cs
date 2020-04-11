@@ -32,10 +32,6 @@ public class NodeManager : MonoBehaviour
     void Update()
     {
         var numberOfColliders = collidedObjects.Count;
-        if(numberOfColliders > 0)
-        {
-
-        }
         if (availableResource <= 0)
         {
             // Need to add isGathering = false

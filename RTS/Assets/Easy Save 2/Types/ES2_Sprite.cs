@@ -1,1 +1,0 @@
-/* Included for backwards compatibility. ES2_Sprite is compiled with the DLL from 2.67 onwards */

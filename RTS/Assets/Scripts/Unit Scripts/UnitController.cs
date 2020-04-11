@@ -349,7 +349,7 @@ public class UnitController : MonoBehaviour
             }   
             yield return new WaitForSeconds(attackSpeed);
         }
-                currentlyMeleeing = false;
+        currentlyMeleeing = false;
 
     }
 }

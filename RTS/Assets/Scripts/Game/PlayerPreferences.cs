@@ -22,7 +22,6 @@ public class PlayerPreferences : MonoBehaviour
         PlayerPrefs.SetFloat("volume", volume);
         PlayerPrefs.SetString("username", userName);
         PlayerPrefs.Save();
-        Debug.Log("Preferences saved!");
     }
 
     public void LoadPlayerPreferences()
@@ -32,7 +31,6 @@ public class PlayerPreferences : MonoBehaviour
             volume = PlayerPrefs.GetFloat("volume");
             volumeSlider.value = PlayerPrefs.GetFloat("volume");
             userName = PlayerPrefs.GetString("username");
-            Debug.Log("Preferences loaded!");
         }
         else
         {
@@ -46,6 +44,5 @@ public class PlayerPreferences : MonoBehaviour
         volume = 100.0f;
         volumeSlider.value = 100.0f;
         userName = "traveller";
-        Debug.Log("Preferences reset");
     }
 }

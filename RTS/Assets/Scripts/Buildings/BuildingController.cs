@@ -6,11 +6,8 @@ public class BuildingController : MonoBehaviour
 {
     // Unit variables
     public string unitType;
-
     public string unitRank;
-
     public string unitName;
-
     public int unitKills;
 
     public string weapon;
@@ -44,7 +41,6 @@ public class BuildingController : MonoBehaviour
     private MeshRenderer[] meshes;
     public string buildingID;
 
-    // Start is called before the first frame update
     void Start()
     {
         if(buildingID == null || buildingID == "") {
@@ -52,7 +48,6 @@ public class BuildingController : MonoBehaviour
         }
     }
 
-    // Update is called once per frame
     void Update()
     {
         location = gameObject.transform.position;
