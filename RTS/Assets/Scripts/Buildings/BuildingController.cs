@@ -23,6 +23,9 @@ public class BuildingController : MonoBehaviour
     public Sprite icon;
     public GameObject foundation;
 
+    // Unit List
+    public UnitList UnitList;
+
     // Placeable bool
     public bool inCollider = false;
     public bool placeable = true;
@@ -41,8 +44,14 @@ public class BuildingController : MonoBehaviour
     private MeshRenderer[] meshes;
     public string buildingID;
 
+    void Awake()
+    {
+        UnitList = GameObject.Find("Game").GetComponent<UnitList>();
+    }
+
     void Start()
     {
+        UnitList.friendlyBuildings.Add(gameObject);
         if(buildingID == null || buildingID == "") {
             buildingID = System.Guid.NewGuid().ToString();
         }

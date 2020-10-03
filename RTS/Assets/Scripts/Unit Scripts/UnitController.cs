@@ -45,6 +45,9 @@ public class UnitController : MonoBehaviour
     private GameObject currentTarget; 
     private float enemyHealth;
 
+    // Unit List
+    public UnitList UnitList;
+
     // Projectiles
     private GameObject arrowPrefab;
     private GameObject fireballPrefab;
@@ -82,15 +85,25 @@ public class UnitController : MonoBehaviour
     public int heldResource;
     public bool currentlyMeleeing;
     public bool isDead;
+    public bool justKilled;
     public Sprite unitIcon;
     private bool armourUpgrade;
 
     public string unitID;
+
+    void Awake() {
+        justKilled = true;
+        UnitList = GameObject.Find("Game").GetComponent<UnitList>();
+        InvokeRepeating("Tick", 0, 1.0f);
+    }
+
+
     // Start is called before the first frame update
     void Start()
     {
         player = GameObject.FindGameObjectWithTag("Player");
         team = GameObject.Find("Faction");
+
         UI = player.GetComponent<UIController>();
         RM = team.GetComponent<ResourceManager>();
         RC = team.GetComponent<ResearchController>();
@@ -112,31 +125,44 @@ public class UnitController : MonoBehaviour
         if(unitID == null || unitID == "") {
             unitID = System.Guid.NewGuid().ToString();
         }
+
+        if(UnitSelection.owner == UnitSelection.team) {
+            UnitList.friendlyUnits.Add(gameObject);
+        } else {
+            UnitList.enemyUnits.Add(gameObject);
+        }
     }
 
-    private void Awake()
-    {
-        InvokeRepeating("Tick", 0, 1.0f);
-    }
     // Update is called once per frame
     void Update()
     {
         if(health <= 0) { 
-            health = 0;
-            gameObject.GetComponent<NavMeshAgent>().enabled = false;
-            if(unitType == "Worker" || unitType == "Footman" || unitType == "Swordsman" || unitType == "Archer" || unitType == "Wizard" ||  unitType == "Outrider" || unitType == "Knight" || unitType == "Bandit Swordsman"  || unitType == "Bandit Footman" || unitType == "Skeleton" || unitType == "Necromancer")  { 
-                anim.SetInteger("condition", 10);
-                isDead = true;
-                UnitSelection.isBuilding = false;
-                UnitSelection.isGathering = false;
-                UnitSelection.isFollowing = false;
-                UnitSelection.isAttacking = false;
-                UnitSelection.isMeleeing = false;
-                if(gameObject.GetComponent<NPCController>()) {
-                    gameObject.GetComponent<NPCController>().currentlyMeleeing = false;
+            if(justKilled) {
+                health = 0;
+                gameObject.GetComponent<NavMeshAgent>().enabled = false;
+                if(unitType == "Worker" || unitType == "Footman" || unitType == "Swordsman" || unitType == "Archer" || unitType == "Wizard" ||  unitType == "Outrider" || unitType == "Knight" || unitType == "Bandit Swordsman"  || unitType == "Bandit Footman" || unitType == "Skeleton" || unitType == "Necromancer")  { 
+                    anim.SetInteger("condition", 10);
+                    isDead = true;
+                    UnitSelection.isBuilding = false;
+                    UnitSelection.isGathering = false;
+                    UnitSelection.isFollowing = false;
+                    UnitSelection.isAttacking = false;
+                    UnitSelection.isMeleeing = false;
+                    if(gameObject.GetComponent<NPCController>()) {
+                        gameObject.GetComponent<NPCController>().currentlyMeleeing = false;
+                    }
                 }
+                RM.housing -= 1.0f;
+                
+                if(UnitSelection.owner == UnitSelection.team) {
+                    UnitList.friendlyUnits.Remove(gameObject);
+                    UnitList.friendlyDead.Add(gameObject);
+                } else {
+                    UnitList.enemyUnits.Remove(gameObject);
+                    UnitList.enemyDead.Add(gameObject);
+                }
+                justKilled = false;
             }
-            RM.housing -= 1.0f;
         } else if (health > 0) {
             if(unitType == "Worker" || unitType == "Footman" || unitType == "Swordsman" || unitType == "Archer" || unitType == "Wizard" ||  unitType == "Outrider" || unitType == "Knight" || unitType == "Bandit Swordsman"  || unitType == "Bandit Footman" || unitType == "Skeleton" || unitType == "Necromancer")  { 
                 anim.SetInteger("condition", 0);
