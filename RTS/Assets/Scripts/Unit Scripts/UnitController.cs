@@ -201,22 +201,24 @@ public class UnitController : MonoBehaviour
                 enemyUnits = GameObject.FindGameObjectsWithTag("Enemy Unit");
                 currentTarget = GetClosestEnemy(enemyUnits);
                 if(currentTarget && !currentTarget.GetComponent<UnitController>().isDead) {
-                    float dist = Vector3.Distance(agent.transform.position, currentTarget.transform.position);
-                    if(dist <= aggroRange && dist <= attackRange) {
-                        UnitSelection.isMeleeing = true;
-                        UnitSelection.isFollowing = false;
-                        agent.destination = agent.transform.position;
-                        agent.transform.LookAt(currentTarget.transform.position);
-                        if(!currentlyMeleeing) {
-                            StartCoroutine(Attack(currentTarget, agent.transform.rotation));
+                    if(agent) {
+                        float dist = Vector3.Distance(agent.transform.position, currentTarget.transform.position);
+                        if(dist <= aggroRange && dist <= attackRange) {
+                            UnitSelection.isMeleeing = true;
+                            UnitSelection.isFollowing = false;
+                            agent.destination = agent.transform.position;
+                            agent.transform.LookAt(currentTarget.transform.position);
+                            if(!currentlyMeleeing) {
+                                StartCoroutine(Attack(currentTarget, agent.transform.rotation));
+                            }
+                        } else if (dist <= aggroRange && dist > attackRange) {
+                            UnitSelection.isMeleeing = false;
+                            UnitSelection.isFollowing = true;
+                            agent.destination = currentTarget.transform.position;
+                        } else {
+                            UnitSelection.isMeleeing = false;
+                            UnitSelection.isFollowing = false;
                         }
-                    } else if (dist <= aggroRange && dist > attackRange) {
-                        UnitSelection.isMeleeing = false;
-                        UnitSelection.isFollowing = true;
-                        agent.destination = currentTarget.transform.position;
-                    } else {
-                        UnitSelection.isMeleeing = false;
-                        UnitSelection.isFollowing = false;
                     }
                 }
             } 

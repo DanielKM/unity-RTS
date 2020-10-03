@@ -48,6 +48,9 @@ public class UnitButtonController : MonoBehaviour
     Color color;
     private Vector3 currentLocation;
 
+    // Dead pile
+    public List<GameObject> dead = new List<GameObject>();
+
     // Start is called before the first frame update
     void Start()
     {
@@ -136,45 +139,10 @@ public class UnitButtonController : MonoBehaviour
     void ClearDead() {
         InputManager IM = player.GetComponent<InputManager>();
         selectedGOs = IM.selectedObjects;
-        GameObject[] allEnemies = GameObject.FindGameObjectsWithTag("Enemy Unit");
-        List<GameObject> dead = new List<GameObject>();
- 
-        int deadCount = 0;
-        foreach(GameObject enemy in allEnemies) {
-            if(enemy.GetComponent<UnitController>().isDead) {
-                dead.Add(enemy);
-                deadCount += 1;
-            }
-        }
-
         foreach(GameObject go in selectedGOs) {
-            NavMeshAgent agent = go.GetComponent<NavMeshAgent>();
-            go.GetComponent<UnitSelection>().targetNode = GetClosestBody(dead);
-            if(go.GetComponent<UnitSelection>().targetNode) {
-                agent.destination = go.GetComponent<UnitSelection>().targetNode.transform.position;
-            }
+            StartCoroutine(ClearingDead(go));
         }
     }
-
-    public GameObject GetClosestBody(List<GameObject> dead)
-    {
-        GameObject closestBody = null;
-        float closestBodyDistance = Mathf.Infinity;
-        Vector3 bodyPosition = transform.position;
-
-        foreach(GameObject targetBody in dead)
-        {
-            Vector3 direction = targetBody.transform.position - bodyPosition;
-            float dropDistance = direction.sqrMagnitude;
-            if(dropDistance < closestBodyDistance)
-            {
-                closestBodyDistance = dropDistance;
-                closestBody = targetBody;
-            }
-        }
-        return closestBody;
-    }
-
 
     void BuildHouse()
     {
@@ -657,5 +625,58 @@ public class UnitButtonController : MonoBehaviour
         yield return new WaitForSeconds(3);
         //my code here after 3 seconds
         PlayBuildingSound();
+    }
+
+    public IEnumerator ClearingDead(GameObject go) 
+    {        
+        GameObject[] allEnemies = GameObject.FindGameObjectsWithTag("Enemy Unit");
+        GameObject[] allFriendlies = GameObject.FindGameObjectsWithTag("Selectable");
+ 
+        int deadCount = 0;
+        foreach(GameObject enemy in allEnemies) {
+            if(enemy.GetComponent<UnitController>().isDead) {
+                dead.Add(enemy);
+                deadCount += 1;
+            }
+        }
+        foreach(GameObject friend in allFriendlies) {
+            if(friend.GetComponent<UnitController>()) {
+                if(friend.GetComponent<UnitController>().isDead) {
+                    dead.Add(friend);
+                    deadCount += 1;
+                }
+            }
+        }
+
+        if(go.GetComponent<UnitController>().unitType == "Worker") {
+            go.GetComponent<WorkerController>().clearingDead = true;
+            NavMeshAgent agent = go.GetComponent<NavMeshAgent>();
+            go.GetComponent<UnitSelection>().targetNode = GetClosestBody(dead, go);
+            if(go.GetComponent<UnitSelection>().targetNode) {
+                agent.destination = go.GetComponent<UnitSelection>().targetNode.transform.position;
+                yield return new WaitForSeconds(0.5f);
+            }
+        }
+    }
+    
+    public GameObject GetClosestBody(List<GameObject> dead, GameObject clearer)
+    {
+        GameObject closestBody = null;
+        float closestBodyDistance = Mathf.Infinity;
+        Vector3 bodyPosition = clearer.transform.position;
+
+        foreach(GameObject targetBody in dead)
+        {
+            if(targetBody && targetBody.activeSelf) {
+                Vector3 direction = targetBody.transform.position - bodyPosition;
+                float dropDistance = direction.sqrMagnitude;
+                if(dropDistance < closestBodyDistance)
+                {
+                    closestBodyDistance = dropDistance;
+                    closestBody = targetBody;
+                }
+            }
+        }
+        return closestBody;
     }
 }

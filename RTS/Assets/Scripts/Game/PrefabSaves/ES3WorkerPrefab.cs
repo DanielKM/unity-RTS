@@ -593,7 +593,6 @@ public class ES3WorkerPrefab : MonoBehaviour
             go.GetComponent<UnitSelection>().owner = SavedOwner[id];
 
             int waypointLength = SavedWaypointSize[id];
-            Debug.Log(waypointLength);
             Transform[] loadedTransforms = new Transform[waypointLength];
            for(int i = 0; i<waypointLength; i++) {
                 go.GetComponent<NPCController>().waypoints[i] = SavedWaypoints[id + i];

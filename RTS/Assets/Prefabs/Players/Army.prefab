@@ -75,9 +75,10 @@ Camera:
   m_ClearFlags: 1
   m_BackGroundColor: {r: 0.19215687, g: 0.3019608, b: 0.4745098, a: 0}
   m_projectionMatrixMode: 1
+  m_GateFitMode: 2
+  m_FOVAxisMode: 0
   m_SensorSize: {x: 36, y: 24}
   m_LensShift: {x: 0, y: 0}
-  m_GateFitMode: 2
   m_FocalLength: 50
   m_NormalizedViewPortRect:
     serializedVersion: 2
@@ -164,6 +165,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0f9313fd1ff589d4c9c1a71cab43a2e1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  visibleRenderers: []
   xMin: -200
   xMax: 200
   yMin: 5
@@ -207,11 +209,13 @@ MonoBehaviour:
   clickableLayer:
     serializedVersion: 2
     m_Bits: 1024
-  pointer: {fileID: 2800000, guid: a0620340a5e7c6a4e9495140a3e7ec63, type: 3}
-  target: {fileID: 2800000, guid: c8cc70f1cc1017045b54aee58a711af8, type: 3}
-  doorway: {fileID: 2800000, guid: c21cc0a3bd09a8d41bef2787ea7fa284, type: 3}
-  combat: {fileID: 2800000, guid: c527aacb1e33c3943b77694f59d12c9d, type: 3}
-  sword: {fileID: 2800000, guid: c527aacb1e33c3943b77694f59d12c9d, type: 3}
+  mask: 0
+  pointer: {fileID: 2800000, guid: 177762995a760ef4d804ada2f9e9df20, type: 3}
+  finger: {fileID: 2800000, guid: cdcd6b57e61da154f85e8fd52fcc93dd, type: 3}
+  move: {fileID: 2800000, guid: 5fc06166d96984a4ba911e47b0824198, type: 3}
+  doorway: {fileID: 2800000, guid: e0b717dd0c7191c4f8505a73721d58f7, type: 3}
+  sword: {fileID: 2800000, guid: 00765d883e3f93949bcc8afa667742a1, type: 3}
+  mine: {fileID: 2800000, guid: e1cefe370531ef54c87bd05f6c908c46, type: 3}
   cursorHit: {fileID: 0}
   OnClickEnvironment:
     m_PersistentCalls:
@@ -232,6 +236,16 @@ MonoBehaviour:
         m_CallState: 2
   isUnit: 0
   selectedObjects: []
+  controlGroup1: []
+  controlGroup2: []
+  controlGroup3: []
+  controlGroup4: []
+  controlGroup5: []
+  controlGroup6: []
+  controlGroup7: []
+  controlGroup8: []
+  controlGroup9: []
+  controlGroup0: []
   selectedInfo: {fileID: 0}
   selectedObj: {fileID: 0}
 --- !u!114 &595890288067306292
@@ -262,6 +276,7 @@ MonoBehaviour:
   advancedBuildings: {fileID: 0}
   basicBack: {fileID: 0}
   advancedBack: {fileID: 0}
+  clearDead: {fileID: 0}
   playerAudio: {fileID: 595890288742844648}
   constructingBuilding: {fileID: 8300000, guid: 9b5f90fda9e2648cfb0c641ed933ce78,
     type: 3}
@@ -277,9 +292,12 @@ MonoBehaviour:
   lumberMill: {fileID: 70138970605207024, guid: 441dad21bcea610479803a4d5f435645,
     type: 3}
   stables: {fileID: 4593375991603204861, guid: ae3b7ee99c7e81b49b9652fa1d374d99, type: 3}
+  selectedGOs: []
+  mask: 0
   currentPlaceableObject: {fileID: 0}
   placing: {fileID: 2100000, guid: b80600cf60ea5f447ae5cc8acb8697cd, type: 2}
   childColors: []
+  dead: []
 --- !u!114 &595890288067306293
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -298,10 +316,14 @@ MonoBehaviour:
   barracksButtonOne: {fileID: 0}
   barracksButtonTwo: {fileID: 0}
   barracksButtonFour: {fileID: 0}
+  barracksButtonNine: {fileID: 0}
+  barracksButtonTen: {fileID: 0}
   playerAudio: {fileID: 595890288742844648}
   trainVillagerAudio: {fileID: 8300000, guid: 9b5f90fda9e2648cfb0c641ed933ce78, type: 3}
   trainFootmanAudio: {fileID: 8300000, guid: 9b5f90fda9e2648cfb0c641ed933ce78, type: 3}
   trainSwordsmanAudio: {fileID: 8300000, guid: 9b5f90fda9e2648cfb0c641ed933ce78, type: 3}
+  trainOutriderAudio: {fileID: 0}
+  trainKnightAudio: {fileID: 0}
   trainArcherAudio: {fileID: 0}
   villager: {fileID: 3389560421852583913, guid: b53a6d07210063e4cbb21c14f1e3863d,
     type: 3}
@@ -315,6 +337,8 @@ MonoBehaviour:
     type: 3}
   villagerPrefab: {fileID: 3389560421852583913, guid: b53a6d07210063e4cbb21c14f1e3863d,
     type: 3}
+  outriderPrefab: {fileID: 0}
+  knightPrefab: {fileID: 0}
   archerPrefab: {fileID: 1971897941503588938, guid: f33325accbafcc34a93926457ef55ae8,
     type: 3}
 --- !u!54 &595890288067306294
@@ -347,6 +371,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   player: {fileID: 0}
   team: {fileID: 0}
+  saveMenu: {fileID: 0}
+  loadMenu: {fileID: 0}
   GameMenuPanel: {fileID: 0}
   panelOpen: 0
   UnitPanel: {fileID: 0}
@@ -439,9 +465,10 @@ Camera:
   m_ClearFlags: 1
   m_BackGroundColor: {r: 0.19215687, g: 0.3019608, b: 0.4745098, a: 0}
   m_projectionMatrixMode: 1
+  m_GateFitMode: 2
+  m_FOVAxisMode: 0
   m_SensorSize: {x: 36, y: 24}
   m_LensShift: {x: 0, y: 0}
-  m_GateFitMode: 2
   m_FocalLength: 50
   m_NormalizedViewPortRect:
     serializedVersion: 2

@@ -110,6 +110,8 @@ public class BuildingButtonController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        Scene currentScene = SceneManager.GetActiveScene();
+        if(currentScene.name != "Main Menu") {
             if(RM.lumberYardCount > 0) {
                 barracksButtonFour.interactable = true;
             } else {
@@ -130,8 +132,7 @@ public class BuildingButtonController : MonoBehaviour
             } else {
                 barracksButtonTen.interactable = false;
             }
-
-
+        }
     }
 
     void HireVillager()

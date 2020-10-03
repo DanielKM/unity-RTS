@@ -5,10 +5,13 @@ using UnityEngine.UI;
 
 public class WorkerController : MonoBehaviour
 {
+    public bool clearingDead;
+    UnitButtonController UBC;
+
     // Start is called before the first frame update
     void Start()
     {
-        
+        UBC = GameObject.Find("Player").GetComponent<UnitButtonController>();
     }
 
     // Update is called once per frame
@@ -17,9 +20,9 @@ public class WorkerController : MonoBehaviour
         
     }
 
-    void OnCollisionEnter(Collision other)
+    void OnCollisionStay(Collision other)
     {
-        if (other.gameObject.tag == "Enemy Unit" && other.gameObject.GetComponent<UnitController>().isDead && gameObject.GetComponent<UnitSelection>().targetNode == other.gameObject)
+        if (other.gameObject.tag == "Selectable" || other.gameObject.tag == "Enemy Unit" && other.gameObject.GetComponent<UnitController>().isDead && gameObject.GetComponent<UnitSelection>().targetNode == other.gameObject && clearingDead)
         {
             StartCoroutine(ClearDead(other.gameObject));
         }
@@ -28,7 +31,12 @@ public class WorkerController : MonoBehaviour
     IEnumerator ClearDead(GameObject other)
     {
         yield return new WaitForSeconds(3);
-        Destroy(other);
+        if(other.activeSelf) {
+            UBC.dead.Remove(other);
+            other.SetActive(false);
+            StartCoroutine(UBC.ClearingDead(gameObject)); 
+        }
+        // StartCoroutine(UBC.ClearingDead(gameObject)); 
         //my code here after 3 seconds
     }
 }

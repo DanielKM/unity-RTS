@@ -6,11 +6,18 @@ Necromancer ability
 - burn clothes, fake death
 
 Kasser
+Valgard
 Kasir
 iskar
+Rannic
 Akaros
 Acheris
+Rannak
 Lycaron
+Askar
+Rokis
+
+Lost hero - commendation
 
 clearing debris
 fog of war grey - not translucent
@@ -344,6 +351,9 @@ Units:
 -corpseman
 -corps
 -cur
+
+-ARAGOSA
+Taragosa
 -marine
 -guard
 -recruit

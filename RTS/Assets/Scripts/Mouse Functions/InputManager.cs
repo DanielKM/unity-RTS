@@ -9,6 +9,10 @@ using UnityEngine.SceneManagement;
 
 public class InputManager : MonoBehaviour
 {
+    
+     public List<Renderer> visibleRenderers = new List<Renderer>();
+     //Looking for visible objects for double click
+
     private GameObject player;
     private GameObject team;
 
@@ -105,10 +109,13 @@ public class InputManager : MonoBehaviour
     public int mask;
 
     public Texture2D pointer;
-    public Texture2D target;
+    public Texture2D finger;
+    public Texture2D move;
+
     public Texture2D doorway;
-    public Texture2D combat;
     public Texture2D sword;
+    public Texture2D mine;
+    
     public GameObject cursorHit;
     private GameObject currentCursorHit;
 
@@ -125,6 +132,18 @@ public class InputManager : MonoBehaviour
     // All units which are selected
     public List<GameObject> selectedObjects;
 
+    // Control groups
+    public List<GameObject> controlGroup1;
+    public List<GameObject> controlGroup2;
+    public List<GameObject> controlGroup3;
+    public List<GameObject> controlGroup4;
+    public List<GameObject> controlGroup5;
+    public List<GameObject> controlGroup6;
+    public List<GameObject> controlGroup7;
+    public List<GameObject> controlGroup8;
+    public List<GameObject> controlGroup9;
+    public List<GameObject> controlGroup0;
+
     // All units in the game that are selectable
     private GameObject[] units;
 
@@ -133,6 +152,10 @@ public class InputManager : MonoBehaviour
     private float unitPosX;
     private float unitPosY;
     private float unitPosZ;
+
+    // Last Click Time
+    private float lastclickTime;
+    private const float DOUBLE_CLICK_TIME = .2f;
 
     // Grab the main camera
     Camera cam;
@@ -158,6 +181,7 @@ public class InputManager : MonoBehaviour
     void Start()
     {
         Scene currentScene = SceneManager.GetActiveScene();
+        SelectCursor();
         if(currentScene.name != "Main Menu") {
             mask =~ LayerMask.GetMask("FogOfWar");
             team = GameObject.Find("Faction");
@@ -188,11 +212,56 @@ public class InputManager : MonoBehaviour
     void Update()
     {
         Scene currentScene = SceneManager.GetActiveScene();
+        SelectCursor();
         if(currentScene.name != "Main Menu") {
-            SelectCursor();
             MoveCamera();
             //RotateCamera();
             Multiselect();
+
+            if(Input.GetKey(KeyCode.LeftControl) || Input.GetKey(KeyCode.RightControl)) {
+                if(Input.GetKeyDown(KeyCode.Alpha1)) {
+                    SaveControlGroup(1);
+                } else if(Input.GetKeyDown(KeyCode.Alpha2)) {
+                    SaveControlGroup(2);
+                } else if(Input.GetKeyDown(KeyCode.Alpha3)) {
+                    SaveControlGroup(3);
+                } else if(Input.GetKeyDown(KeyCode.Alpha4)) {
+                    SaveControlGroup(4);
+                } else if(Input.GetKeyDown(KeyCode.Alpha5)) {
+                    SaveControlGroup(5);
+                } else if(Input.GetKeyDown(KeyCode.Alpha6)) {
+                    SaveControlGroup(6);
+                } else if(Input.GetKeyDown(KeyCode.Alpha7)) {
+                    SaveControlGroup(7);
+                } else if(Input.GetKeyDown(KeyCode.Alpha8)) {
+                    SaveControlGroup(8);
+                } else if(Input.GetKeyDown(KeyCode.Alpha9)) {
+                    SaveControlGroup(9);
+                }
+            } else {
+                if(Input.GetKeyDown(KeyCode.Alpha1) ) {
+                    LoadControlGroup(1);
+                } else if (Input.GetKeyDown(KeyCode.Alpha2)) {
+                    LoadControlGroup(2);
+                } else if (Input.GetKeyDown(KeyCode.Alpha3)) {
+                    LoadControlGroup(3);
+                } else if (Input.GetKeyDown(KeyCode.Alpha4)) {
+                    LoadControlGroup(4);
+                } else if (Input.GetKeyDown(KeyCode.Alpha5)) {
+                    LoadControlGroup(5);
+                } else if (Input.GetKeyDown(KeyCode.Alpha6)) {
+                    LoadControlGroup(6);
+                } else if (Input.GetKeyDown(KeyCode.Alpha7)) {
+                    LoadControlGroup(7);
+                } else if (Input.GetKeyDown(KeyCode.Alpha8)) {
+                    LoadControlGroup(8);
+                } else if (Input.GetKeyDown(KeyCode.Alpha9)) {
+                    LoadControlGroup(9);
+                } else if (Input.GetKeyDown(KeyCode.Alpha0)) {
+                    LoadControlGroup(0);
+                }
+            }
+            
 
             if (Input.GetKeyDown(KeyCode.Space))
             {
@@ -208,7 +277,19 @@ public class InputManager : MonoBehaviour
                     {
                         if (hit1.transform.tag == "Enemy Unit" || hit1.transform.tag == "Selectable" || hit1.transform.tag == "Player 1" ||  hit1.transform.tag == "Foundation" || hit1.transform.tag == "Ground" || hit1.transform.tag == "Yard" || hit1.transform.tag == "Barracks" || hit1.transform.tag == "House" || hit1.transform.tag == "Resource" || hit1.transform.tag == "Fort" || hit1.transform.tag == "Blacksmith" || hit1.transform.tag == "Stables")
                         {
-                            LeftClick();
+                            float timeSinceLastClick = Time.time - lastclickTime;
+                            
+                            string clickType = "single";
+                            if(timeSinceLastClick <= DOUBLE_CLICK_TIME) {
+                                clickType = "double";
+                                LeftClick(clickType);
+                                // Double click!
+                            } else {
+                                clickType = "single";
+                                LeftClick(clickType);
+                                // Single click!
+                            }
+                            lastclickTime = Time.time;
                         }
                     }
                 }
@@ -346,15 +427,19 @@ public class InputManager : MonoBehaviour
             }
             else if (hit.collider.tag == "Enemy Unit")
             {
-                Cursor.SetCursor(combat, new Vector2(0, 0), CursorMode.Auto);
+                Cursor.SetCursor(sword, new Vector2(0, 0), CursorMode.Auto);
             }
             else if (hit.collider.tag == "Ground")
             {
-                Cursor.SetCursor(combat, new Vector2(0, 0), CursorMode.Auto);
-            }
-            else if (hit.collider.tag == "Selectable" || hit.collider.gameObject.layer == 11 || hit.collider.gameObject.layer == 12  || hit.collider.tag == "Player 1")
-            {
                 Cursor.SetCursor(pointer, new Vector2(0, 0), CursorMode.Auto);
+            }
+            else if (hit.collider.tag == "Resource" || hit.collider.tag == "Foundation")
+            {
+                Cursor.SetCursor(mine, new Vector2(0, 0), CursorMode.Auto);
+            }
+            else if (hit.collider.tag == "Selectable" || hit.collider.gameObject.layer == 11 || hit.collider.tag == "Player 1")
+            {
+                Cursor.SetCursor(finger, new Vector2(0, 0), CursorMode.Auto);
             }
             else
             {
@@ -425,40 +510,8 @@ public class InputManager : MonoBehaviour
 
                     // Adds all units in UnitSelection box to selected
                     if (selectRect.Contains(screenPos, true))
-                    {
-                        selectedInfo = units[i].GetComponent<UnitSelection>();
-                        unitScript = units[i].GetComponent<UnitController>();
-
-                        if(!unitScript.isDead) {
-                            if(!selectedObjects.Contains(units[i])) {
-                                selectedObjects.Add(units[i]);
-                            }
-                            selectedInfo.selected = true;
-                            selectedInfo.transform.GetChild(2).gameObject.GetComponent<Projector>().material.SetColor("_Color", Color.green);
-                            selectedInfo.transform.GetChild(2).gameObject.SetActive(true);
-
-                            playerAudio.clip = unitAudioClip;
-                            if(unitScript.unitType == "Worker") {
-                                UI.WorkerSelect();
-                            } else if (unitScript.unitType == "Swordsman") {
-                                UI.SwordsmanSelect();
-                            } else if (unitScript.unitType == "Footman") {
-                                UI.FootmanSelect();
-                            } else if (unitScript.unitType == "Archer") {
-                                UI.ArcherSelect();
-                            } else if (unitScript.unitType == "Outrider") {
-                                UI.OutriderSelect();
-                            } else if (unitScript.unitType == "Knight") {
-                                UI.KnightSelect();
-                            } else if (unitScript.unitType == "Wizard") {
-                                UI.WizardSelect();
-                            }
-                            inUnitSelectionBox = true;
-                        } else {
-                            if(selectedObjects.Contains(units[i])) {
-                                selectedObjects.Remove(units[i]);
-                            }
-                        }
+                    {   
+                        SelectMultipleUnits (units[i]);
                     } else {
                         if(selectedObjects.Contains(units[i])) {
                             selectedObjects.Remove(units[i]);
@@ -479,6 +532,42 @@ public class InputManager : MonoBehaviour
         }
     }
       
+    void SelectMultipleUnits (GameObject unit) {
+        selectedInfo = unit.GetComponent<UnitSelection>();
+        unitScript = unit.GetComponent<UnitController>();
+
+        if(!unitScript.isDead) {
+            if(!selectedObjects.Contains(unit)) {
+                selectedObjects.Add(unit);
+            }
+            selectedInfo.selected = true;
+            selectedInfo.transform.GetChild(2).gameObject.GetComponent<Projector>().material.SetColor("_Color", Color.green);
+            selectedInfo.transform.GetChild(2).gameObject.SetActive(true);
+
+            playerAudio.clip = unitAudioClip;
+            if(unitScript.unitType == "Worker") {
+                UI.WorkerSelect();
+            } else if (unitScript.unitType == "Swordsman") {
+                UI.SwordsmanSelect();
+            } else if (unitScript.unitType == "Footman") {
+                UI.FootmanSelect();
+            } else if (unitScript.unitType == "Archer") {
+                UI.ArcherSelect();
+            } else if (unitScript.unitType == "Outrider") {
+                UI.OutriderSelect();
+            } else if (unitScript.unitType == "Knight") {
+                UI.KnightSelect();
+            } else if (unitScript.unitType == "Wizard") {
+                UI.WizardSelect();
+            }
+            inUnitSelectionBox = true;
+        } else {
+            if(selectedObjects.Contains(unit)) {
+                selectedObjects.Remove(unit);
+            }
+        }
+    }
+
     public void UpdateUnitPanel()
     { 
         if (RC.artisanArmourSmithing) {
@@ -596,7 +685,7 @@ public class InputManager : MonoBehaviour
         }
     }
 
-    public void LeftClick()
+    public void LeftClick(string clickType)
     {
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
         RaycastHit hit;
@@ -622,87 +711,111 @@ public class InputManager : MonoBehaviour
             }
             else if (hit.collider.tag == "Selectable")
             {
-                
-                DeselectUnits();
-                selectedObj = hit.collider.gameObject;
-                if(!selectedObjects.Contains(selectedObj)) {
-                    selectedObjects.Add(selectedObj);
-                } else {
-                    selectedObjects.Remove(selectedObj);
-                }
-
-                selectedObj.transform.GetChild(2).gameObject.GetComponent<Projector>().material.SetColor("_Color", Color.green);
-                selectedInfo = selectedObj.GetComponent<UnitSelection>();
-                unitScript = selectedObj.GetComponent<UnitController>();
-
-                if (selectedInfo.selected == true)
-                {
-                    DeselectUnits();
-                }
-                else if (Input.GetKey(KeyCode.LeftShift))
-                {
-                    if(!unitScript.isDead) {
-                        selectedInfo.selected = true;
-
-                        // UnitSelection indicators
-                        selectedObj.transform.GetChild(2).gameObject.SetActive(true);
-                        playerAudio.clip = unitAudioClip;
-                        playerAudio.Play();
-                        if(!unitScript.isDead) {
-                            isSelected = true;
-                        }
-
-                        if(unitScript.unitType == "Worker") {
-                            UI.WorkerSelect();
-                        } else if (unitScript.unitType == "Swordsman") {
-                            UI.SwordsmanSelect();
-                        } else if (unitScript.unitType == "Footman") {
-                            UI.FootmanSelect();
-                        } else if (unitScript.unitType == "Archer") {
-                            UI.ArcherSelect();
-                        } else if (unitScript.unitType == "Outrider") {
-                            UI.OutriderSelect();
-                        } else if (unitScript.unitType == "Knight") {
-                            UI.KnightSelect();
-                        } else if (unitScript.unitType == "Wizard") {
-                            UI.WizardSelect();
+                if(clickType == "double") {
+                    Renderer[] sceneRenderers = FindObjectsOfType<Renderer>();
+                    visibleRenderers.Clear();
+                    for(int i = 0; i < sceneRenderers.Length; i++) {
+                        if(IsVisible(sceneRenderers[i])) {
+                            if (sceneRenderers[i].transform.parent) {
+                                if (sceneRenderers[i].transform.parent.gameObject) {
+                                    if(sceneRenderers[i].transform.parent.gameObject.GetComponent<UnitController>()) {
+                                        if(sceneRenderers[i].transform.parent.gameObject.GetComponent<UnitController>().unitType == hit.collider.gameObject.GetComponent<UnitController>().unitType) {
+                                            visibleRenderers.Add(sceneRenderers[i]);
+                                        }
+                                    }
+                                }
+                            }
                         }
                     }
-                }
-                else
-                {
-                    if(!unitScript.isDead) {
-                        GameObject[] selectedIndicators = GameObject.FindGameObjectsWithTag("SelectedIndicator");
-                        for (int j = 0; j < selectedIndicators.Length; j++)
-                        {
-                            selectedIndicators[j].transform.gameObject.SetActive(false);
-                            selectedIndicators[j].transform.parent.GetComponent<UnitSelection>().selected = false;
+                    foreach( Renderer renderer in visibleRenderers) {
+                        GameObject doubleClickSelection = renderer.transform.parent.gameObject;
+                        if (doubleClickSelection.GetComponent<UnitController>()) {
+                            if(hit.collider.gameObject.GetComponent<UnitController>().unitType == doubleClickSelection.GetComponent<UnitController>().unitType) {
+                                SelectMultipleUnits(doubleClickSelection);
+                            }
                         }
+                    }
+                } else {
+                    DeselectUnits();
+                    selectedObj = hit.collider.gameObject;
+                    if(!selectedObjects.Contains(selectedObj)) {
+                        selectedObjects.Add(selectedObj);
+                    } else {
+                        selectedObjects.Remove(selectedObj);
+                    }
+                    selectedObj.transform.GetChild(2).gameObject.GetComponent<Projector>().material.SetColor("_Color", Color.green);
+                    selectedInfo = selectedObj.GetComponent<UnitSelection>();
+                    unitScript = selectedObj.GetComponent<UnitController>();
 
-                        selectedInfo.selected = true;
-
-                        // UnitSelection indicators
-                        selectedObj.transform.GetChild(2).gameObject.SetActive(true);
-                        playerAudio.clip = unitAudioClip;
-                        playerAudio.Play();
+                    if (selectedInfo.selected == true)
+                    {
+                        DeselectUnits();
+                    }
+                    else if (Input.GetKey(KeyCode.LeftShift))
+                    {
                         if(!unitScript.isDead) {
-                            isSelected = true;
-                        }
+                            selectedInfo.selected = true;
 
-                        if(unitScript.unitType == "Worker") {
-                            UI.WorkerSelect();
-                        } else if (unitScript.unitType == "Swordsman") {
-                            UI.SwordsmanSelect();
-                        } else if (unitScript.unitType == "Footman") {
-                            UI.FootmanSelect();
-                        } else if (unitScript.unitType == "Archer") {
-                            UI.ArcherSelect();
-                        } else if (unitScript.unitType == "Outrider") {
-                            UI.OutriderSelect();
-                        } else if (unitScript.unitType == "Knight") {
-                            UI.KnightSelect();
-                        } else if (unitScript.unitType == "Wizard") {
-                            UI.WizardSelect();
+                            // UnitSelection indicators
+                            selectedObj.transform.GetChild(2).gameObject.SetActive(true);
+                            playerAudio.clip = unitAudioClip;
+                            playerAudio.Play();
+                            if(!unitScript.isDead) {
+                                isSelected = true;
+                            }
+
+                            if(unitScript.unitType == "Worker") {
+                                UI.WorkerSelect();
+                            } else if (unitScript.unitType == "Swordsman") {
+                                UI.SwordsmanSelect();
+                            } else if (unitScript.unitType == "Footman") {
+                                UI.FootmanSelect();
+                            } else if (unitScript.unitType == "Archer") {
+                                UI.ArcherSelect();
+                            } else if (unitScript.unitType == "Outrider") {
+                                UI.OutriderSelect();
+                            } else if (unitScript.unitType == "Knight") {
+                                UI.KnightSelect();
+                            } else if (unitScript.unitType == "Wizard") {
+                                UI.WizardSelect();
+                            }
+                        }
+                    }
+                    else
+                    {
+                        if(!unitScript.isDead) {
+                            GameObject[] selectedIndicators = GameObject.FindGameObjectsWithTag("SelectedIndicator");
+                            for (int j = 0; j < selectedIndicators.Length; j++)
+                            {
+                                selectedIndicators[j].transform.gameObject.SetActive(false);
+                                selectedIndicators[j].transform.parent.GetComponent<UnitSelection>().selected = false;
+                            }
+
+                            selectedInfo.selected = true;
+
+                            // UnitSelection indicators
+                            selectedObj.transform.GetChild(2).gameObject.SetActive(true);
+                            playerAudio.clip = unitAudioClip;
+                            playerAudio.Play();
+                            if(!unitScript.isDead) {
+                                isSelected = true;
+                            }
+
+                            if(unitScript.unitType == "Worker") {
+                                UI.WorkerSelect();
+                            } else if (unitScript.unitType == "Swordsman") {
+                                UI.SwordsmanSelect();
+                            } else if (unitScript.unitType == "Footman") {
+                                UI.FootmanSelect();
+                            } else if (unitScript.unitType == "Archer") {
+                                UI.ArcherSelect();
+                            } else if (unitScript.unitType == "Outrider") {
+                                UI.OutriderSelect();
+                            } else if (unitScript.unitType == "Knight") {
+                                UI.KnightSelect();
+                            } else if (unitScript.unitType == "Wizard") {
+                                UI.WizardSelect();
+                            }
                         }
                     }
                 }
@@ -804,6 +917,11 @@ public class InputManager : MonoBehaviour
         }
     }
 
+    bool IsVisible(Renderer renderer) {
+        Plane[] planes = GeometryUtility.CalculateFrustumPlanes(Camera.main);
+        return (GeometryUtility.TestPlanesAABB(planes, renderer.bounds)) ? true : false;
+    }
+
     void SwapProgressIcon()
     {
         progressIcon = GameObject.Find("ProgressIcon").GetComponent<Image>();
@@ -866,8 +984,66 @@ public class InputManager : MonoBehaviour
         isSelected = false;
     }
 
+    void SaveControlGroup(int number) {
+        List<GameObject> currentList = new List<GameObject>();
+        if(number == 1) {
+            currentList = controlGroup1;
+        } else if (number == 2) {
+            currentList = controlGroup2;
+        } else if (number == 3) {
+            currentList = controlGroup3;
+        } else if (number == 4) {
+            currentList = controlGroup4;
+        } else if (number == 5) {
+            currentList = controlGroup5;
+        } else if (number == 6) {
+            currentList = controlGroup6;
+        } else if (number == 7) {
+            currentList = controlGroup7;
+        } else if (number == 8) {
+            currentList = controlGroup8;
+        } else if (number == 9) {
+            currentList = controlGroup9;
+        } else if (number == 0) {
+            currentList = controlGroup0;
+        }
+        currentList.Clear();
+        foreach (GameObject go in selectedObjects) {
+            currentList.Add(go);
+        }
+    }
+
+    void LoadControlGroup(int number) {
+        DeselectUnits();
+        List<GameObject> currentList = new List<GameObject>();
+        if(number == 1) {
+            currentList = controlGroup1;
+        } else if (number == 2) {
+            currentList = controlGroup2;
+        } else if (number == 3) {
+            currentList = controlGroup3;
+        } else if (number == 4) {
+            currentList = controlGroup4;
+        } else if (number == 5) {
+            currentList = controlGroup5;
+        } else if (number == 6) {
+            currentList = controlGroup6;
+        } else if (number == 7) {
+            currentList = controlGroup7;
+        } else if (number == 8) {
+            currentList = controlGroup8;
+        } else if (number == 9) {
+            currentList = controlGroup9;
+        } else if (number == 0) {
+            currentList = controlGroup0;
+        }
+        foreach (GameObject go in currentList) {
+            SelectMultipleUnits(go);
+        }
+    }
+
     public IEnumerator ClickCursorHit(RaycastHit hit) {
-            Destroy(currentCursorHit);
+        Destroy(currentCursorHit);
         if(!PM.gamePaused) {
             currentCursorHit = Instantiate(cursorHit);
             currentCursorHit.transform.position = new Vector3 (hit.point.x, hit.point.y + 2.0f, hit.point.z);

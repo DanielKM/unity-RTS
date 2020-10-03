@@ -76,8 +76,10 @@ public class NPCController : MonoBehaviour
             agent = GetComponent<NavMeshAgent>();
             if(waypoints != null) {
                 if(waypoints.Length != 0) {
-                    agent.destination = waypoints[index].position;
-                    agent.speed = agentSpeed / 2;
+                    if(agent) {
+                        agent.destination = waypoints[index].position;
+                        agent.speed = agentSpeed / 2;
+                    }
                 }
             }
             playerunits = GameObject.FindGameObjectsWithTag("Selectable");
