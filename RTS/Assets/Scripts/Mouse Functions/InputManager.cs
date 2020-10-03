@@ -271,27 +271,18 @@ public class InputManager : MonoBehaviour
             {
                 if (!EventSystem.current.IsPointerOverGameObject(-1))
                 {
-                    Ray raycast = Camera.main.ScreenPointToRay(Input.mousePosition);
-                    RaycastHit hit1;
-                    if (Physics.Raycast(raycast, out hit1, 350, mask))
-                    {
-                        if (hit1.transform.tag == "Enemy Unit" || hit1.transform.tag == "Selectable" || hit1.transform.tag == "Player 1" ||  hit1.transform.tag == "Foundation" || hit1.transform.tag == "Ground" || hit1.transform.tag == "Yard" || hit1.transform.tag == "Barracks" || hit1.transform.tag == "House" || hit1.transform.tag == "Resource" || hit1.transform.tag == "Fort" || hit1.transform.tag == "Blacksmith" || hit1.transform.tag == "Stables")
-                        {
-                            float timeSinceLastClick = Time.time - lastclickTime;
-                            
-                            string clickType = "single";
-                            if(timeSinceLastClick <= DOUBLE_CLICK_TIME) {
-                                clickType = "double";
-                                LeftClick(clickType);
-                                // Double click!
-                            } else {
-                                clickType = "single";
-                                LeftClick(clickType);
-                                // Single click!
-                            }
-                            lastclickTime = Time.time;
-                        }
+                    float timeSinceLastClick = Time.time - lastclickTime;
+                    string clickType = "single";
+                    if(timeSinceLastClick <= DOUBLE_CLICK_TIME) {
+                        clickType = "double";
+                        LeftClick(clickType);
+                        // Double click!
+                    } else {
+                        clickType = "single";
+                        LeftClick(clickType);
+                        // Single click!
                     }
+                    lastclickTime = Time.time;
                 }
             }
 
@@ -496,7 +487,6 @@ public class InputManager : MonoBehaviour
             var selectRect = Utils.GetScreenRect(mouse1, mouse2);
             if(selectRect.size.x * selectRect.size.y > 150) {  
                 
-                DeselectUnits();
                 selectionBoxOpen = true;
                 inUnitSelectionBox = false;
                 for (int i = 0; i < units.Length; i++)
@@ -513,13 +503,15 @@ public class InputManager : MonoBehaviour
                     {   
                         SelectMultipleUnits (units[i]);
                     } else {
-                        if(selectedObjects.Contains(units[i])) {
-                            selectedObjects.Remove(units[i]);
-                            selectedInfo = units[i].GetComponent<UnitSelection>();
-                            unitScript = units[i].GetComponent<UnitController>();
-                            selectedInfo.selected = false;
-                            selectedInfo.transform.GetChild(2).gameObject.GetComponent<Projector>().material.SetColor("_Color", Color.green);
-                            selectedInfo.transform.GetChild(2).gameObject.SetActive(false);
+                        if(!Input.GetKey(KeyCode.LeftShift)) {
+                            if(selectedObjects.Contains(units[i])) {
+                                selectedObjects.Remove(units[i]);
+                                selectedInfo = units[i].GetComponent<UnitSelection>();
+                                unitScript = units[i].GetComponent<UnitController>();
+                                selectedInfo.selected = false;
+                                selectedInfo.transform.GetChild(2).gameObject.GetComponent<Projector>().material.SetColor("_Color", Color.green);
+                                selectedInfo.transform.GetChild(2).gameObject.SetActive(false);
+                            }
                         }
                     }
                 }
