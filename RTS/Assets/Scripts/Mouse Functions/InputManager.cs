@@ -736,7 +736,6 @@ public class InputManager : MonoBehaviour
                         }
                     }
                 } else {
-                    DeselectUnits();
                     selectedObj = hit.collider.gameObject;
                     if(!selectedObjects.Contains(selectedObj)) {
                         selectedObjects.Add(selectedObj);
@@ -747,39 +746,42 @@ public class InputManager : MonoBehaviour
                     selectedInfo = selectedObj.GetComponent<UnitSelection>();
                     unitScript = selectedObj.GetComponent<UnitController>();
 
-                    if (selectedInfo.selected == true)
-                    {
-                        DeselectUnits();
-                    }
-                    else if (Input.GetKey(KeyCode.LeftShift))
+                    if (Input.GetKey(KeyCode.LeftShift))
                     {
                         if(!unitScript.isDead) {
-                            selectedInfo.selected = true;
+                            if(selectedInfo.selected) {
+                                DeselectSingleUnit(selectedObj);
+                            } else {
+                                selectedInfo.selected = true;
+                                // UnitSelection indicators
+                                selectedObj.transform.GetChild(2).gameObject.SetActive(true);
+                                playerAudio.clip = unitAudioClip;
+                                playerAudio.Play();
+                                if(!unitScript.isDead) {
+                                    isSelected = true;
+                                }
 
-                            // UnitSelection indicators
-                            selectedObj.transform.GetChild(2).gameObject.SetActive(true);
-                            playerAudio.clip = unitAudioClip;
-                            playerAudio.Play();
-                            if(!unitScript.isDead) {
-                                isSelected = true;
-                            }
-
-                            if(unitScript.unitType == "Worker") {
-                                UI.WorkerSelect();
-                            } else if (unitScript.unitType == "Swordsman") {
-                                UI.SwordsmanSelect();
-                            } else if (unitScript.unitType == "Footman") {
-                                UI.FootmanSelect();
-                            } else if (unitScript.unitType == "Archer") {
-                                UI.ArcherSelect();
-                            } else if (unitScript.unitType == "Outrider") {
-                                UI.OutriderSelect();
-                            } else if (unitScript.unitType == "Knight") {
-                                UI.KnightSelect();
-                            } else if (unitScript.unitType == "Wizard") {
-                                UI.WizardSelect();
+                                if(unitScript.unitType == "Worker") {
+                                    UI.WorkerSelect();
+                                } else if (unitScript.unitType == "Swordsman") {
+                                    UI.SwordsmanSelect();
+                                } else if (unitScript.unitType == "Footman") {
+                                    UI.FootmanSelect();
+                                } else if (unitScript.unitType == "Archer") {
+                                    UI.ArcherSelect();
+                                } else if (unitScript.unitType == "Outrider") {
+                                    UI.OutriderSelect();
+                                } else if (unitScript.unitType == "Knight") {
+                                    UI.KnightSelect();
+                                } else if (unitScript.unitType == "Wizard") {
+                                    UI.WizardSelect();
+                                }
                             }
                         }
+
+                    } else if (selectedInfo.selected == true)
+                    {
+                        DeselectUnits();
                     }
                     else
                     {
@@ -952,6 +954,14 @@ public class InputManager : MonoBehaviour
         else
         {
             progressIcon.sprite = buildingScript.icon;
+        }
+    }
+
+    private void DeselectSingleUnit(GameObject go) {
+        go.transform.GetChild(2).gameObject.SetActive(false); 
+        go.GetComponent<UnitSelection>().selected = false;
+        if(!go.GetComponent<UnitController>().isDead) {
+            isSelected = false;
         }
     }
 
