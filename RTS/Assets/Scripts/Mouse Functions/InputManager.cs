@@ -21,6 +21,7 @@ public class InputManager : MonoBehaviour
 
     // Reference Scripts
 
+    UnitList unitList;
     UnitController unitScript;
     UnitSelection selectScript;
     BuildingController buildingScript;
@@ -146,6 +147,7 @@ public class InputManager : MonoBehaviour
 
     // All units in the game that are selectable
     private GameObject[] units;
+    GameObject closestSelectableUnit;
 
     // Coordinates of all units
     private Vector3 unitPos;
@@ -165,6 +167,7 @@ public class InputManager : MonoBehaviour
     public GameObject selectedObj;
 
     void Awake() {
+        unitList = GameObject.Find("Game").GetComponent<UnitList>();
         Scene currentScene = SceneManager.GetActiveScene();
         if(currentScene.name != "Main Menu") {
             team = GameObject.Find("Faction");
@@ -683,7 +686,8 @@ public class InputManager : MonoBehaviour
         RaycastHit hit;
         if(Physics.Raycast(ray, out hit, 350, mask))
         {
-            if (hit.collider.tag == "Ground" && (!Input.GetKey(KeyCode.LeftShift)))
+            closestSelectableUnit = CheckClosestUnitFromRaycast(hit);
+            if (hit.collider.tag == "Ground" && (!Input.GetKey(KeyCode.LeftShift)) && !closestSelectableUnit)
             {
                 DeselectUnits();
                 UI.CloseAllPanels();
@@ -903,12 +907,35 @@ public class InputManager : MonoBehaviour
                     UI.StablesSelect();
                 }
             }
-            else if (hit.collider.tag != "Selectable" && (!Input.GetKey(KeyCode.LeftShift)))
+            else if (hit.collider.tag != "Selectable" && (!Input.GetKey(KeyCode.LeftShift)) && !closestSelectableUnit)
             {
                 DeselectUnits();
                 UI.CloseAllPanels();
+            } else if (closestSelectableUnit) {
+                SelectMultipleUnits(closestSelectableUnit);
             }
         }
+    }
+
+    GameObject CheckClosestUnitFromRaycast(RaycastHit hit) {
+        // Find the closest enemy
+        GameObject closestSelectableObject = null;
+        float closestDistance = 1f;
+        Vector3 position = hit.point;
+
+        foreach(GameObject targetEnemy in unitList.selectableUnits)
+        {
+            if(!targetEnemy.GetComponent<UnitController>().isDead) {
+                Vector3 direction = targetEnemy.transform.position - position;
+                float distance = direction.sqrMagnitude;
+                if(distance < closestDistance)
+                {
+                    closestDistance = distance;
+                    closestSelectableObject = targetEnemy;
+                }
+            }
+        }
+        return closestSelectableObject;
     }
 
     bool IsVisible(Renderer renderer) {

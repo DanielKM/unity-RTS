@@ -128,8 +128,10 @@ public class UnitController : MonoBehaviour
 
         if(UnitSelection.owner == UnitSelection.team) {
             UnitList.friendlyUnits.Add(gameObject);
+            UnitList.selectableUnits.Add(gameObject);
         } else {
             UnitList.enemyUnits.Add(gameObject);
+            UnitList.selectableUnits.Add(gameObject);
         }
     }
 

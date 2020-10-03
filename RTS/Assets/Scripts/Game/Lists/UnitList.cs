@@ -19,6 +19,8 @@ public class UnitList : MonoBehaviour
     public List<GameObject> friendlyBuildings;
     public List<GameObject> friendlySackedBuildings;
     public List<GameObject> friendlyDestroyedBuildings;
+
+    public List<GameObject> selectableUnits;
     // Start is called before the first frame update
     void Start()
     {
