@@ -208,8 +208,8 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 21, y: 14, z: 10.5}
-  m_Center: {x: -5, y: 3, z: -4.5}
+  m_Size: {x: 22, y: 10, z: 12}
+  m_Center: {x: -4, y: 4, z: -4.5}
 --- !u!82 &82220320314016438
 AudioSource:
   m_ObjectHideFlags: 0
@@ -316,7 +316,7 @@ NavMeshObstacle:
   m_Enabled: 1
   serializedVersion: 3
   m_Shape: 1
-  m_Extents: {x: 3.5, y: 5, z: 4.5}
+  m_Extents: {x: 3.5, y: 4, z: 4.5}
   m_MoveThreshold: 0.1
   m_Carve: 0
   m_CarveOnlyStationary: 1

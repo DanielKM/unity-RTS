@@ -115,9 +115,7 @@ public class UnitButtonController : MonoBehaviour
                         ReleaseIfClicked();
                     }
                 }
-
                 ChangePrefabColorIfPlaceable(currentPlaceableObject);
-
                 if (Input.GetKeyDown(KeyCode.Escape))
                 {
                     Destroy(currentPlaceableObject);
