@@ -230,6 +230,7 @@ public class UnitSelection : MonoBehaviour
             targetScript = targetNode.GetComponent<UnitSelection>();
             if(owner == team && !UC.isDead) {     
                 if(UC.unitType == "Worker") {
+                    gameObject.GetComponent<NavMeshAgent>().isStopped = false;
 
                     if (hit.collider.tag != "Player 1")
                     {
@@ -406,16 +407,16 @@ public class UnitSelection : MonoBehaviour
         } 
     }
 
-    public void OnTriggerStay(Collider other)
-    {
-        GameObject hitObject = other.gameObject;
+    // public void OnTriggerStay(Collider other)
+    // {
+    //     GameObject hitObject = other.gameObject;
 
-        if (hitObject.tag == "Player 1" && task == ActionList.Idle && heldResource != 0) 
-        {
-            // task = ActionList.Idle;
-            // agent.isStopped = true;
-        }
-    }
+    //     if (hitObject.tag == "Player 1" && task == ActionList.Idle && heldResource != 0) 
+    //     {
+    //         // task = ActionList.Idle;
+    //         // agent.isStopped = true;
+    //     }
+    // }
 
     public void DropSkyMetal()
     {
@@ -685,8 +686,9 @@ public class UnitSelection : MonoBehaviour
             StartCoroutine(Tick());
         } else if (hitObject.tag == "Foundation" && hitObject.gameObject == targetNode && gameObject.GetComponent<UnitController>().unitType == "Worker")
         {
+            gameObject.GetComponent<NavMeshAgent>().isStopped = true;
             isBuilding = true;
-            hitObject.GetComponent<FoundationController>().builders++;
+            hitObject.GetComponent<FoundationController>().builderList.Add(gameObject);
             buildScript = targetNode.GetComponent<FoundationController>();
             buildSpeed = buildScript.buildTime;
             StartCoroutine(Tick());
@@ -736,10 +738,12 @@ public class UnitSelection : MonoBehaviour
         if (hitObject.tag == "Resource" && hitObject.gameObject == targetNode || hitObject.tag == "Blacksmith" && hitObject.gameObject == targetNode)
         {
             isGathering = false;
-        }  else if (hitObject.tag == "Foundation" && hitObject.gameObject == targetNode)
+        }  else if (hitObject.tag == "Foundation")
         {
             isBuilding = false;
-            hitObject.GetComponent<FoundationController>().builders--;
+            if(hitObject.GetComponent<FoundationController>().builderList.Contains(gameObject)) {
+                hitObject.GetComponent<FoundationController>().builderList.Remove(gameObject);
+            }
         } 
     }
     
@@ -779,6 +783,10 @@ public class UnitSelection : MonoBehaviour
     // Ticks down while villager is gathering - Adjust with heldResource in Tick in Selection Script
     IEnumerator Tick()
     {
+        if(!isGathering && !isBuilding) {
+            yield break;
+        }
+
         while(isGathering || isBuilding)
         {
             int toolModifier;

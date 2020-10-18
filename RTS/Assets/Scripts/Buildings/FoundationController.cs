@@ -11,7 +11,8 @@ public class FoundationController : MonoBehaviour
     public bool isBuilding;
     public int buildTime;
     public int buildPercent;
-    public int builders;
+    public List<GameObject> builderList = new List<GameObject>();
+
     private Vector3 location;
 
     private CanvasGroup BuildingProgressPanel;
@@ -95,11 +96,6 @@ public class FoundationController : MonoBehaviour
             isBuilding = true;
         }
     }
-    
-    private void OnCollisionExit(Collision collision)
-    {
-
-    }
 
     public void BuildStructure()
     {       
@@ -112,10 +108,10 @@ public class FoundationController : MonoBehaviour
             toolModifier = 1;
         }
 
-        if (builders != 0)
+        if (builderList.Count > 0)
         {
             isBuilding = true;
-            buildPercent += builders * 5 * toolModifier;
+            buildPercent += builderList.Count * 5 * toolModifier;
         } else
         {
             isBuilding = false;
