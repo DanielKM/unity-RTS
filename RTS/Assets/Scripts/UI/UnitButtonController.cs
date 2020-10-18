@@ -41,11 +41,17 @@ public class UnitButtonController : MonoBehaviour
 
     public GameObject currentPlaceableObject;
     public Material placing;
-    public Renderer[] childColors;
 
-    private MeshRenderer[] meshes;
-    Color[] colors;
-    Color color;
+    // Mesh messing
+    public MeshRenderer selectedMesh;
+    public Material[] mats;
+
+    Material[] materialArray;
+    public List<Material[]> listOfMaterialArrays = new List<Material[]>();
+
+    Material selectedMaterial;
+    public Material redMaterial;
+
     private Vector3 currentLocation;
 
     // Dead pile
@@ -110,23 +116,7 @@ public class UnitButtonController : MonoBehaviour
                     }
                 }
 
-                if (isPlaceable == false)
-                {
-                    foreach (MeshRenderer mesh in meshes)
-                    {
-                        mesh.material.SetColor("_Color", Color.red);
-                    }
-                }
-                else
-                {
-                    int colorIter = 0;
-                    foreach (MeshRenderer mesh in meshes)
-                    {
-                        mesh.material.SetColor("_Color", colors[colorIter]);
-                        colorIter += 1;
-                    }
-                    colorIter = 0;
-                }
+                ChangePrefabColorIfPlaceable(currentPlaceableObject);
 
                 if (Input.GetKeyDown(KeyCode.Escape))
                 {
@@ -147,57 +137,99 @@ public class UnitButtonController : MonoBehaviour
     void BuildHouse()
     {
         BC = house.GetComponent<BuildingController>();
-        if (currentPlaceableObject == null && RM.gold >= BC.gold && RM.wood >= BC.wood && RM.stone >= BC.stone && RM.iron >= BC.iron && RM.steel >= BC.steel && RM.skymetal >= BC.skymetal && RM.food >= BC.food)
-        {
-            currentPlaceableObject = Instantiate(house);
-            meshes = currentPlaceableObject.GetComponentsInChildren<MeshRenderer>();
-
-            int iter = 0;
-            int colorNum = meshes.Length;
-            colors = new Color[colorNum];
-
-            foreach (MeshRenderer mesh in meshes)
-            {
-                color = mesh.material.GetColor("Base_color");
-                colors[iter] = color;
-                iter += 1;
-            }
-            iter = 0;
-        }
-       else if (currentPlaceableObject == null || RM.gold < BC.gold || RM.wood < BC.wood || RM.stone < BC.stone || RM.food < BC.food  || RM.iron < BC.iron  || RM.steel < BC.steel  || RM.skymetal < BC.skymetal)
-         {
-            UI.noResourcesText.SetActive(true);
-            StartCoroutine(Wait());
-        }
-        else
-        {
-            Destroy(currentPlaceableObject);
-        }
+        CreateBasicBuildingInstance(BC, house);
     }
 
     void BuildFarm()
     {
         BC = farm.GetComponent<BuildingController>();
-        if (currentPlaceableObject == null && RM.gold >= BC.gold && RM.wood >= BC.wood && RM.stone >= BC.stone && RM.iron >= BC.iron && RM.steel >= BC.steel && RM.skymetal >= BC.skymetal && RM.food >= BC.food)
-          {
-            currentPlaceableObject = Instantiate(farm);
-            meshes = currentPlaceableObject.GetComponentsInChildren<MeshRenderer>();
+        CreateMultiMeshBuildingInstance(BC, farm);
+    }
 
+    void BuildTownHall()
+    {
+        BC = townHall.GetComponent<BuildingController>();
+        CreateMultiMeshBuildingInstance(BC, townHall);
+    }
+
+    void BuildLumberMill()
+    {
+        BC = lumberMill.GetComponent<BuildingController>();
+        CreateMultiMeshSphereBuildingInstance(BC, lumberMill);
+    }
+
+    void BuildStables()
+    {
+        BC = stables.GetComponent<BuildingController>();
+        CreateMultiMeshBuildingInstance(BC, stables);
+    }
+
+    void BuildBarracks()
+    {
+        BC = barracks.GetComponent<BuildingController>();
+        CreateMultiMeshBuildingInstance(BC, barracks);
+    }
+
+    void BuildFort()
+    {
+        BC = fort.GetComponent<BuildingController>();
+        CreateMultiMeshBuildingInstance(BC, fort);
+    }
+
+    void BuildBlacksmith()
+    {
+        BC = blacksmith.GetComponent<BuildingController>();
+        CreateBasicBuildingInstance(BC, blacksmith);
+    }
+
+    void CreateMultiMeshBuildingInstance(BuildingController BC, GameObject selectedPrefab) {
+       if (currentPlaceableObject == null && RM.gold >= BC.gold && RM.wood >= BC.wood && RM.stone >= BC.stone && RM.iron >= BC.iron && RM.steel >= BC.steel && RM.skymetal >= BC.skymetal && RM.food >= BC.food)
+       {
+            currentPlaceableObject = Instantiate(selectedPrefab);
             BuildingController buildingScript = currentPlaceableObject.GetComponent<BuildingController>();
             BoxCollider boxCollider = buildingScript.GetComponent<BoxCollider>();
             boxCollider.isTrigger = true;
+            listOfMaterialArrays.Clear();
 
-            int iter = 0;
-            int colorNum = meshes.Length;
-            colors = new Color[colorNum];
-
-            foreach (MeshRenderer mesh in meshes)
-            {
-                color = mesh.material.GetColor("_Color");
-                colors[iter] = color;
-                iter += 1;
+            for (int i = 0; i < currentPlaceableObject.transform.childCount; i++) {
+                Transform childTransform = currentPlaceableObject.transform.GetChild(i);
+                if(childTransform.gameObject.GetComponent<MeshRenderer>()) {
+                    Material[] currentMaterialArray = currentPlaceableObject.transform.GetChild(i).gameObject.GetComponent<MeshRenderer>().materials;
+                    listOfMaterialArrays.Add(currentMaterialArray);
+                } else {
+                    listOfMaterialArrays.Add(mats);
+                }
             }
-            iter = 0;
+        }
+       else if (currentPlaceableObject == null || RM.gold < BC.gold || RM.wood < BC.wood || RM.stone < BC.stone || RM.food < BC.food  || RM.iron < BC.iron  || RM.steel < BC.steel  || RM.skymetal < BC.skymetal)
+       {
+            UI.noResourcesText.SetActive(true);
+            StartCoroutine(Wait());
+        }
+        else
+        {
+            Destroy(currentPlaceableObject);
+        }
+    }
+    
+    void CreateMultiMeshSphereBuildingInstance(BuildingController BC, GameObject selectedPrefab) {
+        if (currentPlaceableObject == null && RM.gold >= BC.gold && RM.wood >= BC.wood && RM.stone >= BC.stone && RM.iron >= BC.iron && RM.steel >= BC.steel && RM.skymetal >= BC.skymetal && RM.food >= BC.food)
+      {
+            currentPlaceableObject = Instantiate(lumberMill);
+            BuildingController buildingScript = currentPlaceableObject.GetComponent<BuildingController>();
+            SphereCollider sphereCollider = buildingScript.GetComponent<SphereCollider>();
+            sphereCollider.isTrigger = true;
+            listOfMaterialArrays.Clear();
+
+            for (int i = 0; i < currentPlaceableObject.transform.childCount; i++) {
+                Transform childTransform = currentPlaceableObject.transform.GetChild(i);
+                if(childTransform.gameObject.GetComponent<MeshRenderer>()) {
+                    Material[] currentMaterialArray = currentPlaceableObject.transform.GetChild(i).gameObject.GetComponent<MeshRenderer>().materials;
+                    listOfMaterialArrays.Add(currentMaterialArray);
+                } else {
+                    listOfMaterialArrays.Add(mats);
+                }
+            }
         }
        else if (currentPlaceableObject == null || RM.gold < BC.gold || RM.wood < BC.wood || RM.stone < BC.stone || RM.food < BC.food  || RM.iron < BC.iron  || RM.steel < BC.steel  || RM.skymetal < BC.skymetal)
        {
@@ -210,194 +242,31 @@ public class UnitButtonController : MonoBehaviour
         }
     }
 
-    void BuildTownHall()
-    {
-        BC = townHall.GetComponent<BuildingController>();
-        //Output this to console when the Button2 is clicked
+    void CreateBasicBuildingInstance(BuildingController BC, GameObject selectedPrefab) {
         if (currentPlaceableObject == null && RM.gold >= BC.gold && RM.wood >= BC.wood && RM.stone >= BC.stone && RM.iron >= BC.iron && RM.steel >= BC.steel && RM.skymetal >= BC.skymetal && RM.food >= BC.food)
-       {
-            currentPlaceableObject = Instantiate(townHall);
-            meshes = currentPlaceableObject.GetComponentsInChildren<MeshRenderer>();
+        {
+            currentPlaceableObject = Instantiate(selectedPrefab);
+            selectedMesh = currentPlaceableObject.GetComponent<MeshRenderer>();
+            Material[] mats = selectedMesh.materials;
+            listOfMaterialArrays.Clear();
 
             BuildingController buildingScript = currentPlaceableObject.GetComponent<BuildingController>();
             BoxCollider boxCollider = buildingScript.GetComponent<BoxCollider>();
             boxCollider.isTrigger = true;
 
             int iter = 0;
-            int colorNum = meshes.Length;
-            colors = new Color[colorNum];
+            int materialNum = mats.Length;
+            materialArray = new Material[materialNum];
 
-            foreach (MeshRenderer mesh in meshes)
+            foreach (Material mat in mats)
             {
-                color = mesh.material.GetColor("_Color");
-                colors[iter] = color;
+                selectedMaterial = mat;
+                materialArray[iter] = selectedMaterial;
                 iter += 1;
             }
             iter = 0;
         }
-          else if (currentPlaceableObject == null || RM.gold < BC.gold || RM.wood < BC.wood || RM.stone < BC.stone || RM.food < BC.food  || RM.iron < BC.iron  || RM.steel < BC.steel  || RM.skymetal < BC.skymetal)
-        {
-            UI.noResourcesText.SetActive(true);
-            StartCoroutine(Wait());
-        }
-        else
-        {
-            Destroy(currentPlaceableObject);
-        }
-    }
-
-    void BuildLumberMill()
-    {
-        BC = lumberMill.GetComponent<BuildingController>();
-        //Output this to console when the Button2 is clicked
-        if (currentPlaceableObject == null && RM.gold >= BC.gold && RM.wood >= BC.wood && RM.stone >= BC.stone && RM.iron >= BC.iron && RM.steel >= BC.steel && RM.skymetal >= BC.skymetal && RM.food >= BC.food)
-      {
-            currentPlaceableObject = Instantiate(lumberMill);
-            meshes = currentPlaceableObject.GetComponentsInChildren<MeshRenderer>();
-
-            int iter = 0;
-            int colorNum = meshes.Length;
-            colors = new Color[colorNum];
-
-            foreach (MeshRenderer mesh in meshes)
-            {
-                // color = mesh.material.GetColor("_Color");
-                // colors[iter] = color;
-                // iter += 1;
-            }
-            iter = 0;
-        }
-         else if (currentPlaceableObject == null || RM.gold < BC.gold || RM.wood < BC.wood || RM.stone < BC.stone || RM.food < BC.food  || RM.iron < BC.iron  || RM.steel < BC.steel  || RM.skymetal < BC.skymetal)
-        {
-            UI.noResourcesText.SetActive(true);
-            StartCoroutine(Wait());
-        }
-        else
-        {
-            Destroy(currentPlaceableObject);
-        }
-    }
-
-    void BuildStables()
-    {
-        BC = stables.GetComponent<BuildingController>();
-        //Output this to console when the Button2 is clicked
-        if (currentPlaceableObject == null && RM.gold >= BC.gold && RM.wood >= BC.wood && RM.stone >= BC.stone && RM.iron >= BC.iron && RM.steel >= BC.steel && RM.skymetal >= BC.skymetal && RM.food >= BC.food)
-       {
-            currentPlaceableObject = Instantiate(stables);
-            meshes = currentPlaceableObject.GetComponentsInChildren<MeshRenderer>();
-
-            int iter = 0;
-            int colorNum = meshes.Length;
-            colors = new Color[colorNum];
-
-            foreach (MeshRenderer mesh in meshes)
-            {
-                color = mesh.material.GetColor("_Color");
-                colors[iter] = color;
-                iter += 1;
-            }
-            iter = 0;
-        }
-      else if (currentPlaceableObject == null || RM.gold < BC.gold || RM.wood < BC.wood || RM.stone < BC.stone || RM.food < BC.food  || RM.iron < BC.iron  || RM.steel < BC.steel  || RM.skymetal < BC.skymetal)
-         {
-            UI.noResourcesText.SetActive(true);
-            StartCoroutine(Wait());
-        }
-        else
-        {
-            Destroy(currentPlaceableObject);
-        }
-    }
-
-    void BuildBarracks()
-    {
-        BC = barracks.GetComponent<BuildingController>();
-        //Output this to console when the Button2 is clicked
-        if (currentPlaceableObject == null && RM.gold >= BC.gold && RM.wood >= BC.wood && RM.stone >= BC.stone && RM.iron >= BC.iron && RM.steel >= BC.steel && RM.skymetal >= BC.skymetal && RM.food >= BC.food)
-       {
-            currentPlaceableObject = Instantiate(barracks);
-            meshes = currentPlaceableObject.GetComponentsInChildren<MeshRenderer>();
-            
-            int iter = 0;
-            int colorNum = meshes.Length;
-            colors = new Color[colorNum];
-
-            foreach (MeshRenderer mesh in meshes)
-            {
-                if(mesh.material) {
-                    color = mesh.material.GetColor("_Color");
-                    colors[iter] = color;
-                    iter += 1;
-                }
-            }
-            iter = 0;
-        }
-         else if (currentPlaceableObject == null || RM.gold < BC.gold || RM.wood < BC.wood || RM.stone < BC.stone || RM.food < BC.food  || RM.iron < BC.iron  || RM.steel < BC.steel  || RM.skymetal < BC.skymetal)
-        {
-            UI.noResourcesText.SetActive(true);
-            StartCoroutine(Wait());
-        }
-        else
-        {
-            Destroy(currentPlaceableObject);
-        }
-    }
-
-    void BuildFort()
-    {
-        BC = fort.GetComponent<BuildingController>();
-        //Output this to console when the Button2 is clicked
-        if (currentPlaceableObject == null && RM.gold >= BC.gold && RM.wood >= BC.wood && RM.stone >= BC.stone && RM.iron >= BC.iron && RM.steel >= BC.steel && RM.skymetal >= BC.skymetal && RM.food >= BC.food)
-      {
-            currentPlaceableObject = Instantiate(fort);
-            meshes = currentPlaceableObject.GetComponentsInChildren<MeshRenderer>();
-
-            int iter = 0;
-            int colorNum = meshes.Length;
-            colors = new Color[colorNum];
-
-            foreach (MeshRenderer mesh in meshes)
-            {
-                color = mesh.material.GetColor("_Color");
-                colors[iter] = color;
-                iter += 1;
-            }
-            iter = 0;
-        }
-          else if (currentPlaceableObject == null || RM.gold < BC.gold || RM.wood < BC.wood || RM.stone < BC.stone || RM.food < BC.food  || RM.iron < BC.iron  || RM.steel < BC.steel  || RM.skymetal < BC.skymetal)
-        {
-            UI.noResourcesText.SetActive(true);
-            StartCoroutine(Wait());
-        }
-        else
-        {
-            Destroy(currentPlaceableObject);
-        }
-    }
-
-    void BuildBlacksmith()
-    {
-        BC = blacksmith.GetComponent<BuildingController>();
-        //Output this to console when the Button2 is clicked
-        if (currentPlaceableObject == null && RM.gold >= BC.gold && RM.wood >= BC.wood && RM.stone >= BC.stone && RM.iron >= BC.iron && RM.steel >= BC.steel && RM.skymetal >= BC.skymetal && RM.food >= BC.food)
-       {
-            currentPlaceableObject = Instantiate(blacksmith);
-            meshes = currentPlaceableObject.GetComponentsInChildren<MeshRenderer>();
-
-            int iter = 0;
-            int colorNum = meshes.Length;
-            colors = new Color[colorNum];
-
-            foreach (MeshRenderer mesh in meshes)
-            {
-                color = mesh.material.GetColor("_Color");
-                colors[iter] = color;
-                iter += 1;
-            }
-            iter = 0;
-        }
-         else if (currentPlaceableObject == null || RM.gold < BC.gold || RM.wood < BC.wood || RM.stone < BC.stone || RM.food < BC.food  || RM.iron < BC.iron  || RM.steel < BC.steel  || RM.skymetal < BC.skymetal)
+        else if (currentPlaceableObject == null || RM.gold < BC.gold || RM.wood < BC.wood || RM.stone < BC.stone || RM.food < BC.food  || RM.iron < BC.iron  || RM.steel < BC.steel  || RM.skymetal < BC.skymetal)
         {
             UI.noResourcesText.SetActive(true);
             StartCoroutine(Wait());
@@ -408,6 +277,65 @@ public class UnitButtonController : MonoBehaviour
         }
     }
     
+    void ChangePrefabColorIfPlaceable(GameObject currentPlaceableObject) {
+        BuildingController currentBuildingScript = currentPlaceableObject.GetComponent<BuildingController>();
+        string buildingType = currentBuildingScript.unitType;
+        if (isPlaceable == false)
+        {
+            if(buildingType == "House" || buildingType == "Blacksmith") {
+                Material[] materialsArray = currentPlaceableObject.GetComponent<MeshRenderer>().materials;
+
+                for (int i = 0; i < materialsArray.Length; i++)
+                {
+                    materialsArray[i] = redMaterial;
+                }
+                currentPlaceableObject.GetComponent<Renderer>().materials = materialsArray;
+            } else {
+                for (int i = 0; i < currentPlaceableObject.transform.childCount; i++) {
+                    Transform childTransform = currentPlaceableObject.transform.GetChild(i);
+                    if(childTransform.gameObject.GetComponent<MeshRenderer>()) {
+                        MeshRenderer childRenderer = childTransform.gameObject.GetComponent<MeshRenderer>();
+                        Material[] materialsArray = childRenderer.materials;
+                        for (int j = 0; j < materialsArray.Length; j++)
+                        {
+                            materialsArray[j] = redMaterial;
+                        }
+                        childRenderer.materials = materialsArray;
+                    }
+                }
+            }
+        }
+        else
+        {
+            if(buildingType == "House" || buildingType == "Blacksmith") {
+                Material[] materialsArray = currentPlaceableObject.GetComponent<Renderer>().materials;
+                for (int i = 0; i < materialsArray.Length; i++)
+                {
+                    materialsArray[i] = materialArray[i];
+                }
+                currentPlaceableObject.GetComponent<Renderer>().materials = materialsArray;
+            } else {
+                for (int i = 0; i < currentPlaceableObject.transform.childCount; i++) {
+                    Transform childTransform = currentPlaceableObject.transform.GetChild(i);
+                    if(childTransform.gameObject.GetComponent<MeshRenderer>()) {
+                        MeshRenderer childRenderer = childTransform.gameObject.GetComponent<MeshRenderer>();
+                        Material[] materialsArray = childRenderer.materials;
+                        for (int j = 0; j < materialsArray.Length; j++)
+                        {
+                            // Not perfect
+                            if(materialsArray[j]) {
+                                if(listOfMaterialArrays[i][j]) {
+                                    materialsArray[j] = listOfMaterialArrays[i][j];
+                                }
+                            }
+                        }
+                        childRenderer.materials = materialsArray;
+                    }
+                }
+            }
+        }
+    }
+
     private void MoveCurrentPlaceableObjectToMouse()
     {
         building.isPlaced = false;
@@ -419,8 +347,8 @@ public class UnitButtonController : MonoBehaviour
             if (building.unitType == "House")
             {
                 //HERE~!
-                currentPlaceableObject.transform.position = new Vector3(hitInfo.point.x, hitInfo.point.y - 1.0f, hitInfo.point.z);
-                currentLocation = new Vector3 (hitInfo.point.x, currentPlaceableObject.transform.position.y + 0.75f, hitInfo.point.z);
+                currentPlaceableObject.transform.position = new Vector3(hitInfo.point.x, hitInfo.point.y, hitInfo.point.z);
+                currentLocation = new Vector3 (hitInfo.point.x, currentPlaceableObject.transform.position.y, hitInfo.point.z);
             }
             else if (building.unitType == "Farm")
             {
@@ -430,7 +358,7 @@ public class UnitButtonController : MonoBehaviour
             else if (building.unitType == "Town Hall")
             {
                 currentPlaceableObject.transform.position = new Vector3(hitInfo.point.x, hitInfo.point.y, hitInfo.point.z);
-                Vector3 newLocation = new Vector3(currentPlaceableObject.transform.position.x - 3.0f, currentPlaceableObject.transform.position.y, currentPlaceableObject.transform.position.z - 1.0f);
+                Vector3 newLocation = new Vector3(currentPlaceableObject.transform.position.x, currentPlaceableObject.transform.position.y, currentPlaceableObject.transform.position.z);
                 currentLocation = newLocation;
             }
             else if (building.unitType == "Lumber Yard")
@@ -446,8 +374,8 @@ public class UnitButtonController : MonoBehaviour
             }
             else if (building.unitType == "Barracks")
             {
-                currentPlaceableObject.transform.position = new Vector3(hitInfo.point.x - 3.0f, hitInfo.point.y, hitInfo.point.z);
-                Vector3 newLocation = new Vector3(currentPlaceableObject.transform.position.x + 3.0f, currentPlaceableObject.transform.position.y, currentPlaceableObject.transform.position.z - 4.0f);
+                currentPlaceableObject.transform.position = new Vector3(hitInfo.point.x, hitInfo.point.y, hitInfo.point.z);
+                Vector3 newLocation = new Vector3(currentPlaceableObject.transform.position.x, currentPlaceableObject.transform.position.y, currentPlaceableObject.transform.position.z);
                 currentLocation = newLocation;
             }
             else if (building.unitType == "Fort")
@@ -468,13 +396,15 @@ public class UnitButtonController : MonoBehaviour
             }
 
             currentPlaceableObject.transform.rotation = Quaternion.FromToRotation(Vector3.up, hitInfo.normal);
-            if(building.unitType == "Stables" || building.unitType == "Barracks" || building.unitType == "Town Hall" || building.unitType == "Blacksmith")
-            {
-                currentPlaceableObject.transform.Rotate(0, 270, 0);
-            }
+            // Rotate the building 270 degrees
+            // if(building.unitType == "Stables" || building.unitType == "Barracks" || building.unitType == "Town Hall" || building.unitType == "Blacksmith")
+            // {
+            //     currentPlaceableObject.transform.Rotate(0, 270, 0);
+            // }
 
-            if (currentPlaceableObject.transform.rotation.x >= 0.2f || currentPlaceableObject.transform.rotation.x <= -0.2f || currentPlaceableObject.transform.rotation.z >= 0.2f || 
-                currentPlaceableObject.transform.rotation.z <= -0.2f )
+            // Check if the building is placeable or not
+            if (currentPlaceableObject.transform.rotation.x >= 0.05f || currentPlaceableObject.transform.rotation.x <= -0.05f || currentPlaceableObject.transform.rotation.z >= 0.05f || 
+                currentPlaceableObject.transform.rotation.z <= -0.05f )
             {
                 building.placeable = false;
             } else
@@ -482,6 +412,8 @@ public class UnitButtonController : MonoBehaviour
                 if(building.inCollider == false)
                 {
                     building.placeable = true;
+                } else {
+                    building.placeable = false;
                 }
             }
         }
@@ -509,7 +441,7 @@ public class UnitButtonController : MonoBehaviour
             currentPlaceableObject.layer = 11;
             Destroy(currentPlaceableObject);
             currentPlaceableObject = Instantiate(building.foundation);
-            Vector3 newLocation = new Vector3(currentLocation.x + 5.0f, currentLocation.y, currentLocation.z);
+            Vector3 newLocation = new Vector3(currentLocation.x, currentLocation.y, currentLocation.z);
             currentPlaceableObject.transform.position = newLocation;
             currentPlaceableObject = null;
             PlayBuildingSound();
@@ -522,7 +454,7 @@ public class UnitButtonController : MonoBehaviour
             currentPlaceableObject.layer = 11;
             Destroy(currentPlaceableObject);
             currentPlaceableObject = Instantiate(building.foundation);
-            Vector3 newLocation = new Vector3(currentLocation.x + 2.0f, currentLocation.y, currentLocation.z + 6.0f);
+            Vector3 newLocation = new Vector3(currentLocation.x, currentLocation.y, currentLocation.z);
             currentPlaceableObject.transform.position = newLocation;
             currentPlaceableObject = null;
             PlayBuildingSound();

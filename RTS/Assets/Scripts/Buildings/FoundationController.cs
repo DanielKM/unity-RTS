@@ -38,7 +38,7 @@ public class FoundationController : MonoBehaviour
             buildingScript = buildingPrefab.GetComponent<BuildingController>();
             if(buildingScript.unitType == "House")
             {
-                location = new Vector3(gameObject.transform.position.x, gameObject.transform.position.y - 1.0f, gameObject.transform.position.z);
+                location = new Vector3(gameObject.transform.position.x, gameObject.transform.position.y, gameObject.transform.position.z);
             }
             else if (buildingScript.unitType == "Farm")
             {
@@ -51,25 +51,25 @@ public class FoundationController : MonoBehaviour
             Destroy(gameObject);
             //adjusted placement rotation for odd models
             currentBuilding = Instantiate(buildingPrefab, location, Quaternion.identity);
-             if (buildingScript.unitType == "Stables" || buildingScript.unitType == "Barracks" || buildingScript.unitType == "Town Hall")
-            {
-                currentBuilding.transform.Rotate(0, 270, 0);
-            }
+            //  if (buildingScript.unitType == "Stables" || buildingScript.unitType == "Barracks" || buildingScript.unitType == "Town Hall")
+            // {
+            //     currentBuilding.transform.Rotate(0, 270, 0);
+            // }
 
             //adjusted placement location
             if (buildingScript.unitType == "Barracks")
             {
-                Vector3 newLocation = new Vector3(currentBuilding.transform.position.x - 4.0f, currentBuilding.transform.position.y, currentBuilding.transform.position.z + 4.0f);
+                Vector3 newLocation = new Vector3(currentBuilding.transform.position.x, currentBuilding.transform.position.y, currentBuilding.transform.position.z);
                 currentBuilding.transform.position = newLocation;
             }
             if (buildingScript.unitType == "Stables")
             {
-                Vector3 newLocation = new Vector3(currentBuilding.transform.position.x, currentBuilding.transform.position.y, currentBuilding.transform.position.z - 2.5f);
+                Vector3 newLocation = new Vector3(currentBuilding.transform.position.x, currentBuilding.transform.position.y, currentBuilding.transform.position.z);
                 currentBuilding.transform.position = newLocation;
             }
             if (buildingScript.unitType == "Town Hall")
             {
-                Vector3 newLocation = new Vector3(currentBuilding.transform.position.x + 1.0f, currentBuilding.transform.position.y, currentBuilding.transform.position.z - 3.5f);
+                Vector3 newLocation = new Vector3(currentBuilding.transform.position.x, currentBuilding.transform.position.y, currentBuilding.transform.position.z);
                 currentBuilding.transform.position = newLocation;
             }
 
@@ -95,6 +95,7 @@ public class FoundationController : MonoBehaviour
             isBuilding = true;
         }
     }
+    
     private void OnCollisionExit(Collision collision)
     {
 

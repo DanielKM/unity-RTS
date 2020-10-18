@@ -28,7 +28,7 @@ public class BuildingController : MonoBehaviour
 
     // Placeable bool
     public bool inCollider = false;
-    public bool placeable = true;
+    public bool placeable = false;
     public bool isPlaced = true;
     public Vector3 location;
 
@@ -41,7 +41,6 @@ public class BuildingController : MonoBehaviour
     public int steel;
     public int skymetal;
 
-    private MeshRenderer[] meshes;
     public string buildingID;
 
     void Awake()
@@ -60,18 +59,28 @@ public class BuildingController : MonoBehaviour
     void Update()
     {
         location = gameObject.transform.position;
-        if(isPlaced == true)
+    }
+
+    void OnTriggerEnter(Collider other)
+    {
+        // foreach (ContactPoint contact in other.contacts)
+        // {
+        //     Debug.DrawRay(contact.point, contact.normal, Color.white);
+        // }
+
+        if (other.gameObject.tag != "Ground")
         {
-            
+            // inCollider = true;
+            placeable = false;
         }
     }
 
-    void OnCollisionEnter(Collision other)
+    void OnTriggerStay(Collider other)
     {
-        foreach (ContactPoint contact in other.contacts)
-        {
-            Debug.DrawRay(contact.point, contact.normal, Color.white);
-        }
+        // foreach (ContactPoint contact in other.contacts)
+        // {
+        //     Debug.DrawRay(contact.point, contact.normal, Color.white);
+        // }
         if (other.gameObject.tag != "Ground")
         {
             inCollider = true;
@@ -79,21 +88,9 @@ public class BuildingController : MonoBehaviour
         }
     }
 
-    void OnCollisionStay(Collision other)
-    {
-        foreach (ContactPoint contact in other.contacts)
-        {
-            Debug.DrawRay(contact.point, contact.normal, Color.white);
-        }
-        if (other.gameObject.tag != "Ground")
-        {
-            inCollider = true;
-            placeable = false;
-        }
-    }
-
-    void OnCollisionExit(Collision other)
+    void OnTriggerExit(Collider other)
     {
         inCollider = false;
+        placeable = true;
     }
 }

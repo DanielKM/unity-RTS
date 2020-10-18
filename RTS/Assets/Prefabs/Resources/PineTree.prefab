@@ -25,7 +25,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2215775845845688498}
   m_LocalRotation: {x: 0.7071068, y: 0, z: 0, w: 0.70710677}
-  m_LocalPosition: {x: 0, y: 1, z: 0}
+  m_LocalPosition: {x: 0, y: 1.29, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 6848908928821191431}
@@ -40,9 +40,9 @@ Projector:
   m_GameObject: {fileID: 2215775845845688498}
   m_Enabled: 1
   serializedVersion: 2
-  m_NearClipPlane: 0.1
-  m_FarClipPlane: 2
-  m_FieldOfView: 60
+  m_NearClipPlane: 0.4
+  m_FarClipPlane: 4
+  m_FieldOfView: 5
   m_AspectRatio: 1
   m_Orthographic: 1
   m_OrthographicSize: 3.7
@@ -70,6 +70,7 @@ GameObject:
   - component: {fileID: 6846251606739868176}
   - component: {fileID: 6846251606739868183}
   - component: {fileID: 114055182514284726}
+  - component: {fileID: 4933775101301051560}
   m_Layer: 12
   m_Name: PineTree
   m_TagString: Resource
@@ -116,6 +117,7 @@ MeshRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -128,6 +130,7 @@ MeshRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_LightProbeVolumeOverride: {fileID: 0}
   m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
   m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
@@ -267,6 +270,7 @@ MonoBehaviour:
   maxEnergy: 100
   icon: {fileID: 21300000, guid: 581c857d31079eb4fbe724e01a00efdd, type: 3}
   foundation: {fileID: 0}
+  UnitList: {fileID: 0}
   inCollider: 0
   placeable: 1
   isPlaced: 1
@@ -278,6 +282,7 @@ MonoBehaviour:
   iron: 0
   steel: 0
   skymetal: 0
+  buildingID: 
 --- !u!114 &6846251606739868183
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -363,6 +368,29 @@ MonoBehaviour:
     - {fileID: 2800000, guid: 4753042191854ec4a879e40717c9db7c, type: 3}
     - {fileID: 4800000, guid: 53db23e245600294b8245008e74fbb63, type: 3}
     _Values: 0a913686a6a50e47b3ed8e63a9c5b7689b8d64ec3fec4a2ebe347c602a344c3b193860037db8ab2ecb52c37f1c8dff2dc392c94dbe6c8a09249abb25dd908e7e5fadb68f9b4b151ce23520ed28cb1230cbb1626794018353ae56dee2fd86513ac344ddc9438fc80ea7e56a894b9de05978750f700c0aec5dd59dc20dd508e65c1c19d61c12b61359868ef08594f361108a7aa58d693eb832cfc40c593345c761ff0ea56573fc6b3e62b6f79bfa72f11d3bb19750ae73c62261a34d4da9b92633565285854efc9d79e7e42bb3461d375bd4ee95e4dc170f744882c5174ab9e857703c0db20789943fede2c96d60859743930d8545dbbea96d61fa3dcb36862f60cd8324822bea625c84d4f8fa4da21331e6f67cc2cc5c834e6d5faef2b436f672eed55f239eebe77d70e2c8b0b7a3bb04f3904fd2fd0dd36f01d516cb3b70a84c217a17dcfec82f2edffa33ae253305101cb20023e72475035730dc8bfe4c461f8a148e3d8cdf05453f820cfc25dbb5332ffa5077907b9b46ef1b332ea4bb2d6d4cebc7c63dbd6304b945636a307229321af044076242500e87b7b28f53285f7c
+--- !u!114 &4933775101301051560
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6846658738078682921}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9036ed1d99907d54bbc58c09348dd1fd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  swingSpeedX: 0.39
+  swingSpeedRandomnessX: 0.151
+  swingSpeedY: 1.41
+  swingSpeedRandomnessY: 0
+  swingMaxAngleX: 3.8
+  swingMaxAngleRandomnessX: 0.55
+  swingMaxAngleY: 30
+  swingMaxAngleRandomnessY: 0.8
+  direction: 26
+  directionRandomness: 12
+  enableYAxisSwinging: 0
 --- !u!1 &6847336711526197419
 GameObject:
   m_ObjectHideFlags: 0
@@ -417,6 +445,7 @@ MeshRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -429,6 +458,7 @@ MeshRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_LightProbeVolumeOverride: {fileID: 0}
   m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
   m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
@@ -495,6 +525,7 @@ MeshRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -507,6 +538,7 @@ MeshRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_LightProbeVolumeOverride: {fileID: 0}
   m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
   m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
