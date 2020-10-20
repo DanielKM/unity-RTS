@@ -151,6 +151,12 @@ public class UnitSelection : MonoBehaviour
                     StartCoroutine(IM.ClickCursorHit(hit));
                 }    
             }
+
+            if (task == ActionList.Moving) {
+                if(agent.GetComponent<UnitController>() && agent.destination.x - agent.transform.position.x < 0.5 && agent.destination.z - agent.transform.position.z < 0.5) {
+                    task = ActionList.Idle;
+                }
+            }
         }
     }
 
@@ -277,9 +283,11 @@ public class UnitSelection : MonoBehaviour
                         }
                         else if (hit.collider.tag == "Doorway")
                         {
+                            task = ActionList.Moving;
                         } 
                         else if (hit.collider.tag == "Enemy Unit")
                         {
+                            task = ActionList.Moving;
                             if(hit.collider.gameObject.GetComponent<UnitController>().isDead) {
                                 agent.destination = hit.collider.gameObject.transform.position;
                             }
@@ -404,7 +412,7 @@ public class UnitSelection : MonoBehaviour
                     formationList[iteration].GetComponent<NavMeshAgent>().destination = new Vector3(hit.point.x - 0.8f * counter, hit.point.y, hit.point.z + row);
                 }
             }
-        } 
+        } 		
     }
 
     // public void OnTriggerStay(Collider other)
@@ -751,6 +759,7 @@ public class UnitSelection : MonoBehaviour
         int counter = 0;
         if(targetScript.owner != team) {
             isAttacking = true;
+            task = ActionList.Attacking;
         } else if(targetScript.owner == team) {
             isAttacking = false;
         } 

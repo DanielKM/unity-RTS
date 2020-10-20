@@ -105,6 +105,8 @@ public class InputManager : MonoBehaviour
     private float minHeight = 5f;
     private float maxHeight = 150f;
 
+    public bool rotating = false;
+
     // Cursor variables
     public LayerMask clickableLayer;
     public int mask;
@@ -221,11 +223,19 @@ public class InputManager : MonoBehaviour
             //RotateCamera();
             Multiselect();
             ActivateControlGroups();
-            
+
+            // Switch to building rotation mode
+            if(Input.GetKeyDown("r")) {
+                rotating = !rotating;
+            }
+
+            // Reset camera angle
             if (Input.GetKeyDown(KeyCode.Space))
             {
                 Camera.main.transform.rotation = rotation;
             }
+
+            // Handle left clicking
             if (Input.GetMouseButtonDown(0))
             {
                 if (!EventSystem.current.IsPointerOverGameObject(-1))
@@ -243,19 +253,20 @@ public class InputManager : MonoBehaviour
                 }
             }
 
+            // Open game menu
             if(Input.GetKeyDown(KeyCode.F10))
             {
                 UI.OpenGameMenuPanel();
             }
-            if(unitButtonController.currentPlaceableObject) {
-      
-            } else {
-                if(Input.GetKeyDown(KeyCode.Escape))
-                    {
-                        UI.OpenGameMenuPanel();
-                    } 
-            }
 
+            // If a building isnt being placed, open game menu
+            if(!unitButtonController.currentPlaceableObject) {
+                if(Input.GetKeyDown(KeyCode.Escape))
+                {
+                    UI.OpenGameMenuPanel();
+                } 
+            }
+            
             if(selectedObj != null)
             {
                 if(buildingScript != null) {
@@ -375,7 +386,11 @@ public class InputManager : MonoBehaviour
 
         // Clamping main camera bounds
         moveX = Mathf.Clamp(moveX, xMin, xMax);
-        moveY -= Input.GetAxis("Mouse ScrollWheel") * (panSpeed * 20);
+        if(rotating) { 
+            moveY -= 0;
+        } else {
+            moveY -= Input.GetAxis("Mouse ScrollWheel") * (panSpeed * 20);
+        }
         moveY = Mathf.Clamp(moveY, minHeight, maxHeight);
         moveZ = Mathf.Clamp(moveZ, zMin, zMax);
 

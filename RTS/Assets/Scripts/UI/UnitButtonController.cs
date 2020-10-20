@@ -13,6 +13,7 @@ public class UnitButtonController : MonoBehaviour
     ResourceManager RM;
     UIController UI;
     BuildingController BC;
+    InputManager IM;
 
     public BuildingController building;
     public bool isPlaceable;
@@ -45,17 +46,16 @@ public class UnitButtonController : MonoBehaviour
     // Mesh messing
     public MeshRenderer selectedMesh;
     public Material[] mats;
-
     Material[] materialArray;
     public List<Material[]> listOfMaterialArrays = new List<Material[]>();
-
     Material selectedMaterial;
     public Material redMaterial;
-
     private Vector3 currentLocation;
+    private Quaternion currentRotation;
 
     // Dead pile
     public List<GameObject> dead = new List<GameObject>();
+    private float mouseWheelRotation;
 
     // Start is called before the first frame update
     void Start()
@@ -65,6 +65,7 @@ public class UnitButtonController : MonoBehaviour
             mask =~ LayerMask.GetMask("FogOfWar");
             team = GameObject.Find("Faction");
             player = GameObject.FindGameObjectWithTag("Player");
+            IM = player.GetComponent<InputManager>();
             RM = team.GetComponent<ResourceManager>();
             UI = player.GetComponent<UIController>();
             basicBack.onClick.AddListener(UI.WorkerSelect);
@@ -120,12 +121,20 @@ public class UnitButtonController : MonoBehaviour
                 {
                     Destroy(currentPlaceableObject);
                 }
+                if(IM.rotating) {
+                    RotateFromMouseWheel();
+                }
             }
         }
     }
 
+    private void RotateFromMouseWheel() {
+        mouseWheelRotation = Input.mouseScrollDelta.y;
+        currentPlaceableObject.transform.Rotate(Vector3.up, mouseWheelRotation * 10f);
+            // currentPlaceableObject.transform.rotation = Quaternion.FromToRotation(Vector3.up, hitInfo.normal);
+    }
+
     void ClearDead() {
-        InputManager IM = player.GetComponent<InputManager>();
         selectedGOs = IM.selectedObjects;
         foreach(GameObject go in selectedGOs) {
             StartCoroutine(ClearingDead(go));
@@ -337,7 +346,6 @@ public class UnitButtonController : MonoBehaviour
     private void MoveCurrentPlaceableObjectToMouse()
     {
         building.isPlaced = false;
-
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
         RaycastHit hitInfo;
         if (Physics.Raycast(ray, out hitInfo, 1000))
@@ -392,13 +400,14 @@ public class UnitButtonController : MonoBehaviour
                 currentPlaceableObject.transform.position = new Vector3(hitInfo.point.x, hitInfo.point.y, hitInfo.point.z);
                 currentLocation = currentPlaceableObject.transform.position;
             }
+            currentRotation = currentPlaceableObject.transform.rotation;
 
-            currentPlaceableObject.transform.rotation = Quaternion.FromToRotation(Vector3.up, hitInfo.normal);
             // Rotate the building 270 degrees
             // if(building.unitType == "Stables" || building.unitType == "Barracks" || building.unitType == "Town Hall" || building.unitType == "Blacksmith")
             // {
             //     currentPlaceableObject.transform.Rotate(0, 270, 0);
             // }
+
 
             // Check if the building is placeable or not
             if (currentPlaceableObject.transform.rotation.x >= 0.05f || currentPlaceableObject.transform.rotation.x <= -0.05f || currentPlaceableObject.transform.rotation.z >= 0.05f || 
@@ -428,6 +437,7 @@ public class UnitButtonController : MonoBehaviour
             Destroy(currentPlaceableObject);
             currentPlaceableObject = Instantiate(building.foundation);
             currentPlaceableObject.transform.position = currentLocation;
+            currentPlaceableObject.transform.rotation = currentRotation;
             currentPlaceableObject = null;
             PlayBuildingSound();
         }
@@ -441,6 +451,7 @@ public class UnitButtonController : MonoBehaviour
             currentPlaceableObject = Instantiate(building.foundation);
             Vector3 newLocation = new Vector3(currentLocation.x, currentLocation.y, currentLocation.z);
             currentPlaceableObject.transform.position = newLocation;
+            currentPlaceableObject.transform.rotation = currentRotation;
             currentPlaceableObject = null;
             PlayBuildingSound();
         }
@@ -454,6 +465,7 @@ public class UnitButtonController : MonoBehaviour
             currentPlaceableObject = Instantiate(building.foundation);
             Vector3 newLocation = new Vector3(currentLocation.x, currentLocation.y, currentLocation.z);
             currentPlaceableObject.transform.position = newLocation;
+            currentPlaceableObject.transform.rotation = currentRotation;
             currentPlaceableObject = null;
             PlayBuildingSound();
         }
@@ -466,6 +478,7 @@ public class UnitButtonController : MonoBehaviour
             Destroy(currentPlaceableObject);
             currentPlaceableObject = Instantiate(building.foundation);
             currentPlaceableObject.transform.position = currentLocation;
+            currentPlaceableObject.transform.rotation = currentRotation;
             currentPlaceableObject = null;
             PlayBuildingSound();
         }
@@ -477,7 +490,9 @@ public class UnitButtonController : MonoBehaviour
             currentPlaceableObject.layer = 11;
             Destroy(currentPlaceableObject);
             currentPlaceableObject = Instantiate(building.foundation);
-            currentPlaceableObject.transform.position = currentLocation;
+            Vector3 newLocation = new Vector3(currentLocation.x, currentLocation.y, currentLocation.z - 3.5f);
+            currentPlaceableObject.transform.position = newLocation;
+            currentPlaceableObject.transform.rotation = currentRotation;
             currentPlaceableObject = null;
             PlayBuildingSound();
         }
@@ -490,6 +505,7 @@ public class UnitButtonController : MonoBehaviour
             Destroy(currentPlaceableObject);
             currentPlaceableObject = Instantiate(building.foundation);
             currentPlaceableObject.transform.position = currentLocation;
+            currentPlaceableObject.transform.rotation = currentRotation;
             currentPlaceableObject = null;
             PlayBuildingSound();
         }
@@ -503,6 +519,7 @@ public class UnitButtonController : MonoBehaviour
             Destroy(currentPlaceableObject);
             currentPlaceableObject = Instantiate(building.foundation);
             currentPlaceableObject.transform.position = currentLocation;
+            currentPlaceableObject.transform.rotation = currentRotation;
             currentPlaceableObject = null;
             PlayBuildingSound();
         }
@@ -515,6 +532,7 @@ public class UnitButtonController : MonoBehaviour
             Destroy(currentPlaceableObject);
             currentPlaceableObject = Instantiate(building.foundation);
             currentPlaceableObject.transform.position = currentLocation;
+            currentPlaceableObject.transform.rotation = currentRotation;
             currentPlaceableObject = null;
             PlayBuildingSound();
         }
@@ -527,6 +545,7 @@ public class UnitButtonController : MonoBehaviour
             Destroy(currentPlaceableObject);
             currentPlaceableObject = Instantiate(building.foundation);
             currentPlaceableObject.transform.position = currentLocation;
+            currentPlaceableObject.transform.rotation = currentRotation;
             currentPlaceableObject = null;
             PlayBuildingSound();
         }

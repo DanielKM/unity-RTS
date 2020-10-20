@@ -27,7 +27,6 @@ public class FoundationController : MonoBehaviour
         GameObject team = GameObject.Find("Faction");
         RM = team.GetComponent<ResourceManager>();
         RC = team.GetComponent<ResearchController>();
-
         BuildingProgressPanel = GameObject.Find("BuildingProgressPanel").GetComponent<CanvasGroup>();
         StartCoroutine(BuildTick());
     }
@@ -56,6 +55,8 @@ public class FoundationController : MonoBehaviour
             // {
             //     currentBuilding.transform.Rotate(0, 270, 0);
             // }
+
+            currentBuilding.transform.rotation = gameObject.transform.rotation;
 
             //adjusted placement location
             if (buildingScript.unitType == "Barracks")
@@ -133,6 +134,4 @@ public class FoundationController : MonoBehaviour
             BuildStructure();
         }
     }
-
-
 }

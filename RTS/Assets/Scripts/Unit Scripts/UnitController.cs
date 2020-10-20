@@ -225,31 +225,33 @@ public class UnitController : MonoBehaviour
     {
         if(!isDead) {
             UnitSelection = GetComponent<UnitSelection>();
-            if(UnitSelection.owner == UnitSelection.team) {
-                enemyUnits = GameObject.FindGameObjectsWithTag("Enemy Unit");
-                currentTarget = GetClosestEnemy(enemyUnits);
-                if(currentTarget && !currentTarget.GetComponent<UnitController>().isDead) {
-                    if(agent) {
-                        float dist = Vector3.Distance(agent.transform.position, currentTarget.transform.position);
-                        if(dist <= aggroRange && dist <= attackRange) {
-                            UnitSelection.isMeleeing = true;
-                            UnitSelection.isFollowing = false;
-                            agent.destination = agent.transform.position;
-                            agent.transform.LookAt(currentTarget.transform.position);
-                            if(!currentlyMeleeing) {
-                                StartCoroutine(Attack(currentTarget, agent.transform.rotation));
+            if(UnitSelection.task == ActionList.Attacking || UnitSelection.task == ActionList.Idle) {
+                if(UnitSelection.owner == UnitSelection.team) {
+                    enemyUnits = GameObject.FindGameObjectsWithTag("Enemy Unit");
+                    currentTarget = GetClosestEnemy(enemyUnits);
+                    if(currentTarget && !currentTarget.GetComponent<UnitController>().isDead) {
+                        if(agent) {
+                            float dist = Vector3.Distance(agent.transform.position, currentTarget.transform.position);
+                            if(dist <= aggroRange && dist <= attackRange) {
+                                UnitSelection.isMeleeing = true;
+                                UnitSelection.isFollowing = false;
+                                agent.destination = agent.transform.position;
+                                agent.transform.LookAt(currentTarget.transform.position);
+                                if(!currentlyMeleeing) {
+                                    StartCoroutine(Attack(currentTarget, agent.transform.rotation));
+                                }
+                            } else if (dist <= aggroRange && dist > attackRange) {
+                                UnitSelection.isMeleeing = false;
+                                UnitSelection.isFollowing = true;
+                                agent.destination = currentTarget.transform.position;
+                            } else {
+                                UnitSelection.isMeleeing = false;
+                                UnitSelection.isFollowing = false;
                             }
-                        } else if (dist <= aggroRange && dist > attackRange) {
-                            UnitSelection.isMeleeing = false;
-                            UnitSelection.isFollowing = true;
-                            agent.destination = currentTarget.transform.position;
-                        } else {
-                            UnitSelection.isMeleeing = false;
-                            UnitSelection.isFollowing = false;
                         }
                     }
-                }
-            } 
+                } 
+            }
         }
     }
 
