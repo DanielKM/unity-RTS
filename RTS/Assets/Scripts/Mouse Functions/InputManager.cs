@@ -105,7 +105,10 @@ public class InputManager : MonoBehaviour
     private float minHeight = 5f;
     private float maxHeight = 150f;
 
+    // MODES
     public bool rotating = false;
+    public bool attackMoving = false;
+    public bool patrolling = false;
 
     // Cursor variables
     public LayerMask clickableLayer;
@@ -225,9 +228,40 @@ public class InputManager : MonoBehaviour
             ActivateControlGroups();
 
             // Switch to building rotation mode
-            if(Input.GetKeyDown("r")) {
+            if(Input.GetKeyDown("r") && unitButtonController.currentPlaceableObject) {
                 rotating = !rotating;
+                if(rotating) {
+                    UI.NoModeText();
+                    UI.RotationModeText();
+                } else {
+                    UI.NoModeText();
+                    UI.PlacementModeText();
+                }
             }
+
+            // Switch to attack mode
+            if(Input.GetKeyDown("m") && selectedObjects.Count > 0) {
+                attackMoving = !attackMoving;
+                if(attackMoving) {
+                    UI.NoModeText();
+                    UI.AttackMovementText();
+                } else {
+                    UI.NoModeText();
+                    UI.StandardMovementText();
+                }
+            }
+
+            // // Switch to patrol mode
+            // if(Input.GetKeyDown("p") && selectedObjects.Count > 0) {
+            //     patrolling = !patrolling;
+            //     if(patrolling) {
+            //         UI.NoModeText();
+            //         UI.PatrolMovementText();
+            //     } else {
+            //         UI.NoModeText();
+            //         UI.StandardMovementText();
+            //     }
+            // }
 
             // Reset camera angle
             if (Input.GetKeyDown(KeyCode.Space))
@@ -575,6 +609,7 @@ public class InputManager : MonoBehaviour
             } else if (unitScript.unitType == "Wizard") {
                 UI.WizardSelect();
             }
+            UI.StandardMovementText();
             inUnitSelectionBox = true;
         } else {
             if(selectedObjects.Contains(unit)) {
@@ -755,6 +790,7 @@ public class InputManager : MonoBehaviour
                     selectedObj = hit.collider.gameObject;
                     if(!selectedObjects.Contains(selectedObj)) {
                         selectedObjects.Add(selectedObj);
+                        UI.StandardMovementText();
                     } else {
                         selectedObjects.Remove(selectedObj);
                     }
@@ -1028,8 +1064,8 @@ public class InputManager : MonoBehaviour
                 }
             }
         }
-
         isSelected = false;
+        attackMoving = false;
     }
 
     void SaveControlGroup(int number) {

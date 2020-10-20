@@ -249,7 +249,11 @@ public class UnitSelection : MonoBehaviour
                             isBuilding = false;
                             isGathering = false;
                             isMeleeing = false;
-                            task = ActionList.Moving;
+                            if(IM.attackMoving) {
+                                task = ActionList.Attacking;
+                            } else {
+                                task = ActionList.Moving;
+                            }
                             CreateBoxFormation(hit);
                         }
                         else if (hit.collider.tag == "Resource")
@@ -283,11 +287,19 @@ public class UnitSelection : MonoBehaviour
                         }
                         else if (hit.collider.tag == "Doorway")
                         {
-                            task = ActionList.Moving;
+                            if(IM.attackMoving) {
+                                task = ActionList.Attacking;
+                            } else {
+                                task = ActionList.Moving;
+                            }
                         } 
                         else if (hit.collider.tag == "Enemy Unit")
                         {
-                            task = ActionList.Moving;
+                            if(IM.attackMoving) {
+                                task = ActionList.Attacking;
+                            } else {
+                                task = ActionList.Moving;
+                            }
                             if(hit.collider.gameObject.GetComponent<UnitController>().isDead) {
                                 agent.destination = hit.collider.gameObject.transform.position;
                             }
@@ -318,7 +330,11 @@ public class UnitSelection : MonoBehaviour
                     else if (hit.collider.tag == "Ground")
                     {
                         isMeleeing = false;
-                        task = ActionList.Moving;
+                        if(IM.attackMoving) {
+                            task = ActionList.Attacking;
+                        } else {
+                            task = ActionList.Moving;
+                        }
                         CreateBoxFormation(hit);
                     }
                     else if (hit.collider.tag == "Doorway")

@@ -79,7 +79,7 @@ public class LumberYardController : MonoBehaviour
         buildingScript = selectedObj.GetComponent<BuildingController>();
 
         if(RM.gold < RC.basicBlacksmithingGold || RM.iron < RC.basicBlacksmithingIron) {
-            UI.noResourcesText.SetActive(true);
+            UI.OpenNoResourcesText();
             StartCoroutine(CloseResourcesText());
         } else {
             RM.gold -= RC.basicBlacksmithingGold;
@@ -92,7 +92,7 @@ public class LumberYardController : MonoBehaviour
     public void ResearchEfficientBuildings () 
     { 
         if(RM.gold < RC.basicToolSmithingGold || RM.iron < RC.basicToolSmithingIron) {
-            UI.noResourcesText.SetActive(true);
+            UI.OpenNoResourcesText();
             StartCoroutine(CloseResourcesText());
         } else {
             RM.gold -= RC.basicToolSmithingGold;
@@ -106,7 +106,7 @@ public class LumberYardController : MonoBehaviour
     public void ResearchSturdyConstruction () 
     { 
         if(RM.gold < RC.basicArmourSmithingGold || RM.iron < RC.basicArmourSmithingIron) {
-            UI.noResourcesText.SetActive(true);
+            UI.OpenNoResourcesText();
             StartCoroutine(CloseResourcesText());
         } else {
             RM.gold -= RC.basicArmourSmithingGold;
@@ -120,7 +120,7 @@ public class LumberYardController : MonoBehaviour
     public void ResearchBetterGear () 
     { 
         if(RM.gold < RC.basicWeaponSmithingGold || RM.iron < RC.basicWeaponSmithingIron) {
-            UI.noResourcesText.SetActive(true);
+            UI.OpenNoResourcesText();
             StartCoroutine(CloseResourcesText());
         } else {
             RM.gold -= RC.basicWeaponSmithingGold;
@@ -134,7 +134,7 @@ public class LumberYardController : MonoBehaviour
     // public void ResearchBasicWoodworking () 
     // { 
     //     if(RM.gold < RC.steelSmithingGold || RM.iron < RC.artisanBlacksmithingIron) {
-    //         UI.noResourcesText.SetActive(true);
+    //         UI.OpenNoResourcesText();
     //         StartCoroutine(CloseResourcesText());
     //     } else {
     //         RM.gold -= RC.artisanBlacksmithingGold;
@@ -148,7 +148,7 @@ public class LumberYardController : MonoBehaviour
     public void ResearchImprovedHandles () 
     { 
         if(RM.gold < RC.artisanToolSmithingGold || RM.iron < RC.artisanToolSmithingIron) {
-            UI.noResourcesText.SetActive(true);
+            UI.OpenNoResourcesText();
             StartCoroutine(CloseResourcesText());
         } else {
             RM.gold -= RC.artisanToolSmithingGold;
@@ -162,7 +162,7 @@ public class LumberYardController : MonoBehaviour
     public void ResearchWheelbarrows () 
     { 
         if(RM.gold < RC.artisanArmourSmithingGold || RM.iron < RC.artisanArmourSmithingIron) {
-            UI.noResourcesText.SetActive(true);
+            UI.OpenNoResourcesText();
             StartCoroutine(CloseResourcesText());
         } else {
             RM.gold -= RC.artisanArmourSmithingGold;
@@ -176,7 +176,7 @@ public class LumberYardController : MonoBehaviour
     public void ResearchCarts () 
     { 
         if(RM.gold < RC.artisanWeaponSmithingGold || RM.iron < RC.artisanWeaponSmithingIron) {
-            UI.noResourcesText.SetActive(true);
+            UI.OpenNoResourcesText();
             StartCoroutine(CloseResourcesText());
         } else {
             RM.gold -= RC.artisanWeaponSmithingGold;
@@ -190,7 +190,7 @@ public class LumberYardController : MonoBehaviour
     public void ResearchArtisanWoodworking () 
     { 
         if(RM.gold < RC.horseshoesGold || RM.iron < RC.horseshoesIron) {
-            UI.noResourcesText.SetActive(true);
+            UI.OpenNoResourcesText();
             StartCoroutine(CloseResourcesText());
         } else {
             RM.gold -= RC.horseshoesGold;
@@ -204,7 +204,7 @@ public class LumberYardController : MonoBehaviour
     public void ResearchBridges () 
     { 
         if(RM.gold < RC.minecartsGold || RM.iron < RC.minecartsGold) {
-            UI.noResourcesText.SetActive(true);
+            UI.OpenNoResourcesText();
             StartCoroutine(CloseResourcesText());
         } else {
             RM.gold -= RC.minecartsGold;
@@ -218,7 +218,7 @@ public class LumberYardController : MonoBehaviour
     public void ResearchWalls () 
     { 
         if(RM.gold < RC.caltropsGold || RM.iron < RC.caltropsIron) {
-            UI.noResourcesText.SetActive(true);
+            UI.OpenNoResourcesText();
             StartCoroutine(CloseResourcesText());
         } else {
             RM.gold -= RC.caltropsGold;
@@ -232,7 +232,7 @@ public class LumberYardController : MonoBehaviour
     public void ResearchWatchTowers () 
     { 
         if(RM.gold < RC.reinforcedBuildingsGold || RM.iron < RC.reinforcedBuildingsIron) {
-            UI.noResourcesText.SetActive(true);
+            UI.OpenNoResourcesText();
             StartCoroutine(CloseResourcesText());
         } else {
             RM.gold -= RC.reinforcedBuildingsGold;
@@ -247,7 +247,7 @@ public class LumberYardController : MonoBehaviour
     {
         yield return new WaitForSeconds(3);
         //my code here after 3 seconds
-        UI.noResourcesText.SetActive(false);
+        UI.CloseNoResourcesText();
     }
 
     IEnumerator Research() 

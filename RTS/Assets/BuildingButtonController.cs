@@ -160,7 +160,7 @@ public class BuildingButtonController : MonoBehaviour
         }
         else 
         {
-            UI.noResourcesText.SetActive(true);
+            UI.OpenNoResourcesText();
             StartCoroutine(Wait());
         }
     }
@@ -187,7 +187,7 @@ public class BuildingButtonController : MonoBehaviour
         } 
         else   
         {
-            UI.noResourcesText.SetActive(true);
+            UI.OpenNoResourcesText();
             StartCoroutine(Wait());
         }
     }
@@ -214,7 +214,7 @@ public class BuildingButtonController : MonoBehaviour
         } 
         else   
         {
-            UI.noResourcesText.SetActive(true);
+            UI.OpenNoResourcesText();
             StartCoroutine(Wait());
         }
     }
@@ -241,7 +241,7 @@ public class BuildingButtonController : MonoBehaviour
         } 
         else   
         {
-            UI.noResourcesText.SetActive(true);
+            UI.OpenNoResourcesText();
             StartCoroutine(Wait());
         }
     }
@@ -268,7 +268,7 @@ public class BuildingButtonController : MonoBehaviour
         } 
         else   
         {
-            UI.noResourcesText.SetActive(true);
+            UI.OpenNoResourcesText();
             StartCoroutine(Wait());
         }
     }
@@ -295,7 +295,7 @@ public class BuildingButtonController : MonoBehaviour
         } 
         else   
         {
-            UI.noResourcesText.SetActive(true);
+            UI.OpenNoResourcesText();
             StartCoroutine(Wait());
         }
     }
@@ -303,7 +303,7 @@ public class BuildingButtonController : MonoBehaviour
     {
         yield return new WaitForSeconds(3);
         //my code here after 3 seconds
-        UI.noResourcesText.SetActive(false);
+        UI.CloseNoResourcesText();
     }
 
 }

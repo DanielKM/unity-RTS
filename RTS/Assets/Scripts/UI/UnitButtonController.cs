@@ -106,6 +106,11 @@ public class UnitButtonController : MonoBehaviour
             
             if (currentPlaceableObject != null)
             {
+                if(IM.rotating) {
+                    UI.RotationModeText();
+                } else {
+                    UI.PlacementModeText();
+                }
                 if (!EventSystem.current.IsPointerOverGameObject(-1))
                 {
                     building = currentPlaceableObject.GetComponent<BuildingController>();
@@ -210,7 +215,7 @@ public class UnitButtonController : MonoBehaviour
         }
        else if (currentPlaceableObject == null || RM.gold < BC.gold || RM.wood < BC.wood || RM.stone < BC.stone || RM.food < BC.food  || RM.iron < BC.iron  || RM.steel < BC.steel  || RM.skymetal < BC.skymetal)
        {
-            UI.noResourcesText.SetActive(true);
+            UI.OpenNoResourcesText();
             StartCoroutine(Wait());
         }
         else
@@ -240,7 +245,7 @@ public class UnitButtonController : MonoBehaviour
         }
        else if (currentPlaceableObject == null || RM.gold < BC.gold || RM.wood < BC.wood || RM.stone < BC.stone || RM.food < BC.food  || RM.iron < BC.iron  || RM.steel < BC.steel  || RM.skymetal < BC.skymetal)
        {
-            UI.noResourcesText.SetActive(true);
+            UI.OpenNoResourcesText();
             StartCoroutine(Wait());
         }
         else
@@ -275,7 +280,7 @@ public class UnitButtonController : MonoBehaviour
         }
         else if (currentPlaceableObject == null || RM.gold < BC.gold || RM.wood < BC.wood || RM.stone < BC.stone || RM.food < BC.food  || RM.iron < BC.iron  || RM.steel < BC.steel  || RM.skymetal < BC.skymetal)
         {
-            UI.noResourcesText.SetActive(true);
+            UI.OpenNoResourcesText();
             StartCoroutine(Wait());
         }
         else
@@ -440,6 +445,7 @@ public class UnitButtonController : MonoBehaviour
             currentPlaceableObject.transform.rotation = currentRotation;
             currentPlaceableObject = null;
             PlayBuildingSound();
+            IM.rotating = false;      
         }
         else if (Input.GetMouseButtonDown(0) && building.unitType == "Farm")
         {
@@ -454,6 +460,7 @@ public class UnitButtonController : MonoBehaviour
             currentPlaceableObject.transform.rotation = currentRotation;
             currentPlaceableObject = null;
             PlayBuildingSound();
+            IM.rotating = false;      
         }
         else if (Input.GetMouseButtonDown(0) && building.unitType == "Town Hall")
         {
@@ -468,6 +475,7 @@ public class UnitButtonController : MonoBehaviour
             currentPlaceableObject.transform.rotation = currentRotation;
             currentPlaceableObject = null;
             PlayBuildingSound();
+            IM.rotating = false;      
         }
         else if (Input.GetMouseButtonDown(0) && building.unitType == "Lumber Yard")
         {
@@ -481,6 +489,7 @@ public class UnitButtonController : MonoBehaviour
             currentPlaceableObject.transform.rotation = currentRotation;
             currentPlaceableObject = null;
             PlayBuildingSound();
+            IM.rotating = false;      
         }
         else if (Input.GetMouseButtonDown(0) && building.unitType == "Stables")
         {
@@ -495,6 +504,7 @@ public class UnitButtonController : MonoBehaviour
             currentPlaceableObject.transform.rotation = currentRotation;
             currentPlaceableObject = null;
             PlayBuildingSound();
+            IM.rotating = false;      
         }
         else if (Input.GetMouseButtonDown(0) && building.unitType == "Barracks")
         {
@@ -508,6 +518,7 @@ public class UnitButtonController : MonoBehaviour
             currentPlaceableObject.transform.rotation = currentRotation;
             currentPlaceableObject = null;
             PlayBuildingSound();
+            IM.rotating = false;      
         }
         else if (Input.GetMouseButtonDown(0) && building.unitType == "Fort")
         {
@@ -522,6 +533,7 @@ public class UnitButtonController : MonoBehaviour
             currentPlaceableObject.transform.rotation = currentRotation;
             currentPlaceableObject = null;
             PlayBuildingSound();
+            IM.rotating = false;      
         }
         else if (Input.GetMouseButtonDown(0) && building.unitType == "Resource")
         {
@@ -535,6 +547,7 @@ public class UnitButtonController : MonoBehaviour
             currentPlaceableObject.transform.rotation = currentRotation;
             currentPlaceableObject = null;
             PlayBuildingSound();
+            IM.rotating = false;      
         }
         else if (Input.GetMouseButtonDown(0) && building.unitType == "Blacksmith")
         {
@@ -548,10 +561,12 @@ public class UnitButtonController : MonoBehaviour
             currentPlaceableObject.transform.rotation = currentRotation;
             currentPlaceableObject = null;
             PlayBuildingSound();
+            IM.rotating = false;        
         }
         else if (Input.GetMouseButtonDown(0))
         {
             currentPlaceableObject = null;
+            IM.rotating = false;      
         }
         
     }
@@ -565,7 +580,7 @@ public class UnitButtonController : MonoBehaviour
     IEnumerator Wait()
     {
         yield return new WaitForSeconds(3);
-        UI.noResourcesText.SetActive(false);
+        UI.CloseNoResourcesText();
         //my code here after 3 seconds
     }
 

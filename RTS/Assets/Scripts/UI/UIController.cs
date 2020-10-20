@@ -41,7 +41,15 @@ public class UIController : MonoBehaviour
     public CanvasGroup LumberYardActionPanel;
     public CanvasGroup BarracksActionPanel;
 
-    public GameObject noResourcesText;
+    // NOTIFICATION PANELS
+    public CanvasGroup noResourcesText;
+    public CanvasGroup rotationText;
+    public CanvasGroup placementText;
+    
+    public CanvasGroup attackMovingText;
+    public CanvasGroup movingText;
+    public CanvasGroup patrolText;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -77,6 +85,15 @@ public class UIController : MonoBehaviour
         armour3 = GameObject.Find("Armour3").GetComponent<CanvasGroup>();
         armour4 = GameObject.Find("Armour4").GetComponent<CanvasGroup>();
         armour5 = GameObject.Find("Armour5").GetComponent<CanvasGroup>();
+
+        noResourcesText = GameObject.Find("No Resources Panel").GetComponent<CanvasGroup>();
+        rotationText = GameObject.Find("Rotation Text").GetComponent<CanvasGroup>();
+        placementText = GameObject.Find("Placement Text").GetComponent<CanvasGroup>();
+
+        attackMovingText = GameObject.Find("Attack Move Text").GetComponent<CanvasGroup>();
+        movingText = GameObject.Find("Normal Move Text").GetComponent<CanvasGroup>();
+        patrolText = GameObject.Find("Patrol Move Text").GetComponent<CanvasGroup>();
+
         team = GameObject.Find("Faction");
         player = GameObject.FindGameObjectWithTag("Player");
         RM = team.GetComponent<ResourceManager>();
@@ -106,6 +123,15 @@ public class UIController : MonoBehaviour
         armour3 = GameObject.Find("Armour3").GetComponent<CanvasGroup>();
         armour4 = GameObject.Find("Armour4").GetComponent<CanvasGroup>();
         armour5 = GameObject.Find("Armour5").GetComponent<CanvasGroup>();
+
+        noResourcesText = GameObject.Find("No Resources Panel").GetComponent<CanvasGroup>();
+        rotationText = GameObject.Find("Rotation Text").GetComponent<CanvasGroup>();
+        placementText = GameObject.Find("Placement Text").GetComponent<CanvasGroup>();
+
+        attackMovingText = GameObject.Find("Attack Move Text").GetComponent<CanvasGroup>();
+        movingText = GameObject.Find("Normal Move Text").GetComponent<CanvasGroup>();
+        patrolText = GameObject.Find("Patrol Move Text").GetComponent<CanvasGroup>();
+
         team = GameObject.Find("Faction");
         player = GameObject.FindGameObjectWithTag("Player");
         RM = team.GetComponent<ResourceManager>();
@@ -173,10 +199,81 @@ public class UIController : MonoBehaviour
         BarracksActionPanel.blocksRaycasts = false;
         BarracksActionPanel.interactable = false;
 
+        // NOTIFICATIONS
+        CloseNoResourcesText();
+        NoModeText();
+
         panelOpen = 0;        
     }
 
     // DIFFERENT STATES
+
+    // NOTIFICATIONS TEXT
+    public void CloseNoResourcesText() {
+        noResourcesText.alpha = 0;
+        noResourcesText.blocksRaycasts = false;
+        noResourcesText.interactable = false;
+    }
+
+    public void OpenNoResourcesText() {
+        noResourcesText.alpha = 1;
+        noResourcesText.blocksRaycasts = true;
+        noResourcesText.interactable = true;
+    }
+
+    public void RotationModeText() {
+        rotationText.alpha = 1;
+        rotationText.blocksRaycasts = true;
+        rotationText.interactable = true;
+    }
+
+    public void PlacementModeText() {
+        placementText.alpha = 1;
+        placementText.blocksRaycasts = true;
+        placementText.interactable = true;
+    }
+
+    public void AttackMovementText() {
+        attackMovingText.alpha = 1;
+        attackMovingText.blocksRaycasts = true;
+        attackMovingText.interactable = true;
+    }
+
+    public void StandardMovementText() {
+        movingText.alpha = 1;
+        movingText.blocksRaycasts = true;
+        movingText.interactable = true;
+    }
+
+    public void PatrolMovementText() {
+        patrolText.alpha = 1;
+        patrolText.blocksRaycasts = true;
+        patrolText.interactable = true;
+    }
+
+    public void NoModeText() {
+        rotationText.alpha = 0;
+        rotationText.blocksRaycasts = false;
+        rotationText.interactable = false;
+
+        placementText.alpha = 0;
+        placementText.blocksRaycasts = false;
+        placementText.interactable = false;
+
+        attackMovingText.alpha = 0;
+        attackMovingText.blocksRaycasts = false;
+        attackMovingText.interactable = false;
+
+        movingText.alpha = 0;
+        movingText.blocksRaycasts = false;
+        movingText.interactable = false;
+
+        patrolText.alpha = 0;
+        patrolText.blocksRaycasts = false;
+        patrolText.interactable = false;
+    }
+
+
     // On worker selection
     public void WorkerSelect() {
         CloseAllPanels();
