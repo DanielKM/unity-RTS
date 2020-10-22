@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
 public class UIController : MonoBehaviour
@@ -11,6 +12,7 @@ public class UIController : MonoBehaviour
     public GameObject saveMenu;
     public GameObject loadMenu;
     ResourceManager RM;
+    InputManager IM;
 
     // GAME MENU
     public CanvasGroup GameMenuPanel;
@@ -96,6 +98,7 @@ public class UIController : MonoBehaviour
 
         team = GameObject.Find("Faction");
         player = GameObject.FindGameObjectWithTag("Player");
+        IM = player.GetComponent<InputManager>();
         RM = team.GetComponent<ResourceManager>();
     }
     
@@ -135,6 +138,109 @@ public class UIController : MonoBehaviour
         team = GameObject.Find("Faction");
         player = GameObject.FindGameObjectWithTag("Player");
         RM = team.GetComponent<ResourceManager>();
+    }
+
+    public void DisplaySelectedObjects(GameObject selectedUnit)
+    {
+        if(!IM.selectedObjects.Contains(selectedUnit)) {
+            UnitController unitScript = selectedUnit.GetComponent<UnitController>();
+            GameObject[] allSelectedUnitIcons = GameObject.FindGameObjectsWithTag("SelectedUnitIcon");
+
+            bool unitTypePresentInArray = false;
+            GameObject selectedIcon = null;
+            for(int i = 0; i<allSelectedUnitIcons.Length; i++) {
+                if(allSelectedUnitIcons[i].name == unitScript.unitType) {
+                    unitTypePresentInArray = true;
+                    selectedIcon = allSelectedUnitIcons[i];
+                }
+            }
+
+            int unitCount = 1;
+            for(int i = 0; i<IM.selectedObjects.Count; i++) {
+                if(IM.selectedObjects[i].GetComponent<UnitController>().unitType == unitScript.unitType) {
+                    unitCount += 1;
+                }
+            }
+
+            if(unitTypePresentInArray) {
+                selectedIcon.GetComponentInChildren<Text>().text = unitCount + "";
+            } else {
+                GameObject newUnit = new GameObject();
+                GameObject text = new GameObject();
+                newUnit.name = unitScript.unitType;
+                newUnit.tag = "SelectedUnitIcon";
+                newUnit.AddComponent<Image>();
+                newUnit.GetComponent<Image>().sprite = unitScript.unitIcon;
+                newUnit.AddComponent<Outline>();         
+                newUnit.GetComponent<Outline>().effectColor = new Color(0, 0, 255);
+                newUnit.GetComponent<Outline>().effectDistance = new Vector2(5, 5);
+
+                newUnit.transform.SetParent(UnitPanel.transform); 
+                newUnit.transform.localScale = new Vector3(0.45f, 0.45f, 0.45f);
+                text.AddComponent<Text>();
+                text.GetComponent<Text>().font = Resources.GetBuiltinResource(typeof(Font), "Arial.ttf") as Font;
+                text.GetComponent<Text>().text = "1";
+                text.transform.SetParent(newUnit.transform);
+                text.transform.Translate(50, 0, Time.deltaTime);
+                if(unitScript.unitType == "Worker") {
+                    newUnit.transform.position = new Vector3(620, 270, 50);
+                } else if (unitScript.unitType == "Swordsman") {
+                    newUnit.transform.position = new Vector3(670, 270, 50);
+                } else if (unitScript.unitType == "Archer") {
+                    newUnit.transform.position = new Vector3(720, 270, 50);
+                } else if (unitScript.unitType == "Footman") {
+                    newUnit.transform.position = new Vector3(770, 270, 50);
+                } else if (unitScript.unitType == "Outrider") {
+                    newUnit.transform.position = new Vector3(820, 270, 50);
+                } else if (unitScript.unitType == "Knight") {
+                    newUnit.transform.position = new Vector3(870, 270, 50);
+                } else if (unitScript.unitType == "Wizard") {
+                    newUnit.transform.position = new Vector3(920, 270, 50);
+                }
+            }
+        }
+    }
+
+    public void RemoveSelectedObjects(GameObject selectedUnit) {
+        GameObject selectedIcon = null;
+        GameObject[] allSelectedUnitIcons = GameObject.FindGameObjectsWithTag("SelectedUnitIcon");
+        string unitType = selectedUnit.GetComponent<UnitController>().unitType;
+        int unitCount = 0;
+        for(int i = 0; i<IM.selectedObjects.Count; i++) {
+            if(IM.selectedObjects[i].GetComponent<UnitController>().unitType == selectedUnit.GetComponent<UnitController>().unitType) {
+                unitCount += 1;
+            }
+        }
+
+        for(int i=allSelectedUnitIcons.Length - 1; i>0; i--) {
+            if(unitType == allSelectedUnitIcons[i].name) {
+                selectedIcon = allSelectedUnitIcons[i];
+                selectedIcon.GetComponentInChildren<Text>().text = (unitCount-1) + "";
+                if(unitCount-1 == 0) {
+                    Destroy(selectedIcon);
+                }
+                break;
+            }
+        }
+    }
+
+    public void RemoveAllSelectedObjects(GameObject selectedUnit) {
+        GameObject[] allSelectedUnitIcons = GameObject.FindGameObjectsWithTag("SelectedUnitIcon");
+        string unitType = selectedUnit.GetComponent<UnitController>().unitType;
+        for(int i=allSelectedUnitIcons.Length - 1; i>0; i--) {
+            if(unitType == allSelectedUnitIcons[i].name) {
+                Destroy(allSelectedUnitIcons[i]);
+                break;
+            }
+        }
+    }
+
+    public void ResetSelectionIcons() {
+        GameObject[] allSelectedUnitIcons = GameObject.FindGameObjectsWithTag("SelectedUnitIcon");
+        foreach(GameObject go in allSelectedUnitIcons)
+        {
+            Destroy(go);
+        }
     }
 
     public void OpenGameMenuPanel()
