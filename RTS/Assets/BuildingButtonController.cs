@@ -20,6 +20,8 @@ public class BuildingButtonController : MonoBehaviour
     public Button barracksButtonNine;
     public Button barracksButtonTen;
 
+    public Button BuildingCancelButton;
+
     public AudioSource playerAudio;
     public AudioClip trainVillagerAudio;
     public AudioClip trainFootmanAudio;
@@ -85,7 +87,6 @@ public class BuildingButtonController : MonoBehaviour
             AdvancedBuildingsPanel = GameObject.Find("AdvancedBuildingsPanel").GetComponent<CanvasGroup>();
             PeasantPanel = GameObject.Find("VillagerPanel").GetComponent<CanvasGroup>();
             BuildingActionPanel = GameObject.Find("BuildingActions").GetComponent<CanvasGroup>();
-
             // Trained units
             swordsmanUC = swordsmanPrefab.GetComponent<UnitController>();
             footmanUC = footmanPrefab.GetComponent<UnitController>();
@@ -106,6 +107,8 @@ public class BuildingButtonController : MonoBehaviour
             barracksButtonFour.onClick.AddListener(delegate{HireUnit(archerPrefab);});
             barracksButtonNine.onClick.AddListener(delegate{HireUnit(outriderPrefab);});
             barracksButtonTen.onClick.AddListener(delegate{HireUnit(knightPrefab);});
+
+            BuildingCancelButton.onClick.AddListener(CancelConstruction);
         }
     }
 
@@ -217,11 +220,26 @@ public class BuildingButtonController : MonoBehaviour
         }
     }
 
+    public void CancelConstruction() {
+        selectedObj = inputScript.selectedObj;
+        FoundationController FC = selectedObj.GetComponent<FoundationController>();
+        BuildingController prefabBC = FC.buildingPrefab.GetComponent<BuildingController>();
+        
+        RM.gold += prefabBC.gold;
+        RM.wood += prefabBC.wood;
+        RM.food += prefabBC.food;
+        RM.iron += prefabBC.iron;
+        RM.steel += prefabBC.steel;
+        RM.skymetal += prefabBC.skymetal;
+        RM.stone += prefabBC.stone;
+        Destroy(selectedObj);
+        UI.CloseAllPanels();
+    }
+
     IEnumerator Wait()
     {
         yield return new WaitForSeconds(3);
         //my code here after 3 seconds
         UI.CloseNoResourcesText();
     }
-
 }

@@ -810,94 +810,13 @@ public class InputManager : MonoBehaviour
                     }
                 }
             }
-            else if (hit.collider.tag == "Enemy Unit" || hit.collider.tag == "Player 1" || hit.collider.tag == "Foundation" || hit.collider.tag == "Barracks" || hit.collider.tag == "House" || hit.collider.tag == "Resource" || hit.collider.tag == "Fort" || hit.collider.tag == "Blacksmith" || hit.transform.tag == "Stables" )
+            else if (hit.collider.tag == "Player 1" || hit.collider.tag == "Foundation" || hit.collider.tag == "Barracks" || hit.collider.tag == "House" || hit.collider.tag == "Resource" || hit.collider.tag == "Fort" || hit.collider.tag == "Blacksmith" || hit.transform.tag == "Stables" )
             {
-                UI.CloseAllPanels();
-                if (selectedObjects.Count >= 0)
-                {
-                    DeselectUnits();
-                }
+                // Select the building or unit
                 selectedObj = hit.collider.gameObject;
-
-                if(selectedObj.tag == "Player 1")
-                {
-                    buildingScript = selectedObj.GetComponent<BuildingController>();
-
-                    if(buildingScript.unitType == "Lumber Yard") {
-                        selectedObj.transform.GetChild(0).gameObject.SetActive(true);
-                        UI.LumberYardSelect();
-                    } else if (buildingScript.unitType == "Town Hall") {
-                        selectedObj.transform.GetChild(0).gameObject.SetActive(true);
-                        townHallScript = selectedObj.GetComponent<TownHallController>();
-                        isTraining = townHallScript.isTraining;
-                        SwapProgressIcon();
-                        if (isTraining)
-                        {
-                            UI.TownHallTraining();
-                        }
-                        else
-                        {
-                            UI.TownHallSelect();
-                        }
-                    }
-                } else if (selectedObj.tag == "House")
-                {
-                    selectedObj.transform.GetChild(0).gameObject.SetActive(true);
-                    UI.HouseSelect();
-                } else if (selectedObj.tag == "Resource")
-                {
-                    selectedObj.transform.GetChild(0).gameObject.SetActive(true);
-                    UI.ResourceSelect();
-                }
-                else if (selectedObj.tag == "Foundation")
-                {
-                    
-                    selectedObj.transform.GetChild(0).gameObject.SetActive(true);
-                    foundationScript = selectedObj.GetComponent<FoundationController>();
-                    isBuilding = foundationScript.isBuilding;
-                    if (isBuilding)
-                    {
-                        SwapProgressIcon();
-                        UI.FoundationBuilding();
-                    }
-                    else
-                    {
-                        UI.FoundationSelect();
-                    }
-                } 
-                else if (selectedObj.tag == "Blacksmith") {
-                    blacksmithScript = selectedObj.GetComponent<BlacksmithController>();
-                    selectedObj.transform.GetChild(0).gameObject.SetActive(true);
-                    isTraining = blacksmithScript.isTraining;
-                    SwapProgressIcon();
-                    if (isTraining)
-                    {
-                        UI.BlacksmithTraining();
-                    }
-                    else
-                    {
-                        UI.BlacksmithSelect();
-                    }
-                }
-                else if (selectedObj.tag == "Barracks") {
-                    selectedObj.transform.GetChild(0).gameObject.SetActive(true);
-                    barracksScript = selectedObj.GetComponent<BarracksController>();
-                    isTraining = barracksScript.isTraining;
-                    SwapProgressIcon();
-                    if (isTraining)
-                    {
-                        UI.BarracksTraining();
-                    }
-                    else
-                    {
-                        UI.BarracksSelect();
-                    }
-                }
-                else if (selectedObj.tag == "Stables") {
-                    selectedObj.transform.GetChild(0).gameObject.SetActive(true);
-                    UI.StablesSelect();
-                }
+                SelectBuilding(selectedObj);
             }
+
             else if (hit.collider.tag != "Selectable" && (!Input.GetKey(KeyCode.LeftShift)) && !closestSelectableUnit)
             {
                 if(!Input.GetKey(KeyCode.LeftShift)) {
@@ -915,6 +834,85 @@ public class InputManager : MonoBehaviour
                 }
             }
         }
+    }
+
+    void SelectBuilding(GameObject building) {
+        // Close all panels
+        UI.CloseAllPanels();
+
+        // Deselect all units
+        if (selectedObjects.Count >= 0)
+        {
+            DeselectUnits();
+        }
+        selectedObj = building;
+        // Turn on selection circle
+        selectedObj.transform.GetChild(0).gameObject.SetActive(true);
+
+        if(selectedObj.tag == "Player 1")
+        {
+            buildingScript = selectedObj.GetComponent<BuildingController>();
+            if(buildingScript.unitType == "Lumber Yard") {
+                UI.LumberYardSelect();
+            } else if (buildingScript.unitType == "Town Hall") {
+                townHallScript = selectedObj.GetComponent<TownHallController>();
+                isTraining = townHallScript.isTraining;
+                SwapProgressIcon();
+                if (isTraining)
+                {
+                    UI.TownHallTraining();
+                }
+                else
+                {
+                    UI.TownHallSelect();
+                }
+            }
+        } else if (selectedObj.tag == "House")
+        {
+            UI.HouseSelect();
+        } else if (selectedObj.tag == "Resource")
+        {
+            UI.ResourceSelect();
+        } else if (selectedObj.tag == "Blacksmith") {
+            blacksmithScript = selectedObj.GetComponent<BlacksmithController>();
+            isTraining = blacksmithScript.isTraining;
+            SwapProgressIcon();
+            if (isTraining)
+            {
+                UI.BlacksmithTraining();
+            }
+            else
+            {
+                UI.BlacksmithSelect();
+            }
+        } else if (selectedObj.tag == "Barracks") {
+            barracksScript = selectedObj.GetComponent<BarracksController>();
+            isTraining = barracksScript.isTraining;
+            SwapProgressIcon();
+            if (isTraining)
+            {
+                UI.BarracksTraining();
+            }
+            else
+            {
+                UI.BarracksSelect();
+            }
+        } else if (selectedObj.tag == "Stables") {
+            UI.StablesSelect();
+        } else if (selectedObj.tag == "Foundation")
+        {
+            foundationScript = selectedObj.GetComponent<FoundationController>();
+            isBuilding = foundationScript.isBuilding;
+            if (isBuilding)
+            {
+                SwapProgressIcon();
+                UI.FoundationBuilding();
+            }
+            else
+            {
+                UI.FoundationSelect();
+            }
+        } 
     }
 
     private void DeselectSingleUnit(GameObject go) {
