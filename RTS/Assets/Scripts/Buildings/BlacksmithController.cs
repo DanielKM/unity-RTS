@@ -64,173 +64,75 @@ public class BlacksmithController : MonoBehaviour
         BuildingProgressSlider = BuildingProgressBar.GetComponent<Slider>();
     }
 
-    public void ResearchBlacksmithing () 
-    { 
+    public void StartResearch (string selectedResearch) {
         selectedObj = inputScript.selectedObj;
         buildingScript = selectedObj.GetComponent<BuildingController>();
+        float goldCost = 0;
+        float ironCost = 0;
 
-        if(RM.gold < RC.basicBlacksmithingGold || RM.iron < RC.basicBlacksmithingIron) {
-            UI.OpenNoResourcesText("Not enough resources");
-            StartCoroutine(CloseResourcesText());
-        } else {
-            RM.gold -= RC.basicBlacksmithingGold;
-            RM.iron -= RC.basicBlacksmithingIron;
-            research = "basicBlacksmithing";
-            StartCoroutine(Research());
-            RC.basicBlacksmithingButton.interactable = false;
+        switch(selectedResearch) {
+            case "basicBlacksmithing":
+                goldCost = RC.basicBlacksmithingGold;
+                ironCost = RC.basicBlacksmithingIron;
+                break;
+            case "basicToolSmithing":
+                goldCost = RC.basicToolSmithingGold;
+                ironCost = RC.basicToolSmithingIron;
+                break;
+            case "basicArmourSmithing":
+                goldCost = RC.basicArmourSmithingGold;
+                ironCost = RC.basicArmourSmithingIron;
+                break;
+            case "basicWeaponSmithing":
+                goldCost = RC.basicWeaponSmithingGold;
+                ironCost = RC.basicWeaponSmithingIron;
+                break;
+            case "steelSmithing":
+                goldCost = RC.steelSmithingGold;
+                ironCost = RC.steelSmithingIron;
+                break;
+            case "artisanToolSmithing":
+                goldCost = RC.artisanToolSmithingGold;
+                ironCost = RC.artisanToolSmithingIron;
+                break;
+            case "artisanArmourSmithing":
+                goldCost = RC.artisanArmourSmithingGold;
+                ironCost = RC.artisanArmourSmithingIron;
+                break;
+            case "artisanWeaponSmithing":
+                goldCost = RC.artisanWeaponSmithingGold;
+                ironCost = RC.artisanWeaponSmithingIron;
+                break;
+            case "horseshoes":
+                goldCost = RC.horseshoesGold;
+                ironCost = RC.horseshoesIron;
+                break;
+            case "minecarts":
+                goldCost = RC.minecartsGold;
+                ironCost = RC.minecartsIron;
+                break;
+            case "caltrops":
+                goldCost = RC.caltropsGold;
+                ironCost = RC.caltropsIron;
+                break;
+            case "reinforcedBuildings":
+                goldCost = RC.reinforcedBuildingsGold;
+                ironCost = RC.reinforcedBuildingsIron;
+                break;
+            default:
+                return;
         }
-    }
-    public void ResearchBasicToolSmithing () 
-    { 
-        if(RM.gold < RC.basicToolSmithingGold || RM.iron < RC.basicToolSmithingIron) {
-            UI.OpenNoResourcesText("Not enough resources");
-            StartCoroutine(CloseResourcesText());
-        } else {
-            RM.gold -= RC.basicToolSmithingGold;
-            RM.iron -= RC.basicToolSmithingIron;
-            research = "basicToolSmithing";
-            StartCoroutine(Research());
-            RC.basicToolSmithingButton.interactable = false;
-        }
-    }
 
-    public void ResearchBasicArmourSmithing () 
-    { 
-        if(RM.gold < RC.basicArmourSmithingGold || RM.iron < RC.basicArmourSmithingIron) {
-            UI.OpenNoResourcesText("Not enough resources");
+        if(RM.gold < goldCost){
+            UI.OpenNoResourcesText("Not enough gold!");
+            StartCoroutine(CloseResourcesText());
+        } else if (RM.iron < ironCost) {
+            UI.OpenNoResourcesText("Not enough iron!");
             StartCoroutine(CloseResourcesText());
         } else {
-            RM.gold -= RC.basicArmourSmithingGold;
-            RM.iron -= RC.basicArmourSmithingIron;
-            research = "basicArmourSmithing";
-            StartCoroutine(Research());
-            RC.basicArmourSmithingButton.interactable = false;
-        }
-    }
-
-    public void ResearchBasicWeaponSmithing () 
-    { 
-        if(RM.gold < RC.basicWeaponSmithingGold || RM.iron < RC.basicWeaponSmithingIron) {
-            UI.OpenNoResourcesText("Not enough resources");
-            StartCoroutine(CloseResourcesText());
-        } else {
-            RM.gold -= RC.basicWeaponSmithingGold;
-            RM.iron -= RC.basicWeaponSmithingIron;
-            research = "basicWeaponSmithing";
-            StartCoroutine(Research());
-            RC.basicWeaponSmithingButton.interactable = false;
-        }
-    }
-
-    public void ResearchSteelSmithing () 
-    { 
-        if(RM.gold < RC.steelSmithingGold || RM.iron < RC.steelSmithingIron) {
-            UI.OpenNoResourcesText("Not enough resources");
-            StartCoroutine(CloseResourcesText());
-        } else {
-            RM.gold -= RC.steelSmithingGold;
-            RM.iron -= RC.steelSmithingIron;
-            research = "steelSmithing";
-            StartCoroutine(Research());
-            RC.steelSmithingButton.interactable = false;
-        }
-    }
-
-    public void ResearchArtisanToolSmithing () 
-    { 
-        if(RM.gold < RC.artisanToolSmithingGold || RM.iron < RC.artisanToolSmithingIron) {
-            UI.OpenNoResourcesText("Not enough resources");
-            StartCoroutine(CloseResourcesText());
-        } else {
-            RM.gold -= RC.artisanToolSmithingGold;
-            RM.iron -= RC.artisanToolSmithingIron;
-            research = "artisanToolSmithing";
-            StartCoroutine(Research());
-            RC.artisanToolSmithingButton.interactable = false;
-        }
-    }
-
-    public void ResearchArtisanArmourSmithing () 
-    { 
-        if(RM.gold < RC.artisanArmourSmithingGold || RM.iron < RC.artisanArmourSmithingIron) {
-            UI.OpenNoResourcesText("Not enough resources");
-            StartCoroutine(CloseResourcesText());
-        } else {
-            RM.gold -= RC.artisanArmourSmithingGold;
-            RM.iron -= RC.artisanArmourSmithingIron;
-            research = "artisanArmourSmithing";
-            StartCoroutine(Research());
-            RC.artisanArmourSmithingButton.interactable = false;
-        }
-    }
-
-    public void ResearchArtisanWeaponSmithing () 
-    { 
-        if(RM.gold < RC.artisanWeaponSmithingGold || RM.iron < RC.artisanWeaponSmithingIron) {
-            UI.OpenNoResourcesText("Not enough resources");
-            StartCoroutine(CloseResourcesText());
-        } else {
-            RM.gold -= RC.artisanWeaponSmithingGold;
-            RM.iron -= RC.artisanWeaponSmithingIron;
-            research = "artisanWeaponSmithing";
-            StartCoroutine(Research());
-            RC.artisanWeaponSmithingButton.interactable = false;
-        }
-    }
-
-    public void ResearchHorseshoes () 
-    { 
-        if(RM.gold < RC.horseshoesGold || RM.iron < RC.horseshoesIron) {
-            UI.OpenNoResourcesText("Not enough resources");
-            StartCoroutine(CloseResourcesText());
-        } else {
-            RM.gold -= RC.horseshoesGold;
-            RM.iron -= RC.horseshoesIron;
-            research = "horseshoes";
-            StartCoroutine(Research());
-            RC.horseshoesButton.interactable = false;
-        }
-    }
-
-    public void ResearchMinecarts () 
-    { 
-        if(RM.gold < RC.minecartsGold || RM.iron < RC.minecartsGold) {
-            UI.OpenNoResourcesText("Not enough resources");
-            StartCoroutine(CloseResourcesText());
-        } else {
-            RM.gold -= RC.minecartsGold;
-            RM.iron -= RC.minecartsIron;
-            research = "minecarts";
-            StartCoroutine(Research());
-            RC.minecartsButton.interactable = false;
-        }
-    }
-    
-    public void ResearchCaltrops () 
-    { 
-        if(RM.gold < RC.caltropsGold || RM.iron < RC.caltropsIron) {
-            UI.OpenNoResourcesText("Not enough resources");
-            StartCoroutine(CloseResourcesText());
-        } else {
-            RM.gold -= RC.caltropsGold;
-            RM.iron -= RC.caltropsIron;
-            research = "caltrops";
-            StartCoroutine(Research());
-            RC.caltropsButton.interactable = false;
-        }
-    }
-    
-    public void ResearchReinforcedBuildings () 
-    { 
-        if(RM.gold < RC.reinforcedBuildingsGold || RM.iron < RC.reinforcedBuildingsIron) {
-            UI.OpenNoResourcesText("Not enough resources");
-            StartCoroutine(CloseResourcesText());
-        } else {
-            RM.gold -= RC.reinforcedBuildingsGold;
-            RM.iron -= RC.reinforcedBuildingsIron;
-            research = "reinforcedBuildings";
-            StartCoroutine(Research());
-            RC.reinforcedBuildingsButton.interactable = false;
+            RM.gold -= goldCost;
+            RM.iron -= ironCost;
+            StartCoroutine(Research(selectedResearch));
         }
     }
 
@@ -240,7 +142,7 @@ public class BlacksmithController : MonoBehaviour
         UI.CloseNoResourcesText();
     }
 
-    IEnumerator Research() 
+    IEnumerator Research(string selectedResearch) 
     {
         UI.BlacksmithTraining();
         isTraining = true;
@@ -252,7 +154,7 @@ public class BlacksmithController : MonoBehaviour
             yield return new WaitForSeconds(1);
         }
 
-        if(research == "basicBlacksmithing") {
+        if(selectedResearch == "basicBlacksmithing") {
             RC.basicToolSmithingButton.interactable = true;
             RC.basicArmourSmithingButton.interactable = true;
             RC.basicWeaponSmithingButton.interactable = true;
@@ -261,32 +163,37 @@ public class BlacksmithController : MonoBehaviour
             var colors = RC.basicBlacksmithingButton.colors; 
             colors.disabledColor = new Color(0, 0.4f, 0, 1);
             RC.basicBlacksmithingButton.colors = colors; 
+            RC.basicBlacksmithingButton.interactable = false;
 
-        } else if (research == "basicToolSmithing") {
+        } else if (selectedResearch == "basicToolSmithing") {
             RC.basicToolSmithing = true;
             if(RC.steelSmithing) {
                 RC.artisanToolSmithingButton.interactable = true;
             }
             var colors = RC.basicToolSmithingButton.colors; 
             colors.disabledColor = new Color(0, 0.4f, 0, 1);
-            RC.basicToolSmithingButton.colors = colors; 
-        } else if(research == "basicArmourSmithing") {
+            RC.basicToolSmithingButton.colors = colors;             
+            RC.basicToolSmithingButton.interactable = false;
+
+        } else if(selectedResearch == "basicArmourSmithing") {
             RC.basicArmourSmithing = true;
             if(RC.steelSmithing) {
                 RC.artisanArmourSmithingButton.interactable = true;
             }
             var colors = RC.basicArmourSmithingButton.colors; 
             colors.disabledColor = new Color(0, 0.4f, 0, 1);
-            RC.basicArmourSmithingButton.colors = colors; 
-        } else if (research == "basicWeaponSmithing") {
+            RC.basicArmourSmithingButton.colors = colors;             
+            RC.basicArmourSmithingButton.interactable = false;
+        } else if (selectedResearch == "basicWeaponSmithing") {
             RC.basicWeaponSmithing = true;
             if(RC.steelSmithing) {
                 RC.artisanWeaponSmithingButton.interactable = true;
             }
             var colors = RC.basicWeaponSmithingButton.colors; 
             colors.disabledColor = new Color(0, 0.4f, 0, 1);
-            RC.basicWeaponSmithingButton.colors = colors; 
-        } else if (research == "steelSmithing") {
+            RC.basicWeaponSmithingButton.colors = colors;   
+            RC.basicWeaponSmithingButton.interactable = false;
+        } else if (selectedResearch == "steelSmithing") {
             RC.steelSmithing = true;
             if(RC.basicToolSmithing) {
                 RC.artisanToolSmithingButton.interactable = true;
@@ -300,41 +207,49 @@ public class BlacksmithController : MonoBehaviour
             var colors = RC.steelSmithingButton.colors; 
             colors.disabledColor = new Color(0, 0.4f, 0, 1);
             RC.steelSmithingButton.colors = colors; 
-        } else if (research == "artisanToolSmithing") {
+            RC.steelSmithingButton.interactable = false;
+        } else if (selectedResearch == "artisanToolSmithing") {
             RC.artisanToolSmithing = true;
             var colors = RC.artisanToolSmithingButton.colors; 
             colors.disabledColor = new Color(0, 0.4f, 0, 1);
             RC.artisanToolSmithingButton.colors = colors; 
-        } else if (research == "artisanArmourSmithing") {
+            RC.artisanToolSmithingButton.interactable = false;
+        } else if (selectedResearch == "artisanArmourSmithing") {
             RC.artisanArmourSmithing = true;
             var colors = RC.artisanArmourSmithingButton.colors; 
             colors.disabledColor = new Color(0, 0.4f, 0, 1);
             RC.artisanArmourSmithingButton.colors = colors; 
-        } else if (research == "artisanWeaponSmithing") {
+            RC.artisanArmourSmithingButton.interactable = false;
+        } else if (selectedResearch == "artisanWeaponSmithing") {
             RC.artisanWeaponSmithing = true;
             var colors = RC.artisanWeaponSmithingButton.colors; 
             colors.disabledColor = new Color(0, 0.4f, 0, 1);
             RC.artisanWeaponSmithingButton.colors = colors; 
-        } else if (research == "horseshoes") {
+            RC.artisanWeaponSmithingButton.interactable = false;
+        } else if (selectedResearch == "horseshoes") {
             RC.horseshoes = true;
             var colors = RC.horseshoesButton.colors; 
             colors.disabledColor = new Color(0, 0.4f, 0, 1);
             RC.horseshoesButton.colors = colors; 
-        } else if (research == "minecarts") {
+            RC.horseshoesButton.interactable = false;
+        } else if (selectedResearch == "minecarts") {
             RC.minecarts = true;
             var colors = RC.minecartsButton.colors; 
             colors.disabledColor = new Color(0, 0.4f, 0, 1);
             RC.minecartsButton.colors = colors; 
-        } else if (research == "caltrops") {
+            RC.minecartsButton.interactable = false;
+        } else if (selectedResearch == "caltrops") {
             RC.caltrops = true;
             var colors = RC.caltropsButton.colors; 
             colors.disabledColor = new Color(0, 0.4f, 0, 1);
             RC.caltropsButton.colors = colors; 
-        } else if (research == "reinforcedBuildings") {
+            RC.caltropsButton.interactable = false;
+        } else if (selectedResearch == "reinforcedBuildings") {
             RC.reinforcedBuildings = true;
             var colors = RC.reinforcedBuildingsButton.colors; 
             colors.disabledColor = new Color(0, 0.4f, 0, 1);
             RC.reinforcedBuildingsButton.colors = colors; 
+            RC.reinforcedBuildingsButton.interactable = false;
         }
             
         isTraining = false;

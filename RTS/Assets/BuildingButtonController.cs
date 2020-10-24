@@ -119,16 +119,19 @@ public class BuildingButtonController : MonoBehaviour
             } else {
                 barracksButtonFour.interactable = false;
             }
+
             if(RM.blacksmithCount > 0) {
                 barracksButtonTwo.interactable = true;
             } else {
                 barracksButtonTwo.interactable = false;
             }
+
             if(RM.stablesCount > 0) {
                 barracksButtonNine.interactable = true;
             } else {
                 barracksButtonNine.interactable = false;
             }
+
             if(RM.stablesCount > 0 && RM.blacksmithCount > 0) {
                 barracksButtonTen.interactable = true;
             } else {

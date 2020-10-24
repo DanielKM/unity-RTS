@@ -75,14 +75,14 @@ public class UnitButtonController : MonoBehaviour
             advancedBuildings.onClick.AddListener(UI.VillagerAdvancedBuildings);
             clearDead.onClick.AddListener(ClearDead);
 
-            buttonTwo.onClick.AddListener(BuildHouse);
-            buttonThree.onClick.AddListener(BuildFarm);
-            buttonFour.onClick.AddListener(BuildTownHall);
+            buttonTwo.onClick.AddListener(delegate{BuildStructure(house);});
+            buttonThree.onClick.AddListener(delegate{BuildStructure(farm);});
+            buttonFour.onClick.AddListener(delegate{BuildStructure(townHall);});
 
-            buttonFive.onClick.AddListener(BuildBlacksmith);
-            buttonSix.onClick.AddListener(BuildLumberMill);
-            buttonSeven.onClick.AddListener(BuildStables);
-            buttonEight.onClick.AddListener(BuildBarracks);
+            buttonFive.onClick.AddListener(delegate{BuildStructure(blacksmith);});
+            buttonSix.onClick.AddListener(delegate{BuildStructure(lumberMill);});
+            buttonSeven.onClick.AddListener(delegate{BuildStructure(stables);});
+            buttonEight.onClick.AddListener(delegate{BuildStructure(barracks);});
         }
     }
 
@@ -138,7 +138,6 @@ public class UnitButtonController : MonoBehaviour
     private void RotateFromMouseWheel() {
         mouseWheelRotation = Input.mouseScrollDelta.y;
         currentPlaceableObject.transform.Rotate(Vector3.up, mouseWheelRotation * 10f);
-            // currentPlaceableObject.transform.rotation = Quaternion.FromToRotation(Vector3.up, hitInfo.normal);
     }
 
     void ClearDead() {
@@ -148,147 +147,97 @@ public class UnitButtonController : MonoBehaviour
         }
     }
 
-    void BuildHouse()
-    {
-        BC = house.GetComponent<BuildingController>();
-        CreateBasicBuildingInstance(BC, house);
-    }
-
-    void BuildFarm()
-    {
-        BC = farm.GetComponent<BuildingController>();
-        CreateMultiMeshBuildingInstance(BC, farm);
-    }
-
-    void BuildTownHall()
-    {
-        BC = townHall.GetComponent<BuildingController>();
-        CreateMultiMeshBuildingInstance(BC, townHall);
-    }
-
-    void BuildLumberMill()
-    {
-        BC = lumberMill.GetComponent<BuildingController>();
-        CreateMultiMeshSphereBuildingInstance(BC, lumberMill);
-    }
-
-    void BuildStables()
-    {
-        BC = stables.GetComponent<BuildingController>();
-        CreateMultiMeshBuildingInstance(BC, stables);
-    }
-
-    void BuildBarracks()
-    {
-        BC = barracks.GetComponent<BuildingController>();
-        CreateMultiMeshBuildingInstance(BC, barracks);
-    }
-
-    void BuildFort()
-    {
-        BC = fort.GetComponent<BuildingController>();
-        CreateMultiMeshBuildingInstance(BC, fort);
-    }
-
-    void BuildBlacksmith()
-    {
-        BC = blacksmith.GetComponent<BuildingController>();
-        CreateBasicBuildingInstance(BC, blacksmith);
+    void BuildStructure(GameObject structure) {
+        BC = structure.GetComponent<BuildingController>();
+        bool enoughResources = CheckResources(BC);
+        if(currentPlaceableObject == null && enoughResources) {
+            switch(BC.unitType) {
+                case "House":
+                    CreateBasicBuildingInstance(BC, structure);
+                    break;
+                case "Farm":
+                    CreateMultiMeshBuildingInstance(BC, structure);
+                    break;
+                case "Town Hall":
+                    CreateMultiMeshBuildingInstance(BC, structure);
+                    break;
+                case "Blacksmith":
+                    CreateBasicBuildingInstance(BC, structure);
+                    break;
+                case "Barracks":
+                    CreateMultiMeshBuildingInstance(BC, structure);
+                    break;
+                case "Lumber Yard":
+                    CreateMultiMeshSphereBuildingInstance(BC, structure);
+                    break;
+                case "Stables":
+                    CreateMultiMeshBuildingInstance(BC, structure);
+                    break;
+                default:
+                    return;
+            }
+        } else {
+            Destroy(currentPlaceableObject);
+        }
     }
 
     void CreateMultiMeshBuildingInstance(BuildingController BC, GameObject selectedPrefab) {
-       if (currentPlaceableObject == null && RM.gold >= BC.gold && RM.wood >= BC.wood && RM.stone >= BC.stone && RM.iron >= BC.iron && RM.steel >= BC.steel && RM.skymetal >= BC.skymetal && RM.food >= BC.food)
-       {
-            currentPlaceableObject = Instantiate(selectedPrefab);
-            BuildingController buildingScript = currentPlaceableObject.GetComponent<BuildingController>();
-            BoxCollider boxCollider = buildingScript.GetComponent<BoxCollider>();
-            boxCollider.isTrigger = true;
-            listOfMaterialArrays.Clear();
+        currentPlaceableObject = Instantiate(selectedPrefab);
+        BuildingController buildingScript = currentPlaceableObject.GetComponent<BuildingController>();
+        BoxCollider boxCollider = buildingScript.GetComponent<BoxCollider>();
+        boxCollider.isTrigger = true;
+        listOfMaterialArrays.Clear();
 
-            for (int i = 0; i < currentPlaceableObject.transform.childCount; i++) {
-                Transform childTransform = currentPlaceableObject.transform.GetChild(i);
-                if(childTransform.gameObject.GetComponent<MeshRenderer>()) {
-                    Material[] currentMaterialArray = currentPlaceableObject.transform.GetChild(i).gameObject.GetComponent<MeshRenderer>().materials;
-                    listOfMaterialArrays.Add(currentMaterialArray);
-                } else {
-                    listOfMaterialArrays.Add(mats);
-                }
+        for (int i = 0; i < currentPlaceableObject.transform.childCount; i++) {
+            Transform childTransform = currentPlaceableObject.transform.GetChild(i);
+            if(childTransform.gameObject.GetComponent<MeshRenderer>()) {
+                Material[] currentMaterialArray = currentPlaceableObject.transform.GetChild(i).gameObject.GetComponent<MeshRenderer>().materials;
+                listOfMaterialArrays.Add(currentMaterialArray);
+            } else {
+                listOfMaterialArrays.Add(mats);
             }
-        }
-       else if (currentPlaceableObject == null || RM.gold < BC.gold || RM.wood < BC.wood || RM.stone < BC.stone || RM.food < BC.food  || RM.iron < BC.iron  || RM.steel < BC.steel  || RM.skymetal < BC.skymetal)
-       {
-            UI.OpenNoResourcesText("Not enough resources");
-            StartCoroutine(Wait());
-        }
-        else
-        {
-            Destroy(currentPlaceableObject);
         }
     }
     
     void CreateMultiMeshSphereBuildingInstance(BuildingController BC, GameObject selectedPrefab) {
-        if (currentPlaceableObject == null && RM.gold >= BC.gold && RM.wood >= BC.wood && RM.stone >= BC.stone && RM.iron >= BC.iron && RM.steel >= BC.steel && RM.skymetal >= BC.skymetal && RM.food >= BC.food)
-      {
-            currentPlaceableObject = Instantiate(lumberMill);
-            BuildingController buildingScript = currentPlaceableObject.GetComponent<BuildingController>();
-            SphereCollider sphereCollider = buildingScript.GetComponent<SphereCollider>();
-            sphereCollider.isTrigger = true;
-            listOfMaterialArrays.Clear();
+        currentPlaceableObject = Instantiate(lumberMill);
+        BuildingController buildingScript = currentPlaceableObject.GetComponent<BuildingController>();
+        SphereCollider sphereCollider = buildingScript.GetComponent<SphereCollider>();
+        sphereCollider.isTrigger = true;
+        listOfMaterialArrays.Clear();
 
-            for (int i = 0; i < currentPlaceableObject.transform.childCount; i++) {
-                Transform childTransform = currentPlaceableObject.transform.GetChild(i);
-                if(childTransform.gameObject.GetComponent<MeshRenderer>()) {
-                    Material[] currentMaterialArray = currentPlaceableObject.transform.GetChild(i).gameObject.GetComponent<MeshRenderer>().materials;
-                    listOfMaterialArrays.Add(currentMaterialArray);
-                } else {
-                    listOfMaterialArrays.Add(mats);
-                }
+        for (int i = 0; i < currentPlaceableObject.transform.childCount; i++) {
+            Transform childTransform = currentPlaceableObject.transform.GetChild(i);
+            if(childTransform.gameObject.GetComponent<MeshRenderer>()) {
+                Material[] currentMaterialArray = currentPlaceableObject.transform.GetChild(i).gameObject.GetComponent<MeshRenderer>().materials;
+                listOfMaterialArrays.Add(currentMaterialArray);
+            } else {
+                listOfMaterialArrays.Add(mats);
             }
-        }
-       else if (currentPlaceableObject == null || RM.gold < BC.gold || RM.wood < BC.wood || RM.stone < BC.stone || RM.food < BC.food  || RM.iron < BC.iron  || RM.steel < BC.steel  || RM.skymetal < BC.skymetal)
-       {
-            UI.OpenNoResourcesText("Not enough resources");
-            StartCoroutine(Wait());
-        }
-        else
-        {
-            Destroy(currentPlaceableObject);
         }
     }
 
     void CreateBasicBuildingInstance(BuildingController BC, GameObject selectedPrefab) {
-        if (currentPlaceableObject == null && RM.gold >= BC.gold && RM.wood >= BC.wood && RM.stone >= BC.stone && RM.iron >= BC.iron && RM.steel >= BC.steel && RM.skymetal >= BC.skymetal && RM.food >= BC.food)
-        {
-            currentPlaceableObject = Instantiate(selectedPrefab);
-            selectedMesh = currentPlaceableObject.GetComponent<MeshRenderer>();
-            Material[] mats = selectedMesh.materials;
-            listOfMaterialArrays.Clear();
+        currentPlaceableObject = Instantiate(selectedPrefab);
+        selectedMesh = currentPlaceableObject.GetComponent<MeshRenderer>();
+        Material[] mats = selectedMesh.materials;
+        listOfMaterialArrays.Clear();
 
-            BuildingController buildingScript = currentPlaceableObject.GetComponent<BuildingController>();
-            BoxCollider boxCollider = buildingScript.GetComponent<BoxCollider>();
-            boxCollider.isTrigger = true;
+        BuildingController buildingScript = currentPlaceableObject.GetComponent<BuildingController>();
+        BoxCollider boxCollider = buildingScript.GetComponent<BoxCollider>();
+        boxCollider.isTrigger = true;
 
-            int iter = 0;
-            int materialNum = mats.Length;
-            materialArray = new Material[materialNum];
+        int iter = 0;
+        int materialNum = mats.Length;
+        materialArray = new Material[materialNum];
 
-            foreach (Material mat in mats)
-            {
-                selectedMaterial = mat;
-                materialArray[iter] = selectedMaterial;
-                iter += 1;
-            }
-            iter = 0;
-        }
-        else if (currentPlaceableObject == null || RM.gold < BC.gold || RM.wood < BC.wood || RM.stone < BC.stone || RM.food < BC.food  || RM.iron < BC.iron  || RM.steel < BC.steel  || RM.skymetal < BC.skymetal)
+        foreach (Material mat in mats)
         {
-            UI.OpenNoResourcesText("Not enough resources");
-            StartCoroutine(Wait());
+            selectedMaterial = mat;
+            materialArray[iter] = selectedMaterial;
+            iter += 1;
         }
-        else
-        {
-            Destroy(currentPlaceableObject);
-        }
+        iter = 0;
     }
     
     void ChangePrefabColorIfPlaceable(GameObject currentPlaceableObject) {
@@ -350,6 +299,40 @@ public class UnitButtonController : MonoBehaviour
         }
     }
 
+    bool CheckResources(BuildingController buildingResources){
+        bool enoughResources = true;
+        string notEnoughResourcesText = "";
+        if (RM.gold < buildingResources.gold){
+            notEnoughResourcesText = "Not enough gold!";
+            enoughResources = false;
+        } else if (RM.wood < buildingResources.wood){
+            notEnoughResourcesText = "Not enough wood!";
+            enoughResources = false;
+        } else if (RM.food < buildingResources.food){
+            notEnoughResourcesText = "Not enough food!";
+            enoughResources = false;
+        } else if (RM.iron < buildingResources.iron){
+            notEnoughResourcesText = "Not enough iron!";
+            enoughResources = false;
+        } else if (RM.steel < buildingResources.steel){
+            notEnoughResourcesText = "Not enough steel!";
+            enoughResources = false;
+        } else if (RM.skymetal < buildingResources.skymetal){
+            notEnoughResourcesText = "Not enough skymetal!";
+            enoughResources = false;
+        } else if (RM.stone < buildingResources.stone){
+            notEnoughResourcesText = "Not enough stone!";
+            enoughResources = false;
+        } 
+
+        if(!enoughResources) {
+            UI.OpenNoResourcesText(notEnoughResourcesText);
+            StartCoroutine(Wait());
+        }
+        return enoughResources;
+    }
+
+
     private void MoveCurrentPlaceableObjectToMouse()
     {
         building.isPlaced = false;
@@ -357,65 +340,10 @@ public class UnitButtonController : MonoBehaviour
         RaycastHit hitInfo;
         if (Physics.Raycast(ray, out hitInfo, 1000))
         {
-            if (building.unitType == "House")
-            {
-                //HERE~!
-                currentPlaceableObject.transform.position = new Vector3(hitInfo.point.x, hitInfo.point.y, hitInfo.point.z);
-                currentLocation = new Vector3 (hitInfo.point.x, currentPlaceableObject.transform.position.y, hitInfo.point.z);
-            }
-            else if (building.unitType == "Farm")
-            {
-                currentPlaceableObject.transform.position = new Vector3(hitInfo.point.x + 0.4f, hitInfo.point.y, hitInfo.point.z + 0.4f);
-                currentLocation = currentPlaceableObject.transform.position;
-            }
-            else if (building.unitType == "Town Hall")
-            {
-                currentPlaceableObject.transform.position = new Vector3(hitInfo.point.x, hitInfo.point.y, hitInfo.point.z);
-                Vector3 newLocation = new Vector3(currentPlaceableObject.transform.position.x, currentPlaceableObject.transform.position.y, currentPlaceableObject.transform.position.z);
-                currentLocation = newLocation;
-            }
-            else if (building.unitType == "Lumber Yard")
-            {
-                currentPlaceableObject.transform.position = new Vector3(hitInfo.point.x, hitInfo.point.y, hitInfo.point.z);
-                currentLocation = currentPlaceableObject.transform.position;
-            }
-            else if (building.unitType == "Stables")
-            {
-                currentPlaceableObject.transform.position = new Vector3(hitInfo.point.x, hitInfo.point.y, hitInfo.point.z);
-                Vector3 newLocation = new Vector3(currentPlaceableObject.transform.position.x, currentPlaceableObject.transform.position.y, currentPlaceableObject.transform.position.z +2.0f);
-                currentLocation = newLocation;
-            }
-            else if (building.unitType == "Barracks")
-            {
-                currentPlaceableObject.transform.position = new Vector3(hitInfo.point.x, hitInfo.point.y, hitInfo.point.z);
-                Vector3 newLocation = new Vector3(currentPlaceableObject.transform.position.x, currentPlaceableObject.transform.position.y, currentPlaceableObject.transform.position.z);
-                currentLocation = newLocation;
-            }
-            else if (building.unitType == "Fort")
-            {
-                currentPlaceableObject.transform.position = new Vector3(hitInfo.point.x, hitInfo.point.y, hitInfo.point.z);
-                currentLocation = currentPlaceableObject.transform.position;
-            }
-            else if (building.unitType == "Blacksmith")
-            {
-                currentPlaceableObject.transform.position = new Vector3(hitInfo.point.x, hitInfo.point.y, hitInfo.point.z);
-                Vector3 newLocation = new Vector3(currentPlaceableObject.transform.position.x, currentPlaceableObject.transform.position.y, currentPlaceableObject.transform.position.z);
-                currentLocation = newLocation;
-            }
-            else if (building.unitType == "Resource")
-            {
-                currentPlaceableObject.transform.position = new Vector3(hitInfo.point.x, hitInfo.point.y, hitInfo.point.z);
-                currentLocation = currentPlaceableObject.transform.position;
-            }
+            currentPlaceableObject.transform.position = new Vector3(hitInfo.point.x, hitInfo.point.y, hitInfo.point.z);
+            currentLocation = currentPlaceableObject.transform.position;
             currentRotation = currentPlaceableObject.transform.rotation;
-
-            // Rotate the building 270 degrees
-            // if(building.unitType == "Stables" || building.unitType == "Barracks" || building.unitType == "Town Hall" || building.unitType == "Blacksmith")
-            // {
-            //     currentPlaceableObject.transform.Rotate(0, 270, 0);
-            // }
-
-
+           
             // Check if the building is placeable or not
             if (currentPlaceableObject.transform.rotation.x >= 0.05f || currentPlaceableObject.transform.rotation.x <= -0.05f || currentPlaceableObject.transform.rotation.z >= 0.05f || 
                 currentPlaceableObject.transform.rotation.z <= -0.05f )
@@ -435,8 +363,7 @@ public class UnitButtonController : MonoBehaviour
 
     private void ReleaseIfClicked()
     {
-        if (Input.GetMouseButtonDown(0) && building.unitType == "House")
-        {
+        if(Input.GetMouseButtonDown(0)) {
             RM.gold -= BC.gold;
             RM.wood -= BC.wood;
             building.isPlaced = true;
@@ -447,130 +374,9 @@ public class UnitButtonController : MonoBehaviour
             currentPlaceableObject.transform.rotation = currentRotation;
             currentPlaceableObject = null;
             PlayBuildingSound();
-            IM.rotating = false;      
-        }
-        else if (Input.GetMouseButtonDown(0) && building.unitType == "Farm")
-        {
-            RM.gold -= BC.gold;
-            RM.wood -= BC.wood;
-            building.isPlaced = true;
-            currentPlaceableObject.layer = 11;
-            Destroy(currentPlaceableObject);
-            currentPlaceableObject = Instantiate(building.foundation);
-            Vector3 newLocation = new Vector3(currentLocation.x, currentLocation.y, currentLocation.z);
-            currentPlaceableObject.transform.position = newLocation;
-            currentPlaceableObject.transform.rotation = currentRotation;
-            currentPlaceableObject = null;
-            PlayBuildingSound();
-            IM.rotating = false;      
-        }
-        else if (Input.GetMouseButtonDown(0) && building.unitType == "Town Hall")
-        {
-            RM.gold -= BC.gold;
-            RM.wood -= BC.wood;
-            building.isPlaced = true;
-            currentPlaceableObject.layer = 11;
-            Destroy(currentPlaceableObject);
-            currentPlaceableObject = Instantiate(building.foundation);
-            Vector3 newLocation = new Vector3(currentLocation.x, currentLocation.y, currentLocation.z);
-            currentPlaceableObject.transform.position = newLocation;
-            currentPlaceableObject.transform.rotation = currentRotation;
-            currentPlaceableObject = null;
-            PlayBuildingSound();
-            IM.rotating = false;      
-        }
-        else if (Input.GetMouseButtonDown(0) && building.unitType == "Lumber Yard")
-        {
-            RM.gold -= BC.gold;
-            RM.wood -= BC.wood;
-            building.isPlaced = true;
-            currentPlaceableObject.layer = 11;
-            Destroy(currentPlaceableObject);
-            currentPlaceableObject = Instantiate(building.foundation);
-            currentPlaceableObject.transform.position = currentLocation;
-            currentPlaceableObject.transform.rotation = currentRotation;
-            currentPlaceableObject = null;
-            PlayBuildingSound();
-            IM.rotating = false;      
-        }
-        else if (Input.GetMouseButtonDown(0) && building.unitType == "Stables")
-        {
-            RM.gold -= BC.gold;
-            RM.wood -= BC.wood;
-            building.isPlaced = true;
-            currentPlaceableObject.layer = 11;
-            Destroy(currentPlaceableObject);
-            currentPlaceableObject = Instantiate(building.foundation);
-            Vector3 newLocation = new Vector3(currentLocation.x, currentLocation.y, currentLocation.z - 3.5f);
-            currentPlaceableObject.transform.position = newLocation;
-            currentPlaceableObject.transform.rotation = currentRotation;
-            currentPlaceableObject = null;
-            PlayBuildingSound();
-            IM.rotating = false;      
-        }
-        else if (Input.GetMouseButtonDown(0) && building.unitType == "Barracks")
-        {
-            RM.gold -= BC.gold;
-            RM.wood -= BC.wood;
-            building.isPlaced = true;
-            currentPlaceableObject.layer = 11;
-            Destroy(currentPlaceableObject);
-            currentPlaceableObject = Instantiate(building.foundation);
-            currentPlaceableObject.transform.position = currentLocation;
-            currentPlaceableObject.transform.rotation = currentRotation;
-            currentPlaceableObject = null;
-            PlayBuildingSound();
-            IM.rotating = false;      
-        }
-        else if (Input.GetMouseButtonDown(0) && building.unitType == "Fort")
-        {
-            RM.gold -= BC.gold;
-            RM.wood -= BC.wood;
-            RM.stone -= BC.stone;
-            building.isPlaced = true;
-            currentPlaceableObject.layer = 11;
-            Destroy(currentPlaceableObject);
-            currentPlaceableObject = Instantiate(building.foundation);
-            currentPlaceableObject.transform.position = currentLocation;
-            currentPlaceableObject.transform.rotation = currentRotation;
-            currentPlaceableObject = null;
-            PlayBuildingSound();
-            IM.rotating = false;      
-        }
-        else if (Input.GetMouseButtonDown(0) && building.unitType == "Resource")
-        {
-            RM.gold -= BC.gold;
-            RM.wood -= BC.wood;
-            building.isPlaced = true;
-            currentPlaceableObject.layer = 11;
-            Destroy(currentPlaceableObject);
-            currentPlaceableObject = Instantiate(building.foundation);
-            currentPlaceableObject.transform.position = currentLocation;
-            currentPlaceableObject.transform.rotation = currentRotation;
-            currentPlaceableObject = null;
-            PlayBuildingSound();
-            IM.rotating = false;      
-        }
-        else if (Input.GetMouseButtonDown(0) && building.unitType == "Blacksmith")
-        {
-            RM.gold -= BC.gold;
-            RM.wood -= BC.wood;
-            building.isPlaced = true;
-            currentPlaceableObject.layer = 11;
-            Destroy(currentPlaceableObject);
-            currentPlaceableObject = Instantiate(building.foundation);
-            currentPlaceableObject.transform.position = currentLocation;
-            currentPlaceableObject.transform.rotation = currentRotation;
-            currentPlaceableObject = null;
-            PlayBuildingSound();
-            IM.rotating = false;        
-        }
-        else if (Input.GetMouseButtonDown(0))
-        {
-            currentPlaceableObject = null;
-            IM.rotating = false;      
-        }
-        
+            IM.rotating = false;   
+
+        }        
     }
 
     private void PlayBuildingSound()

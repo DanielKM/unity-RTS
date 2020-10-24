@@ -168,20 +168,20 @@ public class ResearchController : MonoBehaviour
             inputScript = player.GetComponent<InputManager>();
 
             // Blacksmith Research
-            basicBlacksmithingButton.onClick.AddListener(ResearchBlacksmithing);
-            basicToolSmithingButton.onClick.AddListener(ResearchBasicToolSmithing);
-            basicArmourSmithingButton.onClick.AddListener(ResearchBasicArmourSmithing);
-            basicWeaponSmithingButton.onClick.AddListener(ResearchBasicWeaponSmithing);
+            basicBlacksmithingButton.onClick.AddListener(delegate{SelectBlacksmithResearch("basicBlacksmithing");});
+            basicToolSmithingButton.onClick.AddListener(delegate{SelectBlacksmithResearch("basicToolSmithing");});
+            basicArmourSmithingButton.onClick.AddListener(delegate{SelectBlacksmithResearch("basicArmourSmithing");});
+            basicWeaponSmithingButton.onClick.AddListener(delegate{SelectBlacksmithResearch("basicWeaponSmithing");});
             
-            steelSmithingButton.onClick.AddListener(ResearchSteelSmithing);
-            artisanToolSmithingButton.onClick.AddListener(ResearchArtisanToolSmithing);
-            artisanArmourSmithingButton.onClick.AddListener(ResearchArtisanArmourSmithing);
-            artisanWeaponSmithingButton.onClick.AddListener(ResearchArtisanWeaponSmithingButton);
+            steelSmithingButton.onClick.AddListener(delegate{SelectBlacksmithResearch("steelSmithing");});
+            artisanToolSmithingButton.onClick.AddListener(delegate{SelectBlacksmithResearch("artisanToolSmithing");});
+            artisanArmourSmithingButton.onClick.AddListener(delegate{SelectBlacksmithResearch("artisanArmourSmithing");});
+            artisanWeaponSmithingButton.onClick.AddListener(delegate{SelectBlacksmithResearch("artisanWeaponSmithing");});
             
-            horseshoesButton.onClick.AddListener(ResearchHorseshoes);
-            minecartsButton.onClick.AddListener(ResearchMinecarts);
-            caltropsButton.onClick.AddListener(ResearchCaltrops);
-            reinforcedBuildingsButton.onClick.AddListener(ResearchReinforcedBuildings);
+            horseshoesButton.onClick.AddListener(delegate{SelectBlacksmithResearch("horseshoes");});
+            minecartsButton.onClick.AddListener(delegate{SelectBlacksmithResearch("minecarts");});
+            caltropsButton.onClick.AddListener(delegate{SelectBlacksmithResearch("caltrops");});
+            reinforcedBuildingsButton.onClick.AddListener(delegate{SelectBlacksmithResearch("reinforcedBuildings");});
 
             // Lumber Mill Research            
             buildingScienceButton.onClick.AddListener(ResearchBuildingScience);
@@ -201,103 +201,11 @@ public class ResearchController : MonoBehaviour
         }
     }
 
-    // BASIC BLACKSMITHING
-    void ResearchBlacksmithing () 
-    { 
+    void SelectBlacksmithResearch(string selectedResearch) {
         selectedObj = inputScript.selectedObj;
         buildingScript = selectedObj.GetComponent<BuildingController>();
         blacksmithScript = selectedObj.GetComponent<BlacksmithController>();
-        blacksmithScript.ResearchBlacksmithing();
-    }
-
-    void ResearchBasicToolSmithing () 
-    { 
-        selectedObj = inputScript.selectedObj;
-        buildingScript = selectedObj.GetComponent<BuildingController>();
-        blacksmithScript = selectedObj.GetComponent<BlacksmithController>();
-        blacksmithScript.ResearchBasicToolSmithing();
-    }
-
-    void ResearchBasicArmourSmithing () 
-    { 
-        selectedObj = inputScript.selectedObj;
-        buildingScript = selectedObj.GetComponent<BuildingController>();
-        blacksmithScript = selectedObj.GetComponent<BlacksmithController>();
-        blacksmithScript.ResearchBasicArmourSmithing();
-    }
-
-    void ResearchBasicWeaponSmithing () 
-    { 
-        selectedObj = inputScript.selectedObj;
-        buildingScript = selectedObj.GetComponent<BuildingController>();
-        blacksmithScript = selectedObj.GetComponent<BlacksmithController>();
-        blacksmithScript.ResearchBasicWeaponSmithing();
-    }
-
-    // ARTISAN BLACKSMITHING
-    void ResearchSteelSmithing () 
-    { 
-        selectedObj = inputScript.selectedObj;
-        buildingScript = selectedObj.GetComponent<BuildingController>();
-        blacksmithScript = selectedObj.GetComponent<BlacksmithController>();
-        blacksmithScript.ResearchSteelSmithing();
-    }
-
-    void ResearchArtisanToolSmithing () 
-    { 
-        selectedObj = inputScript.selectedObj;
-        buildingScript = selectedObj.GetComponent<BuildingController>();
-        blacksmithScript = selectedObj.GetComponent<BlacksmithController>();
-        blacksmithScript.ResearchArtisanToolSmithing();
-    }
-
-    void ResearchArtisanArmourSmithing () 
-    { 
-        selectedObj = inputScript.selectedObj;
-        buildingScript = selectedObj.GetComponent<BuildingController>();
-        blacksmithScript = selectedObj.GetComponent<BlacksmithController>();
-        blacksmithScript.ResearchArtisanArmourSmithing();
-    }
-
-    void ResearchArtisanWeaponSmithingButton () 
-    { 
-        selectedObj = inputScript.selectedObj;
-        buildingScript = selectedObj.GetComponent<BuildingController>();
-        blacksmithScript = selectedObj.GetComponent<BlacksmithController>();
-        blacksmithScript.ResearchArtisanWeaponSmithing();
-    }
-
-    // OTHER BLACKSMITHING
-    void ResearchHorseshoes () 
-    { 
-        selectedObj = inputScript.selectedObj;
-        buildingScript = selectedObj.GetComponent<BuildingController>();
-        blacksmithScript = selectedObj.GetComponent<BlacksmithController>();
-        blacksmithScript.ResearchHorseshoes();
-    }
-
-    void ResearchMinecarts () 
-    { 
-        selectedObj = inputScript.selectedObj;
-        buildingScript = selectedObj.GetComponent<BuildingController>();
-        blacksmithScript = selectedObj.GetComponent<BlacksmithController>();
-        blacksmithScript.ResearchMinecarts();
-    }
-
-    void ResearchCaltrops () 
-    { 
-        selectedObj = inputScript.selectedObj;
-        buildingScript = selectedObj.GetComponent<BuildingController>();
-        blacksmithScript = selectedObj.GetComponent<BlacksmithController>();
-        blacksmithScript.ResearchCaltrops();
-    }
-
-    void ResearchReinforcedBuildings () 
-    { 
-        selectedObj = inputScript.selectedObj;
-        buildingScript = selectedObj.GetComponent<BuildingController>();
-        blacksmithScript = selectedObj.GetComponent<BlacksmithController>();
-        blacksmithScript.ResearchReinforcedBuildings();
+        blacksmithScript.StartResearch(selectedResearch);
     }
 
     // BASIC WOODWORKING
