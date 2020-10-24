@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine.SceneManagement;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.AI;
 
 public class BarracksController : MonoBehaviour
 {
@@ -212,7 +213,7 @@ public class BarracksController : MonoBehaviour
             yield return new WaitForSeconds(1);
         }
 
-        Instantiate(prefab, spawnPosition, Quaternion.identity);
+        GameObject newUnit = Instantiate(prefab, spawnPosition, Quaternion.identity);
 
         if(unit == "Footman") {
             footmanAudio.Play();
@@ -224,6 +225,10 @@ public class BarracksController : MonoBehaviour
             outriderAudio.Play();
         } else if (unit == "Knight") {
             knightAudio.Play();
+        }
+        
+        if(gameObject.transform.position != buildingScript.rallyPoint) {
+            newUnit.GetComponent<NavMeshAgent>().destination = buildingScript.rallyPoint;
         }
         isTraining = false;
     }

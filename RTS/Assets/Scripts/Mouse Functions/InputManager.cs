@@ -20,7 +20,6 @@ public class InputManager : MonoBehaviour
    public float xMin, xMax, yMin, yMax, zMin, zMax;
 
     // Reference Scripts
-
     UnitList unitList;
     UnitController unitScript;
     UnitSelection selectScript;
@@ -214,6 +213,28 @@ public class InputManager : MonoBehaviour
      }
 
     // Update is called once per frame
+
+    // Key Bindings
+
+    // "Left Mouse": Select single unit/building
+    // "Left Mouse Double Click": Select all units of the same type
+    // "Left Mouse Drag": Select multiple units
+    // "Mousewheel": Zoom in and out
+    // "Right Mouse": Move/Interact
+    // "Right Mouse" while building selected: Create rally point
+    // "W": Pan up
+    // "A": Pan left
+    // "S": Pan down
+    // "D": Pan right
+    // "Q": Select all visible units
+    // "R" while building: Rotation mode for construction
+    // "M" while unit selected: Attack/standard movement for units
+    // "Space": Reset camera view
+    // "F10": Open game menu
+    // "CTRL + (0-9)": Save command groups
+    // "(0-9)": Load command groups
+
+
     void Update()
     {
         Scene currentScene = SceneManager.GetActiveScene();
@@ -223,6 +244,9 @@ public class InputManager : MonoBehaviour
             //RotateCamera();
             Multiselect();
             ActivateControlGroups();
+
+            // Handle selected buildings
+            BuildingSelected();
 
             // Switch to building rotation mode
             if(Input.GetKeyDown("r") && unitButtonController.currentPlaceableObject) {
@@ -284,73 +308,71 @@ public class InputManager : MonoBehaviour
                 UI.OpenGameMenuPanel();
             }
 
-            // If a building isnt being placed, open game menu
-            if(!unitButtonController.currentPlaceableObject) {
-                if(Input.GetKeyDown(KeyCode.Escape))
-                {
-                    UI.OpenGameMenuPanel();
-                } 
-            }
-            
             // Select all units
             if(Input.GetKeyDown("q")) {
-                Renderer[] sceneRenderers = FindObjectsOfType<Renderer>();
-                visibleRenderers.Clear();
-                // ADD OWNERS/TEAMS
-                for(int i = 0; i < sceneRenderers.Length; i++) {
-                    if(IsVisible(sceneRenderers[i])) {
-                        if (sceneRenderers[i].transform.parent) {
-                            if (sceneRenderers[i].transform.parent.gameObject) {
-                                if(sceneRenderers[i].transform.parent.gameObject.GetComponent<UnitSelection>()) {
-                                    if(sceneRenderers[i].transform.parent.gameObject.GetComponent<UnitSelection>().owner == sceneRenderers[i].transform.parent.gameObject.GetComponent<UnitSelection>().team) {
-                                        visibleRenderers.Add(sceneRenderers[i]);
-                                    }
-                                }
+                SelectAllVisibleUnits();
+            }
+        }
+    }
+
+    void BuildingSelected(){
+        if(selectedObj != null)
+        {
+            if(buildingScript != null) {
+                if (buildingScript.unitType == "Town Hall")
+                {
+                    if (townHallScript != null && townHallScript.isTraining)
+                    {
+                        BuildingProgressSlider.value = townHallScript.i * 10;
+                    }
+                }
+                else if (buildingScript.unitType == "Barracks")
+                {
+                    if (barracksScript != null && barracksScript.isTraining)
+                    {
+                        BuildingProgressSlider.value = barracksScript.i * 10;
+                    }
+                }
+                else if (selectedObj.tag == "Foundation")
+                {
+                    if (foundationScript != null && foundationScript.isBuilding)
+                    {
+                        BuildingProgressSlider.value = foundationScript.buildPercent;
+                    }
+                }
+                else if (selectedObj.tag == "Blacksmith")
+                {
+                    if (blacksmithScript.isTraining)
+                    {
+                        BuildingProgressSlider.value = blacksmithScript.i * 10;
+                        // handle
+                    }
+                }
+            }
+        }
+    }
+
+    void SelectAllVisibleUnits() {
+        Renderer[] sceneRenderers = FindObjectsOfType<Renderer>();
+        visibleRenderers.Clear();
+        // ADD OWNERS/TEAMS
+        for(int i = 0; i < sceneRenderers.Length; i++) {
+            if(IsVisible(sceneRenderers[i])) {
+                if (sceneRenderers[i].transform.parent) {
+                    if (sceneRenderers[i].transform.parent.gameObject) {
+                        if(sceneRenderers[i].transform.parent.gameObject.GetComponent<UnitSelection>()) {
+                            if(sceneRenderers[i].transform.parent.gameObject.GetComponent<UnitSelection>().owner == sceneRenderers[i].transform.parent.gameObject.GetComponent<UnitSelection>().team) {
+                                visibleRenderers.Add(sceneRenderers[i]);
                             }
                         }
                     }
                 }
-                foreach( Renderer renderer in visibleRenderers) {
-                    GameObject doubleClickSelection = renderer.transform.parent.gameObject;
-                    if (doubleClickSelection.GetComponent<UnitController>()) {
-                        SelectMultipleUnits(doubleClickSelection);
-                    }
-                }
             }
-
-            if(selectedObj != null)
-            {
-                if(buildingScript != null) {
-                    if (buildingScript.unitType == "Town Hall")
-                    {
-                        if (townHallScript != null && townHallScript.isTraining)
-                        {
-                            BuildingProgressSlider.value = townHallScript.i * 10;
-                        }
-                    }
-                    else if (buildingScript.unitType == "Barracks")
-                    {
-                        if (barracksScript != null && barracksScript.isTraining)
-                        {
-                            BuildingProgressSlider.value = barracksScript.i * 10;
-                        }
-                    }
-                    else if (selectedObj.tag == "Foundation")
-                    {
-                        if (foundationScript != null && foundationScript.isBuilding)
-                        {
-                            BuildingProgressSlider.value = foundationScript.buildPercent;
-                        }
-                    }
-                    else if (selectedObj.tag == "Blacksmith")
-                    {
-                        if (blacksmithScript.isTraining)
-                        {
-                            BuildingProgressSlider.value = blacksmithScript.i * 10;
-                            // handle
-                        }
-                    }
-                }
+        }
+        foreach( Renderer renderer in visibleRenderers) {
+            GameObject doubleClickSelection = renderer.transform.parent.gameObject;
+            if (doubleClickSelection.GetComponent<UnitController>()) {
+                SelectMultipleUnits(doubleClickSelection);
             }
         }
     }

@@ -102,11 +102,14 @@ public class TownHallController : MonoBehaviour
         workerUC.unitName = firstNames[random1] + " " + lastNameFirst[random2] + lastNameSecond[random3];
         workerUnitSelection.owner = team;
 
-        Instantiate(villagerPrefab, spawnPosition, Quaternion.identity);
+        GameObject newWorker = Instantiate(villagerPrefab, spawnPosition, Quaternion.identity);
         villagerAudio = selectedObj.GetComponent<AudioSource>();
         villagerAudio.clip = villagerReporting;
         villagerAudio.Play();
-        UI.TownHallSelect();
+
+        if(gameObject.transform.position != buildingScript.rallyPoint) {
+            newWorker.GetComponent<NavMeshAgent>().destination = buildingScript.rallyPoint;
+        }
     }
 
     public void OnCollisionEnter(Collision col) {
@@ -129,7 +132,6 @@ public class TownHallController : MonoBehaviour
                         }
                         unitUnitSelection.heldResourceType = NodeManager.ResourceTypes.Iron;
                         agent.destination = selectscript.targetNode.transform.position;
-
                     }
                 }
             }
