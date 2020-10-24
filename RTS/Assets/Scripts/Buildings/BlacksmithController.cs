@@ -70,7 +70,7 @@ public class BlacksmithController : MonoBehaviour
         buildingScript = selectedObj.GetComponent<BuildingController>();
 
         if(RM.gold < RC.basicBlacksmithingGold || RM.iron < RC.basicBlacksmithingIron) {
-            UI.OpenNoResourcesText();
+            UI.OpenNoResourcesText("Not enough resources");
             StartCoroutine(CloseResourcesText());
         } else {
             RM.gold -= RC.basicBlacksmithingGold;
@@ -83,7 +83,7 @@ public class BlacksmithController : MonoBehaviour
     public void ResearchBasicToolSmithing () 
     { 
         if(RM.gold < RC.basicToolSmithingGold || RM.iron < RC.basicToolSmithingIron) {
-            UI.OpenNoResourcesText();
+            UI.OpenNoResourcesText("Not enough resources");
             StartCoroutine(CloseResourcesText());
         } else {
             RM.gold -= RC.basicToolSmithingGold;
@@ -97,7 +97,7 @@ public class BlacksmithController : MonoBehaviour
     public void ResearchBasicArmourSmithing () 
     { 
         if(RM.gold < RC.basicArmourSmithingGold || RM.iron < RC.basicArmourSmithingIron) {
-            UI.OpenNoResourcesText();
+            UI.OpenNoResourcesText("Not enough resources");
             StartCoroutine(CloseResourcesText());
         } else {
             RM.gold -= RC.basicArmourSmithingGold;
@@ -111,7 +111,7 @@ public class BlacksmithController : MonoBehaviour
     public void ResearchBasicWeaponSmithing () 
     { 
         if(RM.gold < RC.basicWeaponSmithingGold || RM.iron < RC.basicWeaponSmithingIron) {
-            UI.OpenNoResourcesText();
+            UI.OpenNoResourcesText("Not enough resources");
             StartCoroutine(CloseResourcesText());
         } else {
             RM.gold -= RC.basicWeaponSmithingGold;
@@ -125,7 +125,7 @@ public class BlacksmithController : MonoBehaviour
     public void ResearchSteelSmithing () 
     { 
         if(RM.gold < RC.steelSmithingGold || RM.iron < RC.steelSmithingIron) {
-            UI.OpenNoResourcesText();
+            UI.OpenNoResourcesText("Not enough resources");
             StartCoroutine(CloseResourcesText());
         } else {
             RM.gold -= RC.steelSmithingGold;
@@ -139,7 +139,7 @@ public class BlacksmithController : MonoBehaviour
     public void ResearchArtisanToolSmithing () 
     { 
         if(RM.gold < RC.artisanToolSmithingGold || RM.iron < RC.artisanToolSmithingIron) {
-            UI.OpenNoResourcesText();
+            UI.OpenNoResourcesText("Not enough resources");
             StartCoroutine(CloseResourcesText());
         } else {
             RM.gold -= RC.artisanToolSmithingGold;
@@ -153,7 +153,7 @@ public class BlacksmithController : MonoBehaviour
     public void ResearchArtisanArmourSmithing () 
     { 
         if(RM.gold < RC.artisanArmourSmithingGold || RM.iron < RC.artisanArmourSmithingIron) {
-            UI.OpenNoResourcesText();
+            UI.OpenNoResourcesText("Not enough resources");
             StartCoroutine(CloseResourcesText());
         } else {
             RM.gold -= RC.artisanArmourSmithingGold;
@@ -167,7 +167,7 @@ public class BlacksmithController : MonoBehaviour
     public void ResearchArtisanWeaponSmithing () 
     { 
         if(RM.gold < RC.artisanWeaponSmithingGold || RM.iron < RC.artisanWeaponSmithingIron) {
-            UI.OpenNoResourcesText();
+            UI.OpenNoResourcesText("Not enough resources");
             StartCoroutine(CloseResourcesText());
         } else {
             RM.gold -= RC.artisanWeaponSmithingGold;
@@ -181,7 +181,7 @@ public class BlacksmithController : MonoBehaviour
     public void ResearchHorseshoes () 
     { 
         if(RM.gold < RC.horseshoesGold || RM.iron < RC.horseshoesIron) {
-            UI.OpenNoResourcesText();
+            UI.OpenNoResourcesText("Not enough resources");
             StartCoroutine(CloseResourcesText());
         } else {
             RM.gold -= RC.horseshoesGold;
@@ -195,7 +195,7 @@ public class BlacksmithController : MonoBehaviour
     public void ResearchMinecarts () 
     { 
         if(RM.gold < RC.minecartsGold || RM.iron < RC.minecartsGold) {
-            UI.OpenNoResourcesText();
+            UI.OpenNoResourcesText("Not enough resources");
             StartCoroutine(CloseResourcesText());
         } else {
             RM.gold -= RC.minecartsGold;
@@ -209,7 +209,7 @@ public class BlacksmithController : MonoBehaviour
     public void ResearchCaltrops () 
     { 
         if(RM.gold < RC.caltropsGold || RM.iron < RC.caltropsIron) {
-            UI.OpenNoResourcesText();
+            UI.OpenNoResourcesText("Not enough resources");
             StartCoroutine(CloseResourcesText());
         } else {
             RM.gold -= RC.caltropsGold;
@@ -223,7 +223,7 @@ public class BlacksmithController : MonoBehaviour
     public void ResearchReinforcedBuildings () 
     { 
         if(RM.gold < RC.reinforcedBuildingsGold || RM.iron < RC.reinforcedBuildingsIron) {
-            UI.OpenNoResourcesText();
+            UI.OpenNoResourcesText("Not enough resources");
             StartCoroutine(CloseResourcesText());
         } else {
             RM.gold -= RC.reinforcedBuildingsGold;

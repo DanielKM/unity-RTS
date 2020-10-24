@@ -217,7 +217,7 @@ public class UnitButtonController : MonoBehaviour
         }
        else if (currentPlaceableObject == null || RM.gold < BC.gold || RM.wood < BC.wood || RM.stone < BC.stone || RM.food < BC.food  || RM.iron < BC.iron  || RM.steel < BC.steel  || RM.skymetal < BC.skymetal)
        {
-            UI.OpenNoResourcesText();
+            UI.OpenNoResourcesText("Not enough resources");
             StartCoroutine(Wait());
         }
         else
@@ -247,7 +247,7 @@ public class UnitButtonController : MonoBehaviour
         }
        else if (currentPlaceableObject == null || RM.gold < BC.gold || RM.wood < BC.wood || RM.stone < BC.stone || RM.food < BC.food  || RM.iron < BC.iron  || RM.steel < BC.steel  || RM.skymetal < BC.skymetal)
        {
-            UI.OpenNoResourcesText();
+            UI.OpenNoResourcesText("Not enough resources");
             StartCoroutine(Wait());
         }
         else
@@ -282,7 +282,7 @@ public class UnitButtonController : MonoBehaviour
         }
         else if (currentPlaceableObject == null || RM.gold < BC.gold || RM.wood < BC.wood || RM.stone < BC.stone || RM.food < BC.food  || RM.iron < BC.iron  || RM.steel < BC.steel  || RM.skymetal < BC.skymetal)
         {
-            UI.OpenNoResourcesText();
+            UI.OpenNoResourcesText("Not enough resources");
             StartCoroutine(Wait());
         }
         else

@@ -321,10 +321,11 @@ public class UIController : MonoBehaviour
         noResourcesText.interactable = false;
     }
 
-    public void OpenNoResourcesText() {
+    public void OpenNoResourcesText(string text) {
         noResourcesText.alpha = 1;
         noResourcesText.blocksRaycasts = true;
         noResourcesText.interactable = true;
+        noResourcesText.GetComponentInChildren<Text>().text = text;
     }
 
     public void RotationModeText() {

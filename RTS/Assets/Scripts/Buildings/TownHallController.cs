@@ -70,15 +70,15 @@ public class TownHallController : MonoBehaviour
         BuildingProgressSlider = BuildingProgressBar.GetComponent<Slider>();
     }
 
-    public void HireVillager()
+    public void HireWorker()
     {
         selectedObj = inputScript.selectedObj;
         buildingScript = selectedObj.GetComponent<BuildingController>();
 
-        StartCoroutine(VillagerSpawn());
+        StartCoroutine(WorkerSpawn());
     }
     
-    IEnumerator VillagerSpawn()
+    IEnumerator WorkerSpawn()
     {
         isTraining = true;
         selectedObj = inputScript.selectedObj;

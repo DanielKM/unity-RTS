@@ -55,6 +55,8 @@ public class BuildingButtonController : MonoBehaviour
     UnitController knightUC;
     UnitController archerUC;
 
+    UnitController unitUC;
+
     public GameObject selectedObj;
     private Vector3 spawnPosition;
 
@@ -98,12 +100,12 @@ public class BuildingButtonController : MonoBehaviour
             RM = team.GetComponent<ResourceManager>();
             UI = player.GetComponent<UIController>();
 
-            buttonOne.onClick.AddListener(HireVillager);
-            barracksButtonOne.onClick.AddListener(HireSwordsman);
-            barracksButtonTwo.onClick.AddListener(HireFootman);
-            barracksButtonFour.onClick.AddListener(HireArcher);
-            barracksButtonNine.onClick.AddListener(HireOutrider);
-            barracksButtonTen.onClick.AddListener(HireKnight);
+            buttonOne.onClick.AddListener(delegate{HireUnit(villagerPrefab);});
+            barracksButtonOne.onClick.AddListener(delegate{HireUnit(swordsmanPrefab);});
+            barracksButtonTwo.onClick.AddListener(delegate{HireUnit(footmanPrefab);});
+            barracksButtonFour.onClick.AddListener(delegate{HireUnit(archerPrefab);});
+            barracksButtonNine.onClick.AddListener(delegate{HireUnit(outriderPrefab);});
+            barracksButtonTen.onClick.AddListener(delegate{HireUnit(knightPrefab);});
         }
     }
 
@@ -135,170 +137,83 @@ public class BuildingButtonController : MonoBehaviour
         }
     }
 
-    void HireVillager()
-    {
-        if (RM.gold >= villagerUC.gold && RM.wood >= villagerUC.wood && RM.food >= villagerUC.food && RM.iron >= villagerUC.iron && RM.steel >= villagerUC.steel && RM.skymetal >= villagerUC.skymetal && RM.stone >= villagerUC.stone && RM.housing < RM.maxHousing)
-        {
-            UI.TownHallTraining();
-            RM.gold -= villagerUC.gold;
-            RM.wood -= villagerUC.wood;
-            RM.food -= villagerUC.food;
-            RM.iron -= villagerUC.iron;
-            RM.steel -= villagerUC.steel;
-            RM.skymetal -= villagerUC.skymetal;
-            RM.stone -= villagerUC.stone;
+    void HireUnit(GameObject unit) {
+        unitUC = unit.GetComponent<UnitController>();
+        string notEnoughResourcesText = "";
+        bool enoughResources = true;
+
+        if (RM.gold < unitUC.gold){
+            notEnoughResourcesText = "Not enough gold!";
+            enoughResources = false;
+        } else if (RM.wood < unitUC.wood){
+            notEnoughResourcesText = "Not enough wood!";
+            enoughResources = false;
+        } else if (RM.food < unitUC.food){
+            notEnoughResourcesText = "Not enough food!";
+            enoughResources = false;
+        } else if (RM.iron < unitUC.iron){
+            notEnoughResourcesText = "Not enough iron!";
+            enoughResources = false;
+        } else if (RM.steel < unitUC.steel){
+            notEnoughResourcesText = "Not enough steel!";
+            enoughResources = false;
+        } else if (RM.skymetal < unitUC.skymetal){
+            notEnoughResourcesText = "Not enough skymetal!";
+            enoughResources = false;
+        } else if (RM.stone < unitUC.stone){
+            notEnoughResourcesText = "Not enough stone!";
+            enoughResources = false;
+        } else if (RM.housing > RM.maxHousing){
+            notEnoughResourcesText = "Not enough housing!";
+            enoughResources = false;
+        }
+
+        if(enoughResources) {
+            // Remove required resources
+            RM.gold -= unitUC.gold;
+            RM.wood -= unitUC.wood;
+            RM.food -= unitUC.food;
+            RM.iron -= unitUC.iron;
+            RM.steel -= unitUC.steel;
+            RM.skymetal -= unitUC.skymetal;
+            RM.stone -= unitUC.stone;
             RM.housing += 1;
+
+            // Select current building
             selectedObj = inputScript.selectedObj;
-            townHallScript = selectedObj.GetComponent<TownHallController>();
             buildingScript = selectedObj.GetComponent<BuildingController>();
 
-           
-          //  spawnPosition = new Vector3(buildingScript.location.x, buildingScript.location.y, buildingScript.location.z +50f);
-            playerAudio.clip = trainVillagerAudio;
+            // Start hiring based on which unittype
+            if(unitUC.unitType == "Worker") {
+                UI.TownHallTraining();
+                townHallScript = selectedObj.GetComponent<TownHallController>();
+                playerAudio.clip = trainVillagerAudio;
+                townHallScript.HireWorker();
+            } else if (unitUC.unitType == "Swordsman" || unitUC.unitType == "Footman" || unitUC.unitType == "Archer" || unitUC.unitType == "Outrider" || unitUC.unitType == "Knight") {
+                UI.BarracksTraining();
+                barracksScript = selectedObj.GetComponent<BarracksController>();
+                if(unitUC.unitType == "Swordsman") {
+                    barracksScript.HireSwordsman();
+                } else if (unitUC.unitType == "Footman") {
+                    barracksScript.HireFootman();
+                } else if (unitUC.unitType == "Archer") {
+                    barracksScript.HireArcher();
+                } else if (unitUC.unitType == "Outrider") {
+                    barracksScript.HireOutrider();
+                } else if (unitUC.unitType == "Footman") {
+                    barracksScript.HireFootman();
+                } else if (unitUC.unitType == "Knight") {
+                    barracksScript.HireKnight();
+                }
+            }
             playerAudio.Play();
-            townHallScript.HireVillager();
-        }
-        else 
-        {
-            UI.OpenNoResourcesText();
+
+        } else {
+            UI.OpenNoResourcesText(notEnoughResourcesText);
             StartCoroutine(Wait());
         }
     }
 
-    void HireSwordsman()
-    {
-         if (RM.gold >= swordsmanUC.gold && RM.wood >= swordsmanUC.wood && RM.food >= swordsmanUC.food && RM.iron >= swordsmanUC.iron && RM.steel >= swordsmanUC.steel && RM.skymetal >= swordsmanUC.skymetal && RM.stone >= swordsmanUC.stone && RM.housing < RM.maxHousing)
-        {
-            UI.BarracksTraining();
-            RM.gold -= swordsmanUC.gold;
-            RM.wood -= swordsmanUC.wood;
-            RM.food -= swordsmanUC.food;
-            RM.iron -= swordsmanUC.iron;
-            RM.steel -= swordsmanUC.steel;
-            RM.skymetal -= swordsmanUC.skymetal;
-            RM.stone -= swordsmanUC.stone;
-            RM.housing += 1;
-            selectedObj = inputScript.selectedObj;
-            barracksScript = selectedObj.GetComponent<BarracksController>();
-            buildingScript = selectedObj.GetComponent<BuildingController>();
-            playerAudio.clip = trainSwordsmanAudio;
-            playerAudio.Play();
-            barracksScript.HireSwordsman();
-        } 
-        else   
-        {
-            UI.OpenNoResourcesText();
-            StartCoroutine(Wait());
-        }
-    }
-
-    void HireFootman()
-    {
-         if (RM.gold >= footmanUC.gold && RM.wood >= footmanUC.wood && RM.food >= footmanUC.food && RM.iron >= footmanUC.iron && RM.steel >= footmanUC.steel && RM.skymetal >= footmanUC.skymetal && RM.stone >= footmanUC.stone && RM.housing < RM.maxHousing)
-        {
-            UI.BarracksTraining();
-            RM.gold -= footmanUC.gold;
-            RM.wood -= footmanUC.wood;
-            RM.food -= footmanUC.food;
-            RM.iron -= footmanUC.iron;
-            RM.steel -= footmanUC.steel;
-            RM.skymetal -= footmanUC.skymetal;
-            RM.stone -= footmanUC.stone;
-            RM.housing += 1;
-            selectedObj = inputScript.selectedObj;
-            barracksScript = selectedObj.GetComponent<BarracksController>();
-            buildingScript = selectedObj.GetComponent<BuildingController>();
-            playerAudio.clip = trainFootmanAudio;
-            playerAudio.Play();
-            barracksScript.HireFootman();
-        } 
-        else   
-        {
-            UI.OpenNoResourcesText();
-            StartCoroutine(Wait());
-        }
-    }
-
-    void HireArcher()
-    {
-         if (RM.gold >= archerUC.gold && RM.wood >= archerUC.wood && RM.food >= archerUC.food && RM.iron >= archerUC.iron && RM.steel >= archerUC.steel && RM.skymetal >= archerUC.skymetal && RM.stone >= archerUC.stone && RM.housing < RM.maxHousing)
-        {
-            UI.BarracksTraining();
-            RM.gold -= archerUC.gold;
-            RM.wood -= archerUC.wood;
-            RM.food -= archerUC.food;
-            RM.iron -= archerUC.iron;
-            RM.steel -= archerUC.steel;
-            RM.skymetal -= archerUC.skymetal;
-            RM.stone -= archerUC.stone;
-            RM.housing += 1;
-            selectedObj = inputScript.selectedObj;
-            barracksScript = selectedObj.GetComponent<BarracksController>();
-            buildingScript = selectedObj.GetComponent<BuildingController>();
-            playerAudio.clip = trainArcherAudio;
-            playerAudio.Play();
-            barracksScript.HireArcher();
-        } 
-        else   
-        {
-            UI.OpenNoResourcesText();
-            StartCoroutine(Wait());
-        }
-    }
-
-    void HireOutrider()
-    {
-         if (RM.gold >= outriderUC.gold && RM.wood >= outriderUC.wood && RM.food >= outriderUC.food && RM.iron >= outriderUC.iron && RM.steel >= outriderUC.steel && RM.skymetal >= outriderUC.skymetal && RM.stone >= outriderUC.stone && RM.housing < RM.maxHousing)
-        {
-            UI.BarracksTraining();
-            RM.gold -= outriderUC.gold;
-            RM.wood -= outriderUC.wood;
-            RM.food -= outriderUC.food;
-            RM.iron -= outriderUC.iron;
-            RM.steel -= outriderUC.steel;
-            RM.skymetal -= outriderUC.skymetal;
-            RM.stone -= outriderUC.stone;
-            RM.housing += 1;
-            selectedObj = inputScript.selectedObj;
-            barracksScript = selectedObj.GetComponent<BarracksController>();
-            buildingScript = selectedObj.GetComponent<BuildingController>();
-            playerAudio.clip = trainOutriderAudio;
-            playerAudio.Play();
-            barracksScript.HireOutrider();
-        } 
-        else   
-        {
-            UI.OpenNoResourcesText();
-            StartCoroutine(Wait());
-        }
-    }
-
-    void HireKnight()
-    {
-         if (RM.gold >= knightUC.gold && RM.wood >= knightUC.wood && RM.food >= knightUC.food && RM.iron >= knightUC.iron && RM.steel >= knightUC.steel && RM.skymetal >= knightUC.skymetal && RM.stone >= knightUC.stone && RM.housing < RM.maxHousing)
-        {
-            UI.BarracksTraining();
-            RM.gold -= knightUC.gold;
-            RM.wood -= knightUC.wood;
-            RM.food -= knightUC.food;
-            RM.iron -= knightUC.iron;
-            RM.steel -= knightUC.steel;
-            RM.skymetal -= knightUC.skymetal;
-            RM.stone -= knightUC.stone;
-            RM.housing += 1;
-            selectedObj = inputScript.selectedObj;
-            barracksScript = selectedObj.GetComponent<BarracksController>();
-            buildingScript = selectedObj.GetComponent<BuildingController>();
-            playerAudio.clip = trainKnightAudio;
-            playerAudio.Play();
-            barracksScript.HireKnight();
-        } 
-        else   
-        {
-            UI.OpenNoResourcesText();
-            StartCoroutine(Wait());
-        }
-    }
     IEnumerator Wait()
     {
         yield return new WaitForSeconds(3);
