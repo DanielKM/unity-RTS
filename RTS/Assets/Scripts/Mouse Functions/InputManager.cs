@@ -292,6 +292,32 @@ public class InputManager : MonoBehaviour
                 } 
             }
             
+            // Select all units
+            if(Input.GetKeyDown("q")) {
+                Renderer[] sceneRenderers = FindObjectsOfType<Renderer>();
+                visibleRenderers.Clear();
+                // ADD OWNERS/TEAMS
+                for(int i = 0; i < sceneRenderers.Length; i++) {
+                    if(IsVisible(sceneRenderers[i])) {
+                        if (sceneRenderers[i].transform.parent) {
+                            if (sceneRenderers[i].transform.parent.gameObject) {
+                                if(sceneRenderers[i].transform.parent.gameObject.GetComponent<UnitSelection>()) {
+                                    if(sceneRenderers[i].transform.parent.gameObject.GetComponent<UnitSelection>().owner == sceneRenderers[i].transform.parent.gameObject.GetComponent<UnitSelection>().team) {
+                                        visibleRenderers.Add(sceneRenderers[i]);
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+                foreach( Renderer renderer in visibleRenderers) {
+                    GameObject doubleClickSelection = renderer.transform.parent.gameObject;
+                    if (doubleClickSelection.GetComponent<UnitController>()) {
+                        SelectMultipleUnits(doubleClickSelection);
+                    }
+                }
+            }
+
             if(selectedObj != null)
             {
                 if(buildingScript != null) {
@@ -781,6 +807,7 @@ public class InputManager : MonoBehaviour
                 if(clickType == "double") {
                     Renderer[] sceneRenderers = FindObjectsOfType<Renderer>();
                     visibleRenderers.Clear();
+                    // ADD OWNERS/TEAMS
                     for(int i = 0; i < sceneRenderers.Length; i++) {
                         if(IsVisible(sceneRenderers[i])) {
                             if (sceneRenderers[i].transform.parent) {
