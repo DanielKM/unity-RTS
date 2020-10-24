@@ -63,24 +63,14 @@ public class BuildingController : MonoBehaviour
 
     void OnTriggerEnter(Collider other)
     {
-        // foreach (ContactPoint contact in other.contacts)
-        // {
-        //     Debug.DrawRay(contact.point, contact.normal, Color.white);
-        // }
-
         if (other.gameObject.tag != "Ground")
         {
-            // inCollider = true;
             placeable = false;
         }
     }
 
     void OnTriggerStay(Collider other)
     {
-        // foreach (ContactPoint contact in other.contacts)
-        // {
-        //     Debug.DrawRay(contact.point, contact.normal, Color.white);
-        // }
         if (other.gameObject.tag != "Ground")
         {
             inCollider = true;

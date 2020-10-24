@@ -131,20 +131,6 @@ public class LumberYardController : MonoBehaviour
         }
     }
 
-    // public void ResearchBasicWoodworking () 
-    // { 
-    //     if(RM.gold < RC.steelSmithingGold || RM.iron < RC.artisanBlacksmithingIron) {
-    //         UI.OpenNoResourcesText();
-    //         StartCoroutine(CloseResourcesText());
-    //     } else {
-    //         RM.gold -= RC.artisanBlacksmithingGold;
-    //         RM.iron -= RC.artisanBlacksmithingIron;
-    //         research = "artisanBlacksmithing";
-    //         StartCoroutine(Research());
-    //         RC.artisanBlacksmithingButton.interactable = false;
-    //     }
-    // }
-
     public void ResearchImprovedHandles () 
     { 
         if(RM.gold < RC.artisanToolSmithingGold || RM.iron < RC.artisanToolSmithingIron) {

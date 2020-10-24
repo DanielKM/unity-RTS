@@ -202,9 +202,6 @@ public class InputManager : MonoBehaviour
             RC = team.GetComponent<ResearchController>();
             PM = GameObject.Find("GameMenu").GetComponent<PauseMenu>();
 
-        // progressIcon = GameObject.Find("ProgressIcon").GetComponent<Image>();
-        // foundationScript = selectedObj.GetComponent<FoundationController>();
-            // progressIcon.sprite = foundationScript.buildingPrefab.GetComponent<BuildingController>().icon;
             unitIcon = GameObject.Find("UnitIcon");
             BuildingProgressBar = GameObject.Find("BuildingProgressBar");
             BuildingProgressSlider = BuildingProgressBar.GetComponent<Slider>();
@@ -212,7 +209,6 @@ public class InputManager : MonoBehaviour
             rotation = Camera.main.transform.rotation;
             cam = Camera.main;
             minimap = GameObject.Find("Minimap").GetComponent<Camera>();
-            // RESEARCH COROUTINES - only one working
             StartCoroutine(UpdatePanels());
         }
      }
@@ -252,18 +248,6 @@ public class InputManager : MonoBehaviour
                 }
             }
 
-            // // Switch to patrol mode
-            // if(Input.GetKeyDown("p") && selectedObjects.Count > 0) {
-            //     patrolling = !patrolling;
-            //     if(patrolling) {
-            //         UI.NoModeText();
-            //         UI.PatrolMovementText();
-            //     } else {
-            //         UI.NoModeText();
-            //         UI.StandardMovementText();
-            //     }
-            // }
-
             // Reset camera angle
             if (Input.GetKeyDown(KeyCode.Space))
             {
@@ -287,8 +271,9 @@ public class InputManager : MonoBehaviour
                     lastclickTime = Time.time;
                 }
             }
+
             if(Input.GetMouseButtonUp(0)) {
-                if(!inUnitSelectionBox && selectedObjects.Count == 0) {
+                if(!inUnitSelectionBox && selectedObjects.Count == 0 && !selectedObj) {
                     UI.CloseAllPanels();
                 }
             }
@@ -470,7 +455,9 @@ public class InputManager : MonoBehaviour
         Vector3 mousePos = new Vector3(Input.mousePosition.x + 16.0f, Input.mousePosition.y, Input.mousePosition.z);
         if (Physics.Raycast(Camera.main.ScreenPointToRay(mousePos), out hit, 500, clickableLayer.value))
         {      
-            if (hit.collider.tag == "Doorway")
+            if(attackMoving) {
+                Cursor.SetCursor(sword, new Vector2(0, 0), CursorMode.Auto);
+            } else if (hit.collider.tag == "Doorway")
             {
                 Cursor.SetCursor(doorway, new Vector2(0, 0), CursorMode.Auto);
             }
@@ -576,13 +563,7 @@ public class InputManager : MonoBehaviour
                     } else {
                         if(!Input.GetKey(KeyCode.LeftShift)) {
                             if(selectedObjects.Contains(units[i])) {
-                                UI.RemoveSelectedObjects(units[i]);
-                                selectedObjects.Remove(units[i]);
-                                selectedInfo = units[i].GetComponent<UnitSelection>();
-                                unitScript = units[i].GetComponent<UnitController>();
-                                selectedInfo.selected = false;
-                                selectedInfo.transform.GetChild(2).gameObject.GetComponent<Projector>().material.SetColor("_Color", Color.green);
-                                selectedInfo.transform.GetChild(2).gameObject.SetActive(false);
+                                DeselectSingleUnit(units[i]);
                             }
                         }
                     }
@@ -593,6 +574,7 @@ public class InputManager : MonoBehaviour
         }
     }
       
+
     void SelectMultipleUnits (GameObject unit) {
         selectedInfo = unit.GetComponent<UnitSelection>();
         unitScript = unit.GetComponent<UnitController>();
@@ -774,12 +756,16 @@ public class InputManager : MonoBehaviour
             closestSelectableUnit = CheckClosestUnitFromRaycast(hit);
             if (hit.collider.tag == "Ground" && (!Input.GetKey(KeyCode.LeftShift)) && !closestSelectableUnit)
             {
-                DeselectUnits();
+                if(!Input.GetKey(KeyCode.LeftShift)) {
+                    DeselectUnits();
+                }
                 UI.CloseAllPanels();
             } 
             else if (hit.collider.tag == "Enemy Unit" && (!Input.GetKey(KeyCode.LeftShift)))
             {
-                DeselectUnits();
+                if(!Input.GetKey(KeyCode.LeftShift)) {
+                    DeselectUnits();
+                }
                 selectedObj = hit.collider.gameObject;
                 selectedInfo = selectedObj.GetComponent<UnitSelection>();
                 unitScript = selectedObj.GetComponent<UnitController>();
@@ -790,9 +776,8 @@ public class InputManager : MonoBehaviour
                 selectedObj.transform.GetChild(2).gameObject.SetActive(true);
                 UI.EnemySelect();
             }
-            else if (hit.collider.tag == "Selectable" )
+            else if (hit.collider.tag == "Selectable")
             {
-                DeselectUnits();
                 if(clickType == "double") {
                     Renderer[] sceneRenderers = FindObjectsOfType<Renderer>();
                     visibleRenderers.Clear();
@@ -818,7 +803,11 @@ public class InputManager : MonoBehaviour
                         }
                     }
                 } else {
-                    SelectSingleUnit(hit);
+                    if(selectedObjects.Contains(hit.collider.gameObject)) {
+                        DeselectSingleUnit(hit.collider.gameObject);
+                    } else {
+                        SelectMultipleUnits(hit.collider.gameObject);
+                    }
                 }
             }
             else if (hit.collider.tag == "Enemy Unit" || hit.collider.tag == "Player 1" || hit.collider.tag == "Foundation" || hit.collider.tag == "Barracks" || hit.collider.tag == "House" || hit.collider.tag == "Resource" || hit.collider.tag == "Fort" || hit.collider.tag == "Blacksmith" || hit.transform.tag == "Stables" )
@@ -911,16 +900,37 @@ public class InputManager : MonoBehaviour
             }
             else if (hit.collider.tag != "Selectable" && (!Input.GetKey(KeyCode.LeftShift)) && !closestSelectableUnit)
             {
-                DeselectUnits();
+                if(!Input.GetKey(KeyCode.LeftShift)) {
+                    DeselectUnits();
+                }
                 UI.CloseAllPanels();
             } else if (closestSelectableUnit) {
-                DeselectUnits();
-                SelectMultipleUnits(closestSelectableUnit);
-                UI.DisplaySelectedObjects(selectedObj);
+                if(!Input.GetKey(KeyCode.LeftShift)) {
+                    DeselectUnits();
+                }
+                if(selectedObjects.Contains(closestSelectableUnit)) {
+                    DeselectSingleUnit(closestSelectableUnit);
+                } else {
+                    SelectMultipleUnits(closestSelectableUnit);
+                }
             }
         }
     }
 
+    private void DeselectSingleUnit(GameObject go) {
+        UI.RemoveSelectedObjects(go);
+        selectedObjects.Remove(go);
+        selectedInfo = go.GetComponent<UnitSelection>();
+        unitScript = go.GetComponent<UnitController>();
+        selectedInfo.selected = false;
+        selectedInfo.transform.GetChild(2).gameObject.GetComponent<Projector>().material.SetColor("_Color", Color.green);
+        selectedInfo.transform.GetChild(2).gameObject.SetActive(false);
+        go.transform.GetChild(2).gameObject.SetActive(false); 
+        go.GetComponent<UnitSelection>().selected = false;
+        if(!go.GetComponent<UnitController>().isDead) {
+            isSelected = false;
+        }
+    }
     GameObject CheckClosestUnitFromRaycast(RaycastHit hit) {
         // Find the closest enemy
         GameObject closestSelectableObject = null;
@@ -977,104 +987,6 @@ public class InputManager : MonoBehaviour
         else
         {
             progressIcon.sprite = buildingScript.icon;
-        }
-    }
-
-    private void DeselectSingleUnit(GameObject go) {
-        go.transform.GetChild(2).gameObject.SetActive(false); 
-        go.GetComponent<UnitSelection>().selected = false;
-        if(!go.GetComponent<UnitController>().isDead) {
-            isSelected = false;
-        }
-    }
-
-    private void SelectSingleUnit(RaycastHit hit) {
-        selectedObj = hit.collider.gameObject;
-        if(!selectedObjects.Contains(selectedObj)) {
-            selectedObjects.Add(selectedObj);
-            UI.StandardMovementText();
-        } else {
-            selectedObjects.Remove(selectedObj);
-        }
-        selectedObj.transform.GetChild(2).gameObject.GetComponent<Projector>().material.SetColor("_Color", Color.green);
-        selectedInfo = selectedObj.GetComponent<UnitSelection>();
-        unitScript = selectedObj.GetComponent<UnitController>();
-
-        if (Input.GetKey(KeyCode.LeftShift))
-        {
-            if(!unitScript.isDead) {
-                if(selectedInfo.selected) {
-                    DeselectSingleUnit(selectedObj);
-                } else {
-                    selectedInfo.selected = true;
-                    // UnitSelection indicators
-                    selectedObj.transform.GetChild(2).gameObject.SetActive(true);
-                    playerAudio.clip = unitAudioClip;
-                    playerAudio.Play();
-                    if(!unitScript.isDead) {
-                        isSelected = true;
-                    }
-
-                    if(unitScript.unitType == "Worker") {
-                        UI.WorkerSelect();
-                    } else if (unitScript.unitType == "Swordsman") {
-                        UI.SwordsmanSelect();
-                    } else if (unitScript.unitType == "Footman") {
-                        UI.FootmanSelect();
-                    } else if (unitScript.unitType == "Archer") {
-                        UI.ArcherSelect();
-                    } else if (unitScript.unitType == "Outrider") {
-                        UI.OutriderSelect();
-                    } else if (unitScript.unitType == "Knight") {
-                        UI.KnightSelect();
-                    } else if (unitScript.unitType == "Wizard") {
-                        UI.WizardSelect();
-                    }
-                    UI.DisplaySelectedObjects(selectedObj);
-                }
-            }
-
-        } else if (selectedInfo.selected == true)
-        {
-            DeselectUnits();
-        }
-        else
-        {
-            if(!unitScript.isDead) {
-                GameObject[] selectedIndicators = GameObject.FindGameObjectsWithTag("SelectedIndicator");
-                for (int j = 0; j < selectedIndicators.Length; j++)
-                {
-                    selectedIndicators[j].transform.gameObject.SetActive(false);
-                    selectedIndicators[j].transform.parent.GetComponent<UnitSelection>().selected = false;
-                }
-
-                selectedInfo.selected = true;
-
-                // UnitSelection indicators
-                selectedObj.transform.GetChild(2).gameObject.SetActive(true);
-                playerAudio.clip = unitAudioClip;
-                playerAudio.Play();
-                if(!unitScript.isDead) {
-                    isSelected = true;
-                }
-
-                if(unitScript.unitType == "Worker") {
-                    UI.WorkerSelect();
-                } else if (unitScript.unitType == "Swordsman") {
-                    UI.SwordsmanSelect();
-                } else if (unitScript.unitType == "Footman") {
-                    UI.FootmanSelect();
-                } else if (unitScript.unitType == "Archer") {
-                    UI.ArcherSelect();
-                } else if (unitScript.unitType == "Outrider") {
-                    UI.OutriderSelect();
-                } else if (unitScript.unitType == "Knight") {
-                    UI.KnightSelect();
-                } else if (unitScript.unitType == "Wizard") {
-                    UI.WizardSelect();
-                }
-                UI.DisplaySelectedObjects(selectedObj);
-            }
         }
     }
 
@@ -1138,7 +1050,10 @@ public class InputManager : MonoBehaviour
     }
 
     void LoadControlGroup(int number) {
-        DeselectUnits();
+        
+        if(!Input.GetKey(KeyCode.LeftShift)) {
+            DeselectUnits();
+        }
         List<GameObject> currentList = new List<GameObject>();
         if(number == 1) {
             currentList = controlGroup1;

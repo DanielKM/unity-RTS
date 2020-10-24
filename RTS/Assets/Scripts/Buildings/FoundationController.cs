@@ -36,11 +36,7 @@ public class FoundationController : MonoBehaviour
         if (buildPercent >= 100)
         {
             buildingScript = buildingPrefab.GetComponent<BuildingController>();
-            if(buildingScript.unitType == "House")
-            {
-                location = new Vector3(gameObject.transform.position.x, gameObject.transform.position.y, gameObject.transform.position.z);
-            }
-            else if (buildingScript.unitType == "Farm")
+            if (buildingScript.unitType == "Farm")
             {
                 location = new Vector3(gameObject.transform.position.x -4.0f, gameObject.transform.position.y, gameObject.transform.position.z);
             } else
@@ -51,29 +47,7 @@ public class FoundationController : MonoBehaviour
             Destroy(gameObject);
             //adjusted placement rotation for odd models
             currentBuilding = Instantiate(buildingPrefab, location, Quaternion.identity);
-            //  if (buildingScript.unitType == "Stables" || buildingScript.unitType == "Barracks" || buildingScript.unitType == "Town Hall")
-            // {
-            //     currentBuilding.transform.Rotate(0, 270, 0);
-            // }
-
             currentBuilding.transform.rotation = gameObject.transform.rotation;
-
-            //adjusted placement location
-            if (buildingScript.unitType == "Barracks")
-            {
-                Vector3 newLocation = new Vector3(currentBuilding.transform.position.x, currentBuilding.transform.position.y, currentBuilding.transform.position.z);
-                currentBuilding.transform.position = newLocation;
-            }
-            if (buildingScript.unitType == "Stables")
-            {
-                Vector3 newLocation = new Vector3(currentBuilding.transform.position.x, currentBuilding.transform.position.y, currentBuilding.transform.position.z);
-                currentBuilding.transform.position = newLocation;
-            }
-            if (buildingScript.unitType == "Town Hall")
-            {
-                Vector3 newLocation = new Vector3(currentBuilding.transform.position.x, currentBuilding.transform.position.y, currentBuilding.transform.position.z);
-                currentBuilding.transform.position = newLocation;
-            }
 
             // ADD COUNTS TO RESOURCE MANAGER
             if (buildingScript.unitType == "House") {

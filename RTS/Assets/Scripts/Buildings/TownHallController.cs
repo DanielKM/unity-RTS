@@ -110,7 +110,6 @@ public class TownHallController : MonoBehaviour
     }
 
     public void OnCollisionEnter(Collision col) {
-        Debug.Log("ENTERED!");
         selectscript = col.gameObject.GetComponent<UnitSelection>();
         NavMeshAgent agent = col.gameObject.GetComponent<NavMeshAgent>();
         if (col.collider.tag == "Selectable" && selectscript.task == ActionList.Gathering)

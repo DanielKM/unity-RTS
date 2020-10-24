@@ -431,16 +431,43 @@ public class UnitSelection : MonoBehaviour
         } 		
     }
 
-    // public void OnTriggerStay(Collider other)
-    // {
-    //     GameObject hitObject = other.gameObject;
+    public void DropResource() {
+        //Handle drop off!
+        if (RM.skymetal >= RM.maxSkymetal)
+        {
+            task = ActionList.Idle;
+        }
+        else
+        {
+            // if target node is destroyed
+            if (targetNode == null)
+            {
+                isGathering = false;
+                if (heldResource != 0)
+                {
+                    drops = GameObject.FindGameObjectsWithTag("Player 1");
+                    drops = AdjustDrops(drops);
+                    task = ActionList.Delivering;
+                    agent.destination = GetClosestDropOff(drops).transform.position;
 
-    //     if (hitObject.tag == "Player 1" && task == ActionList.Idle && heldResource != 0) 
-    //     {
-    //         // task = ActionList.Idle;
-    //         // agent.isStopped = true;
-    //     }
-    // }
+                    RM.skymetal += heldResource;
+                    heldResource = 0;
+                    drops = null;
+                }
+                else
+                {
+                    task = ActionList.Idle;
+                }
+            }
+            else
+            {
+                RM.skymetal += heldResource;
+                heldResource = 0;
+                task = ActionList.Gathering;
+                agent.destination = targetNode.transform.position;
+            }
+        }
+    }
 
     public void DropSkyMetal()
     {
