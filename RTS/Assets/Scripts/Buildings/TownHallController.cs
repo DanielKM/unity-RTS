@@ -17,7 +17,6 @@ public class TownHallController : MonoBehaviour
 
 
     private float nextSpawnTime;
-    public int i = 0;
 
     public GameObject villagerPrefab;
     private AudioSource villagerAudio;
@@ -26,6 +25,8 @@ public class TownHallController : MonoBehaviour
     [SerializeField]
     public float spawnDelay;
     public bool selected = false;
+    public int progress = 0;
+    public List<GameObject> queuedUnits = new List<GameObject>();
 
     GameObject player;
     GameObject team;
@@ -74,41 +75,47 @@ public class TownHallController : MonoBehaviour
     {
         selectedObj = inputScript.selectedObj;
         buildingScript = selectedObj.GetComponent<BuildingController>();
-
-        StartCoroutine(WorkerSpawn());
+        queuedUnits.Add(villagerPrefab);
+        UI.OpenTrainingProgressPanel();
+        StartCoroutine(WorkerSpawn(selectedObj, villagerPrefab));
     }
     
-    IEnumerator WorkerSpawn()
+    IEnumerator WorkerSpawn(GameObject selectedTownHall, GameObject queuedUnit)
     {
+        yield return new WaitUntil(() => isTraining == false);
         isTraining = true;
-        selectedObj = inputScript.selectedObj;
-        buildingScript = selectedObj.GetComponent<BuildingController>();
+        buildingScript = selectedTownHall.GetComponent<BuildingController>();
         spawnPosition = new Vector3(buildingScript.location.x, buildingScript.location.y, buildingScript.location.z - 10f);
         nextSpawnTime = Time.time + spawnDelay;
 
-        for (i = 1; i < 11; i++)
+        for (int i = 1; i < 11; i++)
         {
+            progress = i;
             yield return new WaitForSeconds(1);
         }
+        queuedUnits.RemoveAt(0);
         isTraining = false;
 
         var random1 = Random.Range(0, firstNames.Length);
         var random2 = Random.Range(0, lastNameFirst.Length);
         var random3 = Random.Range(0, lastNameSecond.Length);
         progressIcon = GameObject.Find("ProgressIcon").GetComponent<Image>();
-        workerUC = villagerPrefab.GetComponent<UnitController>();
-        workerUnitSelection = villagerPrefab.GetComponent<UnitSelection>();
+        workerUC = queuedUnit.GetComponent<UnitController>();
+        workerUnitSelection = queuedUnit.GetComponent<UnitSelection>();
         progressIcon.sprite = workerUC.unitIcon;
         workerUC.unitName = firstNames[random1] + " " + lastNameFirst[random2] + lastNameSecond[random3];
         workerUnitSelection.owner = team;
 
-        GameObject newWorker = Instantiate(villagerPrefab, spawnPosition, Quaternion.identity);
-        villagerAudio = selectedObj.GetComponent<AudioSource>();
+        GameObject newWorker = Instantiate(queuedUnit, spawnPosition, Quaternion.identity);
+        villagerAudio = selectedTownHall.GetComponent<AudioSource>();
         villagerAudio.clip = villagerReporting;
         villagerAudio.Play();
 
         if(gameObject.transform.position != buildingScript.rallyPoint) {
             newWorker.GetComponent<NavMeshAgent>().destination = buildingScript.rallyPoint;
+        }
+        if(queuedUnits.Count == 0) {
+            UI.CloseTrainingProgressPanel();
         }
     }
 

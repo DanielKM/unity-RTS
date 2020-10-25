@@ -42,6 +42,7 @@ public class UIController : MonoBehaviour
     public CanvasGroup BlacksmithActionPanel;
     public CanvasGroup LumberYardActionPanel;
     public CanvasGroup BarracksActionPanel;
+    public CanvasGroup TrainingProgressPanel;
 
     BuildingButtonController BBC;
 
@@ -80,7 +81,8 @@ public class UIController : MonoBehaviour
         BlacksmithActionPanel = GameObject.Find("BlacksmithActionPanel").GetComponent<CanvasGroup>();
         LumberYardActionPanel = GameObject.Find("LumberYardActionPanel").GetComponent<CanvasGroup>();
         BarracksActionPanel = GameObject.Find("BarracksActionPanel").GetComponent<CanvasGroup>();
-
+            
+        TrainingProgressPanel = GameObject.Find("TrainingProgressPanel").GetComponent<CanvasGroup>();
         BuildingProgressPanel = GameObject.Find("BuildingProgressPanel").GetComponent<CanvasGroup>();
         BuildingActionPanel = GameObject.Find("BuildingActions").GetComponent<CanvasGroup>();
 
@@ -121,6 +123,7 @@ public class UIController : MonoBehaviour
         LumberYardActionPanel = GameObject.Find("LumberYardActionPanel").GetComponent<CanvasGroup>();
         BarracksActionPanel = GameObject.Find("BarracksActionPanel").GetComponent<CanvasGroup>();
 
+        TrainingProgressPanel = GameObject.Find("TrainingProgressPanel").GetComponent<CanvasGroup>();
         BuildingProgressPanel = GameObject.Find("BuildingProgressPanel").GetComponent<CanvasGroup>();
         BuildingActionPanel = GameObject.Find("BuildingActions").GetComponent<CanvasGroup>();
 
@@ -307,6 +310,11 @@ public class UIController : MonoBehaviour
         BarracksActionPanel.alpha = 0;
         BarracksActionPanel.blocksRaycasts = false;
         BarracksActionPanel.interactable = false;
+
+        // TRAINING
+        TrainingProgressPanel.alpha = 0;
+        TrainingProgressPanel.blocksRaycasts = false;
+        TrainingProgressPanel.interactable = false;
 
         // NOTIFICATIONS
         CloseNoResourcesText();
@@ -537,18 +545,21 @@ public class UIController : MonoBehaviour
         BuildingActionPanel.alpha = 1;
         BuildingActionPanel.blocksRaycasts = true;
         BuildingActionPanel.interactable = true;
+        CloseTrainingProgressPanel();
         panelOpen = 2;
     }
 
     // On town hall selection if it is training
     public void TownHallTraining() {
-        CloseAllPanels();
-
         BuildingPanel.alpha = 1;
         BuildingPanel.blocksRaycasts = true;
         BuildingPanel.interactable = true;
 
-        OpenBuildingProgressPanel(false);
+        BuildingActionPanel.alpha = 1;
+        BuildingActionPanel.blocksRaycasts = true;
+        BuildingActionPanel.interactable = true;
+
+        OpenTrainingProgressPanel();
         panelOpen = 2;
     }
 
@@ -574,8 +585,7 @@ public class UIController : MonoBehaviour
         BuildingPanel.blocksRaycasts = true;
         BuildingPanel.interactable = true;
 
-        OpenBuildingProgressPanel(false);
-
+        OpenBuildingProgressPanel();
         panelOpen = 2;
     }
 
@@ -604,7 +614,7 @@ public class UIController : MonoBehaviour
         BarracksActionPanel.alpha = 1;
         BarracksActionPanel.blocksRaycasts = true;
         BarracksActionPanel.interactable = true;
-
+        CloseTrainingProgressPanel();
         panelOpen = 2;
     }
 
@@ -615,8 +625,10 @@ public class UIController : MonoBehaviour
         BuildingPanel.blocksRaycasts = true;
         BuildingPanel.interactable = true;
 
-        OpenBuildingProgressPanel(false);
-        
+        BarracksActionPanel.alpha = 1;
+        BarracksActionPanel.blocksRaycasts = true;
+        BarracksActionPanel.interactable = true;
+        OpenTrainingProgressPanel();
         panelOpen = 2;
     }
 
@@ -661,22 +673,26 @@ public class UIController : MonoBehaviour
         BuildingPanel.blocksRaycasts = true;
         BuildingPanel.interactable = true;
         
-        OpenBuildingProgressPanel(true);
+        OpenBuildingProgressPanel();
         panelOpen = 2;
     }
 
-    public void OpenBuildingProgressPanel(bool displayCancelConstructionButton){
+    public void OpenBuildingProgressPanel(){
         BuildingProgressPanel.alpha = 1;
         BuildingProgressPanel.blocksRaycasts = true;
         BuildingProgressPanel.interactable = true;
+    }
 
-        if(displayCancelConstructionButton) {
-            BBC.BuildingCancelButton.enabled = true;
-            BBC.BuildingCancelButton.GetComponentInChildren<Text>().text = "Cancel Construction";
-        } else {
-            BBC.BuildingCancelButton.enabled = false;
-            BBC.BuildingCancelButton.GetComponentInChildren<Text>().text = "";
-        }
+    public void OpenTrainingProgressPanel(){
+        TrainingProgressPanel.alpha = 1;
+        TrainingProgressPanel.blocksRaycasts = true;
+        TrainingProgressPanel.interactable = true;
+    }
+
+    public void CloseTrainingProgressPanel(){
+        TrainingProgressPanel.alpha = 0;
+        TrainingProgressPanel.blocksRaycasts = false;
+        TrainingProgressPanel.interactable = false;
     }
 }
 

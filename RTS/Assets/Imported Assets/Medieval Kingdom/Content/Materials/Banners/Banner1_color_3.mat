@@ -4,8 +4,9 @@
 Material:
   serializedVersion: 6
   m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
   m_Name: Banner1_color_3
   m_Shader: {fileID: 4800000, guid: 8cceb64ff36f85441b0e1496273e8dd8, type: 3}
   m_ShaderKeywords: 
@@ -54,6 +55,10 @@ Material:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
+    - _Normalmapinput:
+        m_Texture: {fileID: 2800000, guid: 0c970a02b891dcf40a071de5e09c7d04, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     - _OcclusionMap:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
@@ -88,10 +93,6 @@ Material:
         m_Offset: {x: 0, y: 0}
     - _fabric_folds_AO:
         m_Texture: {fileID: 2800000, guid: 82925ead7a9fde34293981b4bfef68f7, type: 3}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
-    - _Normalmapinput:
-        m_Texture: {fileID: 2800000, guid: 0c970a02b891dcf40a071de5e09c7d04, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _fabric_metal_smooth:
@@ -174,7 +175,7 @@ Material:
     - _Color3: {r: 0.15294105, g: 0.34117636, b: 0.5137252, a: 0}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
     - _Folds_Tiling: {r: 1, g: 1, b: 0, a: 0}
-    - _Stripe_1_color: {r: 0.49264705, g: 0.3578436, b: 0.304282, a: 0}
+    - _Stripe_1_color: {r: 0.5471698, g: 0.14819182, b: 0, a: 0}
     - _Stripe_2_color: {r: 1, g: 1, b: 1, a: 0}
     - _Stripe_3_color: {r: 0.24313727, g: 0.35686275, b: 0.5019608, a: 0}
     - _Vector0: {r: 1, g: 1, b: 0, a: 0}

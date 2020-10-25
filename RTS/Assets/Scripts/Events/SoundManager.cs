@@ -45,6 +45,7 @@ public class SoundManager : MonoBehaviour
                 if(go.GetComponent<UnitController>()) {
                     if(go.GetComponent<UnitController>().unitType == "Skeleton" && go.GetComponent<UnitController>().isDead) {
                         go.GetComponent<UnitController>().isDead = false;
+                        go.GetComponent<UnitController>().justKilled = true;
                         go.GetComponent<UnitController>().health = 75;
                     }
                 }
@@ -68,6 +69,5 @@ public class SoundManager : MonoBehaviour
                 day = true;
             }
         }
-
     }
 }

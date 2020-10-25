@@ -57,6 +57,10 @@ public class UnitSelection : MonoBehaviour
     public List<GameObject> formationList;
     public List<GameObject> dropList;
 
+    public GameObject rightClickCursor;
+    private GameObject currentRightClickCursor;
+    PauseMenu PM;
+
     // Start is called before the first frame update
     void Awake()
     {
@@ -71,6 +75,8 @@ public class UnitSelection : MonoBehaviour
             IM = player.GetComponent<InputManager>();
             UC = GetComponent<UnitController>();
             agent = GetComponent<NavMeshAgent>();
+            PM = GameObject.Find("GameMenu").GetComponent<PauseMenu>();
+            rightClickCursor = IM.cursorHit;
         }
     }
 
@@ -148,12 +154,12 @@ public class UnitSelection : MonoBehaviour
                 RaycastHit hit;
                 if(Physics.Raycast(ray, out hit, 350, mask))
                 {
-                    StartCoroutine(IM.ClickCursorHit(hit));
+                    StartCoroutine(ShowDestinations());
                 }    
             }
 
             if (task == ActionList.Moving) {
-                if(agent.GetComponent<UnitController>() && agent.destination.x - agent.transform.position.x < 0.5 && agent.destination.z - agent.transform.position.z < 0.5) {
+                if(agent.GetComponent<UnitController>() && agent.destination.x - agent.transform.position.x < 0.4 && agent.destination.z - agent.transform.position.z < 0.4) {
                     task = ActionList.Idle;
                 }
             }
@@ -796,6 +802,24 @@ public class UnitSelection : MonoBehaviour
                 hitObject.GetComponent<FoundationController>().builderList.Remove(gameObject);
             }
         } 
+    }
+
+    public IEnumerator ShowDestinations() {
+        Destroy(currentRightClickCursor);
+        if(!PM.gamePaused) {
+            List<GameObject> createdDestinations = new List<GameObject>();
+            for(int i=0; i<IM.selectedObjects.Count; i++) {
+                Vector3 agentDestination = IM.selectedObjects[i].GetComponent<NavMeshAgent>().destination;
+                currentRightClickCursor = Instantiate(rightClickCursor);
+                currentRightClickCursor.transform.localScale -= new Vector3(0.5f, 0.5f, 0.5f);
+                currentRightClickCursor.transform.position = new Vector3 (agentDestination.x, agentDestination.y + 0.3f, agentDestination.z);
+                createdDestinations.Add(currentRightClickCursor);
+            }
+            yield return new WaitForSeconds(1f);
+            for(int i=0; i<createdDestinations.Count; i++) {
+                Destroy(createdDestinations[i]);
+            }
+        }
     }
     
     IEnumerator Follow() {

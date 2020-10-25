@@ -198,22 +198,8 @@ public class BuildingButtonController : MonoBehaviour
             } else if (unitUC.unitType == "Swordsman" || unitUC.unitType == "Footman" || unitUC.unitType == "Archer" || unitUC.unitType == "Outrider" || unitUC.unitType == "Knight") {
                 UI.BarracksTraining();
                 barracksScript = selectedObj.GetComponent<BarracksController>();
-                if(unitUC.unitType == "Swordsman") {
-                    barracksScript.HireSwordsman();
-                } else if (unitUC.unitType == "Footman") {
-                    barracksScript.HireFootman();
-                } else if (unitUC.unitType == "Archer") {
-                    barracksScript.HireArcher();
-                } else if (unitUC.unitType == "Outrider") {
-                    barracksScript.HireOutrider();
-                } else if (unitUC.unitType == "Footman") {
-                    barracksScript.HireFootman();
-                } else if (unitUC.unitType == "Knight") {
-                    barracksScript.HireKnight();
-                }
+                barracksScript.Hire(unitUC.unitType);
             }
-            playerAudio.Play();
-
         } else {
             UI.OpenNoResourcesText(notEnoughResourcesText);
             StartCoroutine(Wait());

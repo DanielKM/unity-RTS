@@ -73,6 +73,11 @@ public class InputManager : MonoBehaviour
     private GameObject BuildingProgressBar;
     public Slider BuildingProgressSlider;
 
+    private GameObject TrainingProgressBar;
+    public Slider TrainingProgressSlider;
+    public Image TrainingProgressIcon;
+    public Text TrainingQueuedUnits;
+
     public Slider buildingHB;
     public Text buildingHealthDisp;
 
@@ -171,6 +176,9 @@ public class InputManager : MonoBehaviour
     public UnitSelection selectedInfo;
     public GameObject selectedObj;
 
+    public GameObject rallyGameobject;
+    public GameObject currentRallyGameobject;
+    
     void Awake() {
         unitList = GameObject.Find("Game").GetComponent<UnitList>();
         Scene currentScene = SceneManager.GetActiveScene();
@@ -205,6 +213,11 @@ public class InputManager : MonoBehaviour
             BuildingProgressBar = GameObject.Find("BuildingProgressBar");
             BuildingProgressSlider = BuildingProgressBar.GetComponent<Slider>();
 
+            TrainingProgressBar = GameObject.Find("TrainingProgressBar");
+            TrainingProgressSlider = TrainingProgressBar.GetComponent<Slider>();
+            TrainingQueuedUnits = GameObject.Find("TrainingProgressIcon").GetComponentInChildren<Text>();
+            TrainingProgressIcon = GameObject.Find("TrainingProgressIcon").GetComponent<Image>();
+            
             rotation = Camera.main.transform.rotation;
             cam = Camera.main;
             minimap = GameObject.Find("Minimap").GetComponent<Camera>();
@@ -323,14 +336,18 @@ public class InputManager : MonoBehaviour
                 {
                     if (townHallScript != null && townHallScript.isTraining)
                     {
-                        BuildingProgressSlider.value = townHallScript.i * 10;
+                        TrainingProgressIcon.sprite = townHallScript.queuedUnits[0].GetComponent<UnitController>().unitIcon;
+                        TrainingQueuedUnits.text = townHallScript.queuedUnits.Count + "";
+                        TrainingProgressSlider.value = townHallScript.progress * 10;
                     }
                 }
                 else if (buildingScript.unitType == "Barracks")
                 {
                     if (barracksScript != null && barracksScript.isTraining)
                     {
-                        BuildingProgressSlider.value = barracksScript.i * 10;
+                        TrainingProgressIcon.sprite = barracksScript.queuedUnits[0].GetComponent<UnitController>().unitIcon;
+                        TrainingQueuedUnits.text = barracksScript.queuedUnits.Count + "";
+                        TrainingProgressSlider.value = barracksScript.progress * 10;
                     }
                 }
                 else if (selectedObj.tag == "Foundation")
@@ -348,8 +365,28 @@ public class InputManager : MonoBehaviour
                         // handle
                     }
                 }
+
+                if(buildingScript.rallyPoint != buildingScript.transform.position) {
+                    ShowRallyPoint(buildingScript);
+                }
             }
+        } else {
+            DestroyRallyPoint();
         }
+    }
+
+    void DestroyRallyPoint() {
+        if(currentRallyGameobject) {
+            Destroy(currentRallyGameobject);
+        }
+    }
+
+    void ShowRallyPoint(BuildingController BC) {
+        DestroyRallyPoint();
+        GameObject currentRallyPoint;
+        currentRallyPoint = Instantiate(rallyGameobject);
+        currentRallyPoint.transform.position = BC.rallyPoint;
+        currentRallyGameobject = currentRallyPoint;
     }
 
     void SelectAllVisibleUnits() {
@@ -627,6 +664,9 @@ public class InputManager : MonoBehaviour
         selectedInfo = unit.GetComponent<UnitSelection>();
         unitScript = unit.GetComponent<UnitController>();
 
+        if(selectedInfo.task != ActionList.Idle) {
+            StartCoroutine(selectedInfo.ShowDestinations());
+        }
         if(!unitScript.isDead) {
             UI.DisplaySelectedObjects(unit);
             if(!selectedObjects.Contains(unit)) {
@@ -978,6 +1018,7 @@ public class InputManager : MonoBehaviour
             isSelected = false;
         }
     }
+
     GameObject CheckClosestUnitFromRaycast(RaycastHit hit) {
         // Find the closest enemy
         GameObject closestSelectableObject = null;
@@ -1039,6 +1080,7 @@ public class InputManager : MonoBehaviour
 
     private void DeselectUnits()
     {
+
         UI.ResetSelectionIcons();
         selectedObj = null;
         UI.CloseAllPanels();
@@ -1133,7 +1175,7 @@ public class InputManager : MonoBehaviour
         Destroy(currentCursorHit);
         if(!PM.gamePaused) {
             currentCursorHit = Instantiate(cursorHit);
-            currentCursorHit.transform.position = new Vector3 (hit.point.x, hit.point.y + 2.0f, hit.point.z);
+            currentCursorHit.transform.position = new Vector3 (hit.point.x, hit.point.y + 0.3f, hit.point.z);
             yield return new WaitForSeconds(0.1f);
             Destroy(currentCursorHit);
         }

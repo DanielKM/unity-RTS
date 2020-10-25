@@ -36,23 +36,6 @@ public class NecromancerController : MonoBehaviour
                 }          
             }
         }
-
-        if(!gameObject.GetComponent<UnitController>().isDead) {
-            if(DayNight.time >= 68000 && DayNight.time <= 68500 ) {
-                if(!raisingDead) {
-                    StartCoroutine(RaiseDead(DayNight.days));
-                }          
-            }
-        }
-
-        if(!gameObject.GetComponent<UnitController>().isDead) {
-            if(DayNight.time >= 86000 && DayNight.time <= 86300 ) {
-                if(!raisingDead) {
-                    StartCoroutine(RaiseDead(DayNight.days));
-                }          
-            }
-        }
-        
     }
 
     IEnumerator RaiseDead(int number) {
