@@ -22,7 +22,7 @@ public class WorkerController : MonoBehaviour
 
     void OnCollisionStay(Collision other)
     {
-        if (other.gameObject.tag == "Selectable" || other.gameObject.tag == "Enemy Unit" && other.gameObject.GetComponent<UnitController>().isDead && gameObject.GetComponent<UnitSelection>().targetNode == other.gameObject && clearingDead)
+        if (other.gameObject.tag == "Selectable" && other.gameObject.GetComponent<UnitController>().isDead && gameObject.GetComponent<UnitSelection>().targetNode == other.gameObject && clearingDead || other.gameObject.tag == "Enemy Unit" && other.gameObject.GetComponent<UnitController>().isDead && gameObject.GetComponent<UnitSelection>().targetNode == other.gameObject && clearingDead)
         {
             StartCoroutine(ClearDead(other.gameObject));
         }
@@ -33,6 +33,9 @@ public class WorkerController : MonoBehaviour
         yield return new WaitForSeconds(3);
         if(other.activeSelf) {
             UBC.dead.Remove(other);
+            if(other.GetComponent<WorkerController>()){
+                other.GetComponent<WorkerController>().clearingDead = false;
+            }
             other.SetActive(false);
             StartCoroutine(UBC.ClearingDead(gameObject)); 
         }

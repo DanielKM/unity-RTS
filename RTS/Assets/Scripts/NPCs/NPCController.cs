@@ -182,7 +182,7 @@ public class NPCController : MonoBehaviour
                 UC.unitAudio.clip = UC.woodChop;
                 UC.unitAudio.maxDistance = 55;
                 UC.unitAudio.Play();
-            } else if(UC.unitType == "Skeleton" || UC.unitType == "Worker") {
+            } else if(UC.unitType == "Skeleton" || UC.unitType == "Brute" || UC.unitType == "Worker") {
                 UC.unitAudio = agent.GetComponent<AudioSource>();
                 UC.unitAudio.clip = UC.woodChop;
                 UC.unitAudio.maxDistance = 55;

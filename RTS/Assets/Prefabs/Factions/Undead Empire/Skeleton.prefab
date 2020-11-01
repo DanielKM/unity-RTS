@@ -54,6 +54,7 @@ MeshRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -65,6 +66,7 @@ MeshRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_LightProbeVolumeOverride: {fileID: 0}
   m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
   m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
@@ -131,6 +133,7 @@ MeshRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -142,6 +145,7 @@ MeshRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_LightProbeVolumeOverride: {fileID: 0}
   m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
   m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
@@ -208,6 +212,7 @@ MeshRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -219,6 +224,7 @@ MeshRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_LightProbeVolumeOverride: {fileID: 0}
   m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
   m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
@@ -306,6 +312,7 @@ SkinnedMeshRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -317,6 +324,7 @@ SkinnedMeshRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_LightProbeVolumeOverride: {fileID: 0}
   m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
   m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
@@ -387,6 +395,7 @@ SkinnedMeshRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -398,6 +407,7 @@ SkinnedMeshRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_LightProbeVolumeOverride: {fileID: 0}
   m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
   m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
@@ -468,6 +478,7 @@ SkinnedMeshRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -479,6 +490,7 @@ SkinnedMeshRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_LightProbeVolumeOverride: {fileID: 0}
   m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
   m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
@@ -555,6 +567,7 @@ SkinnedMeshRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -566,6 +579,7 @@ SkinnedMeshRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_LightProbeVolumeOverride: {fileID: 0}
   m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
   m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
@@ -667,6 +681,7 @@ SkinnedMeshRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -678,6 +693,7 @@ SkinnedMeshRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_LightProbeVolumeOverride: {fileID: 0}
   m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
   m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
@@ -757,6 +773,7 @@ SkinnedMeshRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -768,6 +785,7 @@ SkinnedMeshRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_LightProbeVolumeOverride: {fileID: 0}
   m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
   m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
@@ -838,6 +856,7 @@ SkinnedMeshRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -849,6 +868,7 @@ SkinnedMeshRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_LightProbeVolumeOverride: {fileID: 0}
   m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
   m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
@@ -928,6 +948,7 @@ SkinnedMeshRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -939,6 +960,7 @@ SkinnedMeshRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_LightProbeVolumeOverride: {fileID: 0}
   m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
   m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
@@ -1027,6 +1049,7 @@ MeshRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -1038,6 +1061,7 @@ MeshRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_LightProbeVolumeOverride: {fileID: 0}
   m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
   m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
@@ -1104,6 +1128,7 @@ MeshRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -1115,6 +1140,7 @@ MeshRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_LightProbeVolumeOverride: {fileID: 0}
   m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
   m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
@@ -1181,6 +1207,7 @@ MeshRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -1192,6 +1219,7 @@ MeshRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_LightProbeVolumeOverride: {fileID: 0}
   m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
   m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
@@ -1258,6 +1286,7 @@ MeshRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -1269,6 +1298,7 @@ MeshRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_LightProbeVolumeOverride: {fileID: 0}
   m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
   m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
@@ -1335,6 +1365,7 @@ MeshRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -1346,6 +1377,7 @@ MeshRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_LightProbeVolumeOverride: {fileID: 0}
   m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
   m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
@@ -1412,6 +1444,7 @@ MeshRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -1423,6 +1456,7 @@ MeshRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_LightProbeVolumeOverride: {fileID: 0}
   m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
   m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
@@ -1489,6 +1523,7 @@ MeshRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -1500,6 +1535,7 @@ MeshRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_LightProbeVolumeOverride: {fileID: 0}
   m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
   m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
@@ -1557,6 +1593,7 @@ SkinnedMeshRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -1568,6 +1605,7 @@ SkinnedMeshRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_LightProbeVolumeOverride: {fileID: 0}
   m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
   m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
@@ -1645,6 +1683,7 @@ SkinnedMeshRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -1656,6 +1695,7 @@ SkinnedMeshRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_LightProbeVolumeOverride: {fileID: 0}
   m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
   m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
@@ -1733,6 +1773,7 @@ SkinnedMeshRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -1744,6 +1785,7 @@ SkinnedMeshRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_LightProbeVolumeOverride: {fileID: 0}
   m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
   m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
@@ -1820,6 +1862,7 @@ SkinnedMeshRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -1831,6 +1874,7 @@ SkinnedMeshRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_LightProbeVolumeOverride: {fileID: 0}
   m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
   m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
@@ -1908,6 +1952,7 @@ SkinnedMeshRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -1919,6 +1964,7 @@ SkinnedMeshRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_LightProbeVolumeOverride: {fileID: 0}
   m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
   m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
@@ -1996,6 +2042,7 @@ SkinnedMeshRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -2007,6 +2054,7 @@ SkinnedMeshRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_LightProbeVolumeOverride: {fileID: 0}
   m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
   m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
@@ -2084,6 +2132,7 @@ SkinnedMeshRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -2095,6 +2144,7 @@ SkinnedMeshRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_LightProbeVolumeOverride: {fileID: 0}
   m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
   m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
@@ -2172,6 +2222,7 @@ SkinnedMeshRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -2183,6 +2234,7 @@ SkinnedMeshRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_LightProbeVolumeOverride: {fileID: 0}
   m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
   m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
@@ -2253,6 +2305,7 @@ SkinnedMeshRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -2264,6 +2317,7 @@ SkinnedMeshRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_LightProbeVolumeOverride: {fileID: 0}
   m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
   m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
@@ -2351,6 +2405,7 @@ SkinnedMeshRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -2362,6 +2417,7 @@ SkinnedMeshRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_LightProbeVolumeOverride: {fileID: 0}
   m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
   m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
@@ -2449,6 +2505,7 @@ SkinnedMeshRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -2460,6 +2517,7 @@ SkinnedMeshRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_LightProbeVolumeOverride: {fileID: 0}
   m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
   m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
@@ -2530,6 +2588,7 @@ SkinnedMeshRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -2541,6 +2600,7 @@ SkinnedMeshRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_LightProbeVolumeOverride: {fileID: 0}
   m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
   m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
@@ -2618,6 +2678,7 @@ SkinnedMeshRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -2629,6 +2690,7 @@ SkinnedMeshRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_LightProbeVolumeOverride: {fileID: 0}
   m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
   m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
@@ -2706,6 +2768,7 @@ SkinnedMeshRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -2717,6 +2780,7 @@ SkinnedMeshRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_LightProbeVolumeOverride: {fileID: 0}
   m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
   m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
@@ -2796,6 +2860,7 @@ SkinnedMeshRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -2807,6 +2872,7 @@ SkinnedMeshRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_LightProbeVolumeOverride: {fileID: 0}
   m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
   m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
@@ -2894,6 +2960,7 @@ SkinnedMeshRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -2905,6 +2972,7 @@ SkinnedMeshRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_LightProbeVolumeOverride: {fileID: 0}
   m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
   m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
@@ -3288,6 +3356,7 @@ MeshRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -3299,6 +3368,7 @@ MeshRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_LightProbeVolumeOverride: {fileID: 0}
   m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
   m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
@@ -3365,6 +3435,7 @@ MeshRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -3376,6 +3447,7 @@ MeshRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_LightProbeVolumeOverride: {fileID: 0}
   m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
   m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
@@ -3442,6 +3514,7 @@ MeshRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -3453,6 +3526,7 @@ MeshRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_LightProbeVolumeOverride: {fileID: 0}
   m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
   m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
@@ -3510,6 +3584,7 @@ SkinnedMeshRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -3521,6 +3596,7 @@ SkinnedMeshRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_LightProbeVolumeOverride: {fileID: 0}
   m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
   m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
@@ -3608,6 +3684,7 @@ SkinnedMeshRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -3619,6 +3696,7 @@ SkinnedMeshRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_LightProbeVolumeOverride: {fileID: 0}
   m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
   m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
@@ -3793,6 +3871,7 @@ MonoBehaviour:
   resources: []
   formationList: []
   dropList: []
+  rightClickCursor: {fileID: 0}
 --- !u!195 &195178626872221466
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -3851,6 +3930,7 @@ MonoBehaviour:
   iron: 0
   steel: 0
   skymetal: 0
+  UnitList: {fileID: 0}
   boneshardsPrefab: {fileID: 0}
   unitAudio: {fileID: 0}
   metalChop: {fileID: 8300000, guid: 4ae4fe17d19c04e10920bfaca3bd8290, type: 3}
@@ -3863,6 +3943,7 @@ MonoBehaviour:
   heldResource: 0
   currentlyMeleeing: 0
   isDead: 0
+  justKilled: 0
   unitIcon: {fileID: 21300000, guid: 72ab77f73c7204045ba5f85f86ec4e59, type: 3}
   unitID: 
 --- !u!54 &54543617370587768
@@ -4269,7 +4350,11 @@ MonoBehaviour:
     - {fileID: 9100000, guid: 8d56a7ff73ca017438e94ab3c4d6f834, type: 2}
     - {fileID: 7400000, guid: 94f11ed6c0f9acd4bbf8df9e070a103c, type: 3}
     - {fileID: 11500000, guid: 3a26af9afe1a4004daddaaf0a7a5d470, type: 3}
-    _Values: 3de0fec8ea1d3825bc0dc503737ccd44dc654065a30eb74e6b2904b8e6e88b4816402a005339a15a2e4938ca7aa75732d38458d9fc50182f29af5dc118803e5b990e1ab3a6cd985dc3e592ec4682c91380c81b9e6f4eb33a27fad7a4dce042528994316c8da38b5ee449e9e842d417581bb5be1e6423344a5bdfdba0a53c391ca24075dbb436a0243dbcbb2664cbf803efcf416e619e49649f18ed513715465911cd8b8349f30c51a91c1d5897f21a7018284d2a053444410a423ef842209e32742d8c4bb2c627049e8809b90f531e2ac08b3f57b22ec35ac435f1aa4cbdc211c7e53d9dfee1e773544a652cb3998b49dbeb46319f091b5df1e710e7b7d2515a4b1af22915802b5d72b30268c997a72aa9a7ce617690712fff6452e82e0043269bbf76cd8cb45f5c17a4bfec07b2947871c56ea15f4d2e2473ddd7852deb7372912432f6df26620a47724ad2d185284cd0da776991a2c74e915259afddda2e2bd0b383d41a75a768d986a613fda3ac114b754bac8cf51f32137e78cd7fee176c431ea18409fc674681df411748db4b34fe6bf95326dbb8256bae1766128a17389e13571b45311a47236ed193c9c984383343cf14f5c446689a84e7a51affcb08c808b55b336679307abfd048f6dba35dd621cc3144fcbc61a63f7e3eb68bd323c625343febd7fa33c99e8eb4948e5e42e189d0f9329ac43b3be94a0c17c585056d0c7d2f589c8e01d966041c748f09171fc4e0bfa433aa2b61f905028ded1c71dc6cb877eed0167de72e2d66611f5036f361ed53e4c5615f4a566fad5e6e71387e8a081eb77ef94eae62a7d261118c7f4a3b102bffc98c15f4a6d1679f97e05661991b14d8901174689fa5821e8efe3836109bdda1bac64cfff2135e4f61ed44bc028e380a8758472a9cc3602309f67c5cf6ce7004fc4b1a616716e57db32406b2613f201c364351b754063d7d276f0bfd970259927d3f46b257678d61c13b7578bdaec2cad55f254c82d8a7fd766778d822e9e5b1cb7334de07903a304a107871834ac42ace2a2638dda61555e7432840204ac028aa3b53b6855e2e9965aa028ea0e87f3ed35d09f9c3aed3255dde39b64605ef00afaf1a4061854fd2a740637857784a013b16147d53b8eb590f78136498e3df6a9902210f32405fa7532360fcedb3832ad6c40fa3e693ab97658b31178e14c53c9f072154563bcefbb66c2ad0a81194a40b16722c2bc37bf9a876555af089c9981662630c2ad02b640aeb13879784bf89df2a0b79a19a11db8c2802cc9128ec4036c24646ad89793aea0d2140b0f46224b6cc79c77d51f67c51887efd310709cd28ac42a6348523a94e2e729578d12b97c5de7d5da2b2be88b9c30b260a766cf217ef675e3708593cf02314adc46204805de73cf07a53d48a1145138f86b64b3b659b7c7796329f427bbe4ec5c76a4c1bc78c3724397c77c31add4cf3f4cab539d7d94629e57b168f877f6b3aa29a517b912f5613ee2801e923b86d8d816dc8b98b7762a1b0750143a2c763bb113e21808bd060c674a34aaed85d05d3f275f1e6494e52d5c80dd3f9ce664bb78c47d8e597ed004ff3fcbb18d34c79f285d1aed32a8204a06f08b7675ba56b24106bdd6e7adf6adf76a2f34d9339027c93c57fa0151e740b427854a0a4670cb36f69f89891f56c9ac472b63289ae0c35063ad39626cb0f0e09174e0ccbf57cddafa6bcfd329a0e8931e4dca368416c0e7b755920c55d26c58715718658a066b9eed883e3f10f0395d3b69bbd109476b57ba277beb16318517ff7751c298830917e22b590be881d948e120b84071b2a1b8bbb0ab528a7078bbf3163f999e6425ce72d3b33490608f3850b4dc36f9c589b215a916d7e7b692ae5d62f73dbdc2d8aab4f632620096492c416301c5a431c22d9c8d73f55d4266396124e73d795316138c2181f39327a18f5fea8674a4c7cd60dadb35c4c9335d729c5bd3357d76aa7b7301b67d40316a64dbf49572bbf531c71db7f7ab772155c72be0a8b8ab83fe36bb1e184971c54ef3bf3f173b52254968d5f3e83a7105dd6ba3f0bea067531fb01d43c235f274b8d2f6db5ab63885a516a74fe2b7abb3aa4ac48c028d8c10ab124f771e1e530359aec344cea39f772cf1aa4aa848ca27f4799e1d0a7e8734b929c9930a505c36bc5c167e750f7da6a4b2a70bc8394712382772b4703608e7d6080de86d327183758387046f48ad03d8bb37a8288483702d48951d226849826b11b782fe6ac6871bd579ab5dcd5d00859112c4825eefa1749dbb249d54610242e696a26ee5ea837e4143acf517ed900b8487814574f0060ea6f873ea14db877b98a798c9555e505970bd3c6d63696384b4d6e733203332098f6c38128956931324ee939fab2940e2d7dab6323c6372006bf88eebc2ba94a5858f59e9163dd015d5d07dae02fcc02e27da0b0af96435dd11b7818e1a712065b616fad57cc5f6ea553fa3a40a2bf29f286d039cc5afa3f159870addbf5e249b5ffcabe6086a515e2cef4a463f6e374dba1255bd7d83a4aa4516740a34d6c508e4f79be28fe3778d51aa80199aa240b841b7782e5c2df723a1562b2ede5b86a9f5beaeb82dbb4236aac2ff1813be44e8a8d44782a1695337006f83e61e966119ec19dc240c677603064e7c76d120e75054ed79f5fc0bf77c7b75b89d4f2847ebae1ad4061ddf25005a448c52ecec57deb91c7edee394e21feda7707ddfecb3de1680d8c65ce141d4127a4030885a6070e2160bcd4696f7f948b428666ea7305da0be5c5c039181b8355d0e922add57c817e16fe5f881149277307267372492b9ba9dd146a6cc848c683c681677aa34161bf06e7d474a651066312cbbfc170100ca54e79d0c01113475e38dbc190e15d174886327831ff0f4f2f0e0759fc8878f5d68d0dc81c1120d119a1753bca8f69178c68e15d1f8e2f9c5a766acf04070742ba5beb448cbc26f403dbd83e0e8747e20ad0f82bef0022c1f145d180df7112627bccb94662e976d042ed5a43b5f1551f42783acbf02331f6d8bb653dccc81420b7bb97ca7652725f44afaa45169855d468732c11a017112b3643b7388b0d66af05e0bdfb642841ff97a4b9de02d062
+    - {fileID: 11500000, guid: 053e19a36db38234fa729dec0618282f, type: 3}
+    - {fileID: 2800000, guid: 72ab77f73c7204045ba5f85f86ec4e59, type: 3}
+    - {fileID: 21300000, guid: 72ab77f73c7204045ba5f85f86ec4e59, type: 3}
+    - {fileID: 3164014114167018859}
+    _Values: 3de0fec8ea1d3825bc0dc503737ccd44dc654065a30eb74e6b2904b8e6e88b4816402a005339a15a2e4938ca7aa75732d38458d9fc50182f29af5dc118803e5b990e1ab3a6cd985dc3e592ec4682c91380c81b9e6f4eb33a27fad7a4dce042528994316c8da38b5ee449e9e842d417581bb5be1e6423344a5bdfdba0a53c391ca24075dbb436a0243dbcbb2664cbf803efcf416e619e49649f18ed513715465911cd8b8349f30c51a91c1d5897f21a7018284d2a053444410a423ef842209e32742d8c4bb2c627049e8809b90f531e2ac08b3f57b22ec35ac435f1aa4cbdc211c7e53d9dfee1e773544a652cb3998b49dbeb46319f091b5df1e710e7b7d2515a4b1af22915802b5d72b30268c997a72aa9a7ce617690712fff6452e82e0043269bbf76cd8cb45f5c17a4bfec07b2947871c56ea15f4d2e2473ddd7852deb7372912432f6df26620a47724ad2d185284cd0da776991a2c74e915259afddda2e2bd0b383d41a75a768d986a613fda3ac114b754bac8cf51f32137e78cd7fee176c431ea18409fc674681df411748db4b34fe6bf95326dbb8256bae1766128a17389e13571b45311a47236ed193c9c984383343cf14f5c446689a84e7a51affcb08c808b55b336679307abfd048f6dba35dd621cc3144fcbc61a63f7e3eb68bd323c625343febd7fa33c99e8eb4948e5e42e189d0f9329ac43b3be94a0c17c585056d0c7d2f589c8e01d966041c748f09171fc4e0bfa433aa2b61f905028ded1c71dc6cb877eed0167de72e2d66611f5036f361ed53e4c5615f4a566fad5e6e71387e8a081eb77ef94eae62a7d261118c7f4a3b102bffc98c15f4a6d1679f97e05661991b14d8901174689fa5821e8efe3836109bdda1bac64cfff2135e4f61ed44bc028e380a8758472a9cc3602309f67c5cf6ce7004fc4b1a616716e57db32406b2613f201c364351b754063d7d276f0bfd970259927d3f46b257678d61c13b7578bdaec2cad55f254c82d8a7fd766778d822e9e5b1cb7334de07903a304a107871834ac42ace2a2638dda61555e7432840204ac028aa3b53b6855e2e9965aa028ea0e87f3ed35d09f9c3aed3255dde39b64605ef00afaf1a4061854fd2a740637857784a013b16147d53b8eb590f78136498e3df6a9902210f32405fa7532360fcedb3832ad6c40fa3e693ab97658b31178e14c53c9f072154563bcefbb66c2ad0a81194a40b16722c2bc37bf9a876555af089c9981662630c2ad02b640aeb13879784bf89df2a0b79a19a11db8c2802cc9128ec4036c24646ad89793aea0d2140b0f46224b6cc79c77d51f67c51887efd310709cd28ac42a6348523a94e2e729578d12b97c5de7d5da2b2be88b9c30b260a766cf217ef675e3708593cf02314adc46204805de73cf07a53d48a1145138f86b64b3b659b7c7796329f427bbe4ec5c76a4c1bc78c3724397c77c31add4cf3f4cab539d7d94629e57b168f877f6b3aa29a517b912f5613ee2801e923b86d8d816dc8b98b7762a1b0750143a2c763bb113e21808bd060c674a34aaed85d05d3f275f1e6494e52d5c80dd3f9ce664bb78c47d8e597ed004ff3fcbb18d34c79f285d1aed32a8204a06f08b7675ba56b24106bdd6e7adf6adf76a2f34d9339027c93c57fa0151e740b427854a0a4670cb36f69f89891f56c9ac472b63289ae0c35063ad39626cb0f0e09174e0ccbf57cddafa6bcfd329a0e8931e4dca368416c0e7b755920c55d26c58715718658a066b9eed883e3f10f0395d3b69bbd109476b57ba277beb16318517ff7751c298830917e22b590be881d948e120b84071b2a1b8bbb0ab528a7078bbf3163f999e6425ce72d3b33490608f3850b4dc36f9c589b215a916d7e7b692ae5d62f73dbdc2d8aab4f632620096492c416301c5a431c22d9c8d73f55d4266396124e73d795316138c2181f39327a18f5fea8674a4c7cd60dadb35c4c9335d729c5bd3357d76aa7b7301b67d40316a64dbf49572bbf531c71db7f7ab772155c72be0a8b8ab83fe36bb1e184971c54ef3bf3f173b52254968d5f3e83a7105dd6ba3f0bea067531fb01d43c235f274b8d2f6db5ab63885a516a74fe2b7abb3aa4ac48c028d8c10ab124f771e1e530359aec344cea39f772cf1aa4aa848ca27f4799e1d0a7e8734b929c9930a505c36bc5c167e750f7da6a4b2a70bc8394712382772b4703608e7d6080de86d327183758387046f48ad03d8bb37a8288483702d48951d226849826b11b782fe6ac6871bd579ab5dcd5d00859112c4825eefa1749dbb249d54610242e696a26ee5ea837e4143acf517ed900b8487814574f0060ea6f873ea14db877b98a798c9555e505970bd3c6d63696384b4d6e733203332098f6c38128956931324ee939fab2940e2d7dab6323c6372006bf88eebc2ba94a5858f59e9163dd015d5d07dae02fcc02e27da0b0af96435dd11b7818e1a712065b616fad57cc5f6ea553fa3a40a2bf29f286d039cc5afa3f159870addbf5e249b5ffcabe6086a515e2cef4a463f6e374dba1255bd7d83a4aa4516740a34d6c508e4f79be28fe3778d51aa80199aa240b841b7782e5c2df723a1562b2ede5b86a9f5beaeb82dbb4236aac2ff1813be44e8a8d44782a1695337006f83e61e966119ec19dc240c677603064e7c76d120e75054ed79f5fc0bf77c7b75b89d4f2847ebae1ad4061ddf25005a448c52ecec57deb91c7edee394e21feda7707ddfecb3de1680d8c65ce141d4127a4030885a6070e2160bcd4696f7f948b428666ea7305da0be5c5c039181b8355d0e922add57c817e16fe5f881149277307267372492b9ba9dd146a6cc848c683c681677aa34161bf06e7d474a651066312cbbfc170100ca54e79d0c01113475e38dbc190e15d174886327831ff0f4f2f0e0759fc8878f5d68d0dc81c1120d119a1753bca8f69178c68e15d1f8e2f9c5a766acf04070742ba5beb448cbc26f403dbd83e0e8747e20ad0f82bef0022c1f145d180df7112627bccb94662e976d042ed5a43b5f1551f42783acbf02331f6d8bb653dccc81420b7bb97ca7652725f44afaa45169855d468732c11a017112b3643b7388b0d66af05e0bdfb642841ff97a4b9de02d062dbf0c8f3ab8e531960927183170e0541beae6e2c71c42937d02f6e99e9873339
 --- !u!114 &3164014114167018859
 MonoBehaviour:
   m_ObjectHideFlags: 0

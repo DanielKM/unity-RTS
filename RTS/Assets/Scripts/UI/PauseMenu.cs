@@ -63,12 +63,10 @@ public class PauseMenu : MonoBehaviour
         Debug.Log("Quit!");
         ResumeGame();
         SceneManager.LoadScene("Main Menu");
-        Steamworks.SteamClient.Shutdown();
     }
 
     void OnDisable()
     {
         Debug.Log("PrintOnDisable: script was disabled");
-        Steamworks.SteamClient.Shutdown();
     }
 }

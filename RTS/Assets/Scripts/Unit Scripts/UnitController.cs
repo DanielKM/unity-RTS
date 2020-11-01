@@ -142,7 +142,7 @@ public class UnitController : MonoBehaviour
             if(justKilled) {
                 health = 0;
                 gameObject.GetComponent<NavMeshAgent>().enabled = false;
-                if(unitType == "Worker" || unitType == "Footman" || unitType == "Swordsman" || unitType == "Archer" || unitType == "Wizard" ||  unitType == "Outrider" || unitType == "Knight" || unitType == "Bandit Swordsman"  || unitType == "Bandit Footman" || unitType == "Skeleton" || unitType == "Necromancer")  { 
+                if(unitType == "Worker" || unitType == "Footman" || unitType == "Swordsman" || unitType == "Archer" || unitType == "Wizard" ||  unitType == "Outrider" || unitType == "Knight" || unitType == "Bandit Swordsman"  || unitType == "Bandit Footman" || unitType == "Skeleton" || unitType == "Brute" || unitType == "Necromancer")  { 
                     anim.SetInteger("condition", 10);
                     isDead = true;
                     UnitSelection.isBuilding = false;
@@ -152,6 +152,9 @@ public class UnitController : MonoBehaviour
                     UnitSelection.isMeleeing = false;
                     if(gameObject.GetComponent<NPCController>()) {
                         gameObject.GetComponent<NPCController>().currentlyMeleeing = false;
+                    }
+                    if(gameObject.GetComponent<WorkerController>()) {
+                        gameObject.GetComponent<WorkerController>().clearingDead = false;
                     }
                 }
                 RM.housing -= 1.0f;
@@ -166,7 +169,7 @@ public class UnitController : MonoBehaviour
                 justKilled = false;
             }
         } else if (health > 0) {
-            if(unitType == "Worker" || unitType == "Footman" || unitType == "Swordsman" || unitType == "Archer" || unitType == "Wizard" ||  unitType == "Outrider" || unitType == "Knight" || unitType == "Bandit Swordsman"  || unitType == "Bandit Footman" || unitType == "Skeleton" || unitType == "Necromancer")  { 
+            if(unitType == "Worker" || unitType == "Footman" || unitType == "Swordsman" || unitType == "Archer" || unitType == "Wizard" ||  unitType == "Outrider" || unitType == "Knight" || unitType == "Bandit Swordsman"  || unitType == "Bandit Footman" || unitType == "Skeleton" || unitType == "Brute" || unitType == "Necromancer")  { 
                 anim.SetInteger("condition", 0);
                 isDead = false;
                 gameObject.GetComponent<NavMeshAgent>().enabled = true;
@@ -204,7 +207,7 @@ public class UnitController : MonoBehaviour
                         anim.SetInteger("condition", 0);
                     }
                 }
-            } else if (unitType == "Footman" || unitType == "Swordsman" || unitType == "Archer" || unitType == "Wizard" ||  unitType == "Outrider" || unitType == "Knight" || unitType == "Bandit Swordsman" || unitType == "Bandit Footman" || unitType == "Skeleton" || unitType == "Necromancer" ) {
+            } else if (unitType == "Footman" || unitType == "Swordsman" || unitType == "Archer" || unitType == "Wizard" ||  unitType == "Outrider" || unitType == "Knight" || unitType == "Bandit Swordsman" || unitType == "Bandit Footman" || unitType == "Skeleton" || unitType == "Brute" || unitType == "Necromancer" ) {
                 if(UnitSelection.isMeleeing) {
                     anim.SetInteger("condition", 1);
                 } else if (!UnitSelection.isMeleeing) {
@@ -301,7 +304,7 @@ public class UnitController : MonoBehaviour
                 unitAudio.clip = woodChop;
                 unitAudio.maxDistance = 55;
                 unitAudio.Play();
-            } else if (unitType == "Footman" || unitType == "Swordsman" || unitType == "Outrider" || unitType == "Knight" || unitType == "Bandit Swordsman" || unitType == "Bandit Footman" || unitType == "Skeleton") {
+            } else if (unitType == "Footman" || unitType == "Swordsman" || unitType == "Outrider" || unitType == "Knight" || unitType == "Bandit Swordsman" || unitType == "Bandit Footman" || unitType == "Skeleton" || unitType == "Brute" ) {
                 AudioClip[] metalAttacks = new AudioClip[4]{ metalChop, metalChop2, metalChop3, metalChop4};
                 unitAudio = agent.GetComponent<AudioSource>();
                     
