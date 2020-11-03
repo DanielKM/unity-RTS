@@ -60,23 +60,29 @@ public class UnitSelection : MonoBehaviour
     public GameObject rightClickCursor;
     private GameObject currentRightClickCursor;
     PauseMenu PM;
+    public GameObject game;
 
     // Start is called before the first frame update
-    void Awake()
+    void Start()
     {
         Scene currentScene = SceneManager.GetActiveScene();
         if(currentScene.name != "Main Menu") {
-            mask =~ LayerMask.GetMask("FogOfWar");
-            team = GameObject.Find("Faction");
-            player = GameObject.FindGameObjectWithTag("Player");
-            playerAudio = GameObject.FindGameObjectWithTag("Main Audio").GetComponent<AudioSource>();
-            RM = team.GetComponent<ResourceManager>();
-            RC = team.GetComponent<ResearchController>();
-            IM = player.GetComponent<InputManager>();
-            UC = GetComponent<UnitController>();
-            agent = GetComponent<NavMeshAgent>();
-            PM = GameObject.Find("GameMenu").GetComponent<PauseMenu>();
-            rightClickCursor = IM.cursorHit;
+            game = GameObject.Find("Game");
+
+            if(game.GetComponent<SaveLoad>().loadedPlayer) {
+                mask =~ LayerMask.GetMask("FogOfWar");
+                team = GameObject.Find("Faction");
+                player = game.GetComponent<SaveLoad>().loadedPlayer;
+                playerAudio = player.GetComponentInChildren<AudioSource>();
+                RM = team.GetComponent<ResourceManager>();
+                RC = team.GetComponent<ResearchController>();
+                IM = player.GetComponent<InputManager>();
+                UC = GetComponent<UnitController>();
+                agent = GetComponent<NavMeshAgent>();
+                PM = GameObject.Find("GameMenu").GetComponent<PauseMenu>();
+                rightClickCursor = IM.cursorHit;
+            }
+
         }
     }
 

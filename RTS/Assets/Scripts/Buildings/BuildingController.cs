@@ -26,6 +26,7 @@ public class BuildingController : MonoBehaviour
 
     // Unit List
     public UnitList UnitList;
+    public GameObject game;
     public GameObject player;
     InputManager IM;
 
@@ -50,14 +51,16 @@ public class BuildingController : MonoBehaviour
 
     void Awake()
     {
-        player = GameObject.FindGameObjectWithTag("Player");
-        IM = player.GetComponent<InputManager>();
-        UnitList = GameObject.Find("Game").GetComponent<UnitList>();
-        mask =~ LayerMask.GetMask("FogOfWar");
     }
 
     void Start()
     {   
+        game = GameObject.Find("Game");
+        if( game.GetComponent<SaveLoad>().loadedPlayer) {
+            IM =  game.GetComponent<SaveLoad>().loadedPlayer.GetComponent<InputManager>();
+            UnitList = game.GetComponent<UnitList>();
+            mask =~ LayerMask.GetMask("FogOfWar");
+        }
         rallyPoint = gameObject.transform.position;
         UnitList.friendlyBuildings.Add(gameObject);
         if(buildingID == null || buildingID == "") {

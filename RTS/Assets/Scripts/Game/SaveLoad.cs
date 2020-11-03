@@ -9,6 +9,8 @@ public class SaveLoad : MonoBehaviour
     GameObject GM;
     ResourceManager RM;
     GameObject faction; 
+    public GameObject player; 
+    public GameObject loadedPlayer; 
     public static bool load;
     public static string saveLocation;
 
@@ -19,11 +21,16 @@ public class SaveLoad : MonoBehaviour
 
     ES3WorkerPrefab ES3WorkerPrefab;
     
+    void Awake() {
+        loadedPlayer = Instantiate(player);
+        loadedPlayer.transform.position = new Vector3(-25f, 10, 55f);
+    }
     // Start is called before the first frame update
     void Start()
     {
         Scene currentScene = SceneManager.GetActiveScene();
         if(currentScene.name != "Main Menu") {
+            loadedPlayer.SetActive(true);
             ES3WorkerPrefab = GameObject.Find("ES3PrefabSaves").GetComponent<ES3WorkerPrefab>();
             GM = GameObject.Find("GameMenu");
             faction = GameObject.Find("Faction");

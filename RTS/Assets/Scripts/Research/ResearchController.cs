@@ -7,7 +7,7 @@ using UnityEngine.SceneManagement;
 
 public class ResearchController : MonoBehaviour
 {
-    public GameObject player;
+    public GameObject currentPlayer;
     public GameObject team;
     UIController UI;
     ResourceManager RM;
@@ -156,16 +156,19 @@ public class ResearchController : MonoBehaviour
     public string research;
     public bool isTraining;
     public int i = 0;
+    public GameObject SaveLoad;
+
     // Start is called before the first frame update
     void Start()
     {
         Scene currentScene = SceneManager.GetActiveScene();
         if(currentScene.name != "Main Menu") {
             team = GameObject.Find("Faction");
-            player = GameObject.FindGameObjectWithTag("Player");
+            SaveLoad = GameObject.Find("Game");
+            currentPlayer = SaveLoad.GetComponent<SaveLoad>().loadedPlayer;
             RM = team.GetComponent<ResourceManager>();
-            UI = player.GetComponent<UIController>();
-            inputScript = player.GetComponent<InputManager>();
+            UI = currentPlayer.GetComponent<UIController>();
+            inputScript = currentPlayer.GetComponent<InputManager>();
 
             // Blacksmith Research
             basicBlacksmithingButton.onClick.AddListener(delegate{SelectBlacksmithResearch("basicBlacksmithing");});

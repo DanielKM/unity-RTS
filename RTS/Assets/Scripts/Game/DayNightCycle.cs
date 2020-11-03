@@ -22,12 +22,18 @@ public class DayNightCycle : MonoBehaviour
     public Color fogNight = Color.black;
 
     public int speed;
-    
+    public GameObject game;
+
+    void Awake() {
+        game = GameObject.Find("Game");
+    }
 
     // Update is called once per frame
     void Update()
     {
-        ChangeTime();
+        if(game.GetComponent<SaveLoad>().loadedPlayer) {
+            ChangeTime();
+        }
     }
 
     public void ChangeTime() {

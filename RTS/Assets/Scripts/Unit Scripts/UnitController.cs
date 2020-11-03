@@ -92,46 +92,47 @@ public class UnitController : MonoBehaviour
     public string unitID;
 
     void Awake() {
-        justKilled = true;
-        UnitList = GameObject.Find("Game").GetComponent<UnitList>();
-        InvokeRepeating("Tick", 0, 1.0f);
     }
 
 
     // Start is called before the first frame update
     void Start()
     {
-        player = GameObject.FindGameObjectWithTag("Player");
-        team = GameObject.Find("Faction");
+        justKilled = true;
+        UnitList = GameObject.Find("Game").GetComponent<UnitList>();
+        InvokeRepeating("Tick", 0, 1.0f);
+        player = GameObject.Find("Game").GetComponent<SaveLoad>().loadedPlayer;
+        if(player) {
+            team = GameObject.Find("Faction");
+            UI = player.GetComponent<UIController>();
+            RM = team.GetComponent<ResourceManager>();
+            RC = team.GetComponent<ResearchController>();
+            anim = GetComponent<Animator>();
+            agent = GetComponent<NavMeshAgent>();
+            UnitSelection = GetComponent<UnitSelection>();
+            archer = GetComponent<ArcherController>();
+            wizard = GetComponent<WizardController>();
+            necromancer = GetComponent<NecromancerController>();
+            if(archer) {
+                arrowPrefab = archer.arrow;
+            }        
+            if(wizard) {
+                fireballPrefab = wizard.fireball;
+            }      
+            if(necromancer) {
+                boneshardsPrefab = necromancer.boneshards;
+            }
+            if(unitID == null || unitID == "") {
+                unitID = System.Guid.NewGuid().ToString();
+            }
 
-        UI = player.GetComponent<UIController>();
-        RM = team.GetComponent<ResourceManager>();
-        RC = team.GetComponent<ResearchController>();
-        anim = GetComponent<Animator>();
-        agent = GetComponent<NavMeshAgent>();
-        UnitSelection = GetComponent<UnitSelection>();
-        archer = GetComponent<ArcherController>();
-        wizard = GetComponent<WizardController>();
-        necromancer = GetComponent<NecromancerController>();
-        if(archer) {
-            arrowPrefab = archer.arrow;
-        }        
-        if(wizard) {
-            fireballPrefab = wizard.fireball;
-        }      
-        if(necromancer) {
-            boneshardsPrefab = necromancer.boneshards;
-        }
-        if(unitID == null || unitID == "") {
-            unitID = System.Guid.NewGuid().ToString();
-        }
-
-        if(UnitSelection.owner == UnitSelection.team) {
-            UnitList.friendlyUnits.Add(gameObject);
-            UnitList.selectableUnits.Add(gameObject);
-        } else {
-            UnitList.enemyUnits.Add(gameObject);
-            UnitList.selectableUnits.Add(gameObject);
+            if(UnitSelection.owner == UnitSelection.team) {
+                UnitList.friendlyUnits.Add(gameObject);
+                UnitList.selectableUnits.Add(gameObject);
+            } else {
+                UnitList.enemyUnits.Add(gameObject);
+                UnitList.selectableUnits.Add(gameObject);
+            }
         }
     }
 

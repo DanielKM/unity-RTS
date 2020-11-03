@@ -51,12 +51,14 @@ public class TownHallController : MonoBehaviour
     private CanvasGroup BuildingActionPanel;
 
     public List<Collider> collidedObjects = new List<Collider>();
+    public GameObject SaveLoad;
 
 
     // Start is called before the first frame update
     void Start()
     {
-        player = GameObject.FindGameObjectWithTag("Player");
+        SaveLoad = GameObject.Find("Game");
+        player = SaveLoad.GetComponent<SaveLoad>().loadedPlayer;
         team = GameObject.Find("Faction");
         
         RM = team.GetComponent<ResourceManager>();

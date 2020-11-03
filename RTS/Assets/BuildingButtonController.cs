@@ -40,9 +40,10 @@ public class BuildingButtonController : MonoBehaviour
     private CanvasGroup UnitPanel;
     private CanvasGroup BasicBuildingsPanel;
     private CanvasGroup AdvancedBuildingsPanel;
-    private CanvasGroup PeasantPanel;
+    private CanvasGroup WorkerPanel;
     private CanvasGroup BuildingProgressPanel;
     private CanvasGroup BuildingActionPanel;
+    private CanvasGroup BarracksActionPanel;
 
     TownHallController townHallScript;
     BarracksController barracksScript;
@@ -85,8 +86,10 @@ public class BuildingButtonController : MonoBehaviour
             BuildingProgressPanel = GameObject.Find("BuildingProgressPanel").GetComponent<CanvasGroup>();
             BasicBuildingsPanel = GameObject.Find("BasicBuildingsPanel").GetComponent<CanvasGroup>();
             AdvancedBuildingsPanel = GameObject.Find("AdvancedBuildingsPanel").GetComponent<CanvasGroup>();
-            PeasantPanel = GameObject.Find("VillagerPanel").GetComponent<CanvasGroup>();
+            WorkerPanel = GameObject.Find("VillagerPanel").GetComponent<CanvasGroup>();
             BuildingActionPanel = GameObject.Find("BuildingActions").GetComponent<CanvasGroup>();
+            BarracksActionPanel = GameObject.Find("BarracksActionPanel").GetComponent<CanvasGroup>();
+
             // Trained units
             swordsmanUC = swordsmanPrefab.GetComponent<UnitController>();
             footmanUC = footmanPrefab.GetComponent<UnitController>();
@@ -95,20 +98,30 @@ public class BuildingButtonController : MonoBehaviour
             outriderUC = outriderPrefab.GetComponent<UnitController>();
             knightUC = knightPrefab.GetComponent<UnitController>();
 
-            player = GameObject.FindGameObjectWithTag("Player");
+            player = GameObject.Find("Game").GetComponent<SaveLoad>().loadedPlayer;
             team = GameObject.Find("Faction");
             inputScript = player.GetComponent<InputManager>();
             RM = team.GetComponent<ResourceManager>();
             UI = player.GetComponent<UIController>();
 
-            buttonOne.onClick.AddListener(delegate{HireUnit(villagerPrefab);});
+            BuildingActionPanel.transform.GetChild(0).GetComponent<Button>().onClick.AddListener(delegate{HireUnit(villagerPrefab);});
+
+            barracksButtonOne = BarracksActionPanel.transform.GetChild(0).GetComponent<Button>();
+            barracksButtonTwo = BarracksActionPanel.transform.GetChild(1).GetComponent<Button>();
+
+            barracksButtonFour = BarracksActionPanel.transform.GetChild(5).GetComponent<Button>();
+            barracksButtonNine = BarracksActionPanel.transform.GetChild(8).GetComponent<Button>();
+            barracksButtonTen = BarracksActionPanel.transform.GetChild(9).GetComponent<Button>();
+
             barracksButtonOne.onClick.AddListener(delegate{HireUnit(swordsmanPrefab);});
             barracksButtonTwo.onClick.AddListener(delegate{HireUnit(footmanPrefab);});
             barracksButtonFour.onClick.AddListener(delegate{HireUnit(archerPrefab);});
+
+
             barracksButtonNine.onClick.AddListener(delegate{HireUnit(outriderPrefab);});
             barracksButtonTen.onClick.AddListener(delegate{HireUnit(knightPrefab);});
 
-            BuildingCancelButton.onClick.AddListener(CancelConstruction);
+            BarracksActionPanel.transform.GetChild(11).GetComponent<Button>().onClick.AddListener(CancelConstruction);
         }
     }
 

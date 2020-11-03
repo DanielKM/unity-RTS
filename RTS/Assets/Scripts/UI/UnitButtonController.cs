@@ -57,31 +57,59 @@ public class UnitButtonController : MonoBehaviour
     public List<GameObject> dead = new List<GameObject>();
     private float mouseWheelRotation;
 
+    // Canvas
+    GameObject basicBuildingsPanel;
+    GameObject advancedBuildingsPanel;
+    GameObject workerPanel;
+
     // Start is called before the first frame update
     void Start()
     {
         Scene currentScene = SceneManager.GetActiveScene();
         if(currentScene.name != "Main Menu") {
-            mask =~ LayerMask.GetMask("FogOfWar");
             team = GameObject.Find("Faction");
-            player = GameObject.FindGameObjectWithTag("Player");
+            player = GameObject.Find("Game").GetComponent<SaveLoad>().loadedPlayer;
             IM = player.GetComponent<InputManager>();
             RM = team.GetComponent<ResourceManager>();
             UI = player.GetComponent<UIController>();
+            basicBuildingsPanel = GameObject.Find("BasicBuildingsPanel");
+            advancedBuildingsPanel = GameObject.Find("AdvancedBuildingsPanel");
+            workerPanel = GameObject.Find("VillagerPanel");
+
+            basicBack = basicBuildingsPanel.transform.GetChild(11).GetComponent<Button>();
             basicBack.onClick.AddListener(UI.WorkerSelect);
+
+            advancedBack = advancedBuildingsPanel.transform.GetChild(11).GetComponent<Button>();
             advancedBack.onClick.AddListener(UI.WorkerSelect);
 
+            basicBuildings = workerPanel.transform.GetChild(0).GetComponent<Button>();
             basicBuildings.onClick.AddListener(UI.VillagerBasicBuildings);
+            
+            advancedBuildings = workerPanel.transform.GetChild(1).GetComponent<Button>();
             advancedBuildings.onClick.AddListener(UI.VillagerAdvancedBuildings);
-            clearDead.onClick.AddListener(ClearDead);
 
+            clearDead = workerPanel.transform.GetChild(2).GetComponent<Button>();
+            clearDead.onClick.AddListener(ClearDead);
+            
+            buttonTwo = basicBuildingsPanel.transform.GetChild(1).GetComponent<Button>();
             buttonTwo.onClick.AddListener(delegate{BuildStructure(house);});
+
+            buttonThree = basicBuildingsPanel.transform.GetChild(2).GetComponent<Button>();
             buttonThree.onClick.AddListener(delegate{BuildStructure(farm);});
+
+            buttonFour = basicBuildingsPanel.transform.GetChild(3).GetComponent<Button>();
             buttonFour.onClick.AddListener(delegate{BuildStructure(townHall);});
 
+            buttonFive = basicBuildingsPanel.transform.GetChild(4).GetComponent<Button>();
             buttonFive.onClick.AddListener(delegate{BuildStructure(blacksmith);});
+
+            buttonSix = basicBuildingsPanel.transform.GetChild(5).GetComponent<Button>();
             buttonSix.onClick.AddListener(delegate{BuildStructure(lumberMill);});
+
+            buttonSeven = basicBuildingsPanel.transform.GetChild(6).GetComponent<Button>();
             buttonSeven.onClick.AddListener(delegate{BuildStructure(stables);});
+            
+            buttonEight = basicBuildingsPanel.transform.GetChild(7).GetComponent<Button>();
             buttonEight.onClick.AddListener(delegate{BuildStructure(barracks);});
         }
     }

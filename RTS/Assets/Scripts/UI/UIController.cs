@@ -65,47 +65,6 @@ public class UIController : MonoBehaviour
             CloseAllPanels();
         }
     }
-
-    void Awake() {
-        GameMenuPanel = GameObject.Find("GameMenu").GetComponent<CanvasGroup>();
-
-        saveMenu = GameObject.Find("SaveMenu");
-        loadMenu = GameObject.Find("loadMenu");
-        UnitPanel = GameObject.Find("UnitPanel").GetComponent<CanvasGroup>();
-        VillagerPanel = GameObject.Find("VillagerPanel").GetComponent<CanvasGroup>();
-        BasicBuildingsPanel = GameObject.Find("BasicBuildingsPanel").GetComponent<CanvasGroup>();
-        AdvancedBuildingsPanel = GameObject.Find("AdvancedBuildingsPanel").GetComponent<CanvasGroup>();
-        FootmanPanel = GameObject.Find("FootmanPanel").GetComponent<CanvasGroup>();
-                
-        BuildingPanel = GameObject.Find("BuildingPanel").GetComponent<CanvasGroup>();
-        BlacksmithActionPanel = GameObject.Find("BlacksmithActionPanel").GetComponent<CanvasGroup>();
-        LumberYardActionPanel = GameObject.Find("LumberYardActionPanel").GetComponent<CanvasGroup>();
-        BarracksActionPanel = GameObject.Find("BarracksActionPanel").GetComponent<CanvasGroup>();
-            
-        TrainingProgressPanel = GameObject.Find("TrainingProgressPanel").GetComponent<CanvasGroup>();
-        BuildingProgressPanel = GameObject.Find("BuildingProgressPanel").GetComponent<CanvasGroup>();
-        BuildingActionPanel = GameObject.Find("BuildingActions").GetComponent<CanvasGroup>();
-
-        armour1 = GameObject.Find("Armour1").GetComponent<CanvasGroup>();
-        armour2 = GameObject.Find("Armour2").GetComponent<CanvasGroup>();
-        armour3 = GameObject.Find("Armour3").GetComponent<CanvasGroup>();
-        armour4 = GameObject.Find("Armour4").GetComponent<CanvasGroup>();
-        armour5 = GameObject.Find("Armour5").GetComponent<CanvasGroup>();
-
-        noResourcesText = GameObject.Find("No Resources Panel").GetComponent<CanvasGroup>();
-        rotationText = GameObject.Find("Rotation Text").GetComponent<CanvasGroup>();
-        placementText = GameObject.Find("Placement Text").GetComponent<CanvasGroup>();
-
-        attackMovingText = GameObject.Find("Attack Move Text").GetComponent<CanvasGroup>();
-        movingText = GameObject.Find("Normal Move Text").GetComponent<CanvasGroup>();
-        patrolText = GameObject.Find("Patrol Move Text").GetComponent<CanvasGroup>();
-
-        team = GameObject.Find("Faction");
-        player = GameObject.FindGameObjectWithTag("Player");
-        IM = player.GetComponent<InputManager>();
-        RM = team.GetComponent<ResourceManager>();
-        BBC = player.GetComponent<BuildingButtonController>();
-    }
     
     public void FindAllPanels() {
         GameMenuPanel = GameObject.Find("GameMenu").GetComponent<CanvasGroup>();
@@ -142,8 +101,9 @@ public class UIController : MonoBehaviour
         patrolText = GameObject.Find("Patrol Move Text").GetComponent<CanvasGroup>();
 
         team = GameObject.Find("Faction");
-        player = GameObject.FindGameObjectWithTag("Player");
+        player = GameObject.Find("Game").GetComponent<SaveLoad>().loadedPlayer;
         RM = team.GetComponent<ResourceManager>();
+        IM = player.GetComponent<InputManager>();
     }
 
     public void DisplaySelectedObjects(GameObject selectedUnit)

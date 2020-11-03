@@ -11,7 +11,7 @@ public class WorkerController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        UBC = GameObject.Find("Player").GetComponent<UnitButtonController>();
+        UBC = GameObject.Find("Game").GetComponent<SaveLoad>().loadedPlayer.GetComponent<UnitButtonController>();
     }
 
     // Update is called once per frame

@@ -179,29 +179,16 @@ public class InputManager : MonoBehaviour
     public GameObject rallyGameobject;
     public GameObject currentRallyGameobject;
     
-    void Awake() {
-        unitList = GameObject.Find("Game").GetComponent<UnitList>();
-        Scene currentScene = SceneManager.GetActiveScene();
-        if(currentScene.name != "Main Menu") {
-            team = GameObject.Find("Faction");
-            player = GameObject.FindGameObjectWithTag("Player");
-
-            unitButtonController = player.GetComponent<UnitButtonController>();
-            playerAudio = GameObject.FindGameObjectWithTag("Main Audio").GetComponent<AudioSource>();
-            UI = player.GetComponent<UIController>();
-            RC = team.GetComponent<ResearchController>();
-            PM = GameObject.Find("GameMenu").GetComponent<PauseMenu>();
-        }
-    }
     // Start is called before the first frame update
     void Start()
     {
         Scene currentScene = SceneManager.GetActiveScene();
         SelectCursor();
         if(currentScene.name != "Main Menu") {
+            unitList = GameObject.Find("Game").GetComponent<UnitList>();
             mask =~ LayerMask.GetMask("FogOfWar");
             team = GameObject.Find("Faction");
-            player = GameObject.FindGameObjectWithTag("Player");
+            player = GameObject.Find("Game").GetComponent<SaveLoad>().loadedPlayer;
 
             unitButtonController = player.GetComponent<UnitButtonController>();
             playerAudio = GameObject.FindGameObjectWithTag("Main Audio").GetComponent<AudioSource>();
@@ -212,12 +199,47 @@ public class InputManager : MonoBehaviour
             unitIcon = GameObject.Find("UnitIcon");
             BuildingProgressBar = GameObject.Find("BuildingProgressBar");
             BuildingProgressSlider = BuildingProgressBar.GetComponent<Slider>();
+            buildingIcon = GameObject.Find("BuildingIcon");
 
             TrainingProgressBar = GameObject.Find("TrainingProgressBar");
             TrainingProgressSlider = TrainingProgressBar.GetComponent<Slider>();
             TrainingQueuedUnits = GameObject.Find("TrainingProgressIcon").GetComponentInChildren<Text>();
             TrainingProgressIcon = GameObject.Find("TrainingProgressIcon").GetComponent<Image>();
             
+            buildingHB = GameObject.Find("BuildingPanel").transform.GetChild(2).GetComponent<Slider>();
+            buildingEB = GameObject.Find("BuildingPanel").transform.GetChild(3).GetComponent<Slider>();
+                        
+            buildingHealthDisp = GameObject.Find("BuildingPanel").transform.GetChild(2).GetComponentInChildren<Text>();
+            buildingEnergyDisp = GameObject.Find("BuildingPanel").transform.GetChild(3).GetComponentInChildren<Text>();
+
+            buildingName = GameObject.Find("BuildingPanel").transform.GetChild(0).GetComponent<Text>();
+
+            buildingRankDisp = GameObject.Find("BuildingPanel").transform.GetChild(4).GetChild(0).GetComponent<Text>();
+            buildingNameDisp = GameObject.Find("BuildingPanel").transform.GetChild(4).GetChild(1).GetComponent<Text>();
+            buildingKillDisp = GameObject.Find("BuildingPanel").transform.GetChild(4).GetChild(2).GetComponent<Text>();
+
+            buildingWeaponDisp = GameObject.Find("BuildingPanel").transform.GetChild(5).GetChild(1).GetComponent<Text>();
+            buildingArmourDisp = GameObject.Find("BuildingPanel").transform.GetChild(5).GetChild(3).GetComponent<Text>();
+            buildingItemDisp = GameObject.Find("BuildingPanel").transform.GetChild(5).GetChild(5).GetComponent<Text>();
+
+            HB = GameObject.Find("UnitPanel").transform.GetChild(2).GetComponent<Slider>();
+            EB = GameObject.Find("UnitPanel").transform.GetChild(3).GetComponent<Slider>();
+
+            healthDisp = GameObject.Find("UnitPanel").transform.GetChild(2).GetComponentInChildren<Text>();
+            energyDisp = GameObject.Find("UnitPanel").transform.GetChild(3).GetComponentInChildren<Text>();
+            
+            unitName = GameObject.Find("UnitPanel").transform.GetChild(0).GetComponent<Text>();
+
+            rankDisp = GameObject.Find("UnitPanel").transform.GetChild(4).GetChild(0).GetComponent<Text>();
+            nameDisp = GameObject.Find("UnitPanel").transform.GetChild(4).GetChild(1).GetComponent<Text>();
+            killDisp = GameObject.Find("UnitPanel").transform.GetChild(4).GetChild(2).GetComponent<Text>();
+
+            weaponDisp = GameObject.Find("UnitPanel").transform.GetChild(5).GetChild(1).GetComponent<Text>();
+            armourDisp = GameObject.Find("UnitPanel").transform.GetChild(5).GetChild(3).GetComponent<Text>();
+            itemDisp = GameObject.Find("UnitPanel").transform.GetChild(5).GetChild(5).GetComponent<Text>();
+
+            taskDisp = GameObject.Find("UnitPanel").transform.GetChild(5).GetChild(7).GetComponent<Text>();
+
             rotation = Camera.main.transform.rotation;
             cam = Camera.main;
             minimap = GameObject.Find("Minimap").GetComponent<Camera>();
@@ -246,7 +268,6 @@ public class InputManager : MonoBehaviour
     // "F10": Open game menu
     // "CTRL + (0-9)": Save command groups
     // "(0-9)": Load command groups
-
 
     void Update()
     {
@@ -799,7 +820,6 @@ public class InputManager : MonoBehaviour
             currentTask = "Delivering";
         }
         taskDisp.text = currentTask;
-
     }
 
     public void UpdateBuildingPanel()
@@ -820,6 +840,7 @@ public class InputManager : MonoBehaviour
 
             buildingNameDisp.text = buildingScript.unitName;
             buildingName.text = buildingScript.unitType;
+
             buildingRankDisp.text = buildingScript.unitRank;
             buildingKillDisp.text = "Kills: " + buildingScript.unitKills;
 
@@ -937,10 +958,10 @@ public class InputManager : MonoBehaviour
         selectedObj = building;
         // Turn on selection circle
         selectedObj.transform.GetChild(0).gameObject.SetActive(true);
+        buildingScript = selectedObj.GetComponent<BuildingController>();
 
         if(selectedObj.tag == "Player 1")
         {
-            buildingScript = selectedObj.GetComponent<BuildingController>();
             if(buildingScript.unitType == "Lumber Yard") {
                 UI.LumberYardSelect();
             } else if (buildingScript.unitType == "Town Hall") {
@@ -1167,6 +1188,7 @@ public class InputManager : MonoBehaviour
         }
         
         foreach (GameObject go in currentList) {
+        Debug.Log(go);
             SelectMultipleUnits(go);
         }
     }

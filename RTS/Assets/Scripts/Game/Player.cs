@@ -15,6 +15,6 @@ public class Player : MonoBehaviour
     // Update is called once per frame
     public void Update()
     {
-        
+
     }
 }

@@ -10,6 +10,7 @@ public class PauseMenu : MonoBehaviour
     public GameObject optionsMenu;
     public GameObject loadMenu;
     public GameObject saveMenu;
+    public GameObject SaveLoad;
 
     public GameObject player;
     BuildingButtonController BBC;
@@ -18,8 +19,8 @@ public class PauseMenu : MonoBehaviour
     {
         loadMenu = GameObject.Find("LoadMenu");
         saveMenu = GameObject.Find("SaveMenu");
-        player = GameObject.FindGameObjectWithTag("Player");
-        BBC = player.GetComponent<BuildingButtonController>();
+        SaveLoad = GameObject.Find("Game");
+        BBC = SaveLoad.GetComponent<SaveLoad>().loadedPlayer.GetComponent<BuildingButtonController>();
     }
 
     private void Update()
@@ -63,12 +64,12 @@ public class PauseMenu : MonoBehaviour
         Debug.Log("Quit!");
         ResumeGame();
         SceneManager.LoadScene("Main Menu");
-        Steamworks.SteamClient.Shutdown();
+        // Steamworks.SteamClient.Shutdown();
     }
 
     void OnDisable()
     {
         Debug.Log("PrintOnDisable: script was disabled");
-        Steamworks.SteamClient.Shutdown();
+        // Steamworks.SteamClient.Shutdown();
     }
 }

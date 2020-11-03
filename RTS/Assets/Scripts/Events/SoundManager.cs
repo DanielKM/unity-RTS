@@ -12,7 +12,7 @@ public class SoundManager : MonoBehaviour
 
     DayNightCycle DayNight;
     public GameObject faction;
-    public GameObject MainCamera;
+    public GameObject Lighting;
 
     private bool scream = false;
     private bool day = true;
@@ -24,8 +24,8 @@ public class SoundManager : MonoBehaviour
     {
         SoundAudio = gameObject.GetComponent<AudioSource>();
         faction = GameObject.Find("Faction");
-        MainCamera = GameObject.Find("Main Camera");
-        DayNight = MainCamera.GetComponent<DayNightCycle>();
+        Lighting = GameObject.Find("Lighting");
+        DayNight = Lighting.GetComponent<DayNightCycle>();
     }
 
     // Update is called once per frame

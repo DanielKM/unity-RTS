@@ -10,7 +10,7 @@ public class NecromancerController : MonoBehaviour
     
     DayNightCycle DayNight;
     public GameObject faction;
-    public GameObject MainCamera;
+    GameObject Lighting;
     public Transform TownCenter;
 
     public GameObject skeleton;
@@ -21,8 +21,8 @@ public class NecromancerController : MonoBehaviour
     void Start()
     {
         faction = GameObject.Find("Faction");
-        MainCamera = GameObject.Find("Main Camera");
-        DayNight = MainCamera.GetComponent<DayNightCycle>();
+        Lighting = GameObject.Find("Lighting");
+        DayNight = Lighting.GetComponent<DayNightCycle>();
         TownCenter = GameObject.Find("TownCenter").GetComponent<Transform>();
     }
 
